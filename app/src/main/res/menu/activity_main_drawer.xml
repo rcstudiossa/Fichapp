@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/cadastros">
+        <menu>
+            <item
+                android:id="@+id/nav_cnes"
+                android:icon="@drawable/ic_hospital"
+                android:title="@string/cnes" />
+            <item
+                android:id="@+id/nav_profissional"
+                android:icon="@drawable/ic_doctor"
+                android:title="@string/profissional" />
+        </menu>
+    </item>
+
+    <item android:title="@string/fichas">
+        <menu>
+            <item
+                android:id="@+id/nav_fichaVisitaDT"
+                android:icon="@drawable/ic_result"
+                android:title="@string/fichaVisita" />
+        </menu>
+    </item>
+
+</menu>
