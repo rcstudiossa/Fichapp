@@ -1,6 +1,5 @@
 package com.fichapp.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,6 @@ import com.fichapp.Model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,7 +37,7 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
     @Override
     public void onBindViewHolder(CNESViewHolder cnesVH, final int position) {
 
-        cnesVH.CNES.setText(String.format(Locale.getDefault(), "%s - %s", mList.get(position).getCodigo(), mList.get(position).getNome()));
+        cnesVH.cnes.setText(String.format(Locale.getDefault(), "%s - %s", mList.get(position).getCodigo(), mList.get(position).getNome()));
 
         cnesVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,13 +85,13 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
 
     public class CNESViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView CNES;
+        public TextView cnes;
         public ImageButton editBT;
         public ImageButton deleteBT;
 
         public CNESViewHolder(View itemView) {
             super(itemView);
-            CNES = (TextView) itemView.findViewById(R.id.cnes_nome);
+            cnes = (TextView) itemView.findViewById(R.id.cnes_nome);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

@@ -6,5 +6,6 @@ package com.fichapp.util;
 
 public class Constantes {
 
-    public static final String DATABASE_NAME = "smpep";
+    public static final String CNES_DB = "smpep";
+    public static final String PROFISSIONAL_DB = "smpep";
 }

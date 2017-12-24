@@ -1,16 +1,22 @@
 package com.fichapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.fichapp.Activity.CNESActivity;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
+import com.fichapp.business.CNESBS;
+import com.fichapp.business.ProfissionalBS;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Rodrigo Costa on 21/12/2017.
@@ -35,8 +41,29 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
     }
 
     @Override
-    public void onBindViewHolder(ProfissionalViewHolder myViewHolder, int position) {
-        myViewHolder.tvModel.setText(mList.get(position).getModel() );
+    public void onBindViewHolder(ProfissionalViewHolder profissionalViewHolder, final int position) {
+
+        profissionalViewHolder.profissional.setText(String.format(Locale.getDefault(), "%s, CBO: %s", mList.get(position).getNome(), mList.get(position).getCbo()));
+
+        profissionalViewHolder.editBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), CNESActivity.class);
+                intent.putExtra("profissional", mList.get(position));
+
+                view.getContext().startActivity(intent);
+
+            }
+        });
+
+        profissionalViewHolder.deleteBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeListItem(view, position);
+            }
+        });
+
     }
 
     @Override
@@ -51,7 +78,9 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
     }
 
 
-    public void removeListItem(int position){
+    public void removeListItem(View view, int position){
+        ProfissionalBS profissionalBS = new ProfissionalBS(view.getContext());
+        profissionalBS.excluir(mList.get(position));
         mList.remove(position);
         notifyItemRemoved(position);
     }
@@ -59,15 +88,19 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
 
     public class ProfissionalViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvModel;
+        public TextView profissional;
+        public ImageButton editBT;
+        public ImageButton deleteBT;
 
         public ProfissionalViewHolder(View itemView) {
+
             super(itemView);
 
-            tvModel = (TextView) itemView.findViewById(R.id.cbo_nome);
+            profissional = (TextView) itemView.findViewById(R.id.profissional);
+            editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
+            deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 
         }
-
 
     }
 }

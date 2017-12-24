@@ -142,17 +142,6 @@ public class MainActivity extends AppCompatActivity
         fragTransaction.commit();
     }
 
-    public List<ProfissionalModel> getSetProfissionalList(int qtd){
-        String[] cboEnome = new String[]{"2231-46 - Dr. Paulo Freitas", "2231-06 - Dra. Natália Costa", "2231-31 - Dr. Alexandre Matos"};
-        List<ProfissionalModel> listAux = new ArrayList<>();
-
-        for(int i = 0; i < qtd; i++){
-            ProfissionalModel c = new ProfissionalModel(cboEnome[i % cboEnome.length]);
-            listAux.add(c);
-        }
-        return(listAux);
-    }
-
     public List<FichaVisitaDTModel> getSetCarList(int qtd){
         String[] prontuarioEnome = new String[]{"254689 - Rodrigo Costa", "485312 - Roque Souza", "648312 - Patrícia Duarte"};
         List<FichaVisitaDTModel> listAux = new ArrayList<>();

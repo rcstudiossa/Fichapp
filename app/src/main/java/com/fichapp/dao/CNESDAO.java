@@ -19,8 +19,8 @@ public class CNESDAO {
     public CNESDAO() {
     }
 
-    public CNESDAO(CNESDbHelper CNESDbHelper) {
-        this.db = CNESDbHelper.getWritableDatabase();
+    public CNESDAO(CNESDbHelper cnesDbHelper) {
+        this.db = cnesDbHelper.getWritableDatabase();
     }
 
     public void alterar(CNESModel cnesModel) {

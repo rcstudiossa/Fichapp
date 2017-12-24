@@ -14,37 +14,37 @@ import java.util.List;
 
 public class CNESBS {
 
-    CNESDAO CNESDAO;
+    CNESDAO cnesDAO;
 
     public CNESBS() {
     }
 
     public CNESBS(Context context) {
-        CNESDbHelper CNESDbHelper = new CNESDbHelper(context);
-        CNESDAO = new CNESDAO(CNESDbHelper);
+        CNESDbHelper cnesDbHelper = new CNESDbHelper(context);
+        cnesDAO = new CNESDAO(cnesDbHelper);
     }
 
     public void gravar(CNESModel CNES) {
 
         if (CNES.getId() != null) {
-            CNESDAO.alterar(CNES);
+            cnesDAO.alterar(CNES);
         } else {
-            CNESDAO.inserir(CNES);
+            cnesDAO.inserir(CNES);
         }
 
     }
 
     public void excluir(CNESModel CNES) {
-        CNESDAO.excluir(CNES);
-        CNESDAO.pesquisar();
+        cnesDAO.excluir(CNES);
+        //cnesDAO.pesquisar();
     }
 
     public List<CNESModel> pesquisar() {
-        return CNESDAO.pesquisar();
+        return cnesDAO.pesquisar();
     }
 
     public List<CNESModel> pesquisarAtivo() {
-        return CNESDAO.pesquisarAtivos();
+        return cnesDAO.pesquisarAtivos();
     }
 
 
