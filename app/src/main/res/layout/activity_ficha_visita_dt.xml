@@ -150,7 +150,8 @@
                     android:id="@+id/et_prontuario"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Nº Prontuário" />
+                    android:hint="Nº Prontuário"
+                    android:inputType="number" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -166,7 +167,8 @@
                     android:id="@+id/et_cns"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="CNS Cidadão" />
+                    android:hint="CNS Cidadão"
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -181,8 +183,8 @@
                     android:id="@+id/et_data_nascimento"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="date"
-                    android:hint="Nascimento" />
+                    android:hint="Nascimento"
+                    android:inputType="date" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -306,7 +308,6 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="16dp"
                 android:text="Visita compartilhada com outro profissional"
-                android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="@+id/textInputLayout5"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
