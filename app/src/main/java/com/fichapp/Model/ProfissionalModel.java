@@ -16,6 +16,10 @@ public class ProfissionalModel implements Serializable{
 
     public ProfissionalModel() {}
 
+    public ProfissionalModel(Long id) {
+        this.id = id;
+    }
+
     public ProfissionalModel(Long id, String codigo, String cns, String nome, Boolean flagAtivo) {
         this.id = id;
         this.cbo = codigo;

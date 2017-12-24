@@ -15,6 +15,10 @@ public class CNESModel implements Serializable {
 
     public CNESModel(){}
 
+    public CNESModel(Long id){
+        this.id = id;
+    }
+
     public CNESModel(Long id, String codigo, String nome, Boolean flagAtivo) {
         this.id = id;
         this.codigo = codigo;

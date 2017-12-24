@@ -1,23 +1,31 @@
 package com.fichapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fichapp.Activity.CNESActivity;
+import com.fichapp.Activity.FichaVisitaDTActivity;
 import com.fichapp.Model.FichaVisitaDTModel;
 import com.fichapp.R;
+import com.fichapp.business.CNESBS;
+import com.fichapp.business.FichaVisitaDTBS;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Rodrigo Costa on 21/12/2017.
  */
 
-public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdapter.MyViewHolder> {
+public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdapter.FichaVisitaDTVH> {
+
     private List<FichaVisitaDTModel> mList;
     private LayoutInflater mLayoutInflater;
 
@@ -29,15 +37,37 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public FichaVisitaDTVH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View v = mLayoutInflater.inflate(R.layout.item_rv_ficha_visita_dt, viewGroup, false);
-        MyViewHolder mvh = new MyViewHolder(v);
+        FichaVisitaDTVH mvh = new FichaVisitaDTVH(v);
         return mvh;
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder myViewHolder, int position) {
-        myViewHolder.tvModel.setText(mList.get(position).getModel() );
+    public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
+
+        fichaVisitaDTVH.ficha.setText(String.format(Locale.getDefault(), "CNS: %s, P: %s", mList.get(position).getCnsCidadao(), mList.get(position).getProntuario()));
+
+        fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), FichaVisitaDTActivity.class);
+                intent.putExtra("fichaVisitaDT", mList.get(position));
+
+                view.getContext().startActivity(intent);
+
+            }
+        });
+
+        fichaVisitaDTVH.deleteBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeListItem(view, position);
+            }
+        });
+
+
     }
 
     @Override
@@ -54,21 +84,26 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     }
 
 
-    public void removeListItem(int position){
+    public void removeListItem(View view, int position){
+
+        FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
+        fichaVisitaDTBS.excluir(mList.get(position));
         mList.remove(position);
         notifyItemRemoved(position);
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivCar;
-        public TextView tvModel;
-        public TextView tvBrand;
+    public class FichaVisitaDTVH extends RecyclerView.ViewHolder {
 
-        public MyViewHolder(View itemView) {
+        public TextView ficha;
+        public ImageButton editBT;
+        public ImageButton deleteBT;
+
+        public FichaVisitaDTVH(View itemView) {
             super(itemView);
-            tvModel = (TextView) itemView.findViewById(R.id.prontuario_paciente);
-
+            ficha = (TextView) itemView.findViewById(R.id.ficha);
+            editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
+            deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 
         }
 

@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.fichapp.Activity.CNESActivity;
+import com.fichapp.Activity.ProfissionalActivity;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
@@ -49,7 +50,7 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(), CNESActivity.class);
+                Intent intent = new Intent(view.getContext(), ProfissionalActivity.class);
                 intent.putExtra("profissional", mList.get(position));
 
                 view.getContext().startActivity(intent);

@@ -68,13 +68,13 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="4dp"
                 android:text="M"
-                app:layout_constraintBottom_toBottomOf="@+id/tb_turno_t"
-                app:layout_constraintRight_toLeftOf="@+id/tb_turno_t"
-                app:layout_constraintTop_toTopOf="@+id/tb_turno_t"
+                app:layout_constraintBottom_toBottomOf="@+id/rb_turno_t"
+                app:layout_constraintRight_toLeftOf="@+id/rb_turno_t"
+                app:layout_constraintTop_toTopOf="@+id/rb_turno_t"
                 app:layout_constraintVertical_bias="1.0" />
 
             <RadioButton
-                android:id="@+id/tb_turno_t"
+                android:id="@+id/rb_turno_t"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -685,7 +685,7 @@
                         android:layout_marginStart="16dp">
 
                         <EditText
-                            android:id="@+id/et_altra"
+                            android:id="@+id/et_altura"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Altura (cm)"
@@ -722,6 +722,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ausente" />
+
+                <Button
+                    android:id="@+id/btn_gravar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cadastrar"/>
 
 
             </LinearLayout>

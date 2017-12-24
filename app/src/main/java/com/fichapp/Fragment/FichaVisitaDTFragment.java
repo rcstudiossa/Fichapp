@@ -14,6 +14,8 @@ import com.fichapp.Activity.MainActivity;
 import com.fichapp.Adapter.FichaVisitaDTAdapter;
 import com.fichapp.Model.FichaVisitaDTModel;
 import com.fichapp.R;
+import com.fichapp.business.CNESBS;
+import com.fichapp.business.FichaVisitaDTBS;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class FichaVisitaDTFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private List<FichaVisitaDTModel> mList;
+    private FichaVisitaDTBS fichaVisitaDTBS;
 
 
     @Override
@@ -31,36 +34,15 @@ public class FichaVisitaDTFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_dt);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                FichaVisitaDTAdapter adapter = (FichaVisitaDTAdapter) mRecyclerView.getAdapter();
-
-                if (mList.size() == llm.findLastCompletelyVisibleItemPosition() + 1) {
-                    List<FichaVisitaDTModel> listAux = ((MainActivity) getActivity()).getSetCarList(10);
-
-                    for (int i = 0; i < listAux.size(); i++) {
-                        adapter.addListItem(listAux.get(i), mList.size());
-                    }
-                }
-            }
-        });
-
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
+        fichaVisitaDTBS = new FichaVisitaDTBS(getActivity());
 
-        mList = ((MainActivity) getActivity()).getSetCarList(10);
+        mList = fichaVisitaDTBS.pesquisarAtivo();
+        
         FichaVisitaDTAdapter adapter = new FichaVisitaDTAdapter(getActivity(), mList);
         mRecyclerView.setAdapter( adapter );
 
