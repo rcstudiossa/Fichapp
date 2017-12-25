@@ -22,6 +22,7 @@ import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.Model.TipoImovelModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
+import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +38,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
     private Spinner spinnerHospital;
     private EditText etINE;
     private EditText etDataRegistro;
-    private Calendar registroCalendar;
     private RadioButton rbTurnoM;
     private RadioButton rbTurnoT;
     private RadioButton rbTurnoN;
@@ -100,14 +100,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
     private RadioButton rbAusente;
 
     private Button btnGravar;
-
-    private void updateLabel(EditText editText, Calendar calendar) {
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
-
-        editText.setText(sdf.format(calendar.getTime()));
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,9 +253,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 gravar();
-                Intent intent = new Intent(FichaVisitaDTActivity.this, MainActivity.class);
-                intent.putExtra("fichaVisitaDTFragment", "fragment");
-                view.getContext().startActivity(intent);
             }
         });
 
@@ -291,11 +280,9 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         this.fichaVisitaDTBS.gravar(this.fichaVisitaDTModel);
 
-
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("Fragment", "FichaVisitaDTFragment");
+        intent.putExtra("fragment", "FichaVisitaDTFragment");
         startActivity(intent);
-
 
     }
 
@@ -303,7 +290,19 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         boolean valido = true;
 
-        if (etDataRegistro.getText().length() == 0) {
+        if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
+
+            if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                Snackbar.make(getCurrentFocus(), "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            }
+
+        } else {
+            Snackbar.make(getCurrentFocus(), "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
             Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
@@ -372,7 +371,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         cbOutros.setChecked(this.fichaVisitaDTModel.getFlagOutros());
 
         etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
-        etAltura.setText(this.fichaVisitaDTModel.getAltura());
+        etAltura.setText(this.fichaVisitaDTModel.getAltura().toString());
 
         rbVisitaRealizada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 1);
         rbVisitaRecusada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 2);
@@ -447,6 +446,13 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ? 3 : 0);
 
+    }
+
+    private void updateLabel(EditText editText, Calendar calendar) {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editText.setText(sdf.format(calendar.getTime()));
     }
 
 }

@@ -3,11 +3,8 @@ package com.fichapp.business;
 import android.content.Context;
 
 import com.fichapp.Model.FichaVisitaDTModel;
-import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.dao.FichaVisitaDTDAO;
-import com.fichapp.dao.FichaVisitaDTDbHelper;
-import com.fichapp.dao.ProfissionalDAO;
-import com.fichapp.dao.ProfissionalDbHelper;
+import com.fichapp.dao.SMPEPDbHelper;
 
 import java.util.List;
 
@@ -23,8 +20,8 @@ public class FichaVisitaDTBS {
     }
 
     public FichaVisitaDTBS(Context context) {
-        FichaVisitaDTDbHelper fichaVisitaDTDbHelper = new FichaVisitaDTDbHelper(context);
-        fichaVisitaDTDAO = new FichaVisitaDTDAO(fichaVisitaDTDbHelper);
+        SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
+        fichaVisitaDTDAO = new FichaVisitaDTDAO(smpepDbHelper);
     }
 
     public void gravar(FichaVisitaDTModel fichaModel) {

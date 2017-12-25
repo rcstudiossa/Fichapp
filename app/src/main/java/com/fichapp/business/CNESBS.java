@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.fichapp.Model.CNESModel;
 import com.fichapp.dao.CNESDAO;
-import com.fichapp.dao.CNESDbHelper;
+import com.fichapp.dao.SMPEPDbHelper;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public class CNESBS {
     }
 
     public CNESBS(Context context) {
-        CNESDbHelper cnesDbHelper = new CNESDbHelper(context);
-        cnesDAO = new CNESDAO(cnesDbHelper);
+        SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
+        cnesDAO = new CNESDAO(smpepDbHelper);
     }
 
     public void gravar(CNESModel CNES) {

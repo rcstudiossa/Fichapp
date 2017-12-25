@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.dao.ProfissionalDAO;
-import com.fichapp.dao.ProfissionalDbHelper;
+import com.fichapp.dao.SMPEPDbHelper;
 
 import java.util.List;
 
@@ -20,8 +20,8 @@ public class ProfissionalBS {
     }
 
     public ProfissionalBS(Context context) {
-        ProfissionalDbHelper profissionalDbHelper = new ProfissionalDbHelper(context);
-        profissionalDAO = new ProfissionalDAO(profissionalDbHelper);
+        SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
+        profissionalDAO = new ProfissionalDAO(smpepDbHelper);
     }
 
     public void gravar(ProfissionalModel profissionalModel) {

@@ -19,8 +19,8 @@ public class ProfissionalDAO {
     public ProfissionalDAO() {
     }
 
-    public ProfissionalDAO(ProfissionalDbHelper profissionalDbHelper) {
-        this.db = profissionalDbHelper.getWritableDatabase();
+    public ProfissionalDAO(SMPEPDbHelper smpepDbHelper) {
+        this.db = smpepDbHelper.getWritableDatabase();
     }
 
     public void alterar(ProfissionalModel profissionalModel) {

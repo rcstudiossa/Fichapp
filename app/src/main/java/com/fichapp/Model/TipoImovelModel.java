@@ -1,10 +1,12 @@
 package com.fichapp.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Rodrigo Costa on 24/12/2017.
  */
 
-public class TipoImovelModel {
+public class TipoImovelModel implements Serializable {
 
     private String codigo;
     private String descricao;

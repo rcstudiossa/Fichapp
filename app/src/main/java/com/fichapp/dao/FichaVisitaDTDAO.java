@@ -24,8 +24,8 @@ public class FichaVisitaDTDAO {
     public FichaVisitaDTDAO() {
     }
 
-    public FichaVisitaDTDAO(FichaVisitaDTDbHelper fichaVisitaDTDbHelper) {
-        this.db = fichaVisitaDTDbHelper.getWritableDatabase();
+    public FichaVisitaDTDAO(SMPEPDbHelper smpepDbHelper) {
+        this.db = smpepDbHelper.getWritableDatabase();
     }
 
     public void alterar(FichaVisitaDTModel fichaModel) {
@@ -193,7 +193,7 @@ public class FichaVisitaDTDAO {
 
         List<FichaVisitaDTModel> fichas = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_visita_domiciliar_territorial order by id;", null);
+        Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_visita_domiciliar_territorial where flag_ativo = 1 order by id;", null);
 
         if (c.getCount() > 0) {
             c.moveToFirst();
@@ -267,6 +267,7 @@ public class FichaVisitaDTDAO {
         fichaModel.setFlagDiabetes(c.getInt(c.getColumnIndex("flag_diabetes")) > 0);
         fichaModel.setFlagAsma(c.getInt(c.getColumnIndex("flag_asma")) > 0);
         fichaModel.setFlagEnfisema(c.getInt(c.getColumnIndex("flag_enfisema")) > 0);
+        fichaModel.setFlagCancer(c.getInt(c.getColumnIndex("flag_cancer")) > 0);
         fichaModel.setFlagDoencasCronicas(c.getInt(c.getColumnIndex("flag_doencas_cronicas")) > 0);
         fichaModel.setFlagHanseniase(c.getInt(c.getColumnIndex("flag_hanseniase")) > 0);
         fichaModel.setFlagTuberculose(c.getInt(c.getColumnIndex("flag_tuberculose")) > 0);
