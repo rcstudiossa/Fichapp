@@ -2,15 +2,15 @@
     <string name="app_name">Fichapp</string>
 
     <string name="cadastros">Cadastros</string>
-    <string name="cnes">CNES</string>
-    <string name="profissional">Profissional</string>
+    <string name="cnes">Hospitais</string>
+    <string name="profissional">Profissionais</string>
     <string name="fichas">Fichas</string>
     <string name="fichaVisita">Domiciliar e Territorial</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_export">Exportar Fichas</string>
 
     <string name="prompt_cnes">Código CNES</string>
     <string name="prompt_hospital">Nome do Hospital</string>
@@ -35,9 +35,9 @@
     </string-array>
 
     <string-array name="tipoImovel">
-        <item>01 - Domicílio</item>
-        <item>02 - Comércio</item>
-        <item>03 - Terreno baldio</item>
+        <item>Domicílio (01)</item>
+        <item>Comércio (02)</item>
+        <item>Terreno baldio (03)</item>
     </string-array>
 
 
