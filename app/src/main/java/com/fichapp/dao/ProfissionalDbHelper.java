@@ -12,8 +12,8 @@ import com.fichapp.util.Constantes;
 
 public class ProfissionalDbHelper extends SQLiteOpenHelper {
 
-    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS nomeTV (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN);";
-    public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS nomeTV;";
+    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS profissional (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN);";
+    public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS profissional;";
 
     public ProfissionalDbHelper(Context context) {
         super(context, Constantes.SMPEP_DB, null, Constantes.DATABASE_VERSION);
