@@ -1,16 +1,19 @@
 package com.fichapp.Activity;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.fichapp.Model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
+import com.fichapp.util.Utilitario;
 
 public class CNESActivity extends AppCompatActivity {
 
@@ -65,13 +68,42 @@ public class CNESActivity extends AppCompatActivity {
 
     }
 
+    private boolean validaCampos() {
+
+        boolean valido = true;
+
+        String aviso = "";
+
+        if (Utilitario.isEmpty(mNome.getText().toString())) {
+            aviso = Utilitario.addAviso("O nome do hospital está vazio", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(mCodigo.getText().toString())) {
+            aviso = Utilitario.addAviso("O código CNES está vazio", aviso);
+            valido = false;
+        }
+
+        if (!valido) {
+            Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
+        }
+
+        return valido;
+    }
+
     private void gravar() {
+
+        if (!validaCampos()) {
+            return;
+        }
 
         this.cnesModel.setCodigo(mCodigo.getText().toString());
         this.cnesModel.setNome(mNome.getText().toString());
         this.cnesModel.setFlagAtivo(mFlagAtivo.isChecked());
 
         cnesbs.gravar(this.cnesModel);
+
+        Utilitario.avisoSucesso(getApplicationContext());
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("Fragment", "CNESFragment");

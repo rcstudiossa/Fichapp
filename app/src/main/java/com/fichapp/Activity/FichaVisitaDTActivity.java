@@ -280,6 +280,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         this.fichaVisitaDTBS.gravar(this.fichaVisitaDTModel);
 
+        Utilitario.avisoSucesso(getApplicationContext());
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fragment", "FichaVisitaDTFragment");
         startActivity(intent);

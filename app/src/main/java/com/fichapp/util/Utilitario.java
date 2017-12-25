@@ -1,5 +1,8 @@
 package com.fichapp.util;
 
+import android.content.Context;
+import android.widget.Toast;
+
 /**
  * Created by Rodrigo Costa on 25/12/2017.
  */
@@ -24,5 +27,23 @@ public final class Utilitario {
             soma += Character.digit(cs[i], 10) * (15 - i);
         }
         return soma;
+    }
+
+    public static String addAviso(String texto, String aviso) {
+
+        if (isEmpty(aviso)) {
+            aviso = texto;
+        } else {
+            aviso = aviso + "\n" + texto;
+        }
+
+        return aviso;
+
+    }
+
+    public static void avisoSucesso(Context context) {
+
+        Toast.makeText(context, "Operação realizada com sucesso", Toast.LENGTH_SHORT).show();
+
     }
 }

@@ -1,6 +1,7 @@
 package com.fichapp.Activity;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.CheckBox;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
+import com.fichapp.util.Utilitario;
 
 public class ProfissionalActivity extends AppCompatActivity {
 
@@ -46,7 +48,7 @@ public class ProfissionalActivity extends AppCompatActivity {
                 gravar();
             }
         });
-        
+
     }
 
     private void instanciarProfissionalModel() {
@@ -65,7 +67,42 @@ public class ProfissionalActivity extends AppCompatActivity {
 
     }
 
+    private boolean validaCampos() {
+
+        boolean valido = true;
+
+        String aviso = "";
+
+        if (Utilitario.isEmpty(mNome.getText().toString())) {
+            aviso = Utilitario.addAviso("O nome do profissional está vazio", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(mCns.getText().toString())) {
+            aviso = Utilitario.addAviso("O código CNS está vazio", aviso);
+            valido = false;
+        } else if (!Utilitario.isCNSValido(mCns.getText().toString())) {
+            aviso = Utilitario.addAviso("O código CNS é inválido", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(mCbo.getText().toString())) {
+            aviso = Utilitario.addAviso("O código CBO está vazio", aviso);
+            valido = false;
+        }
+
+        if (!valido) {
+            Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
+        }
+
+        return valido;
+    }
+
     private void gravar() {
+
+        if (!validaCampos()) {
+            return;
+        }
 
         this.profissionalModel.setCbo(mCbo.getText().toString());
         this.profissionalModel.setCns(mCns.getText().toString());
@@ -73,6 +110,8 @@ public class ProfissionalActivity extends AppCompatActivity {
         this.profissionalModel.setFlagAtivo(mFlagAtivo.isChecked());
 
         profissionalBS.gravar(this.profissionalModel);
+
+        Utilitario.avisoSucesso(getApplicationContext());
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fragment", "ProfissionalFragment");
