@@ -309,6 +309,11 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
             valido = false;
         }
 
+        if (rbVisitaRealizada.isChecked() && Utilitario.isEmpty(etNascimento.getText().toString())) {
+            Snackbar.make(getCurrentFocus(), "Preencha a data de nascimento.", Snackbar.LENGTH_LONG).show();
+            valido = false;
+        }
+
         return valido;
 
     }
@@ -318,17 +323,17 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         etINE.setText(this.fichaVisitaDTModel.getIne());
         etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
-        rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno() == "M");
-        rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno() == "T");
-        rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno() == "N");
+        rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno().equals("M"));
+        rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno().equals("T"));
+        rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
 
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
         etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
-        rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo() == "M");
-        rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo() == "F");
+        rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo().equals("M"));
+        rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo().equals("F"));
         cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
 
         cbCadastramentoAtt.setChecked(this.fichaVisitaDTModel.getFlagCadastramento());
