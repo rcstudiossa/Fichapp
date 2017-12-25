@@ -28,13 +28,21 @@ import com.fichapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private String barTitleCNES;
+    private String barTitleProfissionais;
+    private String barTitleFichaVisitaDT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.barTitleCNES = new String("Hospitais");
+        this.barTitleProfissionais = new String("Profissionais");
+        this.barTitleFichaVisitaDT = new String("Fichas de Visita");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,14 +52,21 @@ public class MainActivity extends AppCompatActivity
 
             if (fragment.equals("CNESFragment")) {
                 setContent(new CNESFragment());
+                getSupportActionBar().setTitle(this.barTitleCNES);
+
             } else if (fragment.equals("ProfissionalFragment")) {
                 setContent(new ProfissionalFragment());
+                getSupportActionBar().setTitle(this.barTitleProfissionais);
+
             } else if (fragment.equals("FichaVisitaDTFragment")) {
                 setContent(new FichaVisitaDTFragment());
+                getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
+
             }
 
         } else {
             setContent(new CNESFragment());
+            getSupportActionBar().setTitle(this.barTitleCNES);
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -125,10 +140,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_cnes) {
             setContent(new CNESFragment());
+            getSupportActionBar().setTitle(this.barTitleCNES);
+
         } else if (id == R.id.nav_profissional) {
             setContent(new ProfissionalFragment());
+            getSupportActionBar().setTitle(this.barTitleProfissionais);
+
         } else if (id == R.id.nav_fichaVisitaDT) {
             setContent(new FichaVisitaDTFragment());
+            getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -140,6 +161,7 @@ public class MainActivity extends AppCompatActivity
         final FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
         fragTransaction.replace(R.id.conteudo_activity, content);
         fragTransaction.commit();
+
     }
 
 }

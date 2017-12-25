@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.fichapp.Model.ProfissionalModel;
-import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
 
@@ -29,10 +28,12 @@ public class ProfissionalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profissional);
 
+        getSupportActionBar().setTitle("Cadastro de Profissional");
+
         Button btnGravar = (Button) findViewById(R.id.btnGravar);
         mCbo = (AutoCompleteTextView) findViewById(R.id.cbo);
-        mCns = (AutoCompleteTextView) findViewById(R.id.cns);
-        mNome = (AutoCompleteTextView) findViewById(R.id.nome);
+        mCns = (AutoCompleteTextView) findViewById(R.id.tvCNS);
+        mNome = (AutoCompleteTextView) findViewById(R.id.tv_nome);
         mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
 
         this.profissionalBS = new ProfissionalBS(getApplicationContext());
@@ -50,7 +51,7 @@ public class ProfissionalActivity extends AppCompatActivity {
 
     private void instanciarProfissionalModel() {
 
-        this.profissionalModel = (ProfissionalModel) getIntent().getSerializableExtra("profissional");
+        this.profissionalModel = (ProfissionalModel) getIntent().getSerializableExtra("nomeTV");
 
         if (this.profissionalModel == null) {
             this.profissionalModel = new ProfissionalModel();

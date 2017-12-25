@@ -5,16 +5,38 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
-    <TextView
-        android:id="@+id/cnes_nome"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CNES Nome Hospital"
-        android:textSize="@dimen/item_rv_text_size"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eládio Lasserre"
+            android:textSize="@dimen/item_rv_text_size"
+            android:layout_alignParentStart="true"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_cnes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CNES: 0034597"
+            android:textSize="@dimen/item_rv_text_size"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="2dp"/>
+
+
+    </LinearLayout>
+
 
     <ImageButton
         android:id="@+id/edit_bt"

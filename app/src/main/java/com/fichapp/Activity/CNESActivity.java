@@ -7,9 +7,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
-import com.fichapp.Fragment.CNESFragment;
 import com.fichapp.Model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
@@ -30,9 +28,11 @@ public class CNESActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cnes);
 
+        getSupportActionBar().setTitle("Cadastro de Hospital");
+
         Button btnGravar = (Button) findViewById(R.id.btnGravar);
         mCodigo = (AutoCompleteTextView) findViewById(R.id.codigo);
-        mNome = (AutoCompleteTextView) findViewById(R.id.nome);
+        mNome = (AutoCompleteTextView) findViewById(R.id.tv_nome);
         mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
 
         cnesbs = new CNESBS(getApplicationContext());

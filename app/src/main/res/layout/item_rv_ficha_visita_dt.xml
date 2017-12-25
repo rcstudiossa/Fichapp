@@ -5,16 +5,45 @@
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
-    <TextView
-        android:id="@+id/ficha"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CNES Nome Hospital"
-        android:textSize="@dimen/item_rv_text_size"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tvCNS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CNS: 624198352"
+            android:textSize="@dimen/item_rv_text_size"
+            android:textColor="@android:color/black"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/tvProntuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prontuário: 21453214"
+            android:textSize="@dimen/item_rv_text_size"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="1dp"/>
+
+        <TextView
+            android:id="@+id/tvData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12/10/2017"
+            android:textSize="@dimen/item_rv_text_size"
+            android:layout_marginTop="1dp"/>
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/edit_bt"
@@ -23,6 +52,7 @@
         android:padding="8dp"
         android:src="@drawable/ic_edit"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_toStartOf="@+id/delete_bt"
         android:background="@null"/>
 
@@ -32,6 +62,7 @@
         android:src="@drawable/ic_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:padding="8dp"
         android:background="@null"/>
 

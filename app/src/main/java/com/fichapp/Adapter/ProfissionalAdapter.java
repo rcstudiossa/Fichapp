@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.fichapp.Activity.CNESActivity;
 import com.fichapp.Activity.ProfissionalActivity;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
-import com.fichapp.business.CNESBS;
 import com.fichapp.business.ProfissionalBS;
 
 import java.util.List;
@@ -44,14 +42,16 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
     @Override
     public void onBindViewHolder(ProfissionalViewHolder profissionalViewHolder, final int position) {
 
-        profissionalViewHolder.profissional.setText(String.format(Locale.getDefault(), "%s, CBO: %s", mList.get(position).getNome(), mList.get(position).getCbo()));
+        profissionalViewHolder.nomeTV.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNome()));
+        profissionalViewHolder.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCns()));
+        profissionalViewHolder.cboTV.setText(String.format(Locale.getDefault(), "CBO: %s", mList.get(position).getCbo()));
 
         profissionalViewHolder.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(), ProfissionalActivity.class);
-                intent.putExtra("profissional", mList.get(position));
+                intent.putExtra("nomeTV", mList.get(position));
 
                 view.getContext().startActivity(intent);
 
@@ -89,7 +89,9 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
 
     public class ProfissionalViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView profissional;
+        public TextView nomeTV;
+        public TextView cnsTV;
+        public TextView cboTV;
         public ImageButton editBT;
         public ImageButton deleteBT;
 
@@ -97,7 +99,9 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
 
             super(itemView);
 
-            profissional = (TextView) itemView.findViewById(R.id.profissional);
+            nomeTV = (TextView) itemView.findViewById(R.id.tv_nome);
+            cnsTV = (TextView) itemView.findViewById(R.id.tv_cns);
+            cboTV = (TextView) itemView.findViewById(R.id.tv_cbo);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

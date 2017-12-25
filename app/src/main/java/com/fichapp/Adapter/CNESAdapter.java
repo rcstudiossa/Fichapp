@@ -37,7 +37,8 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
     @Override
     public void onBindViewHolder(CNESViewHolder cnesVH, final int position) {
 
-        cnesVH.cnes.setText(String.format(Locale.getDefault(), "%s - %s", mList.get(position).getCodigo(), mList.get(position).getNome()));
+        cnesVH.nome.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNome()));
+        cnesVH.cnes.setText(String.format(Locale.getDefault(), "CNES: %s", mList.get(position).getCodigo()));
 
         cnesVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +87,14 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
     public class CNESViewHolder extends RecyclerView.ViewHolder {
 
         public TextView cnes;
+        public TextView nome;
         public ImageButton editBT;
         public ImageButton deleteBT;
 
         public CNESViewHolder(View itemView) {
             super(itemView);
-            cnes = (TextView) itemView.findViewById(R.id.cnes_nome);
+            cnes = (TextView) itemView.findViewById(R.id.tv_cnes);
+            nome = (TextView) itemView.findViewById(R.id.tv_nome);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

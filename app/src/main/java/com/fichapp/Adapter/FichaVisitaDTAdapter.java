@@ -7,19 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fichapp.Activity.CNESActivity;
 import com.fichapp.Activity.FichaVisitaDTActivity;
 import com.fichapp.Model.FichaVisitaDTModel;
 import com.fichapp.R;
-import com.fichapp.business.CNESBS;
 import com.fichapp.business.FichaVisitaDTBS;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by Rodrigo Costa on 21/12/2017.
@@ -47,7 +45,9 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     @Override
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
-        fichaVisitaDTVH.ficha.setText(String.format(Locale.getDefault(), "Data: %s, CNS: %s, P: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro()), mList.get(position).getCnsCidadao(), mList.get(position).getProntuario()));
+        fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
+        fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
+        fichaVisitaDTVH.dataTV.setText(String.format(Locale.getDefault(), "Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
 
         fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,13 +99,17 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
     public class FichaVisitaDTVH extends RecyclerView.ViewHolder {
 
-        public TextView ficha;
+        public TextView cnsTV;
+        public TextView prontuarioTV;
+        public TextView dataTV;
         public ImageButton editBT;
         public ImageButton deleteBT;
 
         public FichaVisitaDTVH(View itemView) {
             super(itemView);
-            ficha = (TextView) itemView.findViewById(R.id.ficha);
+            cnsTV = (TextView) itemView.findViewById(R.id.tvCNS);
+            prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
+            dataTV = (TextView) itemView.findViewById(R.id.tvData);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

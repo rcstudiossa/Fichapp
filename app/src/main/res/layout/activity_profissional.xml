@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <AutoCompleteTextView
-            android:id="@+id/nome"
+            android:id="@+id/tv_nome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content">
 
         <AutoCompleteTextView
-            android:id="@+id/cns"
+            android:id="@+id/tvCNS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="@string/prompt_cbo"
-            android:inputType="number"
+            android:inputType="textPhonetic"
             android:maxLines="1" />
 
     </android.support.design.widget.TextInputLayout>

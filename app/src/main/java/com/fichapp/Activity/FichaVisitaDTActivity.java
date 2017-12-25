@@ -1,19 +1,22 @@
 package com.fichapp.Activity;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.fichapp.Model.CNESModel;
-import com.fichapp.Model.DesfechoModel;
 import com.fichapp.Model.FichaVisitaDTModel;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.Model.TipoImovelModel;
@@ -21,7 +24,9 @@ import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class FichaVisitaDTActivity extends AppCompatActivity {
 
@@ -32,6 +37,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
     private Spinner spinnerHospital;
     private EditText etINE;
     private EditText etDataRegistro;
+    private Calendar registroCalendar;
     private RadioButton rbTurnoM;
     private RadioButton rbTurnoT;
     private RadioButton rbTurnoN;
@@ -95,16 +101,54 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private Button btnGravar;
 
+    private void updateLabel(EditText editText, Calendar calendar) {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.GERMAN);
+
+        editText.setText(sdf.format(calendar.getTime()));
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_visita_dt);
 
+        getSupportActionBar().setTitle("Cadastro de Ficha");
+
+        final Calendar registroCalendar = Calendar.getInstance();
+        final Calendar nascimentoCalendar = Calendar.getInstance();
+
         spinnerProfissional = (Spinner) findViewById(R.id.spinner_profissional);
         spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
         etINE = (EditText) findViewById(R.id.et_ine);
+
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
+
+        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                registroCalendar.set(Calendar.YEAR, year);
+                registroCalendar.set(Calendar.MONTH, monthOfYear);
+                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataRegistro, registroCalendar);
+            }
+        };
+
+        etDataRegistro.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro, registroCalendar
+                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
+                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
         rbTurnoM = (RadioButton) findViewById(R.id.rb_turno_m);
         rbTurnoT = (RadioButton) findViewById(R.id.rb_turno_t);
         rbTurnoN = (RadioButton) findViewById(R.id.rb_turno_n);
@@ -113,7 +157,35 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         etProntuario = (EditText) findViewById(R.id.et_prontuario);
         etCnsCidadao = (EditText) findViewById(R.id.et_cns);
+
+
         etNascimento = (EditText) findViewById(R.id.et_data_nascimento);
+
+        //TODO: Colocar para salvar data do DatePicker no EditText
+
+        final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                registroCalendar.set(Calendar.YEAR, year);
+                registroCalendar.set(Calendar.MONTH, monthOfYear);
+                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etNascimento, nascimentoCalendar);
+            }
+        };
+
+        etNascimento.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento, nascimentoCalendar
+                        .get(Calendar.YEAR), nascimentoCalendar.get(Calendar.MONTH),
+                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         rbSexoM = (RadioButton) findViewById(R.id.rb_sexo_m);
         rbSexoF = (RadioButton) findViewById(R.id.rb_sexo_f);
         cbVisitaCompartilhada = (CheckBox) findViewById(R.id.visita_outro_profissional);
@@ -189,6 +261,9 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 gravar();
+                Intent intent = new Intent(FichaVisitaDTActivity.this, MainActivity.class);
+                intent.putExtra("fichaVisitaDTFragment", "fragment");
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -240,68 +315,68 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
     private void setModelToActivity() {
 
 
-         etINE.setText(this.fichaVisitaDTModel.getIne());
-         etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
-         rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno() == "M");
-         rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno() == "T");
-         rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno() == "N");
-         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
+        etINE.setText(this.fichaVisitaDTModel.getIne());
+        etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
+        rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno() == "M");
+        rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno() == "T");
+        rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno() == "N");
+        etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
 
-         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
-         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
-         etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
-         rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo() == "M");
-         rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo() == "F");
-         cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
+        etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
+        etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
+        etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
+        rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo() == "M");
+        rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo() == "F");
+        cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
 
-         cbCadastramentoAtt.setChecked(this.fichaVisitaDTModel.getFlagCadastramento());
-         cbVisitaPeriodica.setChecked(this.fichaVisitaDTModel.getFlagVisitaPeriodica());
+        cbCadastramentoAtt.setChecked(this.fichaVisitaDTModel.getFlagCadastramento());
+        cbVisitaPeriodica.setChecked(this.fichaVisitaDTModel.getFlagVisitaPeriodica());
 
-         cbConsulta.setChecked(this.fichaVisitaDTModel.getFlagConsulta());
-         cbExame.setChecked(this.fichaVisitaDTModel.getFlagExame());
-         cbVacina.setChecked(this.fichaVisitaDTModel.getFlagVacina());
-         cbBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagBolsaFamilia());
+        cbConsulta.setChecked(this.fichaVisitaDTModel.getFlagConsulta());
+        cbExame.setChecked(this.fichaVisitaDTModel.getFlagExame());
+        cbVacina.setChecked(this.fichaVisitaDTModel.getFlagVacina());
+        cbBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagBolsaFamilia());
 
-         cbGestante.setChecked(this.fichaVisitaDTModel.getFlagGestante());
-         cbPuerpera.setChecked(this.fichaVisitaDTModel.getFlagPuerpera());
-         cbRecemNascido.setChecked(this.fichaVisitaDTModel.getFlagRecemNascido());
-         cbCrianca.setChecked(this.fichaVisitaDTModel.getFlagCrianca());
-         cbDesnutricao.setChecked(this.fichaVisitaDTModel.getFlagDesnutricao());
-         cbReabilitacao.setChecked(this.fichaVisitaDTModel.getFlagReabilitacao());
-         cbHipertensao.setChecked(this.fichaVisitaDTModel.getFlagHipertensao());
-         cbDiabetes.setChecked(this.fichaVisitaDTModel.getFlagDiabetes());
-         cbAsma.setChecked(this.fichaVisitaDTModel.getFlagAsma());
-         cbEnfisema.setChecked(this.fichaVisitaDTModel.getFlagEnfisema());
-         cbCancer.setChecked(this.fichaVisitaDTModel.getFlagCancer());
-         cbOutrasDoencas.setChecked(this.fichaVisitaDTModel.getFlagDoencasCronicas());
-         cbHanseniase.setChecked(this.fichaVisitaDTModel.getFlagHanseniase());
-         cbTuberculose.setChecked(this.fichaVisitaDTModel.getFlagTuberculose());
-         cbSintomaticosRespiratorios.setChecked(this.fichaVisitaDTModel.getFlagSintomaticosRespiratorios());
-         cbTabagista.setChecked(this.fichaVisitaDTModel.getFlagTabagista());
-         cbAcamados.setChecked(this.fichaVisitaDTModel.getFlagAcamado());
-         cbVulnerabilidadeSocial.setChecked(this.fichaVisitaDTModel.getFlagVunerabilidadeSocial());
-         cbAcompanhamentoBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagAcompanhamentoBolsaFamilia());
-         cbSaudeMental.setChecked(this.fichaVisitaDTModel.getFlagSaudeMental());
-         cbUsuarioAlcool.setChecked(this.fichaVisitaDTModel.getFlagUsuarioAlcool());
-         cbUsuarioOutrasDrogas.setChecked(this.fichaVisitaDTModel.getFlagOutrasDrogas());
+        cbGestante.setChecked(this.fichaVisitaDTModel.getFlagGestante());
+        cbPuerpera.setChecked(this.fichaVisitaDTModel.getFlagPuerpera());
+        cbRecemNascido.setChecked(this.fichaVisitaDTModel.getFlagRecemNascido());
+        cbCrianca.setChecked(this.fichaVisitaDTModel.getFlagCrianca());
+        cbDesnutricao.setChecked(this.fichaVisitaDTModel.getFlagDesnutricao());
+        cbReabilitacao.setChecked(this.fichaVisitaDTModel.getFlagReabilitacao());
+        cbHipertensao.setChecked(this.fichaVisitaDTModel.getFlagHipertensao());
+        cbDiabetes.setChecked(this.fichaVisitaDTModel.getFlagDiabetes());
+        cbAsma.setChecked(this.fichaVisitaDTModel.getFlagAsma());
+        cbEnfisema.setChecked(this.fichaVisitaDTModel.getFlagEnfisema());
+        cbCancer.setChecked(this.fichaVisitaDTModel.getFlagCancer());
+        cbOutrasDoencas.setChecked(this.fichaVisitaDTModel.getFlagDoencasCronicas());
+        cbHanseniase.setChecked(this.fichaVisitaDTModel.getFlagHanseniase());
+        cbTuberculose.setChecked(this.fichaVisitaDTModel.getFlagTuberculose());
+        cbSintomaticosRespiratorios.setChecked(this.fichaVisitaDTModel.getFlagSintomaticosRespiratorios());
+        cbTabagista.setChecked(this.fichaVisitaDTModel.getFlagTabagista());
+        cbAcamados.setChecked(this.fichaVisitaDTModel.getFlagAcamado());
+        cbVulnerabilidadeSocial.setChecked(this.fichaVisitaDTModel.getFlagVunerabilidadeSocial());
+        cbAcompanhamentoBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagAcompanhamentoBolsaFamilia());
+        cbSaudeMental.setChecked(this.fichaVisitaDTModel.getFlagSaudeMental());
+        cbUsuarioAlcool.setChecked(this.fichaVisitaDTModel.getFlagUsuarioAlcool());
+        cbUsuarioOutrasDrogas.setChecked(this.fichaVisitaDTModel.getFlagOutrasDrogas());
 
-         cbAcaoEducativa.setChecked(this.fichaVisitaDTModel.getFlagAcaoEducativa());
-         cbImovelComFoco.setChecked(this.fichaVisitaDTModel.getFlagImovelComFoco());
-         cbAcaoMecanica.setChecked(this.fichaVisitaDTModel.getFlagAcaoMecanica());
-         cbTratamentoFocal.setChecked(this.fichaVisitaDTModel.getFlagTratamentoFocal());
+        cbAcaoEducativa.setChecked(this.fichaVisitaDTModel.getFlagAcaoEducativa());
+        cbImovelComFoco.setChecked(this.fichaVisitaDTModel.getFlagImovelComFoco());
+        cbAcaoMecanica.setChecked(this.fichaVisitaDTModel.getFlagAcaoMecanica());
+        cbTratamentoFocal.setChecked(this.fichaVisitaDTModel.getFlagTratamentoFocal());
 
-         cbEgressoInternacao.setChecked(this.fichaVisitaDTModel.getFlagEgressoInternacao());
-         cbConvite.setChecked(this.fichaVisitaDTModel.getFlagConvite());
-         cbOrientacao.setChecked(this.fichaVisitaDTModel.getFlagOrientacao());
-         cbOutros.setChecked(this.fichaVisitaDTModel.getFlagOutros());
+        cbEgressoInternacao.setChecked(this.fichaVisitaDTModel.getFlagEgressoInternacao());
+        cbConvite.setChecked(this.fichaVisitaDTModel.getFlagConvite());
+        cbOrientacao.setChecked(this.fichaVisitaDTModel.getFlagOrientacao());
+        cbOutros.setChecked(this.fichaVisitaDTModel.getFlagOutros());
 
-         etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
-         etAltura.setText(this.fichaVisitaDTModel.getAltura());
+        etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
+        etAltura.setText(this.fichaVisitaDTModel.getAltura());
 
-         rbVisitaRealizada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 1);
-         rbVisitaRecusada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 2);
-         rbAusente.setChecked(this.fichaVisitaDTModel.getDesfecho() == 3);
+        rbVisitaRealizada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 1);
+        rbVisitaRecusada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 2);
+        rbAusente.setChecked(this.fichaVisitaDTModel.getDesfecho() == 3);
     }
 
     private void setActivityToModel() {
@@ -370,7 +445,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
             this.fichaVisitaDTModel.setAltura(new Integer(etAltura.getText().toString()));
         }
 
-        this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ?  3 : 0);
+        this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ? 3 : 0);
 
     }
 

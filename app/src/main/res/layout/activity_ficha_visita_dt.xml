@@ -130,12 +130,17 @@
                 app:layout_constraintLeft_toLeftOf="@+id/spinner_hospital"
                 app:layout_constraintTop_toBottomOf="@+id/spinner_hospital">
 
+                <!-- TODO: Finally, my only working solution has been to create an AlertDialog and include a DatePicker as a view. Thanks! -->
+                <!-- https://stackoverflow.com/questions/39429946/how-to-change-the-datepicker-style-for-android -->
+
                 <EditText
                     android:id="@+id/et_data_registro"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Data Registro"
-                    android:inputType="date" />
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:inputType="date"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -184,6 +189,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Nascimento"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:inputType="date" />
 
             </android.support.design.widget.TextInputLayout>
