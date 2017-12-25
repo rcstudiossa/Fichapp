@@ -142,19 +142,4 @@ public class MainActivity extends AppCompatActivity
         fragTransaction.commit();
     }
 
-    public List<FichaVisitaDTModel> getSetCarList(int qtd){
-        String[] prontuarioEnome = new String[]{"254689 - Rodrigo Costa", "485312 - Roque Souza", "648312 - Patrícia Duarte"};
-        List<FichaVisitaDTModel> listAux = new ArrayList<>();
-
-        for(int i = 0; i < qtd; i++){
-            FichaVisitaDTModel c = new FichaVisitaDTModel( prontuarioEnome[i % prontuarioEnome.length]);
-            listAux.add(c);
-        }
-        return(listAux);
-    }
-
-
-
-
-
 }

@@ -79,7 +79,7 @@ public class FichaVisitaDTDAO {
                          fichaModel.getFlagOutros(),
                          fichaModel.getPeso(),
                          fichaModel.getAltura(),
-                         fichaModel.getDesfechoModel().getId(),
+                         fichaModel.getDesfecho(),
                          fichaModel.getFlagAtivo(),
                          fichaModel.getFlagExportado(),
                          fichaModel.getId()};
@@ -147,9 +147,9 @@ public class FichaVisitaDTDAO {
                 fichaModel.getFlagOutros(),
                 fichaModel.getPeso(),
                 fichaModel.getAltura(),
-                fichaModel.getDesfechoModel().getId(),
-                fichaModel.getFlagAtivo(),
-                fichaModel.getFlagExportado()};
+                fichaModel.getDesfecho(),
+                Boolean.TRUE,
+                Boolean.FALSE};
 
         String query = "insert into ficha_visita_domiciliar_territorial (profissional_id, cnes_id, ine, data_registro, turno, microarea, tipo_imovel" +
                 ", prontuario, cns_cidadao, data_nascimento, sexo, flag_visita_compartilhada, flag_cadastramento, flag_visita_periodica" +
@@ -193,14 +193,14 @@ public class FichaVisitaDTDAO {
 
         List<FichaVisitaDTModel> fichas = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial where flag_ativo = 1 order by id;", null);
+        Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_visita_domiciliar_territorial order by id;", null);
 
         if (c.getCount() > 0) {
             c.moveToFirst();
-            fichas.add(getFichaVisitaDTModelInstance(c));
+            fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
 
             while (c.moveToNext()) {
-                fichas.add(getFichaVisitaDTModelInstance(c));
+                fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
             }
         }
 
@@ -208,9 +208,37 @@ public class FichaVisitaDTDAO {
 
     }
 
+    public FichaVisitaDTModel obter(FichaVisitaDTModel fichaVisitaDTModel) {
+
+        String[] args = {fichaVisitaDTModel.getId().toString()};
+
+
+        Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial where id = ?;", args);
+
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            return getFichaVisitaDTModelInstance(c);
+        }
+
+        return null;
+
+    }
+
+    private FichaVisitaDTModel getFichaVisitaDTPesquisaModelInstance(Cursor c) {
+
+        FichaVisitaDTModel fichaModel = new FichaVisitaDTModel();
+        fichaModel.setId(c.getLong(c.getColumnIndex("id")));
+        fichaModel.setDataRegistro(new Date(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
+        fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
+
+        return fichaModel;
+    }
+
     private FichaVisitaDTModel getFichaVisitaDTModelInstance(Cursor c) {
 
         FichaVisitaDTModel fichaModel = new FichaVisitaDTModel();
+        fichaModel.setId(c.getLong(c.getColumnIndex("id")));
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
         fichaModel.setIne(c.getString(c.getColumnIndex("ine")));
@@ -260,7 +288,7 @@ public class FichaVisitaDTDAO {
         fichaModel.setFlagOutros(c.getInt(c.getColumnIndex("flag_outros")) > 0);
         fichaModel.setPeso(c.getDouble(c.getColumnIndex("peso")));
         fichaModel.setAltura(c.getInt(c.getColumnIndex("altura")));
-        fichaModel.setDesfechoModel(new DesfechoModel(c.getLong(c.getColumnIndex("desfecho"))));
+        fichaModel.setDesfecho(c.getInt(c.getColumnIndex("desfecho")));
         fichaModel.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) > 0);
         fichaModel.setFlagExportado(c.getInt(c.getColumnIndex("flag_exportado")) > 0);
 

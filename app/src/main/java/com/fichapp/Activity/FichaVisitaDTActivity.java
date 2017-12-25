@@ -1,6 +1,7 @@
 package com.fichapp.Activity;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +13,15 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.fichapp.Model.CNESModel;
+import com.fichapp.Model.DesfechoModel;
 import com.fichapp.Model.FichaVisitaDTModel;
+import com.fichapp.Model.ProfissionalModel;
+import com.fichapp.Model.TipoImovelModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FichaVisitaDTActivity extends AppCompatActivity {
 
@@ -115,6 +122,11 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         cbVisitaPeriodica = (CheckBox) findViewById(R.id.cb_visita_periodica);
 
         cbConsulta = (CheckBox) findViewById(R.id.cb_consulta);
+        cbExame = (CheckBox) findViewById(R.id.cb_exame);
+        cbVacina = (CheckBox) findViewById(R.id.cb_vacina);
+        cbBolsaFamilia = (CheckBox) findViewById(R.id.cb_cond_bolsa_familia);
+
+        cbGestante = (CheckBox) findViewById(R.id.cb_gestante);
         cbPuerpera = (CheckBox) findViewById(R.id.cb_puerpera);
         cbRecemNascido = (CheckBox) findViewById(R.id.cb_recem_nascido);
         cbCrianca = (CheckBox) findViewById(R.id.cb_crianca);
@@ -139,6 +151,11 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         cbAcaoEducativa = (CheckBox) findViewById(R.id.cb_acao_educativa);
         cbImovelComFoco = (CheckBox) findViewById(R.id.cb_imovel_foco);
+        cbAcaoMecanica = (CheckBox) findViewById(R.id.cb_acao_mecanica);
+        cbTratamentoFocal = (CheckBox) findViewById(R.id.cb_tratamento_focal);
+        cbEgressoInternacao = (CheckBox) findViewById(R.id.cb_egresso_internacao);
+        cbConvite = (CheckBox) findViewById(R.id.cb_convite_atividades);
+
         cbOrientacao = (CheckBox) findViewById(R.id.cb_orientaçao_prevenção);
         cbOutros = (CheckBox) findViewById(R.id.cb_outros);
 
@@ -152,10 +169,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         btnGravar = (Button) findViewById(R.id.btn_gravar);
 
 
-
-
-
-
         ArrayAdapter adapterProfissional = ArrayAdapter.createFromResource(this, R.array.profissionais, android.R.layout.simple_spinner_item);
         spinnerProfissional.setAdapter(adapterProfissional);
         spinnerProfissional.setSelection(adapterProfissional.getPosition(1));
@@ -167,6 +180,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipoImovel, android.R.layout.simple_spinner_item);
         spinnerTipoImovel.setAdapter(adapterTipoImovel);
         spinnerTipoImovel.setSelection(adapterTipoImovel.getPosition(1));
+
+        this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
 
         this.instanciarFichaVisitaDTModel();
 
@@ -185,27 +200,177 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         if (this.fichaVisitaDTModel == null) {
             this.fichaVisitaDTModel = new FichaVisitaDTModel();
-            mFlagAtivo.setChecked(Boolean.TRUE);
         } else {
-            mCodigo.setText(this.cnesModel.getCodigo());
-            mNome.setText(this.cnesModel.getNome());
-            mFlagAtivo.setChecked(this.cnesModel.getFlagAtivo());
+            setModelToActivity();
         }
 
     }
 
     private void gravar() {
 
-        this.cnesModel.setCodigo(mCodigo.getText().toString());
-        this.cnesModel.setNome(mNome.getText().toString());
-        this.cnesModel.setFlagAtivo(mFlagAtivo.isChecked());
+        if (!validaCampos()) {
+            return;
+        }
 
-        fichaVisitaDTBS.gravar(this.fichaVisitaDTModel);
+        setActivityToModel();
+
+        this.fichaVisitaDTBS.gravar(this.fichaVisitaDTModel);
+
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("Fragment", "FichaVisitaDTFragment");
         startActivity(intent);
 
+
+    }
+
+    private boolean validaCampos() {
+
+        boolean valido = true;
+
+        if (etDataRegistro.getText().length() == 0) {
+            Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            valido = false;
+        }
+
+        return valido;
+
+    }
+
+    private void setModelToActivity() {
+
+
+         etINE.setText(this.fichaVisitaDTModel.getIne());
+         etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
+         rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno() == "M");
+         rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno() == "T");
+         rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno() == "N");
+         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
+
+
+         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
+         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
+         etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
+         rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo() == "M");
+         rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo() == "F");
+         cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
+
+         cbCadastramentoAtt.setChecked(this.fichaVisitaDTModel.getFlagCadastramento());
+         cbVisitaPeriodica.setChecked(this.fichaVisitaDTModel.getFlagVisitaPeriodica());
+
+         cbConsulta.setChecked(this.fichaVisitaDTModel.getFlagConsulta());
+         cbExame.setChecked(this.fichaVisitaDTModel.getFlagExame());
+         cbVacina.setChecked(this.fichaVisitaDTModel.getFlagVacina());
+         cbBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagBolsaFamilia());
+
+         cbGestante.setChecked(this.fichaVisitaDTModel.getFlagGestante());
+         cbPuerpera.setChecked(this.fichaVisitaDTModel.getFlagPuerpera());
+         cbRecemNascido.setChecked(this.fichaVisitaDTModel.getFlagRecemNascido());
+         cbCrianca.setChecked(this.fichaVisitaDTModel.getFlagCrianca());
+         cbDesnutricao.setChecked(this.fichaVisitaDTModel.getFlagDesnutricao());
+         cbReabilitacao.setChecked(this.fichaVisitaDTModel.getFlagReabilitacao());
+         cbHipertensao.setChecked(this.fichaVisitaDTModel.getFlagHipertensao());
+         cbDiabetes.setChecked(this.fichaVisitaDTModel.getFlagDiabetes());
+         cbAsma.setChecked(this.fichaVisitaDTModel.getFlagAsma());
+         cbEnfisema.setChecked(this.fichaVisitaDTModel.getFlagEnfisema());
+         cbCancer.setChecked(this.fichaVisitaDTModel.getFlagCancer());
+         cbOutrasDoencas.setChecked(this.fichaVisitaDTModel.getFlagDoencasCronicas());
+         cbHanseniase.setChecked(this.fichaVisitaDTModel.getFlagHanseniase());
+         cbTuberculose.setChecked(this.fichaVisitaDTModel.getFlagTuberculose());
+         cbSintomaticosRespiratorios.setChecked(this.fichaVisitaDTModel.getFlagSintomaticosRespiratorios());
+         cbTabagista.setChecked(this.fichaVisitaDTModel.getFlagTabagista());
+         cbAcamados.setChecked(this.fichaVisitaDTModel.getFlagAcamado());
+         cbVulnerabilidadeSocial.setChecked(this.fichaVisitaDTModel.getFlagVunerabilidadeSocial());
+         cbAcompanhamentoBolsaFamilia.setChecked(this.fichaVisitaDTModel.getFlagAcompanhamentoBolsaFamilia());
+         cbSaudeMental.setChecked(this.fichaVisitaDTModel.getFlagSaudeMental());
+         cbUsuarioAlcool.setChecked(this.fichaVisitaDTModel.getFlagUsuarioAlcool());
+         cbUsuarioOutrasDrogas.setChecked(this.fichaVisitaDTModel.getFlagOutrasDrogas());
+
+         cbAcaoEducativa.setChecked(this.fichaVisitaDTModel.getFlagAcaoEducativa());
+         cbImovelComFoco.setChecked(this.fichaVisitaDTModel.getFlagImovelComFoco());
+         cbAcaoMecanica.setChecked(this.fichaVisitaDTModel.getFlagAcaoMecanica());
+         cbTratamentoFocal.setChecked(this.fichaVisitaDTModel.getFlagTratamentoFocal());
+
+         cbEgressoInternacao.setChecked(this.fichaVisitaDTModel.getFlagEgressoInternacao());
+         cbConvite.setChecked(this.fichaVisitaDTModel.getFlagConvite());
+         cbOrientacao.setChecked(this.fichaVisitaDTModel.getFlagOrientacao());
+         cbOutros.setChecked(this.fichaVisitaDTModel.getFlagOutros());
+
+         etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
+         etAltura.setText(this.fichaVisitaDTModel.getAltura());
+
+         rbVisitaRealizada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 1);
+         rbVisitaRecusada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 2);
+         rbAusente.setChecked(this.fichaVisitaDTModel.getDesfecho() == 3);
+    }
+
+    private void setActivityToModel() {
+
+        this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel());
+        this.fichaVisitaDTModel.setCnesModel(new CNESModel());
+        this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
+
+        this.fichaVisitaDTModel.setIne(etINE.getText().toString());
+        this.fichaVisitaDTModel.setDataRegistro(new Date(etDataRegistro.getText().toString()));
+        this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
+        this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
+
+        this.fichaVisitaDTModel.setProntuario(etProntuario.getText().toString());
+        this.fichaVisitaDTModel.setCnsCidadao(etCnsCidadao.getText().toString());
+        this.fichaVisitaDTModel.setDataNascimento(new Date(etNascimento.getText().toString()));
+        this.fichaVisitaDTModel.setSexo(rbSexoM.isChecked() ? "M" : rbSexoF.isChecked() ? "F" : null);
+        this.fichaVisitaDTModel.setFlagVisitaCompartilhada(cbVisitaCompartilhada.isChecked());
+
+        this.fichaVisitaDTModel.setFlagCadastramento(cbCadastramentoAtt.isChecked());
+        this.fichaVisitaDTModel.setFlagVisitaPeriodica(cbVisitaPeriodica.isChecked());
+
+        this.fichaVisitaDTModel.setFlagConsulta(cbConsulta.isChecked());
+        this.fichaVisitaDTModel.setFlagExame(cbExame.isChecked());
+        this.fichaVisitaDTModel.setFlagVacina(cbVacina.isChecked());
+        this.fichaVisitaDTModel.setFlagBolsaFamilia(cbBolsaFamilia.isChecked());
+
+        this.fichaVisitaDTModel.setFlagGestante(cbGestante.isChecked());
+        this.fichaVisitaDTModel.setFlagPuerpera(cbPuerpera.isChecked());
+        this.fichaVisitaDTModel.setFlagRecemNascido(cbRecemNascido.isChecked());
+        this.fichaVisitaDTModel.setFlagCrianca(cbCrianca.isChecked());
+        this.fichaVisitaDTModel.setFlagDesnutricao(cbDesnutricao.isChecked());
+        this.fichaVisitaDTModel.setFlagReabilitacao(cbReabilitacao.isChecked());
+        this.fichaVisitaDTModel.setFlagHipertensao(cbHipertensao.isChecked());
+        this.fichaVisitaDTModel.setFlagDiabetes(cbDiabetes.isChecked());
+        this.fichaVisitaDTModel.setFlagAsma(cbAsma.isChecked());
+        this.fichaVisitaDTModel.setFlagEnfisema(cbEnfisema.isChecked());
+        this.fichaVisitaDTModel.setFlagCancer(cbCancer.isChecked());
+        this.fichaVisitaDTModel.setFlagDoencasCronicas(cbOutrasDoencas.isChecked());
+        this.fichaVisitaDTModel.setFlagHanseniase(cbHanseniase.isChecked());
+        this.fichaVisitaDTModel.setFlagTuberculose(cbTuberculose.isChecked());
+        this.fichaVisitaDTModel.setFlagSintomaticosRespiratorios(cbSintomaticosRespiratorios.isChecked());
+        this.fichaVisitaDTModel.setFlagTabagista(cbTabagista.isChecked());
+        this.fichaVisitaDTModel.setFlagAcamado(cbAcamados.isChecked());
+        this.fichaVisitaDTModel.setFlagVunerabilidadeSocial(cbVulnerabilidadeSocial.isChecked());
+        this.fichaVisitaDTModel.setFlagAcompanhamentoBolsaFamilia(cbAcompanhamentoBolsaFamilia.isChecked());
+        this.fichaVisitaDTModel.setFlagSaudeMental(cbSaudeMental.isChecked());
+        this.fichaVisitaDTModel.setFlagUsuarioAlcool(cbUsuarioAlcool.isChecked());
+        this.fichaVisitaDTModel.setFlagOutrasDrogas(cbUsuarioOutrasDrogas.isChecked());
+
+        this.fichaVisitaDTModel.setFlagAcaoEducativa(cbAcaoEducativa.isChecked());
+        this.fichaVisitaDTModel.setFlagImovelComFoco(cbImovelComFoco.isChecked());
+        this.fichaVisitaDTModel.setFlagAcaoMecanica(cbAcaoMecanica.isChecked());
+        this.fichaVisitaDTModel.setFlagTratamentoFocal(cbTratamentoFocal.isChecked());
+
+        this.fichaVisitaDTModel.setFlagEgressoInternacao(cbEgressoInternacao.isChecked());
+        this.fichaVisitaDTModel.setFlagConvite(cbConvite.isChecked());
+        this.fichaVisitaDTModel.setFlagOrientacao(cbOrientacao.isChecked());
+        this.fichaVisitaDTModel.setFlagOutros(cbOutros.isChecked());
+
+        if (etPeso.getText().length() > 0) {
+            this.fichaVisitaDTModel.setPeso(new Double(etPeso.getText().toString()));
+        }
+
+        if (etAltura.getText().length() > 0) {
+            this.fichaVisitaDTModel.setAltura(new Integer(etAltura.getText().toString()));
+        }
+
+        this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ?  3 : 0);
 
     }
 

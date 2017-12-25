@@ -12,12 +12,11 @@ import com.fichapp.util.Constantes;
 
 public class CNESDbHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
     public static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS cnes (id INTEGER PRIMARY KEY, codigo VARCHAR, nome VARCHAR, flag_ativo BOOLEAN);";
     public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS cnes;";
 
     public CNESDbHelper(Context context) {
-        super(context, Constantes.CNES_DB, null, DATABASE_VERSION);
+        super(context, Constantes.SMPEP_DB, null, Constantes.DATABASE_VERSION);
     }
 
     public void onCreate(SQLiteDatabase db) {

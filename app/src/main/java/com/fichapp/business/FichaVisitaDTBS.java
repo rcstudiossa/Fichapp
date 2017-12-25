@@ -42,6 +42,11 @@ public class FichaVisitaDTBS {
         //profissionalDAO.pesquisar();
     }
 
+    public FichaVisitaDTModel obter(FichaVisitaDTModel fichaVisitaDTModel) {
+
+        return this.fichaVisitaDTDAO.obter(fichaVisitaDTModel);
+    }
+
     public List<FichaVisitaDTModel> pesquisar() {
         return fichaVisitaDTDAO.pesquisar();
     }

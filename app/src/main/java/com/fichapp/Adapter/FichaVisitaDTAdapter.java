@@ -17,6 +17,7 @@ import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.business.FichaVisitaDTBS;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,14 +47,17 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     @Override
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
-        fichaVisitaDTVH.ficha.setText(String.format(Locale.getDefault(), "CNS: %s, P: %s", mList.get(position).getCnsCidadao(), mList.get(position).getProntuario()));
+        fichaVisitaDTVH.ficha.setText(String.format(Locale.getDefault(), "Data: %s, CNS: %s, P: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro()), mList.get(position).getCnsCidadao(), mList.get(position).getProntuario()));
 
         fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(), FichaVisitaDTActivity.class);
-                intent.putExtra("fichaVisitaDT", mList.get(position));
+
+                FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
+
+                intent.putExtra("fichaVisitaDT", fichaVisitaDTBS.obter(mList.get(position)));
 
                 view.getContext().startActivity(intent);
 

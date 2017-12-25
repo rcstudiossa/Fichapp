@@ -68,7 +68,7 @@ public class FichaVisitaDTModel implements Serializable{
 
     private Double peso;
     private Integer altura;
-    private DesfechoModel desfechoModel;
+    private Integer desfecho;
 
     private Boolean flagAtivo;
     private Boolean flagExportado;
@@ -481,12 +481,12 @@ public class FichaVisitaDTModel implements Serializable{
         this.altura = altura;
     }
 
-    public DesfechoModel getDesfechoModel() {
-        return desfechoModel;
+    public Integer getDesfecho() {
+        return desfecho;
     }
 
-    public void setDesfechoModel(DesfechoModel desfechoModel) {
-        this.desfechoModel = desfechoModel;
+    public void setDesfecho(Integer desfecho) {
+        this.desfecho = desfecho;
     }
 
     public Boolean getFlagAtivo() {
@@ -504,4 +504,5 @@ public class FichaVisitaDTModel implements Serializable{
     public void setFlagExportado(Boolean flagExportado) {
         this.flagExportado = flagExportado;
     }
+
 }
