@@ -37,7 +37,7 @@
                 android:id="@+id/tv_profissional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/field_margin"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="@dimen/field_margin"
                 android:text="Profissional"
                 android:textColor="@color/colorPrimaryDark" />
@@ -107,7 +107,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="">
 
                     <TextView
                         android:id="@+id/tv_turno"
@@ -201,7 +202,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorBGDivider"
-                android:layout_marginTop="@dimen/field_margin"
+                android:layout_marginTop="12dp"
                 android:layout_marginStart="@dimen/field_margin"
                 android:paddingStart="6dp"
                 android:paddingTop="2dp"
@@ -307,7 +308,8 @@
                 android:id="@+id/visita_outro_profissional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
                 android:layout_marginStart="@dimen/field_margin_start"
                 android:text="Visita compartilhada com outro profissional" />
 
