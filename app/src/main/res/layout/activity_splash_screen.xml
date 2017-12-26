@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="SM"
+                android:typeface="normal"
+                android:textStyle="bold"
+                android:textColor="@color/colorSMPEPLogoBlue"
+                android:textSize="30dp"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="PEP"
+                android:textStyle="bold"
+                android:textColor="@color/colorSMPEPLogoWhite"
+                android:textSize="30dp"
+                android:layout_centerInParent="true" />
+
+        </LinearLayout>
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="mobile"
+        android:textStyle="bold"
+        android:textColor="@color/colorSMPEPLogoWhite"
+        android:textSize="16dp"
+        android:layout_centerInParent="true" />
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
