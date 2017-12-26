@@ -21,23 +21,20 @@
     <string name="prompt_profissional">Nome do Profissional</string>
     <string name="title_activity_settings">Settings</string>
 
-
-    <string-array name="profissionais">
-        <item>Rodrigo Costa dos Santos - 856425</item>
-        <item>Roque Souza dos Santos - 856425</item>
-        <item>Patrícia Duarte Costa - 674257</item>
-        <item>Natália Costa dos Santos - 345264</item>
-    </string-array>
-
-    <string-array name="hospitais">
-        <item>Eládio Lasserre - 233152</item>
-        <item>Couto Maia - 453268</item>
-    </string-array>
-
     <string-array name="tipoImovel">
-        <item>Domicílio (01)</item>
-        <item>Comércio (02)</item>
-        <item>Terreno baldio (03)</item>
+        <item>01: Domicílio</item>
+        <item>02: Comércio</item>
+        <item>03: Terreno baldio</item>
+        <item>04: Ponto estratégico</item>
+        <item>05: Escola</item>
+        <item>06: Creche</item>
+        <item>07: Abrigo</item>
+        <item>08: Instituição de longa permanência p/ idosos</item>
+        <item>09: Unidade prisional</item>
+        <item>10: Unidade de medida socioeducativa</item>
+        <item>11: Delegacia</item>
+        <item>12: Estabelecimento religioso</item>
+        <item>99: Outros</item>
     </string-array>
 
 

@@ -43,10 +43,8 @@ public class ProfissionalBS {
         return profissionalDAO.pesquisar();
     }
 
-    public List<ProfissionalModel> pesquisarAtivo() {
+    public List<ProfissionalModel> pesquisarAtivos() {
         return profissionalDAO.pesquisarAtivos();
     }
-
-
 
 }

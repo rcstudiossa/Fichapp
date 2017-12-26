@@ -21,18 +21,24 @@ import com.fichapp.Model.FichaVisitaDTModel;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.Model.TipoImovelModel;
 import com.fichapp.R;
+import com.fichapp.business.CNESBS;
 import com.fichapp.business.FichaVisitaDTBS;
+import com.fichapp.business.ProfissionalBS;
 import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private FichaVisitaDTModel fichaVisitaDTModel;
     private FichaVisitaDTBS fichaVisitaDTBS;
+
+    List<ProfissionalModel> profissionais;
+    List<CNESModel> hospitais;
 
     private Spinner spinnerProfissional;
     private Spinner spinnerHospital;
@@ -232,20 +238,9 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         btnGravar = (Button) findViewById(R.id.btn_gravar);
 
-
-        ArrayAdapter adapterProfissional = ArrayAdapter.createFromResource(this, R.array.profissionais, android.R.layout.simple_spinner_item);
-        spinnerProfissional.setAdapter(adapterProfissional);
-        spinnerProfissional.setSelection(adapterProfissional.getPosition(1));
-
-        ArrayAdapter adapterHospital = ArrayAdapter.createFromResource(this, R.array.hospitais, android.R.layout.simple_spinner_item);
-        spinnerHospital.setAdapter(adapterHospital);
-        spinnerHospital.setSelection(adapterHospital.getPosition(1));
-
-        ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipoImovel, android.R.layout.simple_spinner_item);
-        spinnerTipoImovel.setAdapter(adapterTipoImovel);
-        spinnerTipoImovel.setSelection(adapterTipoImovel.getPosition(1));
-
         this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
+
+        carregarCombos();
 
         this.instanciarFichaVisitaDTModel();
 
@@ -255,6 +250,23 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
                 gravar();
             }
         });
+
+    }
+
+    private void carregarCombos() {
+
+        ProfissionalBS profissionalBS = new ProfissionalBS(this);
+        this.profissionais = profissionalBS.pesquisarAtivos();
+        ArrayAdapter<ProfissionalModel> adapterProfissional = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.profissionais);
+        spinnerProfissional.setAdapter(adapterProfissional);
+
+        CNESBS cnesBS = new CNESBS(this);
+        this.hospitais = cnesBS.pesquisarAtivos();
+        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, this.hospitais);
+        spinnerHospital.setAdapter(adapterHospital);
+
+        ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipoImovel, android.R.layout.simple_spinner_item);
+        spinnerTipoImovel.setAdapter(adapterTipoImovel);
 
     }
 
@@ -320,7 +332,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private void setModelToActivity() {
 
-
+        spinnerProfissional.setSelection(this.profissionais.indexOf(this.fichaVisitaDTModel.getProfissionalModel()));
         etINE.setText(this.fichaVisitaDTModel.getIne());
         etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
         rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno().equals("M"));
@@ -387,8 +399,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private void setActivityToModel() {
 
-        this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel());
-        this.fichaVisitaDTModel.setCnesModel(new CNESModel());
+        this.fichaVisitaDTModel.setProfissionalModel((ProfissionalModel) spinnerProfissional.getSelectedItem());
+        this.fichaVisitaDTModel.setCnesModel((CNESModel) spinnerHospital.getSelectedItem());
         this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
 
         this.fichaVisitaDTModel.setIne(etINE.getText().toString());

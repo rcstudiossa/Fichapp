@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fichapp.Activity.MainActivity;
 import com.fichapp.Adapter.CNESAdapter;
 import com.fichapp.Model.CNESModel;
 import com.fichapp.R;
@@ -39,7 +38,7 @@ public class CNESFragment extends Fragment {
 
         cnesBS = new CNESBS(getActivity());
 
-        mList = cnesBS.pesquisarAtivo();
+        mList = cnesBS.pesquisarAtivos();
         CNESAdapter adapter = new CNESAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
 

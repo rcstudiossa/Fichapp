@@ -52,12 +52,10 @@ public class ProfissionalDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM profissional order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
-            while (c.moveToNext()) {
+        if (c.moveToFirst()) {
+            do {
                 profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
-            }
+            } while (c.moveToNext());
         }
 
         return profissionalList;
@@ -70,17 +68,14 @@ public class ProfissionalDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM profissional where flag_ativo = 1 order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
-            while (c.moveToNext()) {
+        if (c.moveToFirst()) {
+            do {
                 profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
-            }
+            } while (c.moveToNext());
         }
 
         return profissionalList;
 
     }
-
 
 }

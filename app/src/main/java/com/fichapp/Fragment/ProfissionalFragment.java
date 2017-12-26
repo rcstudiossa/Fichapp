@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fichapp.Activity.MainActivity;
 import com.fichapp.Adapter.ProfissionalAdapter;
 import com.fichapp.Model.ProfissionalModel;
 import com.fichapp.R;
@@ -40,7 +39,7 @@ public class ProfissionalFragment extends Fragment {
 
         profissionalBS = new ProfissionalBS(getActivity());
 
-        mList = profissionalBS.pesquisarAtivo();
+        mList = profissionalBS.pesquisarAtivos();
         ProfissionalAdapter adapter = new ProfissionalAdapter(getActivity(), mList);
         mRecyclerView.setAdapter( adapter );
 

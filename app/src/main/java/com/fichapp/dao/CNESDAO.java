@@ -52,12 +52,10 @@ public class CNESDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM cnes order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            cnesList.add(new CNESModel(c.getLong(0), c.getString(1), c.getString(2), c.getInt(3) > 0));
-            while (c.moveToNext()) {
+        if (c.moveToFirst()) {
+            do {
                 cnesList.add(new CNESModel(c.getLong(0), c.getString(1), c.getString(2), c.getInt(3) > 0));
-            }
+            } while (c.moveToNext());
         }
 
         return cnesList;
@@ -70,17 +68,14 @@ public class CNESDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM cnes where flag_ativo = 1 order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            cnesList.add(new CNESModel(c.getLong(0), c.getString(1), c.getString(2), c.getInt(3) > 0));
-            while (c.moveToNext()) {
+        if (c.moveToFirst()) {
+            do {
                 cnesList.add(new CNESModel(c.getLong(0), c.getString(1), c.getString(2), c.getInt(3) > 0));
-            }
+            } while (c.moveToNext());
         }
 
         return cnesList;
 
     }
-
 
 }

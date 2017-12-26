@@ -43,10 +43,8 @@ public class CNESBS {
         return cnesDAO.pesquisar();
     }
 
-    public List<CNESModel> pesquisarAtivo() {
+    public List<CNESModel> pesquisarAtivos() {
         return cnesDAO.pesquisarAtivos();
     }
-
-
 
 }

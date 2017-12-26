@@ -176,13 +176,10 @@ public class FichaVisitaDTDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            fichas.add(getFichaVisitaDTModelInstance(c));
-
-            while (c.moveToNext()) {
-                fichas.add(getFichaVisitaDTModelInstance(c));
-            }
+        if (c.moveToFirst()) {
+            do {
+                fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
+            } while (c.moveToNext());
         }
 
         return fichas;
@@ -195,13 +192,10 @@ public class FichaVisitaDTDAO {
 
         Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_visita_domiciliar_territorial where flag_ativo = 1 order by id;", null);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
-
-            while (c.moveToNext()) {
+        if (c.moveToFirst()) {
+            do {
                 fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
-            }
+            } while (c.moveToNext());
         }
 
         return fichas;
@@ -215,8 +209,7 @@ public class FichaVisitaDTDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial where id = ?;", args);
 
-        if (c.getCount() > 0) {
-            c.moveToFirst();
+        if (c.moveToFirst()) {
             return getFichaVisitaDTModelInstance(c);
         }
 

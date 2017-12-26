@@ -59,4 +59,9 @@ public class CNESModel implements Serializable {
         return this.flagAtivo ? "Ativo" : "Inativo";
 
     }
+
+    @Override
+    public String toString() {
+        return codigo + ": " + nome;
+    }
 }
