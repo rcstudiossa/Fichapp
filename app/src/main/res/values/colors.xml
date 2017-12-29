@@ -8,5 +8,6 @@
 
     <color name="colorSMPEPLogoBlue">#68d3ff</color>
     <color name="colorSMPEPLogoWhite">#def4ff</color>
+    <color name="colorSMPEPLogoBG">#098dce</color>
 
 </resources>

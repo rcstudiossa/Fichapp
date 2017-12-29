@@ -1,4 +1,4 @@
-package com.fichapp.Activity;
+package com.fichapp.activity;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
-import com.fichapp.Model.CNESModel;
+import com.fichapp.model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.util.Utilitario;

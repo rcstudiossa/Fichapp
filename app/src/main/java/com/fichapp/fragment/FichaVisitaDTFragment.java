@@ -1,4 +1,5 @@
-package com.fichapp.Fragment;
+package com.fichapp.fragment;
+
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,40 +10,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fichapp.Adapter.CNESAdapter;
-import com.fichapp.Model.CNESModel;
+import com.fichapp.adapter.FichaVisitaDTAdapter;
+import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
-import com.fichapp.business.CNESBS;
+import com.fichapp.business.FichaVisitaDTBS;
 
 import java.util.List;
 
-public class CNESFragment extends Fragment {
+public class FichaVisitaDTFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private List<CNESModel> mList;
-    private CNESBS cnesBS;
+    private List<FichaVisitaDTModel> mList;
+    private FichaVisitaDTBS fichaVisitaDTBS;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cnes, container, false);
+        View view = inflater.inflate(R.layout.fragment_ficha_visita_dt, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_cnes);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_dt);
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
 
-        cnesBS = new CNESBS(getActivity());
+        fichaVisitaDTBS = new FichaVisitaDTBS(getActivity());
 
-        mList = cnesBS.pesquisarAtivos();
-        CNESAdapter adapter = new CNESAdapter(getActivity(), mList);
-        mRecyclerView.setAdapter(adapter);
+        mList = fichaVisitaDTBS.pesquisarAtivo();
+        
+        FichaVisitaDTAdapter adapter = new FichaVisitaDTAdapter(getActivity(), mList);
+        mRecyclerView.setAdapter( adapter );
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
 
         return view;
     }

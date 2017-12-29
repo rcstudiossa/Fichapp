@@ -3,11 +3,10 @@ package com.fichapp.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fichapp.Model.CNESModel;
-import com.fichapp.Model.DesfechoModel;
-import com.fichapp.Model.FichaVisitaDTModel;
-import com.fichapp.Model.ProfissionalModel;
-import com.fichapp.Model.TipoImovelModel;
+import com.fichapp.model.CNESModel;
+import com.fichapp.model.FichaVisitaDTModel;
+import com.fichapp.model.ProfissionalModel;
+import com.fichapp.model.TipoImovelModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -182,6 +181,8 @@ public class FichaVisitaDTDAO {
             } while (c.moveToNext());
         }
 
+        c.close();
+
         return fichas;
 
     }
@@ -198,6 +199,8 @@ public class FichaVisitaDTDAO {
             } while (c.moveToNext());
         }
 
+        c.close();
+
         return fichas;
 
     }
@@ -212,6 +215,7 @@ public class FichaVisitaDTDAO {
         if (c.moveToFirst()) {
             return getFichaVisitaDTModelInstance(c);
         }
+        c.close();
 
         return null;
 

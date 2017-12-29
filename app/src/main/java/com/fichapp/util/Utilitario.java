@@ -13,6 +13,10 @@ public final class Utilitario {
         return (s == null || s.trim().length() == 0);
     }
 
+    public static boolean isEmpty(Object object) {
+        return (object == null);
+    }
+
     public static boolean isCNSValido(String s) {
         if (s.matches("[1-2]\\d{10}00[0-1]\\d") || s.matches("[7-9]\\d{14}")) {
             return somaPonderada(s) % 11 == 0;

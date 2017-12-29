@@ -1,4 +1,6 @@
-package com.fichapp.Model;
+package com.fichapp.model;
+
+import com.fichapp.util.Utilitario;
 
 import java.io.Serializable;
 
@@ -14,6 +16,10 @@ public class CNESModel implements Serializable {
     private Boolean flagAtivo;
 
     public CNESModel(){}
+
+    public CNESModel(String nome) {
+        this.nome = nome;
+    }
 
     public CNESModel(Long id){
         this.id = id;
@@ -62,6 +68,15 @@ public class CNESModel implements Serializable {
 
     @Override
     public String toString() {
-        return codigo + ": " + nome;
+
+        StringBuilder sb = new StringBuilder();
+
+        if (!Utilitario.isEmpty(this.codigo)) {
+            sb.append(codigo).append(": ");
+        }
+
+        sb.append(this.nome);
+
+        return sb.toString();
     }
 }

@@ -1,4 +1,4 @@
-package com.fichapp.Fragment;
+package com.fichapp.fragment;
 
 
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fichapp.Adapter.ProfissionalAdapter;
-import com.fichapp.Model.ProfissionalModel;
+import com.fichapp.adapter.ProfissionalAdapter;
+import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
 

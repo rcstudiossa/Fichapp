@@ -1,10 +1,8 @@
-package com.fichapp.Activity;
+package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,10 +14,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
-import com.fichapp.Model.CNESModel;
-import com.fichapp.Model.FichaVisitaDTModel;
-import com.fichapp.Model.ProfissionalModel;
-import com.fichapp.Model.TipoImovelModel;
+import com.fichapp.model.CNESModel;
+import com.fichapp.model.FichaVisitaDTModel;
+import com.fichapp.model.ProfissionalModel;
+import com.fichapp.model.TipoImovelModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.business.FichaVisitaDTBS;

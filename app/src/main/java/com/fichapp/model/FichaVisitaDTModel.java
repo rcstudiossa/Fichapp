@@ -1,4 +1,4 @@
-package com.fichapp.Model;
+package com.fichapp.model;
 
 import java.io.Serializable;
 import java.util.Date;

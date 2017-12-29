@@ -3,7 +3,7 @@ package com.fichapp.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fichapp.Model.CNESModel;
+import com.fichapp.model.CNESModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +58,8 @@ public class CNESDAO {
             } while (c.moveToNext());
         }
 
+        c.close();
+
         return cnesList;
 
     }
@@ -73,6 +75,8 @@ public class CNESDAO {
                 cnesList.add(new CNESModel(c.getLong(0), c.getString(1), c.getString(2), c.getInt(3) > 0));
             } while (c.moveToNext());
         }
+
+        c.close();
 
         return cnesList;
 

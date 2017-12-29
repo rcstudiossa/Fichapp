@@ -2,7 +2,7 @@ package com.fichapp.business;
 
 import android.content.Context;
 
-import com.fichapp.Model.CNESModel;
+import com.fichapp.model.CNESModel;
 import com.fichapp.dao.CNESDAO;
 import com.fichapp.dao.SMPEPDbHelper;
 

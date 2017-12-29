@@ -19,13 +19,12 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="SMPEP Mobi"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".Activity.SplashScreenActivity"
+            android:name=".activity.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +32,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.CNESActivity" />
+        <activity android:name=".activity.CNESActivity" />
 
-        <activity android:name=".Activity.ProfissionalActivity" />
+        <activity android:name=".activity.ProfissionalActivity" />
 
-        <activity android:name=".Activity.FichaVisitaDTActivity" />
+        <activity android:name=".activity.FichaVisitaDTActivity" />
+
+        <activity android:name=".AlterarSenhaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+
+
     </application>
+
 
 </manifest>

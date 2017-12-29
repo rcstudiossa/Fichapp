@@ -1,4 +1,4 @@
-package com.fichapp.Activity;
+package com.fichapp.activity;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -9,7 +9,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import com.fichapp.Model.ProfissionalModel;
+import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
 import com.fichapp.util.Utilitario;

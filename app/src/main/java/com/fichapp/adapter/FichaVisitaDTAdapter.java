@@ -1,4 +1,4 @@
-package com.fichapp.Adapter;
+package com.fichapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.fichapp.Activity.FichaVisitaDTActivity;
-import com.fichapp.Model.FichaVisitaDTModel;
+import com.fichapp.activity.FichaVisitaDTActivity;
+import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 /**
  * Created by Rodrigo Costa on 21/12/2017.

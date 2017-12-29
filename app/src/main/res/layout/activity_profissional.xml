@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_activity"
-    tools:context="com.fichapp.Activity.ProfissionalActivity">
+    tools:context="com.fichapp.activity.ProfissionalActivity">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

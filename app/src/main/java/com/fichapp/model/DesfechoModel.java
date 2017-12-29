@@ -1,4 +1,4 @@
-package com.fichapp.Model;
+package com.fichapp.model;
 
 /**
  * Created by Rodrigo Costa on 24/12/2017.

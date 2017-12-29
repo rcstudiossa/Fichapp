@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/padding_activity"
-    tools:context="com.fichapp.Activity.CNESActivity">
+    tools:context="com.fichapp.activity.CNESActivity">
 
     <!-- TODO: Colocar TextViews dentro de um TextInputLayout -->
 

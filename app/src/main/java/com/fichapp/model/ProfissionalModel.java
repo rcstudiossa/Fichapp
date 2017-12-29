@@ -1,4 +1,4 @@
-package com.fichapp.Model;
+package com.fichapp.model;
 
 import java.io.Serializable;
 
@@ -12,7 +12,11 @@ public class ProfissionalModel implements Serializable{
     private String cbo;
     private String cns;
     private String nome;
+    private CNESModel cnesModel;
+    private String usuario;
+    private String senha;
     private Boolean flagAtivo;
+    private Boolean flagAdministrador;
 
     public ProfissionalModel() {}
 
@@ -26,6 +30,11 @@ public class ProfissionalModel implements Serializable{
         this.cns = cns;
         this.nome = nome;
         this.flagAtivo = flagAtivo;
+    }
+
+    public ProfissionalModel(String usuario, String senha) {
+        this.usuario = usuario;
+        this.senha = senha;
     }
 
     public Long getId() {
@@ -68,6 +77,38 @@ public class ProfissionalModel implements Serializable{
         this.cns = cns;
     }
 
+    public CNESModel getCnesModel() {
+        return cnesModel;
+    }
+
+    public void setCnesModel(CNESModel cnesModel) {
+        this.cnesModel = cnesModel;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Boolean getFlagAdministrador() {
+        return flagAdministrador;
+    }
+
+    public void setFlagAdministrador(Boolean flagAdministrador) {
+        this.flagAdministrador = flagAdministrador;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +120,8 @@ public class ProfissionalModel implements Serializable{
         if (cbo != null ? !cbo.equals(that.cbo) : that.cbo != null) return false;
         if (cns != null ? !cns.equals(that.cns) : that.cns != null) return false;
         if (nome != null ? !nome.equals(that.nome) : that.nome != null) return false;
+        if (cnesModel != null ? !cnesModel.equals(that.cnesModel) : that.cnesModel != null)
+            return false;
         return flagAtivo != null ? flagAtivo.equals(that.flagAtivo) : that.flagAtivo == null;
 
     }
@@ -89,6 +132,7 @@ public class ProfissionalModel implements Serializable{
         result = 31 * result + (cbo != null ? cbo.hashCode() : 0);
         result = 31 * result + (cns != null ? cns.hashCode() : 0);
         result = 31 * result + (nome != null ? nome.hashCode() : 0);
+        result = 31 * result + (cnesModel != null ? cnesModel.hashCode() : 0);
         result = 31 * result + (flagAtivo != null ? flagAtivo.hashCode() : 0);
         return result;
     }

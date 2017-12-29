@@ -1,4 +1,4 @@
-package com.fichapp.Adapter;
+package com.fichapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.fichapp.Activity.CNESActivity;
-import com.fichapp.Model.CNESModel;
+import com.fichapp.activity.CNESActivity;
+import com.fichapp.model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 

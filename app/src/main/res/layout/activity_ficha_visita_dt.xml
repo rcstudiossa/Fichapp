@@ -18,7 +18,7 @@
             android:paddingStart="8dp"
             android:paddingBottom="12dp"
             android:paddingTop="8dp"
-            tools:context="com.fichapp.Activity.FichaVisitaDTActivity">
+            tools:context="com.fichapp.activity.FichaVisitaDTActivity">
 
             <TextView
                 android:id="@+id/tv_cabecalho"

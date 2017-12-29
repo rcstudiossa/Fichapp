@@ -3,7 +3,9 @@ package com.fichapp.dao;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.fichapp.Model.ProfissionalModel;
+import com.fichapp.model.CNESModel;
+import com.fichapp.model.ProfissionalModel;
+import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,45 @@ public class ProfissionalDAO {
 
     }
 
+    public ProfissionalModel obterProfissionalLogado(ProfissionalModel profissionalModel, CNESModel cnesModel) {
+
+        List<String> args = new ArrayList<>();
+
+        args.add(profissionalModel.getUsuario());
+        args.add(profissionalModel.getSenha());
+
+        StringBuilder sb = new StringBuilder("SELECT * FROM profissional p WHERE flag_ativo = 1 and usuario = ? and senha = ?");
+
+        if (!Utilitario.isEmpty(cnesModel.getId())) {
+            args.add(cnesModel.getId().toString());
+            sb.append(" AND EXISTS (SELECT 1 FROM profissional_cnes pc where flag_ativo = 1 and pc.profissional_id = p.id and pc.cnes_id = ?)");
+        } else {
+            sb.append(" AND FLAG_ADMINISTRADOR = 1");
+        }
+
+        String[] strings = new String[args.size()];
+        strings = (String[]) args.toArray(strings);
+
+        Cursor c = db.rawQuery(sb.toString(), strings);
+
+        ProfissionalModel model = new ProfissionalModel();
+
+        if (c.moveToFirst()) {
+
+            model.setId(c.getLong(c.getColumnIndex("id")));
+            model.setNome(c.getString(c.getColumnIndex("nome")));
+            model.setCbo(c.getString(c.getColumnIndex("cbo")));
+            model.setCnesModel(new CNESModel(cnesModel.getId(), cnesModel.getCodigo(), cnesModel.getNome(), cnesModel.getFlagAtivo()));
+            model.setFlagAdministrador(c.getInt(c.getColumnIndex("flag_administrador")) > 0);
+
+        }
+
+        c.close();
+
+        return model;
+
+    }
+
     public List<ProfissionalModel> pesquisar() {
 
         List<ProfissionalModel> profissionalList = new ArrayList<>();
@@ -57,6 +98,8 @@ public class ProfissionalDAO {
                 profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
             } while (c.moveToNext());
         }
+
+        c.close();
 
         return profissionalList;
 
@@ -73,6 +116,8 @@ public class ProfissionalDAO {
                 profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
             } while (c.moveToNext());
         }
+
+        c.close();
 
         return profissionalList;
 

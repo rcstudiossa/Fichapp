@@ -2,7 +2,7 @@ package com.fichapp.business;
 
 import android.content.Context;
 
-import com.fichapp.Model.FichaVisitaDTModel;
+import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.dao.FichaVisitaDTDAO;
 import com.fichapp.dao.SMPEPDbHelper;
 
