@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fichapp.AlterarSenhaActivity;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.business.ProfissionalBS;

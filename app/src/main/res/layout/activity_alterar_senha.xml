@@ -79,7 +79,8 @@
             android:drawablePadding="6dp"
             android:background="@drawable/edit_text_layout"
             android:hint="Senha atual"
-            android:inputType="textEmailAddress"
+            android:fontFamily=""
+            android:inputType="textPassword"
             android:padding="4dp" />
 
 

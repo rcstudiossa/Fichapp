@@ -38,7 +38,7 @@
 
         <activity android:name=".activity.FichaVisitaDTActivity" />
 
-        <activity android:name=".AlterarSenhaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.AlterarSenhaActivity" android:theme="@style/AppTheme.NoActionBar"/>
 
 
     </application>

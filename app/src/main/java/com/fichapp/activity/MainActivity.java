@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.fichapp.fragment.CNESFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String barTitleCNES;
     private String barTitleProfissionais;
     private String barTitleFichaVisitaDT;
+    private TextView nomeTV;
+    private TextView cboTV;
+    private TextView hospitalTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
         this.barTitleFichaVisitaDT = new String("Fichas de Visita");
+
+        this.nomeTV = (TextView) findViewById(R.id.tv_nome_bar);
+        this.cboTV = (TextView) findViewById(R.id.tv_cbo_bar);
+        this.hospitalTV = (TextView) findViewById(R.id.tv_hospital_bar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
