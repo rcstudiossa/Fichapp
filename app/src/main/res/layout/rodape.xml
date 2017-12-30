@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/lin_layout_info"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tv_nome_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".50"
+        android:padding="2dp"
+        android:text="Rodrigo Costa"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:background="@drawable/container_bar_layout" />
+
+    <TextView
+        android:id="@+id/tv_cbo_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".30"
+        android:padding="2dp"
+        android:text="CBO: 2206-04"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:background="@drawable/container_bar_layout" />
+
+    <TextView
+        android:id="@+id/tv_hospital_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".20"
+        android:padding="2dp"
+        android:text="HRSAJ"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:background="@drawable/container_bar_layout" />
+
+</LinearLayout>

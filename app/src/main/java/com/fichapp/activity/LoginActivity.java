@@ -69,8 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         CNESBS cnesBS = new CNESBS(this);
         List<CNESModel> hospitais = cnesBS.pesquisarAtivos();
         hospitais.add(0, new CNESModel("Selecione o CNES"));
-        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, hospitais);
+        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
         spinnerHospital.setAdapter(adapterHospital);
+        adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
     }
 

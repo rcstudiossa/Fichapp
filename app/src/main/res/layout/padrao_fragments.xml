@@ -31,8 +31,14 @@
         <FrameLayout
             android:id="@+id/conteudo_activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".95"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <include
+            layout="@layout/rodape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -47,53 +53,7 @@
         android:layout_alignBottom="@id/bottom_bar"
         android:layout_alignEnd="@id/bottom_bar"/>
 
-    <LinearLayout
-        android:id="@+id/lin_layout_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:gravity="center_horizontal"
-        android:layout_alignBottom="@id/bottom_bar">
 
-        <TextView
-            android:id="@+id/tv_nome_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rodrigo Costa"
-            android:textColor="@color/colorSMPEPLogoWhite"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginStart="6dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/tv_cbo_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CBO: 2206-04"
-            android:textColor="@color/colorSMPEPLogoWhite"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginStart="6dp"
-            android:background="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/tv_hospital_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="HRSAJ"
-            android:textColor="@color/colorSMPEPLogoWhite"
-            android:textSize="16sp" />
-
-    </LinearLayout>
 
 </RelativeLayout>
 

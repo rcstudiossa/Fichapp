@@ -21,24 +21,27 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="SMPEP Mobi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
 
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.CNESActivity" />
+        <activity android:name=".activity.CNESActivity" android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".activity.ProfissionalActivity" />
+        <activity android:name=".activity.ProfissionalActivity" android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".activity.FichaVisitaDTActivity" />
+        <activity android:name=".activity.FichaVisitaDTActivity" android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".activity.AlterarSenhaActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.AlterarSenhaActivity" android:theme="@style/AppTheme.NoActionBar" android:windowSoftInputMode="adjustResize"/>
 
 
     </application>
