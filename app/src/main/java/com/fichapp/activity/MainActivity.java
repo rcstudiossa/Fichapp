@@ -21,28 +21,23 @@ import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
 import com.fichapp.model.ProfissionalModel;
+import com.fichapp.util.Utilitario;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends TemplateActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String barTitleCNES;
     private String barTitleProfissionais;
     private String barTitleFichaVisitaDT;
-    private TextView nomeTV;
-    private TextView cboTV;
-    private TextView hospitalTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
         this.barTitleFichaVisitaDT = new String("Fichas de Visita");
-
-        this.nomeTV = (TextView) findViewById(R.id.tv_nome_bar);
-        this.cboTV = (TextView) findViewById(R.id.tv_cbo_bar);
-        this.hospitalTV = (TextView) findViewById(R.id.tv_hospital_bar);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setContent(new CNESFragment());
             getSupportActionBar().setTitle(this.barTitleCNES);
         }
+
+        this.atualizarRodape();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

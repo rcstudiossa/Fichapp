@@ -22,6 +22,9 @@ public class ProfissionalActivity extends AppCompatActivity {
     private AutoCompleteTextView mCbo;
     private AutoCompleteTextView mCns;
     private AutoCompleteTextView mNome;
+    private AutoCompleteTextView mUsuario;
+    private AutoCompleteTextView mSenha;
+    private AutoCompleteTextView mConfirmarSenha;
     private CheckBox mFlagAtivo;
 
     @Override
@@ -36,6 +39,9 @@ public class ProfissionalActivity extends AppCompatActivity {
         mCbo = (AutoCompleteTextView) findViewById(R.id.cbo);
         mCns = (AutoCompleteTextView) findViewById(R.id.tvCNS);
         mNome = (AutoCompleteTextView) findViewById(R.id.tv_nome);
+        mUsuario = (AutoCompleteTextView) findViewById(R.id.usuario);
+        mSenha = (AutoCompleteTextView) findViewById(R.id.senha);
+        mConfirmarSenha = (AutoCompleteTextView) findViewById(R.id.confirmarSenha);
         mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
 
         this.profissionalBS = new ProfissionalBS(getApplicationContext());
@@ -91,6 +97,19 @@ public class ProfissionalActivity extends AppCompatActivity {
             valido = false;
         }
 
+        if (Utilitario.isEmpty(mUsuario.getText().toString())) {
+            aviso = Utilitario.addAviso("O usuário está vazio", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(mSenha.getText().toString())) {
+            aviso = Utilitario.addAviso("A senha está vazia", aviso);
+            valido = false;
+        } else if (!mSenha.getText().toString().equals(mConfirmarSenha.getText().toString())){
+            aviso = Utilitario.addAviso("As senhas não conferem", aviso);
+            valido = false;
+        }
+
         if (!valido) {
             Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
         }
@@ -107,6 +126,8 @@ public class ProfissionalActivity extends AppCompatActivity {
         this.profissionalModel.setCbo(mCbo.getText().toString());
         this.profissionalModel.setCns(mCns.getText().toString());
         this.profissionalModel.setNome(mNome.getText().toString());
+        this.profissionalModel.setUsuario(mUsuario.getText().toString());
+        this.profissionalModel.setSenha(mSenha.getText().toString());
         this.profissionalModel.setFlagAtivo(mFlagAtivo.isChecked());
 
         profissionalBS.gravar(this.profissionalModel);

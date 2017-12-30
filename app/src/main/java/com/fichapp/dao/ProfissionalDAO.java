@@ -91,7 +91,7 @@ public class ProfissionalDAO {
 
         List<ProfissionalModel> profissionalList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM profissional order by id;", null);
+        Cursor c = db.rawQuery("SELECT * FROM profissional id > 1 and order by id;", null);
 
         if (c.moveToFirst()) {
             do {
@@ -109,7 +109,7 @@ public class ProfissionalDAO {
 
         List<ProfissionalModel> profissionalList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT * FROM profissional where flag_ativo = 1 order by id;", null);
+        Cursor c = db.rawQuery("SELECT * FROM profissional where id > 1 and flag_ativo = 1 order by id;", null);
 
         if (c.moveToFirst()) {
             do {
