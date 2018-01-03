@@ -48,8 +48,12 @@ public class FichaVisitaDTBS {
         return fichaVisitaDTDAO.pesquisar();
     }
 
-    public List<FichaVisitaDTModel> pesquisarAtivo() {
+    public List<FichaVisitaDTModel> pesquisarAtivos() {
         return fichaVisitaDTDAO.pesquisarAtivos();
+    }
+
+    public List<FichaVisitaDTModel> pesquisarAtivos(String query) {
+        return fichaVisitaDTDAO.pesquisarAtivos(query);
     }
 
 

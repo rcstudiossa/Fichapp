@@ -14,14 +14,16 @@ import com.fichapp.adapter.ProfissionalAdapter;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
-public class ProfissionalFragment extends Fragment {
+public class ProfissionalFragment extends TemplateFragment {
 
     private RecyclerView mRecyclerView;
     private List<ProfissionalModel> mList;
     private ProfissionalBS profissionalBS;
+    private ProfissionalAdapter adapter;
 
 
     @Override
@@ -40,13 +42,27 @@ public class ProfissionalFragment extends Fragment {
         profissionalBS = new ProfissionalBS(getActivity());
 
         mList = profissionalBS.pesquisarAtivos();
-        ProfissionalAdapter adapter = new ProfissionalAdapter(getActivity(), mList);
+        adapter = new ProfissionalAdapter(getActivity(), mList);
         mRecyclerView.setAdapter( adapter );
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
+        this.instanciarPesquisa();
 
         return view;
+    }
+
+    protected void pesquisarAtivos(String query) {
+
+        if (Utilitario.isEmpty(query)) {
+            mList = profissionalBS.pesquisarAtivos();
+        } else {
+            mList = profissionalBS.pesquisarAtivos(query);
+        }
+
+        adapter.setList(mList);
+        adapter.notifyDataSetChanged();
+
     }
 
 }

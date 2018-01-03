@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder> {
+
     private List<CNESModel> mList;
     private LayoutInflater mLayoutInflater;
 
@@ -101,6 +102,14 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
         }
 
 
+    }
+
+    public List<CNESModel> getList() {
+        return mList;
+    }
+
+    public void setList(List<CNESModel> mList) {
+        this.mList = mList;
     }
 }
 

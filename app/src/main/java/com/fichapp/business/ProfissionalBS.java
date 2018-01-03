@@ -48,6 +48,10 @@ public class ProfissionalBS {
         return this.profissionalDAO.pesquisarAtivos();
     }
 
+    public List<ProfissionalModel> pesquisarAtivos(String query) {
+        return this.profissionalDAO.pesquisarAtivos(query);
+    }
+
     public ProfissionalModel obterProfissionalLogado(ProfissionalModel profissionalModel, CNESModel cnesModel) {
         return this.profissionalDAO.obterProfissionalLogado(profissionalModel, cnesModel);
     }

@@ -47,4 +47,8 @@ public class CNESBS {
         return cnesDAO.pesquisarAtivos();
     }
 
+    public List<CNESModel> pesquisarAtivos(String query) {
+        return cnesDAO.pesquisarAtivos(query);
+    }
+
 }

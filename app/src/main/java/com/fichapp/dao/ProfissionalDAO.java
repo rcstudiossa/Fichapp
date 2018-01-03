@@ -123,4 +123,26 @@ public class ProfissionalDAO {
 
     }
 
+    public List<ProfissionalModel> pesquisarAtivos(String query) {
+
+        List<ProfissionalModel> profissionalList = new ArrayList<>();
+
+        String s = "%" + query.toUpperCase() + "%";
+
+        String[] args = {s,s,s};
+
+        Cursor c = db.rawQuery("SELECT * FROM profissional where id > 1 and flag_ativo = 1 and (upper(nome) like ? or cns like ? or cbo like ?) order by id;", args);
+
+        if (c.moveToFirst()) {
+            do {
+                profissionalList.add(new ProfissionalModel(c.getLong(0), c.getString(1), c.getString(2), c.getString(3), c.getInt(4) > 0));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return profissionalList;
+
+    }
+
 }

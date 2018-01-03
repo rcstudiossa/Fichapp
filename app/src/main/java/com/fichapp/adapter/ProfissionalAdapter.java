@@ -108,4 +108,12 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
         }
 
     }
+
+    public List<ProfissionalModel> getList() {
+        return mList;
+    }
+
+    public void setList(List<ProfissionalModel> mList) {
+        this.mList = mList;
+    }
 }

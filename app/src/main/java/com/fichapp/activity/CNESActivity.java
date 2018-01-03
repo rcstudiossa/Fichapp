@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,6 +22,7 @@ public class CNESActivity extends AppCompatActivity {
     private AutoCompleteTextView mCodigo;
     private AutoCompleteTextView mNome;
     private CheckBox mFlagAtivo;
+
 
     public CNESActivity() {}
 

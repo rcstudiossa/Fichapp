@@ -116,4 +116,12 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
 
     }
+
+    public List<FichaVisitaDTModel> getList() {
+        return mList;
+    }
+
+    public void setList(List<FichaVisitaDTModel> mList) {
+        this.mList = mList;
+    }
 }

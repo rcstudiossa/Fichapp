@@ -5,31 +5,36 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.fichapp.adapter.CNESAdapter;
 import com.fichapp.model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
-public class CNESFragment extends Fragment {
+public class CNESFragment extends TemplateFragment {
 
     private RecyclerView mRecyclerView;
     private List<CNESModel> mList;
     private CNESBS cnesBS;
+    private CNESAdapter adapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_cnes, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_cnes);
+        mRecyclerView = view.findViewById(R.id.rv_cnes);
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -39,12 +44,27 @@ public class CNESFragment extends Fragment {
         cnesBS = new CNESBS(getActivity());
 
         mList = cnesBS.pesquisarAtivos();
-        CNESAdapter adapter = new CNESAdapter(getActivity(), mList);
+        adapter = new CNESAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
+        this.instanciarPesquisa();
+
         return view;
+    }
+
+    protected void pesquisarAtivos(String query) {
+
+        if (Utilitario.isEmpty(query)) {
+            mList = cnesBS.pesquisarAtivos();
+        } else {
+            mList = cnesBS.pesquisarAtivos(query);
+        }
+
+        adapter.setList(mList);
+        adapter.notifyDataSetChanged();
+
     }
 
 }
