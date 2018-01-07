@@ -1,18 +1,23 @@
 package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
+import android.app.Service;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
@@ -24,6 +29,7 @@ import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.business.ProfissionalBS;
 import com.fichapp.util.Utilitario;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,8 +41,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
     private FichaVisitaDTModel fichaVisitaDTModel;
     private FichaVisitaDTBS fichaVisitaDTBS;
 
-    List<ProfissionalModel> profissionais;
-    List<CNESModel> hospitais;
+    private List<ProfissionalModel> profissionais;
+    private List<CNESModel> hospitais;
 
     private Spinner spinnerProfissional;
     private Spinner spinnerHospital;
@@ -105,6 +111,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private Button btnGravar;
 
+    private LinearLayout rodape;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,8 +165,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         etNascimento = (EditText) findViewById(R.id.et_data_nascimento);
 
-        //TODO: Colocar para salvar data do DatePicker no EditText
-
         final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -175,7 +181,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento, nascimentoCalendar
                         .get(Calendar.YEAR), nascimentoCalendar.get(Calendar.MONTH),
                         nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -235,6 +240,10 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         rbAusente = (RadioButton) findViewById(R.id.rb_ausente);
 
         btnGravar = (Button) findViewById(R.id.btn_gravar);
+
+        rodape = (LinearLayout) findViewById(R.id.include_rodape);
+
+        rodape.setVisibility(View.GONE);
 
         this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
 
@@ -299,6 +308,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         intent.putExtra("fragment", "FichaVisitaDTFragment");
         startActivity(intent);
 
+        finish();
+
     }
 
     private boolean validaCampos() {
@@ -335,7 +346,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         spinnerProfissional.setSelection(this.profissionais.indexOf(this.fichaVisitaDTModel.getProfissionalModel()));
         etINE.setText(this.fichaVisitaDTModel.getIne());
-        etDataRegistro.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataRegistro()));
+        etDataRegistro.setText(this.fichaVisitaDTModel.getDataRegistro().toString());
         rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno().equals("M"));
         rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno().equals("T"));
         rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
@@ -405,7 +416,12 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
 
         this.fichaVisitaDTModel.setIne(etINE.getText().toString());
-        this.fichaVisitaDTModel.setDataRegistro(new Date(etDataRegistro.getText().toString()));
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            this.fichaVisitaDTModel.setDataRegistro(formato.parse(etDataRegistro.getText().toString()));
+        } catch (ParseException e) {
+            Toast.makeText(getApplication(), "Data de registro cadastrada errada.", Toast.LENGTH_LONG).show();
+        }
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
 

@@ -6,6 +6,7 @@ import com.fichapp.model.CNESModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.dao.ProfissionalDAO;
 import com.fichapp.dao.SMPEPDbHelper;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class ProfissionalBS {
         //profissionalDAO.pesquisar();
     }
 
+    public void alterarSenha (ProfissionalModel profissionalModel) {
+        this.profissionalDAO.alterarSenha(profissionalModel);
+    }
+
     public List<ProfissionalModel> pesquisar() {
         return this.profissionalDAO.pesquisar();
     }
@@ -49,6 +54,11 @@ public class ProfissionalBS {
     }
 
     public List<ProfissionalModel> pesquisarAtivos(String query) {
+
+        if (Utilitario.isEmpty(query)) {
+            return this.profissionalDAO.pesquisarAtivos();
+        }
+
         return this.profissionalDAO.pesquisarAtivos(query);
     }
 

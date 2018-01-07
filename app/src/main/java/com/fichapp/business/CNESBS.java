@@ -5,6 +5,7 @@ import android.content.Context;
 import com.fichapp.model.CNESModel;
 import com.fichapp.dao.CNESDAO;
 import com.fichapp.dao.SMPEPDbHelper;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
@@ -48,7 +49,13 @@ public class CNESBS {
     }
 
     public List<CNESModel> pesquisarAtivos(String query) {
+
+        if (Utilitario.isEmpty(query)) {
+           return cnesDAO.pesquisarAtivos();
+        }
+
         return cnesDAO.pesquisarAtivos(query);
+
     }
 
 }

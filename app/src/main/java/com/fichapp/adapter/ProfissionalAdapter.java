@@ -99,7 +99,7 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
 
             super(itemView);
 
-            nomeTV = (TextView) itemView.findViewById(R.id.tv_nome);
+            nomeTV = (TextView) itemView.findViewById(R.id.et_nome);
             cnsTV = (TextView) itemView.findViewById(R.id.tv_cns);
             cboTV = (TextView) itemView.findViewById(R.id.tv_cbo);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);

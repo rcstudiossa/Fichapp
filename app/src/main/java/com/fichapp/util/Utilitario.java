@@ -3,6 +3,10 @@ package com.fichapp.util;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by Rodrigo Costa on 25/12/2017.
  */
@@ -42,6 +46,18 @@ public final class Utilitario {
         }
 
         return aviso;
+
+    }
+
+    public static Date getDataFormatada(String data) {
+
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            return formato.parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 

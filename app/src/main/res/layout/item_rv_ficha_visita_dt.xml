@@ -18,7 +18,7 @@
         android:layout_centerVertical="true">
 
         <TextView
-            android:id="@+id/tvCNS"
+            android:id="@+id/et_cns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="CNS: 624198352"

@@ -21,6 +21,8 @@ import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
+import static android.R.attr.delay;
+
 /**
  * Created by Rodrigo Costa on 25/12/2017.
  */
@@ -111,9 +113,13 @@ public class LoginActivity extends AppCompatActivity {
         profissionalModel = profissionalBS.obterProfissionalLogado(profissionalModel, (CNESModel) spinnerHospital.getSelectedItem());
 
         if (!Utilitario.isEmpty(profissionalModel) && !Utilitario.isEmpty(profissionalModel.getId())) {
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("profissional", profissionalModel);
             startActivity(intent);
+
+            finish();
+
         } else {
             Toast.makeText(getApplicationContext(), "Acesso negado!", Toast.LENGTH_LONG).show();
         }

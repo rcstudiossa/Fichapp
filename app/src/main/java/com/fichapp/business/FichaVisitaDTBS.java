@@ -5,6 +5,7 @@ import android.content.Context;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.dao.FichaVisitaDTDAO;
 import com.fichapp.dao.SMPEPDbHelper;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
@@ -53,7 +54,13 @@ public class FichaVisitaDTBS {
     }
 
     public List<FichaVisitaDTModel> pesquisarAtivos(String query) {
+
+        if (Utilitario.isEmpty(query)) {
+            return fichaVisitaDTDAO.pesquisarAtivos();
+        }
+
         return fichaVisitaDTDAO.pesquisarAtivos(query);
+
     }
 
 

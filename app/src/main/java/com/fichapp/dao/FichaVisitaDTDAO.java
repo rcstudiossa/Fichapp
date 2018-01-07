@@ -2,12 +2,16 @@ package com.fichapp.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoImovelModel;
+import com.fichapp.util.Utilitario;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -231,7 +235,6 @@ public class FichaVisitaDTDAO {
 
         String[] args = {fichaVisitaDTModel.getId().toString()};
 
-
         Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial where id = ?;", args);
 
         if (c.moveToFirst()) {
@@ -247,7 +250,7 @@ public class FichaVisitaDTDAO {
 
         FichaVisitaDTModel fichaModel = new FichaVisitaDTModel();
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
-        fichaModel.setDataRegistro(new Date(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
 
@@ -261,13 +264,13 @@ public class FichaVisitaDTDAO {
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
         fichaModel.setIne(c.getString(c.getColumnIndex("ine")));
-        fichaModel.setDataRegistro(new Date(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
         fichaModel.setTipoImovelModel(new TipoImovelModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
-        fichaModel.setDataNascimento(new Date(c.getString(c.getColumnIndex("data_nascimento"))));
+        fichaModel.setDataNascimento(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_nascimento"))));
         fichaModel.setSexo(c.getString(c.getColumnIndex("sexo")));
         fichaModel.setFlagVisitaCompartilhada(c.getInt(c.getColumnIndex("flag_visita_compartilhada")) > 0);
         fichaModel.setFlagCadastramento(c.getInt(c.getColumnIndex("flag_cadastramento")) > 0);

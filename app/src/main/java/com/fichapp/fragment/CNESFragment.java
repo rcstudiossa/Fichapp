@@ -21,11 +21,9 @@ import java.util.List;
 
 public class CNESFragment extends TemplateFragment {
 
-    private RecyclerView mRecyclerView;
     private List<CNESModel> mList;
     private CNESBS cnesBS;
     private CNESAdapter adapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -35,11 +33,7 @@ public class CNESFragment extends TemplateFragment {
         View view = inflater.inflate(R.layout.fragment_cnes, container, false);
 
         mRecyclerView = view.findViewById(R.id.rv_cnes);
-        mRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
+        configRV();
 
         cnesBS = new CNESBS(getActivity());
 
@@ -47,21 +41,12 @@ public class CNESFragment extends TemplateFragment {
         adapter = new CNESAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
-        this.instanciarPesquisa();
-
         return view;
     }
 
     protected void pesquisarAtivos(String query) {
 
-        if (Utilitario.isEmpty(query)) {
-            mList = cnesBS.pesquisarAtivos();
-        } else {
-            mList = cnesBS.pesquisarAtivos(query);
-        }
-
+        mList = cnesBS.pesquisarAtivos(query);
         adapter.setList(mList);
         adapter.notifyDataSetChanged();
 

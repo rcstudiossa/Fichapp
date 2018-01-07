@@ -14,7 +14,6 @@ import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,7 +45,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
-        fichaVisitaDTVH.dataTV.setText(String.format(Locale.getDefault(), "Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
+        //fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
 
         fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +105,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         public FichaVisitaDTVH(View itemView) {
             super(itemView);
-            cnsTV = (TextView) itemView.findViewById(R.id.tvCNS);
+            cnsTV = (TextView) itemView.findViewById(R.id.et_cns);
             prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
             dataTV = (TextView) itemView.findViewById(R.id.tvData);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);

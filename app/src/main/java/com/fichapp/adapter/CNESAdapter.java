@@ -95,7 +95,7 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
         public CNESViewHolder(View itemView) {
             super(itemView);
             cnes = (TextView) itemView.findViewById(R.id.tv_cnes);
-            nome = (TextView) itemView.findViewById(R.id.tv_nome);
+            nome = (TextView) itemView.findViewById(R.id.et_nome);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

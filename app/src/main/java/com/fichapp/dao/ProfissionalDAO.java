@@ -29,7 +29,7 @@ public class ProfissionalDAO {
 
         Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), profissionalModel.getFlagAtivo(), profissionalModel.getId()};
 
-        db.execSQL("UPDATE profissional set cbo = ?, cns = ?, nome = ?, flag_ativo = ? WHERE id = ?;", args);
+        db.execSQL("UPDATE profissional SET cbo = ?, cns = ?, nome = ?, flag_ativo = ? WHERE id = ?;", args);
 
     }
 
@@ -45,6 +45,14 @@ public class ProfissionalDAO {
         Object[] args = {Boolean.FALSE, profissionalModel.getId()};
 
         db.execSQL("UPDATE profissional SET flag_ativo = ? where id = ? ", args);
+
+    }
+
+    public void alterarSenha (ProfissionalModel profissionalModel) {
+
+        Object[] args = {profissionalModel.getSenha(), profissionalModel.getId()};
+
+        db.execSQL("UPDATE profissional SET senha = ? where id = ? ", args);
 
     }
 

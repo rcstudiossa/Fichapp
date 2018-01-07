@@ -67,11 +67,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_layout"
             android:drawableLeft="@drawable/ic_doctor"
-            android:text="smpep"
             android:drawablePadding="6dp"
             android:hint="Usuário"
             android:inputType="textEmailAddress"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="smpep" />
 
 
         <EditText
@@ -81,12 +81,12 @@
             android:layout_marginTop="12dp"
             android:background="@drawable/edit_text_layout"
             android:drawableLeft="@drawable/ic_senha"
-            android:text="topsys"
             android:drawablePadding="6dp"
             android:fontFamily=""
             android:hint="Senha"
             android:inputType="textPassword"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="topsys" />
 
         <Spinner
             android:id="@+id/spinner_hospital"

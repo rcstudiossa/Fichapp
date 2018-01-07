@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ProfissionalFragment extends TemplateFragment {
 
-    private RecyclerView mRecyclerView;
     private List<ProfissionalModel> mList;
     private ProfissionalBS profissionalBS;
     private ProfissionalAdapter adapter;
@@ -30,14 +29,11 @@ public class ProfissionalFragment extends TemplateFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_profissional, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_profissional);
-        mRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(llm);
+        mRecyclerView = view.findViewById(R.id.rv_profissional);
+        configRV();
 
         profissionalBS = new ProfissionalBS(getActivity());
 
@@ -45,20 +41,12 @@ public class ProfissionalFragment extends TemplateFragment {
         adapter = new ProfissionalAdapter(getActivity(), mList);
         mRecyclerView.setAdapter( adapter );
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
-        this.instanciarPesquisa();
-
         return view;
     }
 
     protected void pesquisarAtivos(String query) {
 
-        if (Utilitario.isEmpty(query)) {
-            mList = profissionalBS.pesquisarAtivos();
-        } else {
-            mList = profissionalBS.pesquisarAtivos(query);
-        }
+        mList = profissionalBS.pesquisarAtivos(query);
 
         adapter.setList(mList);
         adapter.notifyDataSetChanged();

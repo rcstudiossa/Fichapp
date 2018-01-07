@@ -40,17 +40,18 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //db.execSQL(SQL_CREATE_CNES);
-        db.execSQL(SQL_CREATE_PROFISSIONAL);
-        db.execSQL(SQL_INSERT_PROFISSIONAL);
-        db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
+        //db.execSQL(SQL_CREATE_PROFISSIONAL);
+        //db.execSQL(SQL_INSERT_PROFISSIONAL);
+        //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
 
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       // db.execSQL(SQL_DELETE_CNES);
-        db.execSQL(SQL_DELETE_PROFISSIONAL);
-        db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
+
+        //db.execSQL(SQL_DELETE_CNES);
+        //db.execSQL(SQL_DELETE_PROFISSIONAL);
+        //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         onCreate(db);
     }

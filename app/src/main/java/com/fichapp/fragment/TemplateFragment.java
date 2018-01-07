@@ -2,49 +2,63 @@ package com.fichapp.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.fichapp.R;
 import com.fichapp.adapter.CNESAdapter;
-import com.fichapp.business.CNESBS;
-import com.fichapp.model.CNESModel;
 import com.fichapp.util.Utilitario;
 
-import java.util.List;
+public abstract class TemplateFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-public abstract class TemplateFragment extends Fragment {
+    protected RecyclerView mRecyclerView;
 
-    protected SearchView searchView;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
-    protected void instanciarPesquisa() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
 
-        searchView = getActivity().findViewById(R.id.searchView);
+        super.onCreateOptionsMenu(menu, inflater);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
+        SearchView sv = (SearchView) menu.findItem(R.id.search_bar).getActionView();
+        sv.setOnQueryTextListener(this);
+    }
 
-                pesquisarAtivos(query);
+    @Override
+    public boolean onQueryTextSubmit(String query) {
 
-                return true;
-            }
+        pesquisarAtivos(query);
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
+        return true;
+    }
 
-                if(Utilitario.isEmpty(newText)){
-                    this.onQueryTextSubmit(newText);
-                }
+    @Override
+    public boolean onQueryTextChange(String newText) {
 
-                return true;
-            }
-        });
+        if (Utilitario.isEmpty(newText)) {
+            return this.onQueryTextSubmit(newText);
+        }
+
+        return false;
+    }
+
+    protected void configRV() {
+
+        mRecyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
     }
 

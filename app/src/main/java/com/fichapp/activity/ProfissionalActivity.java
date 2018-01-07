@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
@@ -19,13 +21,21 @@ public class ProfissionalActivity extends AppCompatActivity {
     private ProfissionalModel profissionalModel;
     private ProfissionalBS profissionalBS;
 
-    private AutoCompleteTextView mCbo;
-    private AutoCompleteTextView mCns;
-    private AutoCompleteTextView mNome;
-    private AutoCompleteTextView mUsuario;
-    private AutoCompleteTextView mSenha;
-    private AutoCompleteTextView mConfirmarSenha;
+    private Integer qtdNome = 0;
+    private Integer qtdCns = 0;
+    private Integer qtdCbo = 0;
+    private Integer qtdUsuario = 0;
+    private Integer qtdSenha = 0;
+    private Integer qtdConfirmarSenha = 0;
+
+    private EditText cboET;
+    private EditText cnsET;
+    private EditText nomeET;
+    private EditText usuarioET;
+    private EditText senhaET;
+    private EditText confirmarSenhaET;
     private CheckBox mFlagAtivo;
+    private Button gravarBT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +45,27 @@ public class ProfissionalActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Cadastro de Profissional");
 
-        Button btnGravar = (Button) findViewById(R.id.btnGravar);
-        mCbo = (AutoCompleteTextView) findViewById(R.id.cbo);
-        mCns = (AutoCompleteTextView) findViewById(R.id.tvCNS);
-        mNome = (AutoCompleteTextView) findViewById(R.id.tv_nome);
-        mUsuario = (AutoCompleteTextView) findViewById(R.id.usuario);
-        mSenha = (AutoCompleteTextView) findViewById(R.id.senha);
-        mConfirmarSenha = (AutoCompleteTextView) findViewById(R.id.confirmarSenha);
+        gravarBT = (Button) findViewById(R.id.bt_gravar);
+        cboET = (EditText) findViewById(R.id.et_cbo);
+        cnsET = (EditText) findViewById(R.id.et_cns);
+        nomeET = (EditText) findViewById(R.id.et_nome);
+        usuarioET = (EditText) findViewById(R.id.et_usuario);
+        senhaET = (EditText) findViewById(R.id.et_senha);
+        confirmarSenhaET = (EditText) findViewById(R.id.et_confirmar_senha);
         mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
 
         this.profissionalBS = new ProfissionalBS(getApplicationContext());
 
         this.instanciarProfissionalModel();
 
-        btnGravar.setOnClickListener(new View.OnClickListener() {
+        gravarBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
             }
         });
+
+        this.leitorCampos();
 
     }
 
@@ -65,9 +77,9 @@ public class ProfissionalActivity extends AppCompatActivity {
             this.profissionalModel = new ProfissionalModel();
             mFlagAtivo.setChecked(Boolean.TRUE);
         } else {
-            mCbo.setText(this.profissionalModel.getCbo());
-            mCns.setText(this.profissionalModel.getCns());
-            mNome.setText(this.profissionalModel.getNome());
+            cboET.setText(this.profissionalModel.getCbo());
+            cnsET.setText(this.profissionalModel.getCns());
+            nomeET.setText(this.profissionalModel.getNome());
             mFlagAtivo.setChecked(this.profissionalModel.getFlagAtivo());
         }
 
@@ -79,33 +91,33 @@ public class ProfissionalActivity extends AppCompatActivity {
 
         String aviso = "";
 
-        if (Utilitario.isEmpty(mNome.getText().toString())) {
+        if (Utilitario.isEmpty(nomeET.getText().toString())) {
             aviso = Utilitario.addAviso("O nome do profissional está vazio", aviso);
             valido = false;
         }
 
-        if (Utilitario.isEmpty(mCns.getText().toString())) {
+        if (Utilitario.isEmpty(cnsET.getText().toString())) {
             aviso = Utilitario.addAviso("O código CNS está vazio", aviso);
             valido = false;
-        } else if (!Utilitario.isCNSValido(mCns.getText().toString())) {
+        } else if (!Utilitario.isCNSValido(cnsET.getText().toString())) {
             aviso = Utilitario.addAviso("O código CNS é inválido", aviso);
             valido = false;
         }
 
-        if (Utilitario.isEmpty(mCbo.getText().toString())) {
+        if (Utilitario.isEmpty(cboET.getText().toString())) {
             aviso = Utilitario.addAviso("O código CBO está vazio", aviso);
             valido = false;
         }
 
-        if (Utilitario.isEmpty(mUsuario.getText().toString())) {
+        if (Utilitario.isEmpty(usuarioET.getText().toString())) {
             aviso = Utilitario.addAviso("O usuário está vazio", aviso);
             valido = false;
         }
 
-        if (Utilitario.isEmpty(mSenha.getText().toString())) {
+        if (Utilitario.isEmpty(senhaET.getText().toString())) {
             aviso = Utilitario.addAviso("A senha está vazia", aviso);
             valido = false;
-        } else if (!mSenha.getText().toString().equals(mConfirmarSenha.getText().toString())){
+        } else if (!senhaET.getText().toString().equals(confirmarSenhaET.getText().toString())) {
             aviso = Utilitario.addAviso("As senhas não conferem", aviso);
             valido = false;
         }
@@ -123,11 +135,11 @@ public class ProfissionalActivity extends AppCompatActivity {
             return;
         }
 
-        this.profissionalModel.setCbo(mCbo.getText().toString());
-        this.profissionalModel.setCns(mCns.getText().toString());
-        this.profissionalModel.setNome(mNome.getText().toString());
-        this.profissionalModel.setUsuario(mUsuario.getText().toString());
-        this.profissionalModel.setSenha(mSenha.getText().toString());
+        this.profissionalModel.setCbo(cboET.getText().toString());
+        this.profissionalModel.setCns(cnsET.getText().toString());
+        this.profissionalModel.setNome(nomeET.getText().toString());
+        this.profissionalModel.setUsuario(usuarioET.getText().toString());
+        this.profissionalModel.setSenha(senhaET.getText().toString());
         this.profissionalModel.setFlagAtivo(mFlagAtivo.isChecked());
 
         profissionalBS.gravar(this.profissionalModel);
@@ -138,6 +150,57 @@ public class ProfissionalActivity extends AppCompatActivity {
         intent.putExtra("fragment", "ProfissionalFragment");
         startActivity(intent);
 
+        finish();
 
     }
+
+    private void leitorCampos() {
+
+        gravarBT.setEnabled(false);
+
+        TextWatcher validador = new Validador();
+
+        nomeET.addTextChangedListener(validador);
+        cnsET.addTextChangedListener(validador);
+        cboET.addTextChangedListener(validador);
+        usuarioET.addTextChangedListener(validador);
+        senhaET.addTextChangedListener(validador);
+        confirmarSenhaET.addTextChangedListener(validador);
+
+    }
+
+    private boolean camposValidosBotao() {
+
+
+       return !Utilitario.isEmpty(nomeET.getText().toString()) && !Utilitario.isEmpty(usuarioET.getText().toString()) && !Utilitario.isEmpty(senhaET.getText().toString()) && !Utilitario.isEmpty(confirmarSenhaET.getText().toString()) && cnsET.getText().length() == 15 && cboET.getText().length() == 6;
+
+    }
+
+    private void validadorBotao() {
+
+        gravarBT.setEnabled(false);
+
+        if (camposValidosBotao()) {
+            gravarBT.setEnabled(true);
+        }
+
+    }
+
+    private class Validador implements TextWatcher {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            validadorBotao();
+        }
+
+    }
+
 }

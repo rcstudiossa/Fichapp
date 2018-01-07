@@ -10,10 +10,10 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/bt_pesquisa"
-        android:title="Pesquisar"
-        android:orderInCategory="200"
+        android:id="@+id/search_bar"
         android:icon="@drawable/ic_pesquisar"
-        app:showAsAction="ifRoom" />
+        android:title="Pesquisar..."
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"/>
 
 </menu>
