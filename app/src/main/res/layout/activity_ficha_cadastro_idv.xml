@@ -76,12 +76,14 @@
                             android:id="@+id/rb_turno_t"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
                             android:text="T" />
 
                         <RadioButton
                             android:id="@+id/rb_turno_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
                             android:text="N" />
 
                     </RadioGroup>
@@ -140,6 +142,7 @@
                     android:id="@+id/rg_responsavel_familiar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -152,6 +155,7 @@
                         android:id="@+id/rb_responsavel_familiar_nao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:text="Não" />
 
                 </RadioGroup>
@@ -293,6 +297,7 @@
                             android:id="@+id/rb_sexo_f"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:text="F" />
 
                     </RadioGroup>
@@ -309,11 +314,11 @@
                 <LinearLayout
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginBottom="@dimen/field_margin"
                     android:layout_marginEnd="@dimen/field_margin"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="@dimen/field_margin"
-                    android:layout_gravity="center_vertical"
                     android:orientation="vertical">
 
                     <TextView
@@ -325,8 +330,7 @@
 
                     <Spinner
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -339,8 +343,8 @@
                         android:id="@+id/et_etnia"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Etnia**"
                         android:layout_marginStart="8dp"
+                        android:hint="Etnia**"
                         android:inputType="textPersonName"
                         android:maxLines="1" />
 
@@ -348,44 +352,367 @@
 
             </LinearLayout>
 
-
-            <CheckBox
-                android:id="@+id/visita_outro_profissional"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginStart="@dimen/field_margin_start"
-                android:layout_marginTop="8dp"
-                android:text="Visita compartilhada com outro profissional" />
-
-            <TextView
-                android:id="@+id/tv_motivos_visita"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/field_margin"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nis"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nº NIS (PIS/PASEP)"
+                    android:inputType="number"
+                    android:maxLength="11" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nome_mae"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome Completo da Mãe"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cb_desconhecido_mae"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin_start"
+                android:text="Desconhecido" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nome_pai"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome Completo do Pai"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cb_desconhecido_pai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin_start"
+                android:text="Desconhecido" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/field_margin"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_nacionalidade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nacionalidade*"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_nacionalidae"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/rb_brasileira"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Brasileira" />
+
+                        <RadioButton
+                            android:id="@+id/rb_naturalizado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Naturalizado" />
+
+                        <RadioButton
+                            android:id="@+id/rb_estrangeiro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estrangeiro" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/et_pais_nascimento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="País de Nascimento"
+                            android:inputType="textPersonName"
+                            android:maxLines="1" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_municipio_uf_nascimento"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Município e UF de Nascimento**"
+                            android:inputType="textPersonName" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_portaria_naturalizacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Portaria de Naturaliização**"
+                    android:inputType="textPersonName" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_data_naturalizacao"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Data Naturalização"
+                        android:inputType="date" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/field_margin"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/et_data_entrada"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Data Entrada"
+                        android:inputType="date" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_telefone_celular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Telefone Celular"
+                    android:inputType="phone" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="E-mail"
+                    android:inputType="textEmailAddress" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/tv_informacoes_sociodemograficas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
                 android:background="@color/colorBGDivider"
                 android:paddingBottom="2dp"
                 android:paddingStart="6dp"
                 android:paddingTop="2dp"
-                android:text="Motivo da Visita**"
+                android:text="Informações Sociodemográficas"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
-            <CheckBox
-                android:id="@+id/cb_cadastramento_atualizacao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/field_margin_start"
-                android:layout_marginTop="16dp"
-                android:text="Cadastramento/Atualização" />
 
-            <CheckBox
-                android:id="@+id/cb_visita_periodica"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/field_margin_start"
-                android:text="Visita Periódica" />
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_parentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parentesco com responsável familiar"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_parentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_ocupacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Ocupação"
+                    android:inputType="textPersonName" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_frequenta_escola"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frequenta escola ou creche?*"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <RadioGroup
+                    android:id="@+id/rg_frequenta_escola"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_frequenta_escola_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_frequenta_escola_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_curso_frequentado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Curso mais elevado que frequentou"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_curso_frequentado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_mercado_trabalho"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Situaçao no mercado de trabalho"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_mercado_trabalho"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -393,36 +720,318 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Busca ativa"
+                android:text="0 a 9 anos, com quem fica?"
                 android:textColor="@color/colorPrimaryDark" />
 
             <CheckBox
-                android:id="@+id/cb_consulta"
+                android:id="@+id/cb_adulto_responsavel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin_start"
-                android:text="Consulta" />
+                android:text="Adulto Responsável" />
 
             <CheckBox
-                android:id="@+id/cb_exame"
+                android:id="@+id/cb_outras_criancas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin_start"
-                android:text="Exame" />
+                android:text="Outra(s) Criança(s)" />
 
             <CheckBox
-                android:id="@+id/cb_vacina"
+                android:id="@+id/cb_adolescente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin_start"
-                android:text="Vacina" />
+                android:text="Adolescente" />
 
             <CheckBox
-                android:id="@+id/cb_cond_bolsa_familia"
+                android:id="@+id/cb_sozinha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin_start"
-                android:text="Condicionalidades do Bolsa Família" />
+                android:text="Sozinha" />
+
+            <CheckBox
+                android:id="@+id/cb_creche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin_start"
+                android:text="Creche" />
+
+            <CheckBox
+                android:id="@+id/cb_outro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin_start"
+                android:text="Outro" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_frequenta_cuidador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frequenta cuidador tradicional?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_frequenta_cuidador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_frequenta_cuidador_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_frequenta_cuidador_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_participa_grupo_comunitario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Participa de grupo comunitário?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_participa_grupo_comunitario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_participa_grupo_comunitario_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_participa_grupo_comunitario_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_plano_privado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Possui plano de saude privado?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_plano_privado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_plano_privado_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_plano_privado_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/field_margin"
+                android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginTop="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_povo_comunidade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="É membro de povo ou comunidade tradicional?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:id="@+id/rg_povo_comunidade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_povo_comunidade_sim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sim" />
+
+                        <RadioButton
+                            android:id="@+id/rb_povo_comunidade_nao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="8dp"
+                            android:text="Não" />
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/et_qual_povo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/field_margin"
+                        android:layout_marginEnd="@dimen/field_margin"
+                        android:layout_marginStart="@dimen/field_margin"
+                        android:hint="Se sim, qual?"
+                        android:inputType="textPersonName" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/field_margin"
+                android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginTop="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_informar_orientacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deseja informar orientação sexual?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_informar_orientacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_informar_orientacao_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_informar_orientacao_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/rg_orientacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_heterossexual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Heterossexual" />
+
+                    <RadioButton
+                        android:id="@+id/rb_homossexual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Homossexual" />
+
+                    <RadioButton
+                        android:id="@+id/rb_bissexual"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bissexual" />
+
+                    <RadioButton
+                        android:id="@+id/rb_outra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Outra" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_parentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Parentesco com responsável familiar"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_parentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
 
             <TextView
