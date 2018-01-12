@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="8dp"
+            tools:context="com.fichapp.activity.FichaVisitaDTActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayout"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp">
+
+                    <!-- TODO: Finally, my only working solution has been to create an AlertDialog and include a DatePicker as a view. Thanks! -->
+                    <!-- https://stackoverflow.com/questions/39429946/how-to-change-the-datepicker-style-for-android -->
+
+                    <EditText
+                        android:id="@+id/et_data_registro"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Data Registro*"
+                        android:inputType="date" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_turno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Turno*"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioGroup
+                        android:id="@+id/rgTurno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rb_turno_m"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="M" />
+
+                        <RadioButton
+                            android:id="@+id/rb_turno_t"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="T" />
+
+                        <RadioButton
+                            android:id="@+id/rb_turno_n"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="N" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_endereco_permanencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginTop="12dp"
+                android:background="@color/colorBGDivider"
+                android:paddingBottom="2dp"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:text="Endereço de Permanência"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_cep"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="CEP"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:maxLines="1"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_uf"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="UF"
+                        android:inputType="text"
+                        android:maxLength="2" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/et_municipio"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Municipio"
+                        android:inputType="text" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_responsavel_familiar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Bairro"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_tipo_logradouro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Tipo do Logradouro"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nome_logradouro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome do Logradouro"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_complemento"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Complemento"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_ponto_referencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Ponto de Referência"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_numero_casa"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Número"
+                        android:inputType="number"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_sem_numero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sem número"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_microarea"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Microárea"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_fora_de_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fora de Área"
+                    android:layout_marginStart="8dp"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_tipo_imovel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de Imóvel"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_tipo_imovel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_tel_residencial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Telefone da Residência"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_tel_contato"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Telefone de Contato"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/tv_dados_cidadao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorBGDivider"
+                android:paddingBottom="2dp"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:text="Endereço de Permanência"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_situacao_moradia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Situação de moradia/Posse de terra"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_situacao_moradia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_localizacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Localização"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_localizacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_urbana"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Urbana" />
+
+                    <RadioButton
+                        android:id="@+id/rb_rural"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rural" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_tipo_domicilio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo de Domicílio"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_tipo_domicilio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_casa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Casa" />
+
+                    <RadioButton
+                        android:id="@+id/rb_apartamento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apartamento" />
+
+                    <RadioButton
+                        android:id="@+id/rb_comodo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cômodo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_outro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outro" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_gravar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/cadastrar" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include
+        android:id="@+id/include_rodape"
+        layout="@layout/rodape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

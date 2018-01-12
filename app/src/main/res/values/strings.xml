@@ -42,8 +42,71 @@
         <item>99: Outros</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="raca">
+        <item>Branca</item>
+        <item>Preta</item>
+        <item>Parda</item>
+        <item>Amarela</item>
+        <item>Indígena</item>
+    </string-array>
+
+    <string-array name="parentesco">
+        <item>Cônjuge/Companheiro(a)</item>
+        <item>Filho(a)</item>
+        <item>Enteado(a)</item>
+        <item>Neto(a)/Bineto(a)</item>
+        <item>Pai/Mãe</item>
+        <item>Sogro(a)</item>
+        <item>Irmão/Irmã</item>
+        <item>Genro/Nora</item>
+        <item>Outro parente</item>
+        <item>Não parente</item>
+    </string-array>
+
+    <string-array name="curso">
+        <item>Creche</item>
+        <item>Pré-escola (exceto CA)</item>
+        <item>Classe de Alfabetização - CA</item>
+        <item>Ensino Fundamental 1ª a 4ª séries</item>
+        <item>Ensino Fundamental 5ª a 8ª séries</item>
+        <item>Ensino Fundamental Completo</item>
+        <item>Ensino Fundamental Especial</item>
+        <item>Ensino Fundamental EJA - (Supletivo 1ª a 4ª)</item>
+        <item>Ensino Fundamental EJA - (Supletivo 5ª a 8ª)</item>
+        <item>Ensino Médio, Médio 2º Ciclo (Científico, Técnico etc.)</item>
+        <item>Ensino Médio Especial</item>
+        <item>Ensino Fundamental EJA (Supletivo)</item>
+        <item>Superioi, Aperfeiçoamento, Especialização, Mestrado, Doutorado</item>
+        <item>Alfabetização para Adultos</item>
+        <item>Nenhum</item>
+    </string-array>
+
+    <string-array name="trabalho">
+        <item>Empregador</item>
+        <item>Assalariado com carteira de trabalho</item>
+        <item>Assalariado sem carteira de trabalho</item>
+        <item>Autônomo com previdência social</item>
+        <item>Autônomo sem previdência social</item>
+        <item>Aposentado/Pensionista</item>
+        <item>Desempregado</item>
+        <item>Não trabalha</item>
+        <item>Servidor público/militar</item>
+        <item>Outro</item>
+    </string-array>
+
+    <string-array name="orientacao">
+        <item>Heterossexual</item>
+        <item>Bissexual</item>
+        <item>Homossexual (gay/lésbica)</item>
+        <item>Outra</item>
+    </string-array>
+
+    <string-array name="genero">
+        <item>Homem transexual</item>
+        <item>Mulher transexual</item>
+        <item>Travesti</item>
+        <item>Outro</item>
+    </string-array>
 
 
 </resources>
