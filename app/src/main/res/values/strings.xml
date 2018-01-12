@@ -26,6 +26,8 @@
 
     <string name="alterar_senha"><u>Alterar Senha</u></string>
 
+    <string name="cadastro_recusado"><u>Cadastro Recusado</u></string>
+
     <string-array name="tipoImovel">
         <item>01: Domicílio</item>
         <item>02: Comércio</item>

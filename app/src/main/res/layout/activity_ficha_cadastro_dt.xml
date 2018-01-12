@@ -99,6 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginEnd="@dimen/field_margin"
                 android:layout_marginTop="12dp"
                 android:background="@color/colorBGDivider"
                 android:paddingBottom="2dp"
@@ -323,7 +324,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
 
                 <EditText
                     android:id="@+id/et_tel_residencial"
@@ -337,7 +339,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
 
                 <EditText
                     android:id="@+id/et_tel_contato"
@@ -351,17 +354,18 @@
 
 
             <TextView
-                android:id="@+id/tv_dados_cidadao"
+                android:id="@+id/tv_condicoes_moradia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginEnd="@dimen/field_margin"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/colorBGDivider"
                 android:paddingBottom="2dp"
                 android:paddingStart="6dp"
                 android:paddingTop="2dp"
-                android:text="Endereço de Permanência"
+                android:text="Condições de Moradia"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
@@ -404,7 +408,7 @@
                     android:id="@+id/rg_localizacao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rb_urbana"
@@ -416,6 +420,7 @@
                         android:id="@+id/rb_rural"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:text="Rural" />
 
                 </RadioGroup>
@@ -425,50 +430,551 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="@dimen/field_margin">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_tipo_domicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de Domicílio"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_tipo_domicilio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/rb_casa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Casa" />
+
+                        <RadioButton
+                            android:id="@+id/rb_apartamento"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Apartamento" />
+
+                        <RadioButton
+                            android:id="@+id/rb_comodo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cômodo" />
+
+                        <RadioButton
+                            android:id="@+id/rb_outro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outro" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_acesso_domicilio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Acesso ao Domicílio"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_acesso_domicilio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/rb_pavimento"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pavimento" />
+
+                        <RadioButton
+                            android:id="@+id/rb_chao_batido"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chão batido" />
+
+                        <RadioButton
+                            android:id="@+id/rb_fluvial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fluvial" />
+
+                        <RadioButton
+                            android:id="@+id/rb_acesso_outro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outro" />
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/field_margin"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_tipo_domicilio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tipo de Domicílio"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <RadioGroup
-                    android:id="@+id/rg_tipo_domicilio"
+                    android:id="@+id/tv_condicao_posse_terra"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:text="Condição de posse e uso de terra"
+                    android:textColor="@color/colorPrimaryDark" />
 
-                    <RadioButton
-                        android:id="@+id/rb_casa"
+                <Spinner
+                    android:id="@+id/spinner_condicao_posse_terra"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_margin="@dimen/field_margin">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_numero_moradores"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Casa" />
+                        android:text="Nº de moradores"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                    <RadioButton
-                        android:id="@+id/rb_apartamento"
+                    <Spinner
+                        android:id="@+id/spinner_numero_moradores"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="4dp">
+
+                    <TextView
+                        android:id="@+id/tv_numero_comodos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Apartamento" />
+                        android:text="Nº de cômodos"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <Spinner
+                        android:id="@+id/spinner_numero_comodos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_material_paredes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Material das paredes externas do domicílio"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_material_paredes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_disponibilidade_energia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Há disponibilidade de energia elétrica?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <RadioGroup
+                    android:id="@+id/rg_disponibilidade_energia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/rb_comodo"
+                        android:id="@+id/rb_disponibilidade_energia_sim"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cômodo" />
+                        android:text="Sim" />
 
                     <RadioButton
-                        android:id="@+id/rb_outro"
+                        android:id="@+id/rb_disponibilidade_energia_nao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Outro" />
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
 
                 </RadioGroup>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_abastecimento_agua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abastecimento de Água"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_abastecimento_agua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_agua_consumo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Água para consumo no domicílio"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_agua_consumo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_escoamento_banheiro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forma de escoamento do banheiro ou sanitário"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_escoamento_banheiro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_destino_lixo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Destino do lixo"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <Spinner
+                    android:id="@+id/spinner_destino_lixo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_animais"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Há animais no domicílio?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <RadioGroup
+                        android:id="@+id/rg_animais"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical">
+
+                        <RadioButton
+                            android:id="@+id/rb_animais_sim"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sim" />
+
+                        <RadioButton
+                            android:id="@+id/rb_animais_nao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Não" />
+
+                    </RadioGroup>
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Quantos?"
+                        android:inputType="number"
+                        android:layout_marginStart="16dp"/>
+
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/cb_gato"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Gato" />
+
+                <CheckBox
+                    android:id="@+id/cb_cachorro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cachorro" />
+
+                <CheckBox
+                    android:id="@+id/cb_passaro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pássaro" />
+
+                <CheckBox
+                    android:id="@+id/cb_outros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Outros" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_instituicao_permanencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/field_margin"
+                android:layout_marginEnd="@dimen/field_margin"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorBGDivider"
+                android:paddingBottom="2dp"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:text="Instituição de Permanência"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nome_instituicao_permanencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome da Instituição"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_outros_profissionais"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Há outros profissionais de saúde vinculados à instituição?"
+                    android:textColor="@color/colorPrimaryDark" />
+                <TextView
+                    android:id="@+id/tv_ou3tros_profissionais2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(não inclui profissionais da rede pública de saúde)" />
+
+
+                <RadioGroup
+                    android:id="@+id/rg_outros_profissionais"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_outros_profissionais_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_outros_profissionais_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_id_profissional"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:text="Identificaçao do responsável técnico na instituição"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_nome_responsavel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Nome do Responsavel"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_cns_responsavel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="CNS do Responsável"
+                    android:inputType="number"
+                    android:maxLength="15"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_cargo_profissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Cargo na Instituição"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin">
+
+                <EditText
+                    android:id="@+id/et_tel_contato_responsavel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Telefone de Contato"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+
+
+
 
 
             <Button
@@ -477,6 +983,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/cadastrar" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/cadastro_recusado" />
 
 
         </LinearLayout>
