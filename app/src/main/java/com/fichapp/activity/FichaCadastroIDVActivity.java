@@ -7,7 +7,7 @@ import android.widget.Spinner;
 
 import com.fichapp.R;
 
-public class FichaCadastroIdvActivity extends AppCompatActivity {
+public class FichaCadastroIDVActivity extends AppCompatActivity {
 
     private Spinner spRaca;
     private Spinner spParentesco;

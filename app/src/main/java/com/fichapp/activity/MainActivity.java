@@ -11,26 +11,25 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.fichapp.fragment.CNESFragment;
+import com.fichapp.fragment.FichaCadastroDTFragment;
+import com.fichapp.fragment.FichaCadastroIDVFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
-import com.fichapp.fragment.TemplateFragment;
-import com.fichapp.model.ProfissionalModel;
-import com.fichapp.util.Utilitario;
 
 public class MainActivity extends TemplateActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String barTitleCNES;
     private String barTitleProfissionais;
     private String barTitleFichaVisitaDT;
+    private String barTitleFichaCadastroDT;
+    private String barTitleFichaCadastroIDV;
 
     private LinearLayout sairLL;
 
@@ -42,7 +41,9 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
 
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
-        this.barTitleFichaVisitaDT = new String("Fichas de Visita");
+        this.barTitleFichaVisitaDT = new String("Visita Domiciliar/Territorial");
+        this.barTitleFichaCadastroDT = new String("Cadastro Domiciliar/Territorial");
+        this.barTitleFichaCadastroIDV = new String("Cadastro Individual");
 
         this.sairLL = (LinearLayout) findViewById(R.id.ll_sair);
 
@@ -74,6 +75,14 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
                 setContent(new FichaVisitaDTFragment());
                 getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
 
+            } else if (fragment.equals("FichaCadastroDTFragment")) {
+                setContent(new FichaVisitaDTFragment());
+                getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
+
+            } else if (fragment.equals("FichaCadastroIDVFragment")) {
+                setContent(new FichaVisitaDTFragment());
+                getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
+
             }
 
         } else {
@@ -97,6 +106,12 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
                     startActivity(intent);
                 } else if (getFragmentClass().equals(FichaVisitaDTFragment.class)) {
                     Intent intent = new Intent(MainActivity.this, FichaVisitaDTActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(FichaCadastroDTFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(FichaCadastroIDVFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, FichaCadastroIDVActivity.class);
                     startActivity(intent);
                 }
 
@@ -171,9 +186,17 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
             setContent(new ProfissionalFragment());
             getSupportActionBar().setTitle(this.barTitleProfissionais);
 
-        } else if (id == R.id.nav_fichaVisitaDT) {
+        } else if (id == R.id.nav_ficha_visita_dt) {
             setContent(new FichaVisitaDTFragment());
             getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
+
+        } else if (id == R.id.nav_ficha_cadastro_dt) {
+            setContent(new FichaCadastroDTFragment());
+            getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
+
+        } else if (id == R.id.nav_ficha_cadastro_idv) {
+            setContent(new FichaCadastroIDVFragment());
+            getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
 
         }
 

@@ -17,9 +17,20 @@
     <item android:title="@string/fichas">
         <menu>
             <item
-                android:id="@+id/nav_fichaVisitaDT"
+                android:id="@+id/nav_ficha_cadastro_idv"
                 android:icon="@drawable/ic_result"
-                android:title="@string/fichaVisita" />
+                android:title="@string/ficha_cadastro_idv" />
+
+            <item
+                android:id="@+id/nav_ficha_cadastro_dt"
+                android:icon="@drawable/ic_result"
+                android:title="@string/ficha_cadastro_dt" />
+
+            <item
+                android:id="@+id/nav_ficha_visita_dt"
+                android:icon="@drawable/ic_result"
+                android:title="@string/ficha_visita_dt" />
+
         </menu>
     </item>
 

@@ -5,7 +5,9 @@
     <string name="cnes">Hospitais</string>
     <string name="profissional">Profissionais</string>
     <string name="fichas">Fichas</string>
-    <string name="fichaVisita">Domiciliar e Territorial</string>
+    <string name="ficha_visita_dt">Visita Dom. e Territorial</string>
+    <string name="ficha_cadastro_dt">Cadastro Dom. e Territorial</string>
+    <string name="ficha_cadastro_idv">Cadastro Individual</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -111,8 +113,6 @@
     </string-array>
 
 
-
-
     <string-array name="situacao_moradia">
         <item>Próprio</item>
         <item>Financiado</item>
@@ -191,8 +191,8 @@
         <item>10</item>
     </string-array>
 
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

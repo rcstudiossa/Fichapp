@@ -24,8 +24,7 @@ public class FichaVisitaDTDAO {
 
     SQLiteDatabase db;
 
-    public FichaVisitaDTDAO() {
-    }
+    public FichaVisitaDTDAO() {}
 
     public FichaVisitaDTDAO(SMPEPDbHelper smpepDbHelper) {
         this.db = smpepDbHelper.getWritableDatabase();
