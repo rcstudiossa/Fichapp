@@ -1,13 +1,11 @@
 package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
-import android.app.Service;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,7 +13,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -274,7 +271,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         spinnerHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-        ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipoImovel, R.layout.spinner_item);
+        ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipo_imovel, R.layout.spinner_item);
         spinnerTipoImovel.setAdapter(adapterTipoImovel);
         adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
