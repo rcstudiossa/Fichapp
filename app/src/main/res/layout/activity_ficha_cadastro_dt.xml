@@ -63,7 +63,7 @@
                         android:textColor="@color/colorPrimaryDark" />
 
                     <RadioGroup
-                        android:id="@+id/rgTurno"
+                        android:id="@+id/rg_turno"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -170,7 +170,7 @@
                 android:layout_margin="@dimen/field_margin">
 
                 <EditText
-                    android:id="@+id/et_responsavel_familiar"
+                    android:id="@+id/et_bairro"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Bairro"
@@ -789,6 +789,7 @@
                     </RadioGroup>
 
                     <EditText
+                        android:id="@+id/et_quantidade_animais"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -817,7 +818,7 @@
                     android:text="Pássaro" />
 
                 <CheckBox
-                    android:id="@+id/cb_outros"
+                    android:id="@+id/cb_outros_animais"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Outros" />
@@ -972,7 +973,7 @@
 
 
             <Button
-                android:id="@+id/btn_gravar"
+                android:id="@+id/btn_gravar_cadastro_dt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -990,7 +991,7 @@
     </ScrollView>
 
     <include
-        android:id="@+id/include_rodape"
+        android:id="@+id/include_rodape_cadastro_dt"
         layout="@layout/rodape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

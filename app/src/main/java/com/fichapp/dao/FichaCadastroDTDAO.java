@@ -190,7 +190,7 @@ public class FichaCadastroDTDAO {
 
         List<FichaCadastroDTModel> fichas = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 order by id;", null);
+        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro, numero FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 order by id;", null);
 
         if (c.moveToFirst()) {
             do {
@@ -212,7 +212,7 @@ public class FichaCadastroDTDAO {
 
         String[] args = {s,s,s};
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, prontuario, cns_cidadao FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (prontuario like ? or strftime( '%d/%m/%Y', data_registro) like ? or cns_cidadao like ?) order by id;", args);
+        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (prontuario like ? or strftime( '%d/%m/%Y', data_registro) like ? or cns_cidadao like ?) order by id;", args);
 
         if (c.moveToFirst()) {
             do {
@@ -270,9 +270,9 @@ public class FichaCadastroDTDAO {
         fichaModel.setComplemento(c.getString(c.getColumnIndex("complemento")));
         fichaModel.setPontoReferencia(c.getString(c.getColumnIndex("ponto_referencia")));
         fichaModel.setNumero(c.getString(c.getColumnIndex("numero")));
-        fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0);
+        fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0); //
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
-        fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0);
+        fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0); //
         fichaModel.setTipoImovelModel(new TipoImovelModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setTelResidencia(c.getString(c.getColumnIndex("tel_residencia")));
         fichaModel.setTelContato(c.getString(c.getColumnIndex("tel_contato")));

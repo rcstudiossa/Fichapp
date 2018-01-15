@@ -227,7 +227,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         cbConvite = (CheckBox) findViewById(R.id.cb_convite_atividades);
 
         cbOrientacao = (CheckBox) findViewById(R.id.cb_orientaçao_prevenção);
-        cbOutros = (CheckBox) findViewById(R.id.cb_outros);
+        cbOutros = (CheckBox) findViewById(R.id.cb_outros_animais);
 
         etPeso = (EditText) findViewById(R.id.et_peso);
         etAltura = (EditText) findViewById(R.id.et_altura);
@@ -236,7 +236,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         rbVisitaRecusada = (RadioButton) findViewById(R.id.rb_visita_recusada);
         rbAusente = (RadioButton) findViewById(R.id.rb_ausente);
 
-        btnGravar = (Button) findViewById(R.id.btn_gravar);
+        btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_dt);
 
         rodape = (LinearLayout) findViewById(R.id.include_rodape);
 

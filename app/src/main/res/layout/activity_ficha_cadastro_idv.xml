@@ -63,7 +63,7 @@
                         android:textColor="@color/colorPrimaryDark" />
 
                     <RadioGroup
-                        android:id="@+id/rgTurno"
+                        android:id="@+id/rg_turno"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -2547,7 +2547,7 @@
 
 
             <Button
-                android:id="@+id/btn_gravar"
+                android:id="@+id/btn_gravar_cadastro_dt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
