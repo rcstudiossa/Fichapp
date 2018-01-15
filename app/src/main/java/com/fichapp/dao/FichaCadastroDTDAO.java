@@ -68,7 +68,7 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagGato(),
                 fichaModel.getFlagCachorro(),
                 fichaModel.getFlagPassaro(),
-                fichaModel.getFlagOutros(),
+                fichaModel.getFlagOutrosAnimais(),
 
                 fichaModel.getNomeInstituicao(),
                 fichaModel.getFlagOutrosProfissionais(),
@@ -135,7 +135,7 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagGato(),
                 fichaModel.getFlagCachorro(),
                 fichaModel.getFlagPassaro(),
-                fichaModel.getFlagOutros(),
+                fichaModel.getFlagOutrosAnimais(),
 
                 fichaModel.getNomeInstituicao(),
                 fichaModel.getFlagOutrosProfissionais(),
@@ -295,7 +295,7 @@ public class FichaCadastroDTDAO {
         fichaModel.setFlagGato(c.getInt(c.getColumnIndex("flag_gato")) > 0);
         fichaModel.setFlagCachorro(c.getInt(c.getColumnIndex("flag_cachorro")) > 0);
         fichaModel.setFlagPassaro(c.getInt(c.getColumnIndex("flag_passaro")) > 0);
-        fichaModel.setFlagOutros(c.getInt(c.getColumnIndex("flag_outros")) > 0);
+        fichaModel.setFlagOutrosAnimais(c.getInt(c.getColumnIndex("flag_outros")) > 0);
 
         fichaModel.setNomeInstituicao(c.getString(c.getColumnIndex("nome_instituicao")));
         fichaModel.setFlagOutrosProfissionais(c.getInt(c.getColumnIndex("flag_outros_profissionais")) > 0);

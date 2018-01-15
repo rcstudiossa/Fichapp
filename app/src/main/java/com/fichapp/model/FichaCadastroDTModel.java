@@ -52,7 +52,7 @@ public class FichaCadastroDTModel implements Serializable {
     private Boolean flagGato;
     private Boolean flagCachorro;
     private Boolean flagPassaro;
-    private Boolean flagOutros;
+    private Boolean flagOutrosAnimais;
 
     private String nomeInstituicao;
     private Boolean flagOutrosProfissionais;
@@ -331,11 +331,11 @@ public class FichaCadastroDTModel implements Serializable {
         this.flagPassaro = flagPassaro;
     }
 
-    public Boolean getFlagOutros() {
-        return flagOutros;
+    public Boolean getFlagOutrosAnimais() {
+        return flagOutrosAnimais;
     }
-    public void setFlagOutros(Boolean flagOutros) {
-        this.flagOutros = flagOutros;
+    public void setFlagOutrosAnimais(Boolean flagOutros) {
+        this.flagOutrosAnimais = flagOutros;
     }
 
     public String getNomeInstituicao() {

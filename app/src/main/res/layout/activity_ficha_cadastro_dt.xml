@@ -117,7 +117,7 @@
                 android:layout_margin="@dimen/field_margin">
 
                 <EditText
-                    android:id="@+id/et_cep"
+                    android:id="@+id/tv_cep"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="CEP"

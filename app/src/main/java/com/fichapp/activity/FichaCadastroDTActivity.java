@@ -1,22 +1,33 @@
 package com.fichapp.activity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.fichapp.R;
 import com.fichapp.business.FichaCadastroDTBS;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.ProfissionalModel;
+import com.fichapp.util.Utilitario;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class FichaCadastroDTActivity extends AppCompatActivity {
 
@@ -78,27 +89,45 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
     private LinearLayout llRodape;
 
+    private Integer itemTemEnergiaEletrica;
+    private Integer itemTurnoSelecionado;
+    private Integer itemTemAnimais;
+    private Integer itemOutrosProfissionais;
+    private Integer itemAcessoDomicilio;
+    private Integer itemLocalizacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_cadastro_dt);
 
+        getSupportActionBar().setTitle("Cadastro Domiciliar/Territorial");
+
+        this.instanciarFichaVisitaDTModel();
+
         this.definirComponentes();
 
         this.carregarSpinners();
 
+        this.configData();
 
+        this.lerRadios();
 
-
+        btnGravar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gravar();
+            }
+        });
 
 
     }
 
     private void definirComponentes() {
 
-        //EDITTEXTS
+        //EditTexts
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
-        etCep = (EditText) findViewById(R.id.et_cep);
+        etCep = (EditText) findViewById(R.id.tv_cep);
         etUf = (EditText) findViewById(R.id.et_uf);
         etMunicipio = (EditText) findViewById(R.id.et_municipio);
         etBairro = (EditText) findViewById(R.id.et_bairro);
@@ -117,7 +146,7 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         etCargoInstituicao = (EditText) findViewById(R.id.et_cargo_profissional);
         etTelefoneContatoResponsavel = (EditText) findViewById(R.id.et_tel_contato_responsavel);
 
-        //SPINNNERS
+        //Spinners
         spTipoImovel = (Spinner) findViewById(R.id.spinner_tipo_imovel);
         spSituacaoMoradia = (Spinner) findViewById(R.id.spinner_situacao_moradia);
         spCondicaoPosseTerra = (Spinner) findViewById(R.id.spinner_condicao_posse_terra);
@@ -129,7 +158,7 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         spEscoamentoBanheiro = (Spinner) findViewById(R.id.spinner_escoamento_banheiro);
         spDestinoLixo = (Spinner) findViewById(R.id.spinner_destino_lixo);
 
-        //RADIOGROUPS
+        //RadioGroups
         rgAcessoDomicilio = (RadioGroup) findViewById(R.id.rg_acesso_domicilio);
         rgLocalizacao = (RadioGroup) findViewById(R.id.rg_localizacao);
         rgOutrosProfissionais = (RadioGroup) findViewById(R.id.rg_outros_profissionais);
@@ -137,7 +166,7 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         rgTurno = (RadioGroup) findViewById(R.id.rg_turno);
         rgTemEnergiaEletrica = (RadioGroup) findViewById(R.id.rg_disponibilidade_energia);
 
-        //CHECKBOXES
+        //Checkboxes
         cbSemNumero = (CheckBox) findViewById(R.id.cb_sem_numero);
         cbForaDeArea = (CheckBox) findViewById(R.id.cb_fora_de_area);
         cbGato = (CheckBox) findViewById(R.id.cb_gato);
@@ -148,6 +177,17 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_dt);
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
+
+    }
+
+    private void lerRadios() {
+
+        itemTemEnergiaEletrica = rgTemEnergiaEletrica.indexOfChild(findViewById(rgTemEnergiaEletrica.getCheckedRadioButtonId()));
+        itemTurnoSelecionado = rgTurno.indexOfChild(findViewById(rgTurno.getCheckedRadioButtonId()));
+        itemTemAnimais = rgTemAnimais.indexOfChild(findViewById(rgTemAnimais.getCheckedRadioButtonId()));
+        itemOutrosProfissionais = rgOutrosProfissionais.indexOfChild(findViewById(rgOutrosProfissionais.getCheckedRadioButtonId()));
+        itemAcessoDomicilio = rgAcessoDomicilio.indexOfChild(findViewById(rgAcessoDomicilio.getCheckedRadioButtonId()));
+        itemLocalizacao = rgLocalizacao.indexOfChild(findViewById(rgLocalizacao.getCheckedRadioButtonId()));
 
     }
 
@@ -195,6 +235,168 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
     }
 
+    private void configData() {
+
+        final Calendar registroCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                registroCalendar.set(Calendar.YEAR, year);
+                registroCalendar.set(Calendar.MONTH, monthOfYear);
+                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                atualizarCampoData(etDataRegistro, registroCalendar);
+            }
+        };
+
+        etDataRegistro.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(FichaCadastroDTActivity.this, dataRegistro, registroCalendar
+                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
+                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+    }
+    private void atualizarCampoData(EditText editText, Calendar calendar) {
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editText.setText(sdf.format(calendar.getTime()));
+    }
+
+    private void instanciarFichaVisitaDTModel() {
+
+        this.fichaCadastroDTModel = (FichaCadastroDTModel) getIntent().getSerializableExtra("fichaCadastroDT");
+
+        if (this.fichaCadastroDTModel == null) {
+            this.fichaCadastroDTModel = new FichaCadastroDTModel();
+        } else {
+            setModelToActivity();
+        }
+
+    }
+
+    private void gravar() {
+
+        if (!validaCampos()) {
+            return;
+        }
+
+        setActivityToModel();
+
+        this.fichaCadastroDTBS.gravar(this.fichaCadastroDTModel);
+
+        Utilitario.avisoSucesso(getApplicationContext());
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("fragment", "FichaCadastroDTFragment");
+        startActivity(intent);
+
+        finish();
+
+    }
+
+    private boolean validaCampos() {
+
+        boolean valido = true;
+
+        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+            Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            valido = false;
+        }
+
+        return valido;
+
+    }
+
+
+
+    private void setModelToActivity() {
+
+        //EditTexts
+        etDataRegistro.setText(this.fichaCadastroDTModel.getDataRegistro().toString());
+        etCep.setText(this.fichaCadastroDTModel.getCep());
+        etUf.setText(this.fichaCadastroDTModel.getUf());
+        etMunicipio.setText(this.fichaCadastroDTModel.getMunicipio());
+        etBairro.setText(this.fichaCadastroDTModel.getBairro());
+        etTipoLogradouro.setText(this.fichaCadastroDTModel.getTipoLogradouro());
+        etNomeLogradouro.setText(this.fichaCadastroDTModel.getNomeLogragouro());
+        etComplemento.setText(this.fichaCadastroDTModel.getComplemento());
+        etPontoReferencia.setText(this.fichaCadastroDTModel.getPontoReferencia());
+        etNumero.setText(this.fichaCadastroDTModel.getNumero());
+        etMicroarea.setText(this.fichaCadastroDTModel.getMicroArea());
+        etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
+        etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
+        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais());
+        etNomeInstituicao.setText(this.fichaCadastroDTModel.getNomeInstituicao());
+        etNomeResponsavel.setText(this.fichaCadastroDTModel.getNomeResponsavel());
+        etCnsResponsavel.setText(this.fichaCadastroDTModel.getCnsResponsavel());
+        etCargoInstituicao.setText(this.fichaCadastroDTModel.getCargoInstituicao());
+        etTelefoneContatoResponsavel.setText(this.fichaCadastroDTModel.getTelContatoResponsavel());
+
+        //TODO: RADIOS E SPINNERS
+
+        //Checkboxes
+        cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero());
+        cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea());
+        cbGato.setChecked(this.fichaCadastroDTModel.getFlagGato());
+        cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro());
+        cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro());
+        cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais());
+
+
+    }
+
+    private void setActivityToModel() {
+
+        //Data de Registro
+        try {
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            this.fichaCadastroDTModel.setDataRegistro(formato.parse(etDataRegistro.getText().toString()));
+        } catch (ParseException e) {
+            Toast.makeText(getApplication(), "Data de registro cadastrada errada.", Toast.LENGTH_LONG).show();
+        }
+
+        //EditTexts
+        this.fichaCadastroDTModel.setCep(etCep.getText().toString());
+        this.fichaCadastroDTModel.setUf(etUf.getText().toString());
+        this.fichaCadastroDTModel.setMunicipio(etMunicipio.getText().toString());
+        this.fichaCadastroDTModel.setBairro(etBairro.getText().toString());
+        this.fichaCadastroDTModel.setTipoLogradouro(etTipoLogradouro.getText().toString());
+        this.fichaCadastroDTModel.setNomeLogragouro(etNomeLogradouro.getText().toString());
+        this.fichaCadastroDTModel.setComplemento(etComplemento.getText().toString());
+        this.fichaCadastroDTModel.setPontoReferencia(etPontoReferencia.getText().toString());
+        this.fichaCadastroDTModel.setNumero(etNumero.getText().toString());
+        this.fichaCadastroDTModel.setMicroArea(etMicroarea.getText().toString());
+        this.fichaCadastroDTModel.setTelResidencia(etTelefoneResidencia.getText().toString());
+        this.fichaCadastroDTModel.setTelContato(etTelefoneContato.getText().toString());
+        this.fichaCadastroDTModel.setQtdAnimais(Integer.valueOf (etQuantidadeAnimais.getText().toString()));
+        this.fichaCadastroDTModel.setNomeInstituicao(etNomeInstituicao.getText().toString());
+        this.fichaCadastroDTModel.setNomeResponsavel(etNomeResponsavel.getText().toString());
+        this.fichaCadastroDTModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
+        this.fichaCadastroDTModel.setCargoInstituicao(etCargoInstituicao.getText().toString());
+        this.fichaCadastroDTModel.setTelContatoResponsavel(etTelefoneContatoResponsavel.getText().toString());
+
+        //TODO: RADIOS E SPINNERS
+
+        //Checkboxes
+        this.fichaCadastroDTModel.setFlagSemNumero(cbSemNumero.isChecked());
+        this.fichaCadastroDTModel.setFlagForaDeArea(cbForaDeArea.isChecked());
+        this.fichaCadastroDTModel.setFlagGato(cbGato.isChecked());
+        this.fichaCadastroDTModel.setFlagCachorro(cbCachorro.isChecked());
+        this.fichaCadastroDTModel.setFlagPassaro(cbPassaro.isChecked());
+        this.fichaCadastroDTModel.setFlagOutrosAnimais(cbOutrosAnimais.isChecked());
+        
+        
+        
+        
+        
+        
+    }
 
 
 }

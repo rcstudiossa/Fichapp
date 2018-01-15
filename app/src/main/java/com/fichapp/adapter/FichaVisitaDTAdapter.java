@@ -45,7 +45,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
-        //fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
+        //fichaVisitaDTVH.tvData.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
 
         fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
             super(itemView);
             cnsTV = (TextView) itemView.findViewById(R.id.et_cns);
             prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
-            dataTV = (TextView) itemView.findViewById(R.id.tvData);
+            dataTV = (TextView) itemView.findViewById(R.id.tv_data);
             editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
             deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
 

@@ -115,7 +115,7 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_visita_dt);
 
-        getSupportActionBar().setTitle("Cadastro de Ficha");
+        getSupportActionBar().setTitle("Visita Domiciliar/Territorial");
 
         final Calendar registroCalendar = Calendar.getInstance();
         final Calendar nascimentoCalendar = Calendar.getInstance();
@@ -127,7 +127,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
 
         final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
-
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
