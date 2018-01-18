@@ -36,7 +36,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             ", ponto_referencia VARCHAR, numero CHAR, flag_sem_numero BOOLEAN, microarea CHAR(2), flag_fora_de_area BOOLEAN, tipo_imovel CHAR(2), tel_residencia VARCHAR, tel_contato VARCHAR, situacao_moradia INTEGER, localizacao INTEGER" +
             ", tipo_domicilio INTEGER, acesso_domicilio INTEGER, condicao_terra INTEGER, num_moradores INTEGER, num_comodos INTEGER, material_paredes INTEGER, flag_energia_eletrica BOOLEAN, abastecimento_agua INTEGER, agua_consumo INTEGER" +
             ", escoamento_banheiro INTEGER, destino_lixo INTEGER, flag_animais BOOLEAN, qtd_animais INTEGER, flag_gato BOOLEAN, flag_cachorro BOOLEAN, flag_passaro BOOLEAN, flag_outros BOOLEAN, nome_instituicao VARCHAR" +
-            ", flag_outros_profissionais BOOLEAN, nome_responsavel VARCHAR, cns_responsavel VARCHAR, cargo_instituicao VARCHAR, tel_contato_responsavel VARCHAR, flag_ativo BOOLEAN, flag_exportado BOOLEAN;";
+            ", flag_outros_profissionais BOOLEAN, nome_responsavel VARCHAR, cns_responsavel VARCHAR, cargo_instituicao VARCHAR, tel_contato_responsavel VARCHAR, flag_ativo BOOLEAN, flag_exportado BOOLEAN);";
     public static final String SQL_DELETE_FICHA_CADASTRO_DT = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial;";
 
 
@@ -53,10 +53,10 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
         //db.execSQL(SQL_CREATE_CNES);
         //db.execSQL(SQL_CREATE_PROFISSIONAL);
-        //db.execSQL(SQL_INSERT_PROFISSIONAL);
+        db.execSQL(SQL_INSERT_PROFISSIONAL);
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
-        db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
-        db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
+        //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
+        //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
 
     }
 
@@ -65,8 +65,8 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_DELETE_CNES);
         //db.execSQL(SQL_DELETE_PROFISSIONAL);
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
-        db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
-        db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
+        //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
+        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
         onCreate(db);
     }
 

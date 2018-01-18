@@ -111,7 +111,7 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
                     Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
                     startActivity(intent);
                 } else if (getFragmentClass().equals(FichaCadastroIDVFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, FichaCadastroIDVActivity.class);
+                    Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
                     startActivity(intent);
                 }
 

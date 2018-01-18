@@ -254,8 +254,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayout5"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/et_data_nascimento"
@@ -776,16 +775,16 @@
                         android:text="Creche" />
 
                     <CheckBox
-                        android:id="@+id/cb_outro"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outro" />
-
-                    <CheckBox
                         android:id="@+id/cb_sozinha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sozinha" />
+
+                    <CheckBox
+                        android:id="@+id/cb_outro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outro" />
 
                 </LinearLayout>
 
@@ -1755,7 +1754,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Insuficiência respiratória" />
+                    android:text="Asma" />
 
                 <CheckBox
                     android:id="@+id/cb_doenca_respiratoria_enfisema"
@@ -1864,7 +1863,7 @@
                     android:id="@+id/tv_cancer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Teve infarto?"
+                    android:text="Tem ou teve câncer?"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <RadioGroup
@@ -2120,6 +2119,45 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_praticas_integrativas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usa outras praticas integrativas e complementares?"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_praticas_integrativas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_praticas_integrativas_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_praticas_integrativas_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -2165,7 +2203,7 @@
                     android:id="@+id/tv_esta_situacao_rua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Esta em situação de rua?*"
+                    android:text="Está em situação de rua?*"
                     android:textColor="@color/colorPrimaryDark" />
 
                 <RadioGroup
@@ -2302,6 +2340,52 @@
                 </RadioGroup>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/field_margin"
+                android:layout_marginTop="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_frequencia_alimentacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantas vezes se alimenta por dia?*"
+                    android:textColor="@color/colorPrimaryDark" />
+
+
+                <RadioGroup
+                    android:id="@+id/rg_frquencia_alimentacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_1_vez"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 vez" />
+
+                    <RadioButton
+                        android:id="@+id/rb_2_3_vezes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 ou 3 vezes" />
+
+                    <RadioButton
+                        android:id="@+id/rb_mais_3_vezes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mais de 3 vezes" />
+
+
+                </RadioGroup>
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/origem_alimentacao"

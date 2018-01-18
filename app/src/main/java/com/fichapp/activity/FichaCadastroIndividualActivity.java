@@ -7,7 +7,7 @@ import android.widget.Spinner;
 
 import com.fichapp.R;
 
-public class FichaCadastroIDVActivity extends AppCompatActivity {
+public class FichaCadastroIndividualActivity extends AppCompatActivity {
 
     private Spinner spRaca;
     private Spinner spParentesco;
@@ -19,7 +19,7 @@ public class FichaCadastroIDVActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ficha_cadastro_idv);
+        setContentView(R.layout.activity_ficha_cadastro_individual);
 
         spRaca = (Spinner) findViewById(R.id.spinner_raca);
         ArrayAdapter spAdapterRaca = ArrayAdapter.createFromResource(this, R.array.raca, R.layout.spinner_item);
