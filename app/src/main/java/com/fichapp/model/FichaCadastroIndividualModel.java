@@ -69,6 +69,7 @@ public class FichaCadastroIndividualModel implements Serializable{
     private Boolean flagInformarIdentidadeGenero;
     private Integer identidadeGenero;
 
+    private Boolean flagDeficiencia;
     private Boolean flagDeficienciaAuditiva;
     private Boolean flagDeficienciaVisual;
     private Boolean flagDeficienciaIntelectual;
@@ -493,6 +494,13 @@ public class FichaCadastroIndividualModel implements Serializable{
     }
     public void setIdentidadeGenero(Integer identidadeGenero) {
         this.identidadeGenero = identidadeGenero;
+    }
+
+    public Boolean getFlagDeficiencia() {
+        return flagDeficiencia;
+    }
+    public void setFlagDeficiencia(Boolean flagDeficiencia) {
+        this.flagDeficiencia = flagDeficiencia;
     }
 
     public Boolean getFlagDeficienciaAuditiva() {

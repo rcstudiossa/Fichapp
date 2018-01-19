@@ -212,7 +212,7 @@ public class FichaCadastroDTDAO {
 
         String[] args = {s,s,s};
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (prontuario like ? or strftime( '%d/%m/%Y', data_registro) like ? or cns_cidadao like ?) order by id;", args);
+        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (cep like ? or strftime( '%d/%m/%Y', data_registro) like ? or bairro like ?) order by id;", args);
 
         if (c.moveToFirst()) {
             do {

@@ -39,6 +39,31 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             ", flag_outros_profissionais BOOLEAN, nome_responsavel VARCHAR, cns_responsavel VARCHAR, cargo_instituicao VARCHAR, tel_contato_responsavel VARCHAR, flag_ativo BOOLEAN, flag_exportado BOOLEAN);";
     public static final String SQL_DELETE_FICHA_CADASTRO_DT = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial;";
 
+    public static final String SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL = "CREATE TABLE IF NOT EXISTS ficha_cadastro_individual" +
+            " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER" +
+            ", data_registro DATE, turno CHAR(1)" +
+            ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo char(1), raca INTEGER, etnia VARCHAR, nis VARCHAR" +
+            ", nome_mae VARCHAR, flag_mae_desconhecido BOOLEAN, nome_pai VARCHAR, flag_pai_desconhecido BOOLEAN" +
+            ", nascimento DATE, pais_nascimento VARCHAR, municipio_uf_nascimento VARCHAR, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
+            ", telefone_celular VARCHAR, email_cidadao VARCHAR" +
+            ", parentesco_responsavel_familiar INTEGER, ocupacao VARCHAR, flag_frequenta_escola BOOLEAN, curso_mais_elevado INTEGER, situacao_mercado INTEGER" +
+            ", flag_fica_com_adulto_responsavel BOOLEAN, flag_fica_com_outras_criancas BOOLEAN, flag_fica_com_adolescente BOOLEAN, flag_fica_em_creche BOOLEAN, flag_fica_sozinha BOOLEAN, flag_fica_outro BOOLEAN" +
+            ", flag_frequenta_cuidador BOOLEAN, flag_participa_grupo_comunitario BOOLEAN, flag_possui_plano_de_saude BOOLEAN, flag_membro_de_comunidade BOOLEAN, qual_comunidade" +
+            ", flag_informar_orientacao BOOLEAN, orientacao_sexual INTEGER, flag_informar_identidade_genero BOOLEAN, identidade_genero INTEGER" +
+            ", flag_deficiencia BOOLEAN, flag_deficiencia_auditiva BOOLEAN, flag_deficiencia_visual BOOLEAN, flag_deficiencia_intelectual BOOLEAN, flag_deficiencia_fisica BOOLEAN, flag_outra_deficiencia BOOLEAN" +
+            ", saida_cadastro INTEGER, numero_do VARCHAR, data_obito DATE" +
+            ", flag_gestante BOOLEAN, qual_maternidade VARCHAR, peso INTEGER" +
+            ", flag_fumante BOOLEAN, flag_alcool BOOLEAN, flag_outras_drogas BOOLEAN, flag_hipertensao BOOLEAN, flag_diabetes BOOLEAN, flag_avc_derrame BOOLEAN, flag_infarto BOOLEAN" +
+            ", flag_doenca_cardiaca BOOLEAN, flag_insuficiencia_cardiaca BOOLEAN, flag_outra_doenca_cardiaca BOOLEAN, flag_nao_sabe_doenca_cardiaca BOOLEAN" +
+            ", flag_problema_rins BOOLEAN, flag_insuficiencia_renal BOOLEAN, outro_problema_rins BOOLEAN, flag_nao_sabe_problema_rins BOOLEAN" +
+            ", flag_doenca_respiratoria BOOLEAN, flag_asma BOOLEAN, flag_enfisema BOOLEAN, flag_outra_doenca_respiratoria BOOLEAN, flag_nao_sabe_doenca_respiratoria BOOLEAN" +
+            ", flag_hanseniase BOOLEAN, flag_tuberculose BOOLEAN, flag_cancer BOOLEAN, flag_internado BOOLEAN, qual_motivo_internamento VARCHAR, flag_problema_mental BOOLEAN, flag_acamado BOOLEAN, flag_domiciliado BOOLEAN, flag_plantas_medicinais BOOLEAN, quais_plantas VARCHAR, outras_praticas_integrativas BOOLEAN, outras_condicoes_saude VARCHAR" +
+            ", flag_situacao_rua BOOLEAN, tempo_situacao_rua INTEGER, flag_recebe_beneficio BOOLEAN, flag_referencia_familiar BOOLEAN" +
+            ", frequencia_alimentacao INTEGER, flag_alimentacao_restaurante_popular BOOLEAN, flag_alimentacao_doacao_grupo_religioso BOOLEAN, flag_alimentacao_doacao_restaurante BOOLEAN, flag_alimentacao_doacao_popular BOOLEAN, flag_alimentacao_outras BOOLEAN" +
+            ", flag_acompanhado_instituicao BOOLEAN, qual_instituicao VARCHAR, flag_visita_familiar BOOLEAN, grau_parentesco VARCHAR" +
+            ", flag_acesso_higiene_pessoal BOOLEAN, flag_acesso_banho BOOLEAN, flag_acesso_sanitario BOOLEAN, flag_acesso_higiene_bucal BOOLEAN, flag_acesso_outras BOOLEAN" +
+            ", flag_ativo BOOLEAN, flag_exportado BOOLEAN);";
+    public static final String SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL = "DROP TABLE IF EXISTS ficha_cadastro_individual;";
 
 
     public static final String SQL_INSERT_PROFISSIONAL = "INSERT INTO profissional (id, nome, flag_ativo, usuario, senha, flag_administrador) values (1, 'smpep', 1, 'smpep', 'topsys', 1);";
@@ -57,6 +82,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
+        db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
 
     }
 
@@ -67,6 +93,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
+        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }
 
