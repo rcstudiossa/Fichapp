@@ -50,7 +50,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getNomePai(),
                 fichaModel.getFlagPaiDesconhecido(),
 
-                fichaModel.getNascimento(),
+                fichaModel.getNacionalidade(),
                 fichaModel.getPaisNascimento(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
@@ -167,7 +167,7 @@ public class FichaCadastroIndividualDAO {
                 ", data_registro, turno" +
                 ", cns_cidadao, flag_responsavel_familiar, cns_responsavel_familiar, microarea, flag_fora_de_area, nome_completo, nome_social, data_nascimento, sexo, raca, etnia, nis" +
                 ", nome_mae, flag_mae_desconhecido, nome_pai, flag_pai_desconhecido" +
-                ", nascimento, pais_nascimento, municipio_uf_nascimento, portaria_naturalizacao, data_naturalizacao, data_entrada" +
+                ", nacionalidade, pais_nascimento, municipio_uf_nascimento, portaria_naturalizacao, data_naturalizacao, data_entrada" +
                 ", telefone_celular, email_cidadao" +
                 ", parentesco_responsavel_familiar, ocupacao, flag_frequenta_escola, curso_mais_elevado, situacao_mercado" +
                 ", flag_fica_com_adulto_responsavel, flag_fica_com_outras_criancas, flag_fica_com_adolescente, flag_fica_em_creche, flag_fica_sozinha, flag_fica_outro" +
@@ -221,7 +221,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getNomePai(),
                 fichaModel.getFlagPaiDesconhecido(),
 
-                fichaModel.getNascimento(),
+                fichaModel.getNacionalidade(),
                 fichaModel.getPaisNascimento(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
@@ -339,7 +339,7 @@ public class FichaCadastroIndividualDAO {
                 ",  data_registro = ?, turno = ?" +
                 ",  cns_cidadao = ?, flag_responsavel_familiar = ?, cns_responsavel_familiar = ?, microarea = ?, flag_fora_de_area = ?, nome_completo = ?, nome_social = ?, data_nascimento = ?, sexo = ?, raca = ?, etnia = ?, nis = ?" +
                 ",  nome_mae = ?, flag_mae_desconhecido = ?, nome_pai = ?, flag_pai_desconhecido = ?" +
-                ",  nascimento = ?, pais_nascimento = ?, municipio_uf_nascimento = ?, portaria_naturalizacao = ?, data_naturalizacao = ?, data_entrada = ?" +
+                ",  nacionalidade = ?, pais_nascimento = ?, municipio_uf_nascimento = ?, portaria_naturalizacao = ?, data_naturalizacao = ?, data_entrada = ?" +
                 ",  telefone_celular = ?, email_cidadao = ?" +
                 ",  parentesco_responsavel_familiar = ?, ocupacao = ?, flag_frequenta_escola = ?, curso_mais_elevado = ?, situacao_mercado = ?" +
                 ",  flag_fica_com_adulto_responsavel = ?, flag_fica_com_outras_criancas = ?, flag_fica_com_adolescente = ?, flag_fica_em_creche = ?, flag_fica_sozinha = ?, flag_fica_outro = ?" +
@@ -485,7 +485,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setNomePai(c.getString(c.getColumnIndex("nome_pai")));
         fichaModel.setFlagPaiDesconhecido(c.getInt(c.getColumnIndex("flag_pai_desconhecido")) > 0);
 
-        fichaModel.setNascimento(c.getInt(c.getColumnIndex("nascimento")));
+        fichaModel.setNacionalidade(c.getInt(c.getColumnIndex("nascimento")));
         fichaModel.setPaisNascimento(c.getString(c.getColumnIndex("pais_nascimento")));
         fichaModel.setMunicipioUfNascimento(c.getString(c.getColumnIndex("municipio_uf_nascimento")));
         fichaModel.setPortariaNaturalizacao(c.getString(c.getColumnIndex("portaria_naturalizacao")));
@@ -586,7 +586,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setFlagAcompanhadoInstituicao(c.getInt(c.getColumnIndex("flag_acompanhado_instituicao")) < 1);
         fichaModel.setQualInstituicao(c.getString(c.getColumnIndex("qual_instituicao")));
         fichaModel.setFlagVisitaFamiliar(c.getInt(c.getColumnIndex("flag_visita_familiar")) < 1);
-        fichaModel.setGrauParentesco(c.getInt(c.getColumnIndex("grau_parentesco")));
+        fichaModel.setGrauParentesco(c.getString(c.getColumnIndex("grau_parentesco")));
 
         fichaModel.setFlagAcessoHigienePessoal(c.getInt(c.getColumnIndex("flag_acesso_higiene_pessoal")) < 1);
         fichaModel.setFlagAcessoBanho(c.getInt(c.getColumnIndex("flag_acesso_banho")) > 0);

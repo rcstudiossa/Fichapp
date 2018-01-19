@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.FichaCadastroIndividualActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -284,7 +285,7 @@
 
 
                     <RadioGroup
-                        android:id="@+id/rgSexo"
+                        android:id="@+id/rg_sexo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -435,7 +436,7 @@
                         android:textColor="@color/colorPrimaryDark" />
 
                     <RadioGroup
-                        android:id="@+id/rg_nacionalidae"
+                        android:id="@+id/rg_nacionalidade"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -781,7 +782,7 @@
                         android:text="Sozinha" />
 
                     <CheckBox
-                        android:id="@+id/cb_outro"
+                        android:id="@+id/cb_fica_outro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Outro" />
@@ -1085,7 +1086,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tem alguma deficiência?"
+                    android:layout_marginBottom="4dp"
                     android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_deficiencia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_deficiencia_sim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sim" />
+
+                    <RadioButton
+                        android:id="@+id/rb_deficiencia_nao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Não" />
+
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1100,19 +1125,19 @@
                         android:orientation="vertical">
 
                         <CheckBox
-                            android:id="@+id/rb_deficiencia_auditiva"
+                            android:id="@+id/cb_deficiencia_auditiva"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Auditiva" />
 
                         <CheckBox
-                            android:id="@+id/rb_deficiencia_visual"
+                            android:id="@+id/cb_deficiencia_visual"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Visual" />
 
                         <CheckBox
-                            android:id="@+id/rb_deficiencia_intelectual"
+                            android:id="@+id/cb_deficiencia_intelectual"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Intelectual/Cognitiva" />
@@ -1126,13 +1151,13 @@
                         android:orientation="vertical">
 
                         <CheckBox
-                            android:id="@+id/rb_deficiencia_fisica"
+                            android:id="@+id/cb_deficiencia_fisica"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Física" />
 
                         <CheckBox
-                            android:id="@+id/rb_deficiencia_outra"
+                            android:id="@+id/cb_deficiencia_outra"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Outra" />
@@ -2167,6 +2192,7 @@
                 android:textColor="@color/colorPrimaryDark" />
 
             <EditText
+                android:id="@+id/et_outras_condicoes_saude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/field_margin"
@@ -2631,7 +2657,7 @@
 
 
             <Button
-                android:id="@+id/btn_gravar_cadastro_dt"
+                android:id="@+id/btn_gravar_cadastro_individual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

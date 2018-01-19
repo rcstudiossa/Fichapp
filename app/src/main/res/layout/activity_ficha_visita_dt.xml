@@ -283,7 +283,7 @@
 
 
                     <RadioGroup
-                        android:id="@+id/rgSexo"
+                        android:id="@+id/rg_sexo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">

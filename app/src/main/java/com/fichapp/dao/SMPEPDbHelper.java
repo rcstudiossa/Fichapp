@@ -44,7 +44,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             ", data_registro DATE, turno CHAR(1)" +
             ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo char(1), raca INTEGER, etnia VARCHAR, nis VARCHAR" +
             ", nome_mae VARCHAR, flag_mae_desconhecido BOOLEAN, nome_pai VARCHAR, flag_pai_desconhecido BOOLEAN" +
-            ", nascimento DATE, pais_nascimento VARCHAR, municipio_uf_nascimento VARCHAR, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
+            ", nacionalidade INTEGER, pais_nascimento VARCHAR, municipio_uf_nascimento VARCHAR, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
             ", telefone_celular VARCHAR, email_cidadao VARCHAR" +
             ", parentesco_responsavel_familiar INTEGER, ocupacao VARCHAR, flag_frequenta_escola BOOLEAN, curso_mais_elevado INTEGER, situacao_mercado INTEGER" +
             ", flag_fica_com_adulto_responsavel BOOLEAN, flag_fica_com_outras_criancas BOOLEAN, flag_fica_com_adolescente BOOLEAN, flag_fica_em_creche BOOLEAN, flag_fica_sozinha BOOLEAN, flag_fica_outro BOOLEAN" +

@@ -35,7 +35,7 @@ public class FichaCadastroIndividualModel implements Serializable{
     private String nomePai;
     private Boolean flagPaiDesconhecido;
 
-    private Integer nascimento;
+    private Integer nacionalidade;
     private String paisNascimento;
     private String municipioUfNascimento;
     private String portariaNaturalizacao;
@@ -136,7 +136,7 @@ public class FichaCadastroIndividualModel implements Serializable{
     private Boolean flagAcompanhadoInstituicao;
     private String qualInstituicao;
     private Boolean flagVisitaFamiliar;
-    private Integer grauParentesco;
+    private String grauParentesco;
 
     private Boolean flagAcessoHigienePessoal;
     private Boolean flagAcessoBanho;
@@ -300,11 +300,11 @@ public class FichaCadastroIndividualModel implements Serializable{
         this.flagPaiDesconhecido = flagPaiDesconhecido;
     }
 
-    public Integer getNascimento() {
-        return nascimento;
+    public Integer getNacionalidade() {
+        return nacionalidade;
     }
-    public void setNascimento(Integer nascimento) {
-        this.nascimento = nascimento;
+    public void setNacionalidade(Integer nacionalidade) {
+        this.nacionalidade = nacionalidade;
     }
 
     public String getPaisNascimento() {
@@ -895,10 +895,10 @@ public class FichaCadastroIndividualModel implements Serializable{
         this.flagVisitaFamiliar = flagVisitaFamiliar;
     }
 
-    public Integer getGrauParentesco() {
+    public String getGrauParentesco() {
         return grauParentesco;
     }
-    public void setGrauParentesco(Integer grauParentesco) {
+    public void setGrauParentesco(String grauParentesco) {
         this.grauParentesco = grauParentesco;
     }
 
