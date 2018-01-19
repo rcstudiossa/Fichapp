@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 
 import com.fichapp.fragment.CNESFragment;
 import com.fichapp.fragment.FichaCadastroDTFragment;
-import com.fichapp.fragment.FichaCadastroIDVFragment;
+import com.fichapp.fragment.FichaCadastroIndividualFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
@@ -79,7 +79,7 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
                 setContent(new FichaVisitaDTFragment());
                 getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
 
-            } else if (fragment.equals("FichaCadastroIDVFragment")) {
+            } else if (fragment.equals("FichaCadastroIndividualFragment")) {
                 setContent(new FichaVisitaDTFragment());
                 getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
 
@@ -110,7 +110,7 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
                 } else if (getFragmentClass().equals(FichaCadastroDTFragment.class)) {
                     Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
                     startActivity(intent);
-                } else if (getFragmentClass().equals(FichaCadastroIDVFragment.class)) {
+                } else if (getFragmentClass().equals(FichaCadastroIndividualFragment.class)) {
                     Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
                     startActivity(intent);
                 }
@@ -195,7 +195,7 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
             getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
 
         } else if (id == R.id.nav_ficha_cadastro_idv) {
-            setContent(new FichaCadastroIDVFragment());
+            setContent(new FichaCadastroIndividualFragment());
             getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
 
         }

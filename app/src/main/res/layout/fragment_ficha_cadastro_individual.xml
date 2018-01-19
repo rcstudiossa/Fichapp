@@ -2,12 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fichapp.fragment.FichaCadastroIDVFragment">
+    tools:context="com.fichapp.fragment.FichaCadastroIndividualFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_ficha_cadastro_individual"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:clipToPadding="false"
+        android:paddingStart="12dp"
+        android:paddingEnd="2dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideInset"
+        tools:listitem="@layout/item_rv_ficha_cadastro_dt" />
 
 </FrameLayout>
