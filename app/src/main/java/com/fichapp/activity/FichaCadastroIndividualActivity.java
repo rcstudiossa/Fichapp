@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -37,6 +38,8 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
 
     private ProfissionalModel profissionalModel;
     private CNESModel cnesModel;
+
+    private Toolbar toolbar;
 
     private Spinner spRaca;
     private Spinner spParentesco;
@@ -224,12 +227,12 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_ficha_cadastro_individual);
 
-        getSupportActionBar().setTitle("Cadastro Individual");
 
         this.definirComponentes();
+
+        this.configToolbar();
 
         this.instanciarFichaVisitaDTModel();
 
@@ -239,7 +242,7 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
 
         this.lerRadios();
 
-        btnGravar.setOnClickListener(new View.OnClickListener() {
+        this.btnGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
@@ -373,6 +376,8 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         this.fichaCadastroIndividualBS = new FichaCadastroIndividualBS(getApplication());
 
         this.profissionalModel = new ProfissionalModel();
@@ -424,6 +429,26 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         itemRgTuberculose = rgTuberculose.indexOfChild(findViewById(rgTuberculose.getCheckedRadioButtonId()));
         itemRgTurno = rgTurno.indexOfChild(findViewById(rgTurno.getCheckedRadioButtonId()));
         itemRgVisitaFamiliar = rgVisitaFamiliar.indexOfChild(findViewById(rgVisitaFamiliar.getCheckedRadioButtonId()));
+
+    }
+
+    private void configToolbar() {
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Cadastro Individual");
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FichaCadastroIndividualActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "FichaCadastroIndividualFragment");
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

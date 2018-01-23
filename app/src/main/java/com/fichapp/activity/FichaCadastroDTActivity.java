@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,6 +37,8 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
     private ProfissionalModel profissionalModel;
     private CNESModel cnesModel;
+
+    private Toolbar toolbar;
 
     private Spinner spTipoImovel;
     private Spinner spSituacaoMoradia;
@@ -101,11 +104,11 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_cadastro_dt);
 
-        getSupportActionBar().setTitle("Cadastro Domiciliar/Territorial");
-
         this.instanciarFichaVisitaDTModel();
 
         this.definirComponentes();
+
+        this.configToolbar();
 
         this.carregarSpinners();
 
@@ -178,7 +181,30 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         this.fichaCadastroDTBS = new FichaCadastroDTBS(getApplication());
+
+    }
+
+    private void configToolbar() {
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Cadastro Domiciliar/Territorial");
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FichaCadastroDTActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "FichaCadastroDTFragment");
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 

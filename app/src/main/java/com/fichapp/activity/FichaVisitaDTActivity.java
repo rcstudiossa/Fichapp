@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     private List<ProfissionalModel> profissionais;
     private List<CNESModel> hospitais;
+
+    private Toolbar toolbar;
 
     private Spinner spinnerProfissional;
     private Spinner spinnerHospital;
@@ -115,74 +118,43 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_visita_dt);
 
-        getSupportActionBar().setTitle("Visita Domiciliar/Territorial");
+        this.definirComponentes();
 
-        final Calendar registroCalendar = Calendar.getInstance();
-        final Calendar nascimentoCalendar = Calendar.getInstance();
+        this.configDatas();
+
+        this.configToolbar();
+
+        this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
+
+        this.carregarCombos();
+
+        this.instanciarFichaVisitaDTModel();
+
+        this.btnGravar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gravar();
+            }
+        });
+
+    }
+
+    private void definirComponentes () {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         spinnerProfissional = (Spinner) findViewById(R.id.spinner_profissional);
         spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
         etINE = (EditText) findViewById(R.id.et_ine);
-
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
-
-        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataRegistro, registroCalendar);
-            }
-        };
-
-        etDataRegistro.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro, registroCalendar
-                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-
         rbTurnoM = (RadioButton) findViewById(R.id.rb_turno_m);
         rbTurnoT = (RadioButton) findViewById(R.id.rb_turno_t);
         rbTurnoN = (RadioButton) findViewById(R.id.rb_turno_n);
         etMicroarea = (EditText) findViewById(R.id.et_microarea);
         spinnerTipoImovel = (Spinner) findViewById(R.id.spinner_tipo_imovel);
-
         etProntuario = (EditText) findViewById(R.id.et_prontuario);
         etCnsCidadao = (EditText) findViewById(R.id.et_cns);
-
-
         etNascimento = (EditText) findViewById(R.id.et_data_nascimento);
-
-        final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etNascimento, nascimentoCalendar);
-            }
-        };
-
-        etNascimento.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento, nascimentoCalendar
-                        .get(Calendar.YEAR), nascimentoCalendar.get(Calendar.MONTH),
-                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
         rbSexoM = (RadioButton) findViewById(R.id.rb_sexo_m);
         rbSexoF = (RadioButton) findViewById(R.id.rb_sexo_f);
         cbVisitaCompartilhada = (CheckBox) findViewById(R.id.visita_outro_profissional);
@@ -239,18 +211,78 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
         rodape = (LinearLayout) findViewById(R.id.include_rodape);
 
-        rodape.setVisibility(View.GONE);
 
-        this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
+    }
 
-        carregarCombos();
+    private void configDatas() {
 
-        this.instanciarFichaVisitaDTModel();
+        final Calendar registroCalendar = Calendar.getInstance();
 
-        btnGravar.setOnClickListener(new View.OnClickListener() {
+        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View view) {
-                gravar();
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                registroCalendar.set(Calendar.YEAR, year);
+                registroCalendar.set(Calendar.MONTH, monthOfYear);
+                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataRegistro, registroCalendar);
+            }
+        };
+
+        etDataRegistro.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro, registroCalendar
+                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
+                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
+        final Calendar nascimentoCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                registroCalendar.set(Calendar.YEAR, year);
+                registroCalendar.set(Calendar.MONTH, monthOfYear);
+                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etNascimento, nascimentoCalendar);
+            }
+        };
+
+        etNascimento.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento, nascimentoCalendar
+                        .get(Calendar.YEAR), nascimentoCalendar.get(Calendar.MONTH),
+                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+    }
+
+    private void configToolbar() {
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Visita Domiciliar/Territorial");
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FichaVisitaDTActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "FichaVisitaDTFragment");
+                startActivity(intent);
+                finish();
             }
         });
 
