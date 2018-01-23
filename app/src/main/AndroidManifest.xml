@@ -38,6 +38,7 @@
         <activity
             android:name=".activity.CNESActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.ProfissionalActivity"

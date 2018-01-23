@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,10 +12,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.fichapp.fragment.CNESFragment;
 import com.fichapp.model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.util.Utilitario;
+
+import static android.support.v7.appcompat.R.styleable.MenuItem;
 
 public class CNESActivity extends AppCompatActivity {
 
@@ -24,38 +28,65 @@ public class CNESActivity extends AppCompatActivity {
     private EditText nomeET;
     private CheckBox mFlagAtivo;
     private Button gravarBT;
+    private Toolbar toolbar;
     private Integer qtdNome = 1;
     private Integer qtdCnes = 7;
-
 
     public CNESActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cnes);
 
-        getSupportActionBar().setTitle("Cadastro de Hospital");
 
-        gravarBT = (Button) findViewById(R.id.bt_gravar);
-        cnesET = (EditText) findViewById(R.id.codigo);
-        nomeET = (EditText) findViewById(R.id.et_nome);
-        mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
+        this.definirComponentes();
 
-        cnesbs = new CNESBS(getApplicationContext());
+        this.configToolbar();
+
+        this.cnesbs = new CNESBS(getApplicationContext());
 
         this.instanciarCNESModel();
 
-        gravarBT.setOnClickListener(new View.OnClickListener() {
+        this.gravarBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
             }
         });
 
-        leitorCampos();
+        this.leitorCampos();
+
+    }
+
+    private void definirComponentes() {
+
+        this.gravarBT = (Button) findViewById(R.id.bt_gravar);
+        this.cnesET = (EditText) findViewById(R.id.codigo);
+        this.nomeET = (EditText) findViewById(R.id.et_nome);
+        this.mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+    }
+
+    private void configToolbar() {
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Cadastro de Hospital");
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CNESActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "CNESFragment");
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -119,7 +150,6 @@ public class CNESActivity extends AppCompatActivity {
 
     }
 
-
     private void leitorCampos() {
 
         qtdNome = 0;
@@ -132,6 +162,7 @@ public class CNESActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -148,6 +179,7 @@ public class CNESActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
             }
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -160,7 +192,6 @@ public class CNESActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void validadorBotao() {
 
