@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
 
-        this.carregarCombos();
+        //this.carregarCombos();
 
     }
 
@@ -108,9 +108,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         ProfissionalModel profissionalModel = new ProfissionalModel(usuarioET.getText().toString(), senhaET.getText().toString());
+        profissionalModel.setFlagAdministrador(false);
         ProfissionalBS profissionalBS = new ProfissionalBS(this);
 
-        profissionalModel = profissionalBS.obterProfissionalLogado(profissionalModel, (CNESModel) spinnerHospital.getSelectedItem());
+        profissionalModel = profissionalBS.obterProfissionalLogado(profissionalModel);
 
         if (!Utilitario.isEmpty(profissionalModel) && !Utilitario.isEmpty(profissionalModel.getId())) {
 

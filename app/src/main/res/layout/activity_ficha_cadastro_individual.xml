@@ -174,7 +174,7 @@
                 android:layout_marginStart="@dimen/field_margin">
 
                 <EditText
-                    android:id="@+id/et_responsavel_familiar"
+                    android:id="@+id/et_cns_responsavel_familiar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="CNS do Responsável Familiar"
@@ -756,7 +756,7 @@
                         android:text="Outra(s) Criança(s)" />
 
                     <CheckBox
-                        android:id="@+id/cb_adolescente"
+                        android:id="@+id/cb_fica_com_adolescente"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Adolescente" />
@@ -1775,7 +1775,7 @@
                 </RadioGroup>
 
                 <CheckBox
-                    android:id="@+id/cb_insuficiencia_respiratoria"
+                    android:id="@+id/cb_doenca_respiratoria_asma"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -2383,7 +2383,7 @@
 
 
                 <RadioGroup
-                    android:id="@+id/rg_frquencia_alimentacao"
+                    android:id="@+id/rg_frequencia_alimentacao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

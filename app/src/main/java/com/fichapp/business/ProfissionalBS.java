@@ -66,4 +66,8 @@ public class ProfissionalBS {
         return this.profissionalDAO.obterProfissionalLogado(profissionalModel, cnesModel);
     }
 
+    public ProfissionalModel obterProfissionalLogado(ProfissionalModel profissionalModel) {
+        return this.profissionalDAO.obterProfissionalLogado(profissionalModel);
+    }
+
 }

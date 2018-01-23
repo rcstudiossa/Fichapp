@@ -35,8 +35,8 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
     private FichaCadastroIndividualModel fichaCadastroIndividualModel;
     private FichaCadastroIndividualBS fichaCadastroIndividualBS;
 
-    private List<ProfissionalModel> profissionais;
-    private List<CNESModel> hospitais;
+    private ProfissionalModel profissionalModel;
+    private CNESModel cnesModel;
 
     private Spinner spRaca;
     private Spinner spParentesco;
@@ -224,14 +224,14 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ficha_cadastro_individual);
 
+        setContentView(R.layout.activity_ficha_cadastro_individual);
 
         getSupportActionBar().setTitle("Cadastro Individual");
 
-        this.instanciarFichaVisitaDTModel();
-
         this.definirComponentes();
+
+        this.instanciarFichaVisitaDTModel();
 
         this.carregarSpinners();
 
@@ -254,7 +254,7 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         //EditTexts
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
         etCnsCidadao = (EditText) findViewById(R.id.et_cns);
-        etCnsResponsavelFamiliar = (EditText) findViewById(R.id.et_cns_responsavel);
+        etCnsResponsavelFamiliar = (EditText) findViewById(R.id.et_cns_responsavel_familiar);
         etMicroarea = (EditText) findViewById(R.id.et_microarea);
         etNomeCompleto = (EditText) findViewById(R.id.et_nome);
         etNomeSocial = (EditText) findViewById(R.id.et_nome_social);
@@ -301,7 +301,7 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         rgDoencaCardiaca = (RadioGroup) findViewById(R.id.rg_doenca_cardiaca);
         rgDoencaRespiratoria = (RadioGroup) findViewById(R.id.rg_doenca_respiratoria);
         rgDomiciliado = (RadioGroup) findViewById(R.id.rg_domiciliado);
-        rgFrequenciaAlimentacao = (RadioGroup) findViewById(R.id.rg_frquencia_alimentacao);
+        rgFrequenciaAlimentacao = (RadioGroup) findViewById(R.id.rg_frequencia_alimentacao);
         rgFrequentaCuidador = (RadioGroup) findViewById(R.id.rg_frequenta_cuidador);
         rgFrequentaEscola = (RadioGroup) findViewById(R.id.rg_frequenta_escola);
         rgFumante = (RadioGroup) findViewById(R.id.rg_fumante);
@@ -344,13 +344,13 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         cbAlimentacaoDoacaoRestaurante = (CheckBox) findViewById(R.id.cb_doacao_restaurante);
         cbAlimentacaoOutras = (CheckBox) findViewById(R.id.cb_alimentacao_outras);
         cbAlimentacaoRestaurantePopular = (CheckBox) findViewById(R.id.cb_restaurante_popular);
-        cbAsma = (CheckBox) findViewById(R.id.cb_asma);
+        cbAsma = (CheckBox) findViewById(R.id.cb_doenca_respiratoria_asma);
         cbDeficienciaAuditiva = (CheckBox) findViewById(R.id.cb_deficiencia_auditiva);
         cbDeficienciaFisica = (CheckBox) findViewById(R.id.cb_deficiencia_fisica);
         cbDeficienciaIntelectual = (CheckBox) findViewById(R.id.cb_deficiencia_intelectual);
         cbDeficienciaVisual = (CheckBox) findViewById(R.id.cb_deficiencia_visual);
-        cbEnfisema = (CheckBox) findViewById(R.id.cb_dpoc_enfisema);
-        cbFicaComAdolescente = (CheckBox) findViewById(R.id.cb_adolescente);
+        cbEnfisema = (CheckBox) findViewById(R.id.cb_doenca_respiratoria_enfisema);
+        cbFicaComAdolescente = (CheckBox) findViewById(R.id.cb_fica_com_adolescente);
         cbFicaComAdultoResponsavel = (CheckBox) findViewById(R.id.cb_adulto_responsavel);
         cbFicaComOutrasCriancas = (CheckBox) findViewById(R.id.cb_outras_criancas);
         cbFicaEmCreche = (CheckBox) findViewById(R.id.cb_creche);
@@ -372,6 +372,11 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_individual);
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
+
+        this.fichaCadastroIndividualBS = new FichaCadastroIndividualBS(getApplication());
+
+        this.profissionalModel = new ProfissionalModel();
+        this.cnesModel = new CNESModel();
 
     }
 
@@ -597,16 +602,14 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         if (this.fichaCadastroIndividualModel == null) {
             this.fichaCadastroIndividualModel = new FichaCadastroIndividualModel();
         } else {
-            setModelToActivity();
+            this.setModelToActivity();
         }
 
     }
 
     private void gravar() {
 
-        if (!validaCampos()) {
-            return;
-        }
+        //if (!validaCampos()) { return; }
 
         setActivityToModel();
 
@@ -629,21 +632,27 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
         if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
 
             if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
-                Snackbar.make(getCurrentFocus(), "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(btnGravar, "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
                 valido = false;
             }
 
         } else {
-            Snackbar.make(getCurrentFocus(), "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(btnGravar, "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
 
         if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(btnGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
 
         return valido;
+
+    }
+
+    private void desabilitarCampos() {
+
+
 
     }
 

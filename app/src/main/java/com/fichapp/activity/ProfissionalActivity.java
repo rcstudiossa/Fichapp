@@ -7,14 +7,20 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.fichapp.business.CNESBS;
+import com.fichapp.model.CNESModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
 import com.fichapp.util.Utilitario;
+
+import java.util.List;
 
 public class ProfissionalActivity extends AppCompatActivity {
 
@@ -35,7 +41,10 @@ public class ProfissionalActivity extends AppCompatActivity {
     private EditText senhaET;
     private EditText confirmarSenhaET;
     private CheckBox mFlagAtivo;
+    private Spinner spinnerHospital;
     private Button gravarBT;
+
+    List<CNESModel> hospitais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +62,11 @@ public class ProfissionalActivity extends AppCompatActivity {
         senhaET = (EditText) findViewById(R.id.et_senha);
         confirmarSenhaET = (EditText) findViewById(R.id.et_confirmar_senha);
         mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
+        spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
 
         this.profissionalBS = new ProfissionalBS(getApplicationContext());
+
+        this.carregarCombos();
 
         this.instanciarProfissionalModel();
 
@@ -81,7 +93,19 @@ public class ProfissionalActivity extends AppCompatActivity {
             cnsET.setText(this.profissionalModel.getCns());
             nomeET.setText(this.profissionalModel.getNome());
             mFlagAtivo.setChecked(this.profissionalModel.getFlagAtivo());
+            spinnerHospital.setSelection(this.hospitais.indexOf(new CNESModel(this.profissionalModel.getCnesModel().getId())));
         }
+
+    }
+
+    private void carregarCombos() {
+
+        CNESBS cnesBS = new CNESBS(this);
+        hospitais = cnesBS.pesquisarAtivos();
+        hospitais.add(0, new CNESModel("Selecione o CNES"));
+        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
+        spinnerHospital.setAdapter(adapterHospital);
+        adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
     }
 
@@ -121,6 +145,10 @@ public class ProfissionalActivity extends AppCompatActivity {
             aviso = Utilitario.addAviso("As senhas não conferem", aviso);
             valido = false;
         }
+        if (Utilitario.isEmpty(spinnerHospital.getSelectedItem()) && Utilitario.isEmpty(((CNESModel)spinnerHospital.getSelectedItem()).getId())) {
+            aviso = Utilitario.addAviso("O CNES está vazio", aviso);
+            valido = false;
+        }
 
         if (!valido) {
             Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
@@ -141,6 +169,7 @@ public class ProfissionalActivity extends AppCompatActivity {
         this.profissionalModel.setUsuario(usuarioET.getText().toString());
         this.profissionalModel.setSenha(senhaET.getText().toString());
         this.profissionalModel.setFlagAtivo(mFlagAtivo.isChecked());
+        this.profissionalModel.setCnesModel((CNESModel) spinnerHospital.getSelectedItem());
 
         profissionalBS.gravar(this.profissionalModel);
 

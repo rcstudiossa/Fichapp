@@ -32,6 +32,11 @@ public class CNESModel implements Serializable {
         this.flagAtivo = flagAtivo;
     }
 
+    public CNESModel(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -67,6 +72,22 @@ public class CNESModel implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CNESModel cnesModel = (CNESModel) o;
+
+        return id != null ? id.equals(cnesModel.id) : cnesModel.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
@@ -78,5 +99,6 @@ public class CNESModel implements Serializable {
         sb.append(this.nome);
 
         return sb.toString();
+
     }
 }

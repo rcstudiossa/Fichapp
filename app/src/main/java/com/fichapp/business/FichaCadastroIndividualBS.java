@@ -17,8 +17,7 @@ public class FichaCadastroIndividualBS {
 
     FichaCadastroIndividualDAO FichaCadastroIndividualDAO;
 
-    public FichaCadastroIndividualBS() {
-    }
+    public FichaCadastroIndividualBS() {}
 
     public FichaCadastroIndividualBS(Context context) {
         SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);

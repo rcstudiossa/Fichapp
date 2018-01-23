@@ -15,7 +15,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_CNES = "CREATE TABLE IF NOT EXISTS cnes (id INTEGER PRIMARY KEY, codigo VARCHAR, nome VARCHAR, flag_ativo BOOLEAN);";
     public static final String SQL_DELETE_CNES = "DROP TABLE IF EXISTS cnes;";
 
-    public static final String SQL_CREATE_PROFISSIONAL = "CREATE TABLE IF NOT EXISTS profissional (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN, usuario VARCHAR UNIQUE, senha VARCHAR, flag_administrador BOOLEAN);";
+    public static final String SQL_CREATE_PROFISSIONAL = "CREATE TABLE IF NOT EXISTS profissional (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN, usuario VARCHAR UNIQUE, senha VARCHAR, flag_administrador BOOLEAN, CNES_ID INTEGER);";
     public static final String SQL_DELETE_PROFISSIONAL = "DROP TABLE IF EXISTS profissional;";
 
     public static final String SQL_CREATE_PROFISSIONAL_CNES = "CREATE TABLE IF NOT EXISTS profissional_cnes (id INTEGER PRIMARY KEY, profissional_id INTEGER not null, cnes_id INTEGER not null, flag_ativo BOOLEAN);";
@@ -66,7 +66,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public static final String SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL = "DROP TABLE IF EXISTS ficha_cadastro_individual;";
 
 
-    public static final String SQL_INSERT_PROFISSIONAL = "INSERT INTO profissional (id, nome, flag_ativo, usuario, senha, flag_administrador) values (1, 'smpep', 1, 'smpep', 'topsys', 1);";
+    public static final String SQL_INSERT_PROFISSIONAL = "INSERT INTO profissional (id, nome, flag_ativo, usuario, senha, flag_administrador, cnes_id) values (1, 'smpep', 1, 'smpep', 'topsys', 1, 1);";
 
 
 
@@ -77,8 +77,8 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //db.execSQL(SQL_CREATE_CNES);
-        //db.execSQL(SQL_CREATE_PROFISSIONAL);
-        //db.execSQL(SQL_INSERT_PROFISSIONAL);
+        db.execSQL(SQL_CREATE_PROFISSIONAL);
+        db.execSQL(SQL_INSERT_PROFISSIONAL);
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
@@ -89,11 +89,11 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         //db.execSQL(SQL_DELETE_CNES);
-        //db.execSQL(SQL_DELETE_PROFISSIONAL);
+        db.execSQL(SQL_DELETE_PROFISSIONAL);
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
-        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
+        db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }
 

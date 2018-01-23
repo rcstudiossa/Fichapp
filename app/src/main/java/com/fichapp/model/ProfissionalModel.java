@@ -24,12 +24,13 @@ public class ProfissionalModel implements Serializable{
         this.id = id;
     }
 
-    public ProfissionalModel(Long id, String codigo, String cns, String nome, Boolean flagAtivo) {
+    public ProfissionalModel(Long id, String cbo, String cns, String nome, Boolean flagAtivo, Long cnesId) {
         this.id = id;
-        this.cbo = codigo;
+        this.cbo = cbo;
         this.cns = cns;
         this.nome = nome;
         this.flagAtivo = flagAtivo;
+        this.cnesModel = new CNESModel(cnesId);
     }
 
     public ProfissionalModel(String usuario, String senha) {

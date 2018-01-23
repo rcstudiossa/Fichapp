@@ -34,8 +34,8 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
     private FichaCadastroDTModel fichaCadastroDTModel;
     private FichaCadastroDTBS fichaCadastroDTBS;
 
-    private List<ProfissionalModel> profissionais;
-    private List<CNESModel> hospitais;
+    private ProfissionalModel profissionalModel;
+    private CNESModel cnesModel;
 
     private Spinner spTipoImovel;
     private Spinner spSituacaoMoradia;
@@ -178,6 +178,8 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
+        this.fichaCadastroDTBS = new FichaCadastroDTBS(getApplication());
+
     }
 
     private void lerRadios() {
@@ -282,9 +284,7 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
     private void gravar() {
 
-        if (!validaCampos()) {
-            return;
-        }
+        //if (!validaCampos()) { return; }
 
         setActivityToModel();
 
@@ -312,8 +312,6 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         return valido;
 
     }
-
-
 
     private void setModelToActivity() {
 
@@ -360,6 +358,13 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
         } catch (ParseException e) {
             Toast.makeText(getApplication(), "Data de registro cadastrada errada.", Toast.LENGTH_LONG).show();
         }
+
+        if (etQuantidadeAnimais.getText().toString().isEmpty()) {
+            etQuantidadeAnimais.setText("0");
+        }
+
+        this.fichaCadastroDTModel.setProfissionalModel((ProfissionalModel) this.fichaCadastroDTModel.getProfissionalModel());
+        this.fichaCadastroDTModel.setCnesModel((CNESModel) this.fichaCadastroDTModel.getCnesModel());
 
         //EditTexts
         this.fichaCadastroDTModel.setCep(etCep.getText().toString());

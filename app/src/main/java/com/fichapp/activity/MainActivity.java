@@ -86,8 +86,8 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
             }
 
         } else {
-            setContent(new FichaVisitaDTFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
+            setContent(new FichaCadastroIndividualFragment());
+            getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
         }
 
         atualizarRodape();

@@ -348,7 +348,6 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
         rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
-
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
         etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
