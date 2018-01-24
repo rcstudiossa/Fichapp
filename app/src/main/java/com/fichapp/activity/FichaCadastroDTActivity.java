@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -113,6 +114,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.configToolbar();
 
         this.carregarSpinners();
+
+        this.desabilitaCampos();
 
         this.configData();
 
@@ -327,6 +330,16 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         finish();
 
     }
+
+    private void desabilitaCampos() {
+
+        this.desabilitaEditText(cbSemNumero, etNumero);
+        this.desabilitaEditText(cbForaDeArea, etMicroarea);
+
+        this.desabilitaEditText(rgTemAnimais, 1, etQuantidadeAnimais);
+
+    }
+
 
     private boolean validaCampos() {
 

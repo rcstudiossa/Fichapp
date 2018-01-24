@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -335,8 +335,8 @@
                         android:id="@+id/tv_tipo_imovel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tipo de Imóvel"
                         android:layout_marginBottom="6dp"
+                        android:text="Tipo de Imóvel"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -405,8 +405,8 @@
                         android:id="@+id/tv_situacao_moradia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Situação de moradia/Posse de terra"
                         android:layout_marginBottom="6dp"
+                        android:text="Situação de moradia/Posse de terra"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -573,8 +573,8 @@
                         android:id="@+id/tv_condicao_posse_terra"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Condição de posse e uso de terra"
                         android:layout_marginBottom="6dp"
+                        android:text="Condição de posse e uso de terra"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -603,8 +603,8 @@
                             android:id="@+id/tv_numero_moradores"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nº de moradores"
                             android:layout_marginBottom="6dp"
+                            android:text="Nº de moradores"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <Spinner
@@ -626,8 +626,8 @@
                             android:id="@+id/tv_numero_comodos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Nº de cômodos"
                             android:layout_marginBottom="6dp"
+                            android:text="Nº de cômodos"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <Spinner
@@ -650,8 +650,8 @@
                         android:id="@+id/tv_material_paredes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Material das paredes externas do domicílio"
                         android:layout_marginBottom="6dp"
+                        android:text="Material das paredes externas do domicílio"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -711,8 +711,8 @@
                         android:id="@+id/tv_abastecimento_agua"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Abastecimento de Água"
                         android:layout_marginBottom="6dp"
+                        android:text="Abastecimento de Água"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -733,8 +733,8 @@
                         android:id="@+id/tv_agua_consumo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Água para consumo no domicílio"
                         android:layout_marginBottom="6dp"
+                        android:text="Água para consumo no domicílio"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -755,8 +755,8 @@
                         android:id="@+id/tv_escoamento_banheiro"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Forma de escoamento do banheiro ou sanitário"
                         android:layout_marginBottom="6dp"
+                        android:text="Forma de escoamento do banheiro ou sanitário"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -777,8 +777,8 @@
                         android:id="@+id/tv_destino_lixo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Destino do lixo"
                         android:layout_marginBottom="6dp"
+                        android:text="Destino do lixo"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner

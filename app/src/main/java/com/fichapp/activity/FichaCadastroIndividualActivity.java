@@ -3,7 +3,6 @@ package com.fichapp.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.fichapp.util.Utilitario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -71,6 +69,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgNacionalidade;
     private EditText etPaisNascimento;
     private EditText etMunicipioUfNascimento;
+    private LinearLayout llNaturalizacao;
     private EditText etPortariaNaturalizacao;
     private EditText etDataNaturalizacao;
     private EditText etDataEntrada;
@@ -97,6 +96,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgInformarOrientacao;
     private RadioGroup rgInformarIdentidadeGenero;
 
+    private LinearLayout llTemDeficiencia;
     private RadioGroup rgDeficiencia;
     private CheckBox cbDeficienciaAuditiva;
     private CheckBox cbDeficienciaVisual;
@@ -120,16 +120,19 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgAvcDerrame;
     private RadioGroup rgInfarto;
 
+    private LinearLayout llDoencaCardiaca;
     private RadioGroup rgDoencaCardiaca;
     private CheckBox cbInsuficienciaCardiaca;
     private CheckBox cbOutraDoencaCardiaca;
     private CheckBox cbNaoSabeDoencaCardiaca;
 
+    private LinearLayout llProblemaRins;
     private RadioGroup rgProblemaRins;
     private CheckBox cbInsuficienciaRenal;
     private CheckBox cbOutroProblemaRins;
     private CheckBox cbNaoSabeProblemaRins;
 
+    private LinearLayout llDoencaRespiratoria;
     private RadioGroup rgDoencaRespiratoria;
     private CheckBox cbAsma;
     private CheckBox cbEnfisema;
@@ -166,6 +169,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgVisitaFamiliar;
     private EditText etGrauParentesco;
 
+    private LinearLayout llHigienePessoal;
     private RadioGroup rgAcessoHigienePessoal;
     private CheckBox cbAcessoBanho;
     private CheckBox cbAcessoSanitario;
@@ -238,6 +242,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.instanciarFichaVisitaDTModel();
 
         this.carregarSpinners();
+
+        this.desabilitaCampos();
 
         this.configDatas();
 
@@ -372,6 +378,14 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         cbOutraDoencaRespiratoria = (CheckBox) findViewById(R.id.cb_doenca_respiratoria_outra);
         cbOutroProblemaRins = (CheckBox) findViewById(R.id.cb_problema_rins_outra);
         cbPaiDesconhecido = (CheckBox) findViewById(R.id.cb_desconhecido_pai);
+
+        //LinearLayouts
+        llTemDeficiencia = (LinearLayout) findViewById(R.id.ll_tem_deficiencia);
+        llNaturalizacao = (LinearLayout) findViewById(R.id.ll_naturalizacao);
+        llDoencaCardiaca = (LinearLayout) findViewById(R.id.ll_doenca_cardiaca);
+        llProblemaRins = (LinearLayout) findViewById(R.id.ll_problema_rins);
+        llDoencaRespiratoria = (LinearLayout) findViewById(R.id.ll_doenca_respiratoria);
+        llHigienePessoal = (LinearLayout) findViewById(R.id.ll_higiene_pessoal);
 
         btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_individual);
 
@@ -676,9 +690,30 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
-    private void desabilitarCampos() {
+    private void desabilitaCampos() {
 
+        this.desabilitaEditText(rgResponsavelFamiliar, 1, etCnsResponsavelFamiliar);
+        this.desabilitaEditText(rgNacionalidade, 0, etPaisNascimento);
+        this.desabilitaEditText(rgMembroDeComunidade, 1, etQualComunidade);
+        this.desabilitaEditText(rgGestante, 1, etQualMaternidade);
+        this.desabilitaEditText(rgInternado, 1, etQualMotivoInternamento);
+        this.desabilitaEditText(rgPlantasMedicinais, 1, etQuaisPlantas);
+        this.desabilitaEditText(rgAcompanhadoInstituicao, 1, etQualInstituicao);
+        this.desabilitaEditText(rgVisitaFamiliar, 1, etGrauParentesco);
 
+        this.desabilitaEditText(cbForaDeArea, etMicroarea);
+        this.desabilitaEditText(cbMaeDesconhecido, etNomeMae);
+        this.desabilitaEditText(cbPaiDesconhecido, etNomePai);
+
+        this.desabilitaLinearLayout(rgDoencaCardiaca, 1, llDoencaCardiaca);
+        this.desabilitaLinearLayout(rgProblemaRins, 1, llProblemaRins);
+        this.desabilitaLinearLayout(rgDoencaRespiratoria, 1, llDoencaRespiratoria);
+        this.desabilitaLinearLayout(rgAcessoHigienePessoal, 1, llHigienePessoal);
+
+        this.desabilitaSpinner(rgInformarOrientacao, 1, spOrientacao);
+        this.desabilitaSpinner(rgInformarIdentidadeGenero, 1, spGenero);
+
+        this.desabilitaRadioGroup(rgSituacaoRua, 1, rgTempoSituacaoRua);
 
     }
 

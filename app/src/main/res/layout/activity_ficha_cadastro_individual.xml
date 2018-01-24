@@ -523,63 +523,73 @@
 
                 </LinearLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin">
-
-                    <EditText
-                        android:id="@+id/et_portaria_naturalizacao"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Portaria de Naturalização**"
-                        android:inputType="textPersonName" />
-
-                </android.support.design.widget.TextInputLayout>
-
                 <LinearLayout
+                    android:id="@+id/ll_naturalizacao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/field_margin"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:orientation="vertical">
 
                     <android.support.design.widget.TextInputLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="4dp"
-                        android:layout_weight="1">
+                        android:layout_margin="@dimen/field_margin">
 
                         <EditText
-                            android:id="@+id/et_data_naturalizacao"
+                            android:id="@+id/et_portaria_naturalizacao"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="false"
-                            android:hint="Data Naturalização"
-                            android:inputType="date" />
+                            android:hint="Portaria de Naturalização**"
+                            android:inputType="textPersonName" />
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/field_margin"
-                        android:layout_weight="1">
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/field_margin"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                        <EditText
-                            android:id="@+id/et_data_entrada"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="false"
-                            android:hint="Data Entrada"
-                            android:inputType="date" />
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="4dp"
+                            android:layout_weight="1">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/et_data_naturalizacao"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="Data Naturalização"
+                                android:inputType="date" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/field_margin"
+                            android:layout_weight="1">
+
+                            <EditText
+                                android:id="@+id/et_data_entrada"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:hint="Data Entrada"
+                                android:inputType="date" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -1105,6 +1115,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ll_tem_deficiencia"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/field_margin"
@@ -1691,24 +1702,34 @@
 
                     </RadioGroup>
 
-                    <CheckBox
-                        android:id="@+id/cb_insuficiencia_cardiaca"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_doenca_cardiaca"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Insuficiência cardíaca" />
+                        android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_cardiaca_outra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outra" />
+                        <CheckBox
+                            android:id="@+id/cb_insuficiencia_cardiaca"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Insuficiência cardíaca" />
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_cardiaca_nao_sabe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Não sabe" />
+                        <CheckBox
+                            android:id="@+id/cb_doenca_cardiaca_outra"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outra" />
+
+                        <CheckBox
+                            android:id="@+id/cb_doenca_cardiaca_nao_sabe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Não sabe" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
 
@@ -1748,24 +1769,32 @@
 
                     </RadioGroup>
 
-                    <CheckBox
-                        android:id="@+id/cb_insuficiencia_renal"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_problema_rins"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Insuficiência renal" />
+                        android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/cb_problema_rins_outra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outra" />
+                        <CheckBox
+                            android:id="@+id/cb_insuficiencia_renal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Insuficiência renal" />
 
-                    <CheckBox
-                        android:id="@+id/cb_problema_rins_nao_sabe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Não sabe" />
+                        <CheckBox
+                            android:id="@+id/cb_problema_rins_outra"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outra" />
+
+                        <CheckBox
+                            android:id="@+id/cb_problema_rins_nao_sabe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Não sabe" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -1805,30 +1834,38 @@
 
                     </RadioGroup>
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_respiratoria_asma"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_doenca_respiratoria"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Asma" />
+                        android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_respiratoria_enfisema"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DPOC/enfisema" />
+                        <CheckBox
+                            android:id="@+id/cb_doenca_respiratoria_asma"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Asma" />
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_respiratoria_outra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outra" />
+                        <CheckBox
+                            android:id="@+id/cb_doenca_respiratoria_enfisema"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="DPOC/enfisema" />
 
-                    <CheckBox
-                        android:id="@+id/cb_doenca_respiratoria_nao_sabe"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Não sabe" />
+                        <CheckBox
+                            android:id="@+id/cb_doenca_respiratoria_outra"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outra" />
+
+                        <CheckBox
+                            android:id="@+id/cb_doenca_respiratoria_nao_sabe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Não sabe" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -2659,30 +2696,39 @@
 
                     </RadioGroup>
 
-                    <CheckBox
-                        android:id="@+id/cb_banho"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/ll_higiene_pessoal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="Banho" />
+                        android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/cb_acesso_sanitario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Acesso ao sanitário" />
+                        <CheckBox
+                            android:id="@+id/cb_banho"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Banho" />
 
-                    <CheckBox
-                        android:id="@+id/cb_higiene_bucal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Higiene bucal" />
+                        <CheckBox
+                            android:id="@+id/cb_acesso_sanitario"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Acesso ao sanitário" />
 
-                    <CheckBox
-                        android:id="@+id/cb_higiene_pessoal_outras"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Outras" />
+                        <CheckBox
+                            android:id="@+id/cb_higiene_bucal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Higiene bucal" />
+
+                        <CheckBox
+                            android:id="@+id/cb_higiene_pessoal_outras"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Outras" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
