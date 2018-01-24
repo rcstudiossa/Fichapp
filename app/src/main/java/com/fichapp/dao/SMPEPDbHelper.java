@@ -15,14 +15,14 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_CNES = "CREATE TABLE IF NOT EXISTS cnes (id INTEGER PRIMARY KEY, codigo VARCHAR, nome VARCHAR, flag_ativo BOOLEAN);";
     public static final String SQL_DELETE_CNES = "DROP TABLE IF EXISTS cnes;";
 
-    public static final String SQL_CREATE_PROFISSIONAL = "CREATE TABLE IF NOT EXISTS profissional (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN, usuario VARCHAR UNIQUE, senha VARCHAR, flag_administrador BOOLEAN, CNES_ID INTEGER);";
+    public static final String SQL_CREATE_PROFISSIONAL = "CREATE TABLE IF NOT EXISTS profissional (id INTEGER PRIMARY KEY, cbo VARCHAR, cns VARCHAR, nome VARCHAR, flag_ativo BOOLEAN, usuario VARCHAR UNIQUE, senha VARCHAR, flag_administrador BOOLEAN, cnes_id INTEGER, ine VARCHAR);";
     public static final String SQL_DELETE_PROFISSIONAL = "DROP TABLE IF EXISTS profissional;";
 
-    public static final String SQL_CREATE_PROFISSIONAL_CNES = "CREATE TABLE IF NOT EXISTS profissional_cnes (id INTEGER PRIMARY KEY, profissional_id INTEGER not null, cnes_id INTEGER not null, flag_ativo BOOLEAN);";
-    public static final String SQL_DELETE_PROFISSIONAL_CNES = "DROP TABLE IF EXISTS profissional_cnes;";
+    //public static final String SQL_CREATE_PROFISSIONAL_CNES = "CREATE TABLE IF NOT EXISTS profissional_cnes (id INTEGER PRIMARY KEY, profissional_id INTEGER not null, cnes_id INTEGER not null, flag_ativo BOOLEAN);";
+    //public static final String SQL_DELETE_PROFISSIONAL_CNES = "DROP TABLE IF EXISTS profissional_cnes;";
 
     public static final String SQL_CREATE_FICHA_VISITA_DT = "CREATE TABLE IF NOT EXISTS ficha_visita_domiciliar_territorial" +
-        " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, ine VARCHAR, data_registro DATE, turno CHAR(1), microarea CHAR(2), tipo_imovel CHAR(2)" +
+        " (id INTEGER PRIMARY KEY, profissional_id INTEGER, data_registro DATE, turno CHAR(1), microarea CHAR(2), tipo_imovel CHAR(2)" +
         ", prontuario VARCHAR, cns_cidadao VARCHAR, data_nascimento date, sexo char(1), flag_visita_compartilhada boolean, flag_cadastramento  boolean, flag_visita_periodica boolean" +
         ", flag_consulta boolean, flag_exame boolean, flag_vacina boolean, flag_bolsa_familia boolean, flag_gestante boolean, flag_puerpera boolean, flag_recem_nascido boolean, flag_crianca boolean, flag_desnutricao boolean" +
         ", flag_reabilitacao boolean, flag_hipertensao boolean, flag_diabetes boolean, flag_asma boolean, flag_enfisema boolean, flag_cancer boolean, flag_doencas_cronicas boolean, flag_hanseniase boolean, flag_tuberculose boolean" +
@@ -76,10 +76,10 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(SQL_CREATE_CNES);
+        //db.execSQL(SQL_CREATE_CNES);
         db.execSQL(SQL_CREATE_PROFISSIONAL);
         db.execSQL(SQL_INSERT_PROFISSIONAL);
-        db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
+        //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
         db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
@@ -88,12 +88,12 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL(SQL_DELETE_CNES);
+        //db.execSQL(SQL_DELETE_CNES);
         db.execSQL(SQL_DELETE_PROFISSIONAL);
-        db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
+        //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
-        db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
-        db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
+        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
+        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }
 

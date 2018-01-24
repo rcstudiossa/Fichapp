@@ -30,6 +30,7 @@ public class ProfissionalActivity extends TemplateActivity {
 
     private EditText etCbo;
     private EditText etCns;
+    private EditText etIne;
     private EditText etNome;
     private EditText etUsuario;
     private EditText etSenha;
@@ -76,6 +77,7 @@ public class ProfissionalActivity extends TemplateActivity {
         btGravar = (Button) findViewById(R.id.bt_gravar);
         etCbo = (EditText) findViewById(R.id.et_cbo);
         etCns = (EditText) findViewById(R.id.et_cns);
+        etIne = (EditText) findViewById(R.id.et_ine);
         etNome = (EditText) findViewById(R.id.et_nome);
         etUsuario = (EditText) findViewById(R.id.et_usuario);
         etSenha = (EditText) findViewById(R.id.et_senha);
@@ -116,6 +118,7 @@ public class ProfissionalActivity extends TemplateActivity {
         } else {
             etCbo.setText(this.profissionalModel.getCbo());
             etCns.setText(this.profissionalModel.getCns());
+            etIne.setText(this.profissionalModel.getIne());
             etNome.setText(this.profissionalModel.getNome());
             etUsuario.setText(this.profissionalModel.getUsuario());
             etSenha.setText(this.profissionalModel.getSenha());
@@ -193,6 +196,7 @@ public class ProfissionalActivity extends TemplateActivity {
 
         this.profissionalModel.setCbo(etCbo.getText().toString());
         this.profissionalModel.setCns(etCns.getText().toString());
+        this.profissionalModel.setIne(etIne.getText().toString());
         this.profissionalModel.setNome(etNome.getText().toString());
         this.profissionalModel.setUsuario(etUsuario.getText().toString());
         this.profissionalModel.setSenha(etSenha.getText().toString());

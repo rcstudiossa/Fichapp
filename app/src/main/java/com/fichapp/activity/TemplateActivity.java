@@ -173,7 +173,7 @@ public class TemplateActivity extends AppCompatActivity {
     protected void atualizarRodape() {
 
         this.nomeBarTV.setText(prefs.getString("nome", ""));
-        this.cboBarTV.setText(prefs.getString("cbo", ""));
+        this.cboBarTV.setText("CBO:" + prefs.getString("cbo", ""));
         this.hospitalBarTV.setText(prefs.getString("cnes", ""));
 
     }

@@ -15,6 +15,7 @@ public class ProfissionalModel implements Serializable{
     private CNESModel cnesModel;
     private String usuario;
     private String senha;
+    private String ine;
     private Boolean flagAtivo;
     private Boolean flagAdministrador;
 
@@ -108,6 +109,14 @@ public class ProfissionalModel implements Serializable{
 
     public void setFlagAdministrador(Boolean flagAdministrador) {
         this.flagAdministrador = flagAdministrador;
+    }
+
+    public String getIne() {
+        return ine;
+    }
+
+    public void setIne(String ine) {
+        this.ine = ine;
     }
 
     @Override

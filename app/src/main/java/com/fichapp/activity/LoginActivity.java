@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
+        prefs.edit().putLong("id", profissionalModel.getId()).commit();
         prefs.edit().putString("nome", profissionalModel.getNome()).commit();
         prefs.edit().putString("cbo", profissionalModel.getCbo()).commit();
         prefs.edit().putString("cnes", profissionalModel.getCnesModel().getNome()).commit();

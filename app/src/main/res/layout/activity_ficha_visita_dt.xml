@@ -56,51 +56,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/tv_profissional"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="@dimen/field_margin"
-                    android:text="Profissional*"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <Spinner
-                    android:id="@+id/spinner_profissional"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin" />
-
-                <TextView
-                    android:id="@+id/tv_hospital"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/field_margin"
-                    android:layout_marginStart="@dimen/field_margin"
-                    android:text="Hospital*"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <Spinner
-                    android:id="@+id/spinner_hospital"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin">
-
-                    <EditText
-                        android:id="@+id/et_ine"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="INE*"
-                        android:maxLength="10"
-                        android:inputType="number" />
-
-                </android.support.design.widget.TextInputLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

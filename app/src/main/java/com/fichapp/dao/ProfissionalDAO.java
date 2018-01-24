@@ -27,17 +27,17 @@ public class ProfissionalDAO {
 
     public void alterar(ProfissionalModel profissionalModel) {
 
-        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), profissionalModel.getFlagAtivo(), profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha(), profissionalModel.getId()};
+        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), profissionalModel.getFlagAtivo(), profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha(), profissionalModel.getIne(), profissionalModel.getId()};
 
-        db.execSQL("UPDATE profissional SET cbo = ?, cns = ?, nome = ?, flag_ativo = ?, cnes_id = ?, usuario = ?, senha = ? WHERE id = ?;", args);
+        db.execSQL("UPDATE profissional SET cbo = ?, cns = ?, nome = ?, flag_ativo = ?, cnes_id = ?, usuario = ?, senha = ?, ine = ? WHERE id = ?;", args);
 
     }
 
     public void inserir(ProfissionalModel profissionalModel) {
 
-        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), Boolean.TRUE, profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha()};
+        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), Boolean.TRUE, profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha(), profissionalModel.getIne()};
 
-        db.execSQL("INSERT INTO profissional (cbo, cns, nome, flag_ativo, cnes_id, usuario, senha) VALUES(?, ?, ?, ?, ?, ?, ?);", args);
+        db.execSQL("INSERT INTO profissional (cbo, cns, nome, flag_ativo, cnes_id, usuario, senha, ine) VALUES(?, ?, ?, ?, ?, ?, ?, ?);", args);
     }
 
     public void excluir(ProfissionalModel profissionalModel) {
@@ -103,7 +103,7 @@ public class ProfissionalDAO {
         args.add(profissionalModel.getUsuario());
         args.add(profissionalModel.getSenha());
 
-        StringBuilder sb = new StringBuilder("SELECT id, nome, cbo, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id as cnes_id, (select c.nome from cnes c where c.id = p.cnes_id) nome_cnes FROM profissional p WHERE flag_ativo = 1 and usuario = ? and senha = ?");
+        StringBuilder sb = new StringBuilder("SELECT id, nome, cbo, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id, (select c.nome from cnes c where c.id = p.cnes_id) nome_cnes FROM profissional p WHERE flag_ativo = 1 and usuario = ? and senha = ?");
 
         if (profissionalModel.getFlagAdministrador()) {
             sb.append(" AND FLAG_ADMINISTRADOR = 1");
@@ -138,7 +138,7 @@ public class ProfissionalDAO {
 
         List<ProfissionalModel> profissionalList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id as cnes_id FROM profissional id > 1 and order by id;", null);
+        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id FROM profissional id > 1 and order by id;", null);
 
         if (c.moveToFirst()) {
             do {
@@ -158,13 +158,14 @@ public class ProfissionalDAO {
 
         List<ProfissionalModel> profissionalList = new ArrayList<>();
 
-        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id as cnes_id FROM profissional where id > 1 and flag_ativo = 1 order by id;", null);
+        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id, ine FROM profissional where id > 1 and flag_ativo = 1 order by id;", null);
 
         if (c.moveToFirst()) {
             do {
                 ProfissionalModel profissionalModel = new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id")));
                 profissionalModel.setUsuario(c.getString(c.getColumnIndex("usuario")));
                 profissionalModel.setSenha(c.getString(c.getColumnIndex("senha")));
+                profissionalModel.setIne(c.getString(c.getColumnIndex("ine")));
                 profissionalList.add(profissionalModel);
             } while (c.moveToNext());
         }
@@ -183,12 +184,14 @@ public class ProfissionalDAO {
 
         String[] args = {s,s,s};
 
-        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id as cnes_id FROM profissional where id > 1 and flag_ativo = 1 and (upper(nome) like ? or cns like ? or cbo like ?) order by id;", args);
+        Cursor c = db.rawQuery("SELECT id, nome, cbo, cns, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id, ine FROM profissional where id > 1 and flag_ativo = 1 and (upper(nome) like ? or cns like ? or cbo like ?) order by id;", args);
 
         if (c.moveToFirst()) {
             do {
                 ProfissionalModel profissionalModel = new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id")));
                 profissionalModel.setUsuario(c.getString(c.getColumnIndex("usuario")));
+                profissionalModel.setSenha(c.getString(c.getColumnIndex("senha")));
+                profissionalModel.setIne(c.getString(c.getColumnIndex("ine")));
                 profissionalList.add(profissionalModel);
             } while (c.moveToNext());
         }

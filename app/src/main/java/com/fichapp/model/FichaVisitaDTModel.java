@@ -11,8 +11,6 @@ public class FichaVisitaDTModel implements Serializable{
 
     private Long id;
     private ProfissionalModel profissionalModel;
-    private CNESModel cnesModel;
-    private String ine;
     private Date dataRegistro;
     private String turno;
     private String microArea;
@@ -87,22 +85,6 @@ public class FichaVisitaDTModel implements Serializable{
 
     public void setProfissionalModel(ProfissionalModel profissionalModel) {
         this.profissionalModel = profissionalModel;
-    }
-
-    public CNESModel getCnesModel() {
-        return cnesModel;
-    }
-
-    public void setCnesModel(CNESModel cnesModel) {
-        this.cnesModel = cnesModel;
-    }
-
-    public String getIne() {
-        return ine;
-    }
-
-    public void setIne(String ine) {
-        this.ine = ine;
     }
 
     public Date getDataRegistro() {

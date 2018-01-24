@@ -13,7 +13,9 @@ import com.fichapp.activity.FichaVisitaDTActivity;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
+import com.fichapp.util.Utilitario;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,7 +47,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
-        //fichaVisitaDTVH.tvData.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
+        fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -39,7 +39,6 @@
             android:id="@+id/tv_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12/10/2017"
             android:textSize="@dimen/item_rv_text_size"
             android:layout_marginTop="1dp"/>
 

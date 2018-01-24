@@ -449,7 +449,7 @@ public class FichaCadastroIndividualDAO {
 
         FichaCadastroIndividualModel fichaModel = new FichaCadastroIndividualModel();
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setNomeCompleto(c.getString(c.getColumnIndex("nome_completo")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
 
@@ -464,7 +464,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
 
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
 
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
@@ -474,7 +474,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0);
         fichaModel.setNomeCompleto(c.getString(c.getColumnIndex("nome_completo")));
         fichaModel.setNomeSocial(c.getString(c.getColumnIndex("nome_social")));
-        fichaModel.setDataNascimento(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_nascimento"))));
+        fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));
         fichaModel.setSexo(c.getInt(c.getColumnIndex("sexo")));
         fichaModel.setRaca(c.getInt(c.getColumnIndex("raca")));
         fichaModel.setEtnia(c.getString(c.getColumnIndex("etnia")));
@@ -489,8 +489,8 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setPaisNascimento(c.getString(c.getColumnIndex("pais_nascimento")));
         fichaModel.setMunicipioUfNascimento(c.getString(c.getColumnIndex("municipio_uf_nascimento")));
         fichaModel.setPortariaNaturalizacao(c.getString(c.getColumnIndex("portaria_naturalizacao")));
-        fichaModel.setDataNaturalizacao(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_naturalizacao"))));
-        fichaModel.setDataEntrada(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_entrada"))));
+        fichaModel.setDataNaturalizacao(Utilitario.getDate(c.getString(c.getColumnIndex("data_naturalizacao"))));
+        fichaModel.setDataEntrada(Utilitario.getDate(c.getString(c.getColumnIndex("data_entrada"))));
 
         fichaModel.setTelefoneCelular(c.getString(c.getColumnIndex("telefone_celular")));
         fichaModel.setEmailCidadao(c.getString(c.getColumnIndex("email_cidadao")));
@@ -528,7 +528,7 @@ public class FichaCadastroIndividualDAO {
 
         fichaModel.setSaidaCadastro(c.getInt(c.getColumnIndex("saida_cadastro")));
         fichaModel.setNumeroDO(c.getString(c.getColumnIndex("numero_do")));
-        fichaModel.setDataObito(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_obito"))));
+        fichaModel.setDataObito(Utilitario.getDate(c.getString(c.getColumnIndex("data_obito"))));
 
         fichaModel.setFlagGestante(c.getInt(c.getColumnIndex("flag_gestante")) < 1);
         fichaModel.setQualMaternidade(c.getString(c.getColumnIndex("qual_maternidade")));

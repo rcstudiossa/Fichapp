@@ -49,9 +49,16 @@ public final class Utilitario {
 
     }
 
-    public static Date getDataFormatada(String data) {
+    public static String getDataFormatada(Date data) {
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(data);
+
+    }
+
+    public static Date getDate(String data) {
 
         try {
+            //SimpleDateFormat formato = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             return formato.parse(data);
         } catch (ParseException e) {

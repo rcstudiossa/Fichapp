@@ -2,8 +2,8 @@ package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,9 +22,7 @@ import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoImovelModel;
 import com.fichapp.R;
-import com.fichapp.business.CNESBS;
 import com.fichapp.business.FichaVisitaDTBS;
-import com.fichapp.business.ProfissionalBS;
 import com.fichapp.util.Utilitario;
 
 import java.text.ParseException;
@@ -44,9 +42,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private Toolbar toolbar;
 
-    private Spinner spinnerProfissional;
-    private Spinner spinnerHospital;
-    private EditText etINE;
     private EditText etDataRegistro;
     private RadioButton rbTurnoM;
     private RadioButton rbTurnoT;
@@ -145,9 +140,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        spinnerProfissional = (Spinner) findViewById(R.id.spinner_profissional);
-        spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
-        etINE = (EditText) findViewById(R.id.et_ine);
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
         rbTurnoM = (RadioButton) findViewById(R.id.rb_turno_m);
         rbTurnoT = (RadioButton) findViewById(R.id.rb_turno_t);
@@ -235,7 +227,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+
                 new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro, registroCalendar
                         .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
                         registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -250,9 +242,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                nascimentoCalendar.set(Calendar.YEAR, year);
+                nascimentoCalendar.set(Calendar.MONTH, monthOfYear);
+                nascimentoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel(etNascimento, nascimentoCalendar);
             }
         };
@@ -292,7 +284,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void carregarCombos() {
 
-        ProfissionalBS profissionalBS = new ProfissionalBS(this);
+        /*ProfissionalBS profissionalBS = new ProfissionalBS(this);
         this.profissionais = profissionalBS.pesquisarAtivos();
         ArrayAdapter<ProfissionalModel> adapterProfissional = new ArrayAdapter<>(this, R.layout.spinner_item, this.profissionais);
         spinnerProfissional.setAdapter(adapterProfissional);
@@ -302,7 +294,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.hospitais = cnesBS.pesquisarAtivos();
         ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, this.hospitais);
         spinnerHospital.setAdapter(adapterHospital);
-        adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);*/
 
         ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipo_imovel, R.layout.spinner_item);
         spinnerTipoImovel.setAdapter(adapterTipoImovel);
@@ -374,17 +366,17 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void setModelToActivity() {
 
-        spinnerProfissional.setSelection(this.profissionais.indexOf(this.fichaVisitaDTModel.getProfissionalModel()));
-        etINE.setText(this.fichaVisitaDTModel.getIne());
-        etDataRegistro.setText(this.fichaVisitaDTModel.getDataRegistro().toString());
-        rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno().equals("M"));
-        rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno().equals("T"));
-        rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
+        etDataRegistro.setText(Utilitario.getDataFormatada(this.fichaVisitaDTModel.getDataRegistro()));
+        if (!Utilitario.isEmpty(this.fichaVisitaDTModel.getTurno())) {
+            rbTurnoM.setChecked(this.fichaVisitaDTModel.getTurno().equals("M"));
+            rbTurnoT.setChecked(this.fichaVisitaDTModel.getTurno().equals("T"));
+            rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
+        }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
-        etNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(this.fichaVisitaDTModel.getDataNascimento()));
+        etNascimento.setText(Utilitario.getDataFormatada(this.fichaVisitaDTModel.getDataNascimento()));
         rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo().equals("M"));
         rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo().equals("F"));
         cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
@@ -440,23 +432,16 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void setActivityToModel() {
 
-        this.fichaVisitaDTModel.setProfissionalModel((ProfissionalModel) spinnerProfissional.getSelectedItem());
-        this.fichaVisitaDTModel.setCnesModel((CNESModel) spinnerHospital.getSelectedItem());
-        this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
+        this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
+        this.fichaVisitaDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
-        this.fichaVisitaDTModel.setIne(etINE.getText().toString());
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            this.fichaVisitaDTModel.setDataRegistro(formato.parse(etDataRegistro.getText().toString()));
-        } catch (ParseException e) {
-            Toast.makeText(getApplication(), "Data de registro cadastrada errada.", Toast.LENGTH_LONG).show();
-        }
+        this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
 
         this.fichaVisitaDTModel.setProntuario(etProntuario.getText().toString());
         this.fichaVisitaDTModel.setCnsCidadao(etCnsCidadao.getText().toString());
-        this.fichaVisitaDTModel.setDataNascimento(new Date(etNascimento.getText().toString()));
+        this.fichaVisitaDTModel.setDataNascimento(Utilitario.getDate(etNascimento.getText().toString()));
         this.fichaVisitaDTModel.setSexo(rbSexoM.isChecked() ? "M" : rbSexoF.isChecked() ? "F" : null);
         this.fichaVisitaDTModel.setFlagVisitaCompartilhada(cbVisitaCompartilhada.isChecked());
 
@@ -514,8 +499,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     }
 
     private void updateLabel(EditText editText, Calendar calendar) {
+
         String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         editText.setText(sdf.format(calendar.getTime()));
     }

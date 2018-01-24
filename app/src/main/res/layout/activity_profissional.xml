@@ -68,6 +68,20 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_ine"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Código INE"
+                        android:maxLength="10"
+                        android:inputType="number" />
+
+                </android.support.design.widget.TextInputLayout>
+
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

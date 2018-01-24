@@ -2,18 +2,13 @@ package com.fichapp.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
-import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoImovelModel;
 import com.fichapp.util.Utilitario;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,15 +28,13 @@ public class FichaVisitaDTDAO {
     public void alterar(FichaVisitaDTModel fichaModel) {
 
         Object[] args = {fichaModel.getProfissionalModel().getId(),
-                         fichaModel.getCnesModel().getId(),
-                         fichaModel.getIne(),
-                         fichaModel.getDataRegistro(),
+                         Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                          fichaModel.getTurno(),
                          fichaModel.getMicroArea(),
                          fichaModel.getTipoImovelModel().getCodigo(),
                          fichaModel.getProntuario(),
                          fichaModel.getCnsCidadao(),
-                         fichaModel.getDataNascimento(),
+                         Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                          fichaModel.getSexo(),
                          fichaModel.getFlagVisitaCompartilhada(),
                          fichaModel.getFlagCadastramento(),
@@ -86,7 +79,7 @@ public class FichaVisitaDTDAO {
                          fichaModel.getFlagExportado(),
                          fichaModel.getId()};
 
-        String query = "update ficha_visita_domiciliar_territorial set profissional_id = ?, cnes_id = ?, ine = ?, data_registro = ?, turno = ?, microarea = ?, tipo_imovel = ?" +
+        String query = "update ficha_visita_domiciliar_territorial set profissional_id = ?, data_registro = ?, turno = ?, microarea = ?, tipo_imovel = ?" +
                    ", prontuario = ?, cns_cidadao = ?, data_nascimento = ?, sexo = ?, flag_visita_compartilhada = ?, flag_cadastramento  = ?, flag_visita_periodica = ?" +
                    ", flag_consulta  = ?, flag_exame  = ?, flag_vacina  = ?, flag_bolsa_familia  = ?, flag_gestante  = ?, flag_puerpera  = ?, flag_recem_nascido  = ?, flag_crianca  = ?, flag_desnutricao  = ?" +
                    ", flag_reabilitacao  = ?, flag_hipertensao  = ?, flag_diabetes  = ?, flag_asma  = ?, flag_enfisema  = ?, flag_doencas_cronicas  = ?, flag_hanseniase  = ?, flag_tuberculose  = ?" +
@@ -101,15 +94,13 @@ public class FichaVisitaDTDAO {
     public void inserir(FichaVisitaDTModel fichaModel) {
 
         Object[] args = {fichaModel.getProfissionalModel().getId(),
-                fichaModel.getCnesModel().getId(),
-                fichaModel.getIne(),
-                fichaModel.getDataRegistro(),
+                Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                 fichaModel.getTurno(),
                 fichaModel.getMicroArea(),
                 fichaModel.getTipoImovelModel().getCodigo(),
                 fichaModel.getProntuario(),
                 fichaModel.getCnsCidadao(),
-                fichaModel.getDataNascimento(),
+                Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
                 fichaModel.getFlagVisitaCompartilhada(),
                 fichaModel.getFlagCadastramento(),
@@ -153,13 +144,13 @@ public class FichaVisitaDTDAO {
                 Boolean.TRUE,
                 Boolean.FALSE};
 
-        String query = "insert into ficha_visita_domiciliar_territorial (profissional_id, cnes_id, ine, data_registro, turno, microarea, tipo_imovel" +
+        String query = "insert into ficha_visita_domiciliar_territorial (profissional_id, data_registro, turno, microarea, tipo_imovel" +
                 ", prontuario, cns_cidadao, data_nascimento, sexo, flag_visita_compartilhada, flag_cadastramento, flag_visita_periodica" +
                 ", flag_consulta, flag_exame, flag_vacina, flag_bolsa_familia, flag_gestante, flag_puerpera, flag_recem_nascido, flag_crianca, flag_desnutricao " +
                 ", flag_reabilitacao, flag_hipertensao, flag_diabetes, flag_asma, flag_enfisema, flag_doencas_cronicas, flag_hanseniase, flag_tuberculose " +
                 ", flag_sintomaticos_respiratorios, flag_tabagista, flag_acamado, flag_vulnerabilidade_social, flag_acompanhamento_bolsa_familia, flag_saude_mental, flag_usuario_alcool " +
                 ", flag_outras_drogas, flag_acao_educativa, flag_imovel_com_foco, flag_acao_mecanica, flag_tratamento_focal, flag_egresso_internacao, flag_convite, flag_orientacao " +
-                ", flag_outros, peso, altura, desfecho, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ", flag_outros, peso, altura, desfecho, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
@@ -249,7 +240,7 @@ public class FichaVisitaDTDAO {
 
         FichaVisitaDTModel fichaModel = new FichaVisitaDTModel();
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
 
@@ -261,15 +252,13 @@ public class FichaVisitaDTDAO {
         FichaVisitaDTModel fichaModel = new FichaVisitaDTModel();
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
-        fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
-        fichaModel.setIne(c.getString(c.getColumnIndex("ine")));
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
         fichaModel.setTipoImovelModel(new TipoImovelModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
-        fichaModel.setDataNascimento(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_nascimento"))));
+        fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));
         fichaModel.setSexo(c.getString(c.getColumnIndex("sexo")));
         fichaModel.setFlagVisitaCompartilhada(c.getInt(c.getColumnIndex("flag_visita_compartilhada")) > 0);
         fichaModel.setFlagCadastramento(c.getInt(c.getColumnIndex("flag_cadastramento")) > 0);

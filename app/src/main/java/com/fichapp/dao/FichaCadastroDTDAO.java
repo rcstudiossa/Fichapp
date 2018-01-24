@@ -245,7 +245,7 @@ public class FichaCadastroDTDAO {
 
         FichaCadastroDTModel fichaModel = new FichaCadastroDTModel();
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setCep(c.getString(c.getColumnIndex("cep")));
         fichaModel.setNumero(c.getString(c.getColumnIndex("numero")));
 
@@ -258,7 +258,7 @@ public class FichaCadastroDTDAO {
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
-        fichaModel.setDataRegistro(Utilitario.getDataFormatada(c.getString(c.getColumnIndex("data_registro"))));
+        fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
 
         fichaModel.setCep(c.getString(c.getColumnIndex("cep")));
