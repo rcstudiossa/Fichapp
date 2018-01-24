@@ -456,27 +456,27 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private void carregarSpinners() {
 
         ArrayAdapter spAdapterRaca = ArrayAdapter.createFromResource(this, R.array.raca, R.layout.spinner_item);
-        spAdapterRaca.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterRaca.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spRaca.setAdapter(spAdapterRaca);
 
         ArrayAdapter spAdapterParentesco = ArrayAdapter.createFromResource(this, R.array.parentesco, R.layout.spinner_item);
-        spAdapterParentesco.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterParentesco.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spParentesco.setAdapter(spAdapterParentesco);
 
         ArrayAdapter spAdapterCurso = ArrayAdapter.createFromResource(this, R.array.curso, R.layout.spinner_item);
-        spAdapterCurso.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterCurso.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCurso.setAdapter(spAdapterCurso);
 
         ArrayAdapter spAdapterTrabalho = ArrayAdapter.createFromResource(this, R.array.trabalho, R.layout.spinner_item);
-        spAdapterTrabalho.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterTrabalho.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spTrabalho.setAdapter(spAdapterTrabalho);
 
         ArrayAdapter spAdapterOrientacao = ArrayAdapter.createFromResource(this, R.array.orientacao, R.layout.spinner_item);
-        spAdapterOrientacao.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterOrientacao.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spOrientacao.setAdapter(spAdapterOrientacao);
 
         ArrayAdapter spAdapterGenero = ArrayAdapter.createFromResource(this, R.array.genero, R.layout.spinner_item);
-        spAdapterGenero.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterGenero.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spGenero.setAdapter(spAdapterGenero);
 
     }

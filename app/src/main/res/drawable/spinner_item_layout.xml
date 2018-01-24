@@ -8,7 +8,7 @@
     android:paddingBottom="16dp"
     >
 
-    <solid android:color="#FAFAFA"/>
+    <solid android:color="@color/colorBGDefault"/>
     <stroke android:width=".5dip" android:color="#AAAAAA"/>
 
     <corners

@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#303F9F</color>
 
+    <color name="colorBGDefault">#FAFAFA</color>
+
     <color name="colorBGDivider">#6d7cce</color>
 
     <color name="colorSMPEPLogoBlue">#68d3ff</color>

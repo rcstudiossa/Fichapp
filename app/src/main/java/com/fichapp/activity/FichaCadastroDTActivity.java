@@ -224,43 +224,43 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private void carregarSpinners() {
 
         ArrayAdapter spAdapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipo_imovel, R.layout.spinner_item);
-        spAdapterTipoImovel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spTipoImovel.setAdapter(spAdapterTipoImovel);
 
         ArrayAdapter spAdapterSituacaoMoradia = ArrayAdapter.createFromResource(this, R.array.situacao_moradia, R.layout.spinner_item);
-        spAdapterSituacaoMoradia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterSituacaoMoradia.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spSituacaoMoradia.setAdapter(spAdapterSituacaoMoradia);
 
         ArrayAdapter spAdapterPosseTerra = ArrayAdapter.createFromResource(this, R.array.posse_terra, R.layout.spinner_item);
-        spAdapterPosseTerra.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterPosseTerra.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCondicaoPosseTerra.setAdapter(spAdapterPosseTerra);
 
         ArrayAdapter spAdapterNumMoradores = ArrayAdapter.createFromResource(this, R.array.numeros, R.layout.spinner_item);
-        spAdapterNumMoradores.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterNumMoradores.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spNumMoradores.setAdapter(spAdapterNumMoradores);
 
         ArrayAdapter spAdapterNumComodos = ArrayAdapter.createFromResource(this, R.array.numeros, R.layout.spinner_item);
-        spAdapterNumComodos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterNumComodos.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spNumComodos.setAdapter(spAdapterNumComodos);
 
         ArrayAdapter spAdapterMaterialParedes = ArrayAdapter.createFromResource(this, R.array.material_paredes, R.layout.spinner_item);
-        spAdapterMaterialParedes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterMaterialParedes.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spMaterialParedes.setAdapter(spAdapterMaterialParedes);
 
         ArrayAdapter spAdapterAbastecimentoAgua = ArrayAdapter.createFromResource(this, R.array.abastecimento_agua, R.layout.spinner_item);
-        spAdapterAbastecimentoAgua.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterAbastecimentoAgua.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spAbastecimentoAgua.setAdapter(spAdapterAbastecimentoAgua);
 
         ArrayAdapter spAdapterAguaConsumo = ArrayAdapter.createFromResource(this, R.array.agua_consumo, R.layout.spinner_item);
-        spAdapterAguaConsumo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterAguaConsumo.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spAguaConsumo.setAdapter(spAdapterAguaConsumo);
 
         ArrayAdapter spAdapterEscoamentoBanheiro = ArrayAdapter.createFromResource(this, R.array.escoamento_banheiro, R.layout.spinner_item);
-        spAdapterEscoamentoBanheiro.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterEscoamentoBanheiro.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spEscoamentoBanheiro.setAdapter(spAdapterEscoamentoBanheiro);
 
         ArrayAdapter spAdapterDestinoLixo = ArrayAdapter.createFromResource(this, R.array.destino_lixo, R.layout.spinner_item);
-        spAdapterDestinoLixo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spAdapterDestinoLixo.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spDestinoLixo.setAdapter(spAdapterDestinoLixo);
 
     }

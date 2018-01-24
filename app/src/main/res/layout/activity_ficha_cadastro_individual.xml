@@ -341,11 +341,8 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/field_margin"
-                        android:layout_marginEnd="@dimen/field_margin"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="@dimen/field_margin"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginEnd="12dp">
 
                         <TextView
                             android:id="@+id/tv_raca"
@@ -359,6 +356,7 @@
                             android:id="@+id/spinner_raca"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -366,7 +364,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical">
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="4dp">
 
                         <EditText
                             android:id="@+id/et_etnia"
