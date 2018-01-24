@@ -34,7 +34,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class FichaVisitaDTActivity extends AppCompatActivity {
+public class FichaVisitaDTActivity extends TemplateActivity {
 
     private FichaVisitaDTModel fichaVisitaDTModel;
     private FichaVisitaDTBS fichaVisitaDTBS;
@@ -115,8 +115,10 @@ public class FichaVisitaDTActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ficha_visita_dt);
+
+        super.onCreate(savedInstanceState);
 
         this.definirComponentes();
 

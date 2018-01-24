@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class FichaCadastroIndividualActivity extends AppCompatActivity {
+public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private FichaCadastroIndividualModel fichaCadastroIndividualModel;
     private FichaCadastroIndividualBS fichaCadastroIndividualBS;
@@ -226,9 +226,10 @@ public class FichaCadastroIndividualActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ficha_cadastro_individual);
 
+        super.onCreate(savedInstanceState);
 
         this.definirComponentes();
 

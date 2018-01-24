@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class FichaCadastroDTActivity extends AppCompatActivity {
+public class FichaCadastroDTActivity extends TemplateActivity {
 
     private FichaCadastroDTModel fichaCadastroDTModel;
     private FichaCadastroDTBS fichaCadastroDTBS;
@@ -101,8 +101,10 @@ public class FichaCadastroDTActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ficha_cadastro_dt);
+
+        super.onCreate(savedInstanceState);
 
         this.instanciarFichaVisitaDTModel();
 

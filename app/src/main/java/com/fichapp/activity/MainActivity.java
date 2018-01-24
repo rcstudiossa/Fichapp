@@ -1,6 +1,8 @@
 package com.fichapp.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -22,6 +24,8 @@ import com.fichapp.fragment.FichaCadastroIndividualFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
+import com.fichapp.model.ProfissionalModel;
+import com.fichapp.util.Utilitario;
 
 public class MainActivity extends TemplateActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,13 +35,16 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
     private String barTitleFichaCadastroDT;
     private String barTitleFichaCadastroIDV;
 
+
+
     private LinearLayout sairLL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        super.onCreate(savedInstanceState);
 
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
@@ -89,8 +96,6 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
             setContent(new FichaCadastroIndividualFragment());
             getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
         }
-
-        atualizarRodape();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

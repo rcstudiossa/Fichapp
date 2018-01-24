@@ -23,7 +23,7 @@ import com.fichapp.util.Utilitario;
 
 import java.util.List;
 
-public class ProfissionalActivity extends AppCompatActivity {
+public class ProfissionalActivity extends TemplateActivity {
 
     private ProfissionalModel profissionalModel;
     private ProfissionalBS profissionalBS;
@@ -43,9 +43,10 @@ public class ProfissionalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profissional);
 
+        super.onCreate(savedInstanceState);
 
         this.definirComponentes();
 
@@ -65,6 +66,8 @@ public class ProfissionalActivity extends AppCompatActivity {
         });
 
         this.leitorCampos();
+
+        this.validadorBotao();
 
     }
 
@@ -114,6 +117,9 @@ public class ProfissionalActivity extends AppCompatActivity {
             etCbo.setText(this.profissionalModel.getCbo());
             etCns.setText(this.profissionalModel.getCns());
             etNome.setText(this.profissionalModel.getNome());
+            etUsuario.setText(this.profissionalModel.getUsuario());
+            etSenha.setText(this.profissionalModel.getSenha());
+            etConfirmarSenha.setText(this.profissionalModel.getSenha());
             mFlagAtivo.setChecked(this.profissionalModel.getFlagAtivo());
             spHospital.setSelection(this.hospitais.indexOf(new CNESModel(this.profissionalModel.getCnesModel().getId())));
         }

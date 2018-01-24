@@ -20,7 +20,7 @@ import com.fichapp.util.Utilitario;
 
 import static android.support.v7.appcompat.R.styleable.MenuItem;
 
-public class CNESActivity extends AppCompatActivity {
+public class CNESActivity extends TemplateActivity {
 
     private CNESModel cnesModel;
     private CNESBS cnesbs;
@@ -37,9 +37,10 @@ public class CNESActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_cnes);
 
+        super.onCreate(savedInstanceState);
 
         this.definirComponentes();
 

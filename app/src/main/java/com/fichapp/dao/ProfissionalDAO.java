@@ -27,17 +27,17 @@ public class ProfissionalDAO {
 
     public void alterar(ProfissionalModel profissionalModel) {
 
-        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), profissionalModel.getFlagAtivo(), profissionalModel.getCnesModel().getId(), profissionalModel.getId()};
+        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), profissionalModel.getFlagAtivo(), profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha(), profissionalModel.getId()};
 
-        db.execSQL("UPDATE profissional SET cbo = ?, cns = ?, nome = ?, flag_ativo = ?, cnes_id = ? WHERE id = ?;", args);
+        db.execSQL("UPDATE profissional SET cbo = ?, cns = ?, nome = ?, flag_ativo = ?, cnes_id = ?, usuario = ?, senha = ? WHERE id = ?;", args);
 
     }
 
     public void inserir(ProfissionalModel profissionalModel) {
 
-        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), Boolean.TRUE, profissionalModel.getCnesModel().getId()};
+        Object[] args = {profissionalModel.getCbo(), profissionalModel.getCns(), profissionalModel.getNome(), Boolean.TRUE, profissionalModel.getCnesModel().getId(), profissionalModel.getUsuario(), profissionalModel.getSenha()};
 
-        db.execSQL("INSERT INTO profissional (cbo, cns, nome, flag_ativo, cnes_id) VALUES(?, ?, ?, ?, ?);", args);
+        db.execSQL("INSERT INTO profissional (cbo, cns, nome, flag_ativo, cnes_id, usuario, senha) VALUES(?, ?, ?, ?, ?, ?, ?);", args);
     }
 
     public void excluir(ProfissionalModel profissionalModel) {
@@ -84,6 +84,7 @@ public class ProfissionalDAO {
             model.setId(c.getLong(c.getColumnIndex("id")));
             model.setNome(c.getString(c.getColumnIndex("nome")));
             model.setCbo(c.getString(c.getColumnIndex("cbo")));
+            model.setUsuario(c.getString(c.getColumnIndex("usuario")));
             model.setCnesModel(new CNESModel(cnesModel.getId(), cnesModel.getCodigo(), cnesModel.getNome(), cnesModel.getFlagAtivo()));
             model.setFlagAdministrador(c.getInt(c.getColumnIndex("flag_administrador")) > 0);
 
@@ -120,6 +121,7 @@ public class ProfissionalDAO {
             model.setId(c.getLong(c.getColumnIndex("id")));
             model.setNome(c.getString(c.getColumnIndex("nome")));
             model.setCbo(c.getString(c.getColumnIndex("cbo")));
+            model.setUsuario(c.getString(c.getColumnIndex("usuario")));
             model.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id")), c.getString(c.getColumnIndex("nome_cnes"))));
             model.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) > 0);
             model.setFlagAdministrador(c.getInt(c.getColumnIndex("flag_administrador")) > 0);
@@ -140,7 +142,9 @@ public class ProfissionalDAO {
 
         if (c.moveToFirst()) {
             do {
-                profissionalList.add(new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id"))));
+                ProfissionalModel profissionalModel = new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id")));
+                profissionalModel.setUsuario(c.getString(c.getColumnIndex("usuario")));
+                profissionalList.add(profissionalModel);
             } while (c.moveToNext());
         }
 
@@ -158,7 +162,10 @@ public class ProfissionalDAO {
 
         if (c.moveToFirst()) {
             do {
-                profissionalList.add(new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id"))));
+                ProfissionalModel profissionalModel = new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id")));
+                profissionalModel.setUsuario(c.getString(c.getColumnIndex("usuario")));
+                profissionalModel.setSenha(c.getString(c.getColumnIndex("senha")));
+                profissionalList.add(profissionalModel);
             } while (c.moveToNext());
         }
 
@@ -180,7 +187,9 @@ public class ProfissionalDAO {
 
         if (c.moveToFirst()) {
             do {
-                profissionalList.add(new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id"))));
+                ProfissionalModel profissionalModel = new ProfissionalModel(c.getLong(c.getColumnIndex("id")), c.getString(c.getColumnIndex("cbo")), c.getString(c.getColumnIndex("cns")), c.getString(c.getColumnIndex("nome")), c.getInt(c.getColumnIndex("flag_ativo")) > 0, c.getLong(c.getColumnIndex("cnes_id")));
+                profissionalModel.setUsuario(c.getString(c.getColumnIndex("usuario")));
+                profissionalList.add(profissionalModel);
             } while (c.moveToNext());
         }
 

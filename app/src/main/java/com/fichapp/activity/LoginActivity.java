@@ -1,7 +1,9 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -37,7 +39,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_login);
 
@@ -115,8 +120,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (!Utilitario.isEmpty(profissionalModel) && !Utilitario.isEmpty(profissionalModel.getId())) {
 
+            atualizarUsuario(profissionalModel);
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("profissional", profissionalModel);
             startActivity(intent);
 
             finish();
@@ -129,6 +135,16 @@ public class LoginActivity extends AppCompatActivity {
     private void irAlterarSenha() {
         Intent intent = new Intent(LoginActivity.this, AlterarSenhaActivity.class);
         startActivity(intent);
+    }
+
+    private void atualizarUsuario(ProfissionalModel profissionalModel) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        prefs.edit().putString("nome", profissionalModel.getNome()).commit();
+        prefs.edit().putString("cbo", profissionalModel.getCbo()).commit();
+        prefs.edit().putString("cnes", profissionalModel.getCnesModel().getNome()).commit();
+
     }
 
 }
