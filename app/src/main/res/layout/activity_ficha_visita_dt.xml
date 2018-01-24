@@ -207,13 +207,15 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/field_margin"
                             android:text="Tipo de Imóvel*"
+                            android:layout_marginBottom="6dp"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <Spinner
                             android:id="@+id/spinner_tipo_imovel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/field_margin" />
+                            android:layout_margin="@dimen/field_margin"
+                            android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
 

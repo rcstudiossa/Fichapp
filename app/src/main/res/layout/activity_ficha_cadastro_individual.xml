@@ -352,12 +352,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Raça/Cor*"
+                            android:layout_marginBottom="6dp"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <Spinner
                             android:id="@+id/spinner_raca"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
 
@@ -638,12 +640,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Parentesco com responsável familiar"
+                        android:layout_marginBottom="6dp"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
                         android:id="@+id/spinner_parentesco"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_item_layout" />
 
                 </LinearLayout>
 
@@ -712,12 +716,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Curso mais elevado que frequentou"
+                        android:layout_marginBottom="6dp"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
                         android:id="@+id/spinner_curso_frequentado"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_item_layout" />
 
                 </LinearLayout>
 
@@ -733,12 +739,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Situaçao no mercado de trabalho"
+                        android:layout_marginBottom="6dp"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
                         android:id="@+id/spinner_situacao_trabalho"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_item_layout" />
 
                 </LinearLayout>
 
@@ -1032,7 +1040,8 @@
                             android:id="@+id/spinner_orientacao"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical" />
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/spinner_item_layout" />
 
 
                     </LinearLayout>
@@ -1087,7 +1096,8 @@
                             android:id="@+id/spinner_identidade_genero"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical" />
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/spinner_item_layout" />
 
 
                     </LinearLayout>
