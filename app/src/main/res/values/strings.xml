@@ -9,8 +9,8 @@
     <string name="ficha_cadastro_dt">Cadastro Dom. e Territorial</string>
     <string name="ficha_cadastro_idv">Cadastro Individual</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abrir menu</string>
+    <string name="navigation_drawer_close">Fechar menu</string>
 
     <string name="action_export">Exportar Fichas</string>
 

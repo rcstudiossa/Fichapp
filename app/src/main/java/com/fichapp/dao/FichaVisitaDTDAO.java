@@ -53,6 +53,7 @@ public class FichaVisitaDTDAO {
                          fichaModel.getFlagDiabetes(),
                          fichaModel.getFlagAsma(),
                          fichaModel.getFlagEnfisema(),
+                         fichaModel.getFlagCancer(),
                          fichaModel.getFlagDoencasCronicas(),
                          fichaModel.getFlagHanseniase(),
                          fichaModel.getFlagTuberculose(),
@@ -82,7 +83,7 @@ public class FichaVisitaDTDAO {
         String query = "update ficha_visita_domiciliar_territorial set profissional_id = ?, data_registro = ?, turno = ?, microarea = ?, tipo_imovel = ?" +
                    ", prontuario = ?, cns_cidadao = ?, data_nascimento = ?, sexo = ?, flag_visita_compartilhada = ?, flag_cadastramento  = ?, flag_visita_periodica = ?" +
                    ", flag_consulta  = ?, flag_exame  = ?, flag_vacina  = ?, flag_bolsa_familia  = ?, flag_gestante  = ?, flag_puerpera  = ?, flag_recem_nascido  = ?, flag_crianca  = ?, flag_desnutricao  = ?" +
-                   ", flag_reabilitacao  = ?, flag_hipertensao  = ?, flag_diabetes  = ?, flag_asma  = ?, flag_enfisema  = ?, flag_doencas_cronicas  = ?, flag_hanseniase  = ?, flag_tuberculose  = ?" +
+                   ", flag_reabilitacao  = ?, flag_hipertensao  = ?, flag_diabetes  = ?, flag_asma  = ?, flag_enfisema  = ?, flag_cancer = ?, flag_doencas_cronicas  = ?, flag_hanseniase  = ?, flag_tuberculose  = ?" +
                    ", flag_sintomaticos_respiratorios  = ?, flag_tabagista  = ?, flag_acamado  = ?, flag_vulnerabilidade_social  = ?, flag_acompanhamento_bolsa_familia  = ?, flag_saude_mental  = ?, flag_usuario_alcool  = ?" +
                    ", flag_outras_drogas  = ?, flag_acao_educativa  = ?, flag_imovel_com_foco  = ?, flag_acao_mecanica  = ?, flag_tratamento_focal  = ?, flag_egresso_internacao  = ?, flag_convite  = ?, flag_orientacao  = ?" +
                    ", flag_outros  = ?, peso = ?, altura = ?, desfecho = ?, flag_ativo  = ?, flag_exportado  = ? where id = ?;";
@@ -119,6 +120,7 @@ public class FichaVisitaDTDAO {
                 fichaModel.getFlagDiabetes(),
                 fichaModel.getFlagAsma(),
                 fichaModel.getFlagEnfisema(),
+                fichaModel.getFlagCancer(),
                 fichaModel.getFlagDoencasCronicas(),
                 fichaModel.getFlagHanseniase(),
                 fichaModel.getFlagTuberculose(),
@@ -147,10 +149,10 @@ public class FichaVisitaDTDAO {
         String query = "insert into ficha_visita_domiciliar_territorial (profissional_id, data_registro, turno, microarea, tipo_imovel" +
                 ", prontuario, cns_cidadao, data_nascimento, sexo, flag_visita_compartilhada, flag_cadastramento, flag_visita_periodica" +
                 ", flag_consulta, flag_exame, flag_vacina, flag_bolsa_familia, flag_gestante, flag_puerpera, flag_recem_nascido, flag_crianca, flag_desnutricao " +
-                ", flag_reabilitacao, flag_hipertensao, flag_diabetes, flag_asma, flag_enfisema, flag_doencas_cronicas, flag_hanseniase, flag_tuberculose " +
+                ", flag_reabilitacao, flag_hipertensao, flag_diabetes, flag_asma, flag_enfisema, flag_cancer, flag_doencas_cronicas, flag_hanseniase, flag_tuberculose " +
                 ", flag_sintomaticos_respiratorios, flag_tabagista, flag_acamado, flag_vulnerabilidade_social, flag_acompanhamento_bolsa_familia, flag_saude_mental, flag_usuario_alcool " +
                 ", flag_outras_drogas, flag_acao_educativa, flag_imovel_com_foco, flag_acao_mecanica, flag_tratamento_focal, flag_egresso_internacao, flag_convite, flag_orientacao " +
-                ", flag_outros, peso, altura, desfecho, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ", flag_outros, peso, altura, desfecho, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }

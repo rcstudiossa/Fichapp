@@ -12,24 +12,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        app:srcCompat="@drawable/ic_stethoscope" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="SM"
+            android:textColor="@color/colorSMPEPLogoBlue"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            android:typeface="normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="PEP"
+            android:textColor="@color/colorSMPEPLogoWhite"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="SMPEP Mobile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_nome_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="roque.souza@topsys.com" />
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Rodrigo Costa"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/tv_cbo_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="CBO: 2206-04"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_hospital_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="HRSAJ"
+        android:textSize="14sp" />
+
 
 </LinearLayout>

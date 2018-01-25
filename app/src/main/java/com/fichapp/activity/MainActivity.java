@@ -1,12 +1,11 @@
 package com.fichapp.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,10 +23,8 @@ import com.fichapp.fragment.FichaCadastroIndividualFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
-import com.fichapp.model.ProfissionalModel;
-import com.fichapp.util.Utilitario;
 
-public class MainActivity extends TemplateActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private String barTitleCNES;
     private String barTitleProfissionais;
@@ -35,9 +32,11 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
     private String barTitleFichaCadastroDT;
     private String barTitleFichaCadastroIDV;
 
-
-
+    private FloatingActionButton fab;
     private LinearLayout sairLL;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,25 +45,77 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
 
         super.onCreate(savedInstanceState);
 
+        this.definirComponentes();
+
+        sairLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
+        this.setTitles();
+
+        this.actionFab();
+
+        this.configDrawer();
+
+    }
+
+    private void definirComponentes() {
+
+        this.sairLL = (LinearLayout) findViewById(R.id.ll_sair);
+        this.fab = (FloatingActionButton) findViewById(R.id.fab);
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+    }
+
+    protected void setContent(Fragment content) {
+        final FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+        fragTransaction.replace(R.id.conteudo_activity, content);
+        fragTransaction.commit();
+
+    }
+
+    private void actionFab() {
+
+        this.fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (getFragmentClass().equals(CNESFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, CNESActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(ProfissionalFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, ProfissionalActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(FichaVisitaDTFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, FichaVisitaDTActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(FichaCadastroDTFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
+                    startActivity(intent);
+                } else if (getFragmentClass().equals(FichaCadastroIndividualFragment.class)) {
+                    Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+    }
+
+    private void setTitles() {
+
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
         this.barTitleFichaVisitaDT = new String("Visita Domiciliar/Territorial");
         this.barTitleFichaCadastroDT = new String("Cadastro Domiciliar/Territorial");
         this.barTitleFichaCadastroIDV = new String("Cadastro Individual");
-
-        this.sairLL = (LinearLayout) findViewById(R.id.ll_sair);
-
-        sairLL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         String fragment = getIntent().getStringExtra("fragment");
 
@@ -97,49 +148,24 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
             getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    }
 
-            @Override
-            public void onClick(View view) {
+    private void configDrawer() {
 
-                if (getFragmentClass().equals(CNESFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, CNESActivity.class);
-                    startActivity(intent);
-                } else if (getFragmentClass().equals(ProfissionalFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, ProfissionalActivity.class);
-                    startActivity(intent);
-                } else if (getFragmentClass().equals(FichaVisitaDTFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, FichaVisitaDTActivity.class);
-                    startActivity(intent);
-                } else if (getFragmentClass().equals(FichaCadastroDTFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
-                    startActivity(intent);
-                } else if (getFragmentClass().equals(FichaCadastroIndividualFragment.class)) {
-                    Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
-                    startActivity(intent);
-                }
-
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            logout();
         }
     }
 
@@ -162,15 +188,11 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -205,15 +227,16 @@ public class MainActivity extends TemplateActivity implements NavigationView.OnN
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
 
-    protected void setContent(Fragment content) {
-        final FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-        fragTransaction.replace(R.id.conteudo_activity, content);
-        fragTransaction.commit();
+    private void logout() {
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 

@@ -23,6 +23,7 @@ public class FichaCadastroIndividualFragment extends TemplateFragment {
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_ficha_cadastro_individual, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_cadastro_individual);

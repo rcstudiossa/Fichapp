@@ -27,8 +27,10 @@ import com.fichapp.util.Utilitario;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -117,8 +119,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.definirComponentes();
 
-        this.configDatas();
-
         this.configToolbar();
 
         this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
@@ -127,6 +127,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.instanciarFichaVisitaDTModel();
 
+        this.configDatas();
+
         this.btnGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,6 +136,14 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             }
         });
 
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private void definirComponentes () {
@@ -211,6 +221,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private void configDatas() {
 
         final Calendar registroCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -228,14 +241,20 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             @Override
             public void onClick(View v) {
 
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro, registroCalendar
-                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro,
+                        registroCalendar.get(Calendar.YEAR),
+                        registroCalendar.get(Calendar.MONTH),
                         registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
 
         final Calendar nascimentoCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etNascimento.getText().toString())) {
+          nascimentoCalendar.setTime(Utilitario.getDate(etNascimento.getText().toString())) ;
+        }
+
+
 
         final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
 
@@ -253,8 +272,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento, nascimentoCalendar
-                        .get(Calendar.YEAR), nascimentoCalendar.get(Calendar.MONTH),
+                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento,
+                        nascimentoCalendar.get(Calendar.YEAR),
+                        nascimentoCalendar.get(Calendar.MONTH),
                         nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
@@ -296,7 +316,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         spinnerHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);*/
 
-        ArrayAdapter adapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipo_imovel, R.layout.spinner_item);
+        ArrayAdapter<TipoImovelModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoImovelModel().getTiposImovel());
         spinnerTipoImovel.setAdapter(adapterTipoImovel);
         adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -374,6 +394,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
+        spinnerTipoImovel.setSelection(new TipoImovelModel().getTiposImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
+
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
         etNascimento.setText(Utilitario.getDataFormatada(this.fichaVisitaDTModel.getDataNascimento()));
@@ -435,7 +457,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
         this.fichaVisitaDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
-        this.fichaVisitaDTModel.setTipoImovelModel(new TipoImovelModel());
+        this.fichaVisitaDTModel.setTipoImovelModel((TipoImovelModel) spinnerTipoImovel.getSelectedItem());
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
 
