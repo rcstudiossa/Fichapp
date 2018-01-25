@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String barTitleProfissionais;
     private String barTitleFichaVisitaDT;
     private String barTitleFichaCadastroDT;
-    private String barTitleFichaCadastroIDV;
+    private String barTitleFichaCadastroIndividual;
 
     private FloatingActionButton fab;
     private LinearLayout sairLL;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        this.setTitles();
+        this.setFragments();
 
         this.actionFab();
 
@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void setTitles() {
+    private void setFragments() {
 
         this.barTitleCNES = new String("Hospitais");
         this.barTitleProfissionais = new String("Profissionais");
         this.barTitleFichaVisitaDT = new String("Visita Domiciliar/Territorial");
         this.barTitleFichaCadastroDT = new String("Cadastro Domiciliar/Territorial");
-        this.barTitleFichaCadastroIDV = new String("Cadastro Individual");
+        this.barTitleFichaCadastroIndividual = new String("Cadastro Individual");
 
         String fragment = getIntent().getStringExtra("fragment");
 
@@ -134,18 +134,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
 
             } else if (fragment.equals("FichaCadastroDTFragment")) {
-                setContent(new FichaVisitaDTFragment());
+                setContent(new FichaCadastroDTFragment());
                 getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
 
             } else if (fragment.equals("FichaCadastroIndividualFragment")) {
-                setContent(new FichaVisitaDTFragment());
-                getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
+                setContent(new FichaCadastroIndividualFragment());
+                getSupportActionBar().setTitle(this.barTitleFichaCadastroIndividual);
 
             }
 
         } else {
             setContent(new FichaCadastroIndividualFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
+            getSupportActionBar().setTitle(this.barTitleFichaCadastroIndividual);
         }
 
     }
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_ficha_cadastro_idv) {
             setContent(new FichaCadastroIndividualFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaCadastroIDV);
+            getSupportActionBar().setTitle(this.barTitleFichaCadastroIndividual);
 
         }
 

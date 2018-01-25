@@ -5,7 +5,9 @@
     android:id="@+id/rl_main"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +41,7 @@
                 android:orientation="vertical"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
-                android:paddingBottom="12dp"
+                android:paddingBottom="36dp"
                 android:paddingTop="8dp"
                 tools:context="com.fichapp.activity.FichaVisitaDTActivity">
 
@@ -684,19 +686,21 @@
 
                 </RadioGroup>
 
-                <Button
-                    android:id="@+id/btn_gravar_cadastro_dt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/cadastrar" />
-
-
             </LinearLayout>
+
         </ScrollView>
 
-
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_gravar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_gravar_ficha"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"/>
 
 
     <include

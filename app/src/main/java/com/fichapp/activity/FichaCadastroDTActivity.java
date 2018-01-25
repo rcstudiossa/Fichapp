@@ -2,15 +2,14 @@ package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +27,6 @@ import com.fichapp.util.Utilitario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class FichaCadastroDTActivity extends TemplateActivity {
@@ -89,7 +87,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private EditText etCargoInstituicao;
     private EditText etTelefoneContatoResponsavel;
 
-    private Button btnGravar;
+    private FloatingActionButton fabGravar;
 
     private LinearLayout llRodape;
 
@@ -121,7 +119,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.lerRadios();
 
-        btnGravar.setOnClickListener(new View.OnClickListener() {
+        fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
@@ -182,7 +180,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         cbPassaro = (CheckBox) findViewById(R.id.cb_passaro);
         cbOutrosAnimais = (CheckBox) findViewById(R.id.cb_outros_animais);
 
-        btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_dt);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
@@ -271,6 +269,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private void configData() {
 
         final Calendar registroCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -279,7 +280,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
                 registroCalendar.set(Calendar.YEAR, year);
                 registroCalendar.set(Calendar.MONTH, monthOfYear);
                 registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                atualizarCampoData(etDataRegistro, registroCalendar);
+                updateLabel(etDataRegistro, registroCalendar);
             }
         };
 
@@ -287,16 +288,18 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(FichaCadastroDTActivity.this, dataRegistro, registroCalendar
-                        .get(Calendar.YEAR), registroCalendar.get(Calendar.MONTH),
+
+                new DatePickerDialog(FichaCadastroDTActivity.this, dataRegistro,
+                        registroCalendar.get(Calendar.YEAR),
+                        registroCalendar.get(Calendar.MONTH),
                         registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
     }
-    private void atualizarCampoData(EditText editText, Calendar calendar) {
+    private void updateLabel(EditText editText, Calendar calendar) {
         String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         editText.setText(sdf.format(calendar.getTime()));
     }

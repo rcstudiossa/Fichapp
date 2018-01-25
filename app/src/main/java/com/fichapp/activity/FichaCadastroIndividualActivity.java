@@ -2,6 +2,7 @@ package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -176,7 +177,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private CheckBox cbAcessoHigieneBucal;
     private CheckBox cbAcessoOutras;
 
-    private Button btnGravar;
+    private FloatingActionButton fabGravar;
 
     private LinearLayout llRodape;
 
@@ -230,10 +231,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setContentView(R.layout.activity_ficha_cadastro_individual);
-
         super.onCreate(savedInstanceState);
+
 
         this.definirComponentes();
 
@@ -249,7 +249,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.lerRadios();
 
-        this.btnGravar.setOnClickListener(new View.OnClickListener() {
+        this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
@@ -387,7 +387,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         llDoencaRespiratoria = (LinearLayout) findViewById(R.id.ll_doenca_respiratoria);
         llHigienePessoal = (LinearLayout) findViewById(R.id.ll_higiene_pessoal);
 
-        btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_individual);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
         llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
@@ -498,6 +498,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private void configDatas() {
 
         final Calendar registroCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -506,8 +509,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 registroCalendar.set(Calendar.YEAR, year);
                 registroCalendar.set(Calendar.MONTH, monthOfYear);
                 registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                atualizarCampoData(etDataRegistro, registroCalendar);
+                updateLabel(etDataRegistro, registroCalendar);
             }
         };
 
@@ -515,25 +517,29 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
+
                 new DatePickerDialog(FichaCadastroIndividualActivity.this, dataRegistro,
                         registroCalendar.get(Calendar.YEAR),
                         registroCalendar.get(Calendar.MONTH),
                         registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
+        
+        //-------------------------------------------------------------\\
 
         final Calendar nascimentoCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataNascimento.getText().toString())) {
+            nascimentoCalendar.setTime(Utilitario.getDate(etDataNascimento.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                atualizarCampoData(etDataNascimento, registroCalendar);
+                nascimentoCalendar.set(Calendar.YEAR, year);
+                nascimentoCalendar.set(Calendar.MONTH, monthOfYear);
+                nascimentoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataNascimento, nascimentoCalendar);
             }
         };
 
@@ -541,51 +547,59 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
+
                 new DatePickerDialog(FichaCadastroIndividualActivity.this, dataNascimento,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        nascimentoCalendar.get(Calendar.YEAR),
+                        nascimentoCalendar.get(Calendar.MONTH),
+                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+        //-------------------------------------------------------------\\
 
         final Calendar naturalizacaoCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString())) {
+            naturalizacaoCalendar.setTime(Utilitario.getDate(etDataNaturalizacao.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataNaturalizacao = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                atualizarCampoData(etDataNascimento, registroCalendar);
+                naturalizacaoCalendar.set(Calendar.YEAR, year);
+                naturalizacaoCalendar.set(Calendar.MONTH, monthOfYear);
+                naturalizacaoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataNaturalizacao, naturalizacaoCalendar);
             }
         };
 
-        etDataNascimento.setOnClickListener(new View.OnClickListener() {
+        etDataNaturalizacao.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataNascimento,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataNaturalizacao,
+                        naturalizacaoCalendar.get(Calendar.YEAR),
+                        naturalizacaoCalendar.get(Calendar.MONTH),
+                        naturalizacaoCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+        //-------------------------------------------------------------\\
 
         final Calendar entradaCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataEntrada.getText().toString())) {
+            entradaCalendar.setTime(Utilitario.getDate(etDataEntrada.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataEntrada = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                atualizarCampoData(etDataEntrada, registroCalendar);
+                entradaCalendar.set(Calendar.YEAR, year);
+                entradaCalendar.set(Calendar.MONTH, monthOfYear);
+                entradaCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataEntrada, entradaCalendar);
             }
         };
 
@@ -593,25 +607,29 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
+
                 new DatePickerDialog(FichaCadastroIndividualActivity.this, dataEntrada,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        entradaCalendar.get(Calendar.YEAR),
+                        entradaCalendar.get(Calendar.MONTH),
+                        entradaCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
+        //-------------------------------------------------------------\\
 
         final Calendar obitoCalendar = Calendar.getInstance();
+        if (!Utilitario.isEmpty(etDataObito.getText().toString())) {
+            obitoCalendar.setTime(Utilitario.getDate(etDataObito.getText().toString())) ;
+        }
 
         final DatePickerDialog.OnDateSetListener dataObito = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                atualizarCampoData(etDataObito, registroCalendar);
+                obitoCalendar.set(Calendar.YEAR, year);
+                obitoCalendar.set(Calendar.MONTH, monthOfYear);
+                obitoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(etDataObito, obitoCalendar);
             }
         };
 
@@ -619,18 +637,19 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
             @Override
             public void onClick(View v) {
+
                 new DatePickerDialog(FichaCadastroIndividualActivity.this, dataObito,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        obitoCalendar.get(Calendar.YEAR),
+                        obitoCalendar.get(Calendar.MONTH),
+                        obitoCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
     }
 
-    private void atualizarCampoData(EditText editText, Calendar calendar) {
+    private void updateLabel(EditText editText, Calendar calendar) {
         String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         editText.setText(sdf.format(calendar.getTime()));
     }
@@ -672,17 +691,17 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
 
             if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
-                Snackbar.make(btnGravar, "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(fabGravar, "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
                 valido = false;
             }
 
         } else {
-            Snackbar.make(btnGravar, "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(fabGravar, "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
 
         if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(btnGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(fabGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
 

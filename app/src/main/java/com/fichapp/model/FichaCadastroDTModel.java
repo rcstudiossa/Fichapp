@@ -65,10 +65,6 @@ public class FichaCadastroDTModel implements Serializable {
     private Boolean flagExportado;
 
 
-
-
-
-
     public Long getId() {
         return id;
     }

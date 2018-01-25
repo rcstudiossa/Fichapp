@@ -6,6 +6,8 @@
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".activity.FichaCadastroDTActivity">
 
     <LinearLayout
@@ -40,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="12dp"
+                android:paddingBottom="36dp"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="8dp"
@@ -1014,28 +1016,21 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-
-                <Button
-                    android:id="@+id/btn_gravar_cadastro_dt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/cadastrar" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/cadastro_recusado" />
-
-
             </LinearLayout>
 
         </ScrollView>
 
-
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_gravar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_gravar_ficha"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"/>
 
     <include
         android:id="@+id/include_rodape_cadastro_dt"

@@ -34,7 +34,7 @@ public class TemplateActivity extends AppCompatActivity {
     protected TextView cboBarTV;
     protected TextView hospitalBarTV;
 
-    private SharedPreferences prefs;
+    protected SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

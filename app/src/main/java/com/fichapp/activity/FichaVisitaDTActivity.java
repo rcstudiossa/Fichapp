@@ -3,6 +3,7 @@ package com.fichapp.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,7 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
@@ -25,14 +25,9 @@ import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.util.Utilitario;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 public class FichaVisitaDTActivity extends TemplateActivity {
 
@@ -106,16 +101,15 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private RadioButton rbVisitaRecusada;
     private RadioButton rbAusente;
 
-    private Button btnGravar;
+    private FloatingActionButton fabGravar;
 
     private LinearLayout rodape;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setContentView(R.layout.activity_ficha_visita_dt);
-
         super.onCreate(savedInstanceState);
+
 
         this.definirComponentes();
 
@@ -129,21 +123,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.configDatas();
 
-        this.btnGravar.setOnClickListener(new View.OnClickListener() {
+        this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
             }
         });
 
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 
     private void definirComponentes () {
@@ -211,7 +197,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         rbVisitaRecusada = (RadioButton) findViewById(R.id.rb_visita_recusada);
         rbAusente = (RadioButton) findViewById(R.id.rb_ausente);
 
-        btnGravar = (Button) findViewById(R.id.btn_gravar_cadastro_dt);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
         rodape = (LinearLayout) findViewById(R.id.include_rodape);
 
@@ -281,6 +267,14 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     }
 
+    private void updateLabel(EditText editText, Calendar calendar) {
+
+        String myFormat = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+
+        editText.setText(sdf.format(calendar.getTime()));
+    }
+
     private void configToolbar() {
 
         setSupportActionBar(toolbar);
@@ -336,9 +330,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        if (!validaCampos()) {
-            return;
-        }
+        //if (!validaCampos()) { return; }
 
         setActivityToModel();
 
@@ -357,6 +349,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private boolean validaCampos() {
 
         boolean valido = true;
+
+        String cboProfissional = prefs.getString("cbo", "");
 
         if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
 
@@ -378,6 +372,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         if (rbVisitaRealizada.isChecked() && Utilitario.isEmpty(etNascimento.getText().toString())) {
             Snackbar.make(getCurrentFocus(), "Preencha a data de nascimento.", Snackbar.LENGTH_LONG).show();
             valido = false;
+        }
+
+        if (!(cboProfissional.equals("515105") || cboProfissional.equals("515120") || cboProfissional.equals("515310") || cboProfissional.equals("51514"))) {
+            Snackbar.make(getCurrentFocus(), "Sua ocupação não permite registrar esta ficha.", Snackbar.LENGTH_LONG).show();
+            valido = false;
+
+
         }
 
         return valido;
@@ -518,14 +519,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ? 3 : 0);
 
-    }
-
-    private void updateLabel(EditText editText, Calendar calendar) {
-
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        editText.setText(sdf.format(calendar.getTime()));
     }
 
 }
