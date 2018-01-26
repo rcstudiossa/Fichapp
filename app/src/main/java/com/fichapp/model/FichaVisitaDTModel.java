@@ -14,7 +14,7 @@ public class FichaVisitaDTModel implements Serializable{
     private Date dataRegistro;
     private String turno;
     private String microArea;
-    private TipoImovelModel tipoImovelModel;
+    private SpTipoImovelModel spTipoImovelModel;
 
     private String prontuario;
     private String cnsCidadao;
@@ -111,12 +111,12 @@ public class FichaVisitaDTModel implements Serializable{
         this.microArea = microArea;
     }
 
-    public TipoImovelModel getTipoImovelModel() {
-        return tipoImovelModel;
+    public SpTipoImovelModel getSpTipoImovelModel() {
+        return spTipoImovelModel;
     }
 
-    public void setTipoImovelModel(TipoImovelModel tipoImovelModel) {
-        this.tipoImovelModel = tipoImovelModel;
+    public void setSpTipoImovelModel(SpTipoImovelModel spTipoImovelModel) {
+        this.spTipoImovelModel = spTipoImovelModel;
     }
 
     public String getProntuario() {

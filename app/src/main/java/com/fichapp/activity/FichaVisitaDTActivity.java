@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,7 +19,7 @@ import android.widget.Spinner;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
-import com.fichapp.model.TipoImovelModel;
+import com.fichapp.model.SpTipoImovelModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.util.Utilitario;
@@ -310,7 +309,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         spinnerHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);*/
 
-        ArrayAdapter<TipoImovelModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoImovelModel().getTiposImovel());
+        ArrayAdapter<SpTipoImovelModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new SpTipoImovelModel().getTiposImovel());
         spinnerTipoImovel.setAdapter(adapterTipoImovel);
         adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -395,7 +394,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
-        spinnerTipoImovel.setSelection(new TipoImovelModel().getTiposImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
+        spinnerTipoImovel.setSelection(new SpTipoImovelModel().getTiposImovel().indexOf(this.fichaVisitaDTModel.getSpTipoImovelModel()));
 
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
@@ -458,7 +457,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
         this.fichaVisitaDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
-        this.fichaVisitaDTModel.setTipoImovelModel((TipoImovelModel) spinnerTipoImovel.getSelectedItem());
+        this.fichaVisitaDTModel.setSpTipoImovelModel((SpTipoImovelModel) spinnerTipoImovel.getSelectedItem());
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
 

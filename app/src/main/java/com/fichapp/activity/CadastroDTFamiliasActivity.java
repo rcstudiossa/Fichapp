@@ -16,11 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fichapp.R;
+import com.fichapp.model.SpSalarioFamiliarModel;
 
 public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
         this.configComponentes();
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        this.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
@@ -54,15 +56,19 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.container);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        spSalarioFamiliar = (Spinner) findViewById(R.id.sp_renda_familiar);
 
     }
 
     private void configComponentes() {
 
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Cadastro Familiar");
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        this.carregarSpinner();
 
     }
 
@@ -82,6 +88,15 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
         finish();
         FichaCadastroDTActivity.getInstance().finish();
+
+    }
+
+    private void carregarSpinner() {
+
+        //ArrayAdapter<SpSalarioFamiliarModel> adapterSalarioFamiliar = new ArrayAdapter<>(this, R.layout.spinner_item, new SpSalarioFamiliarModel().getSalarios());
+        ArrayAdapter adapterSalarioFamiliar = ArrayAdapter.createFromResource(this, R.array.salario_familiar, R.layout.spinner_item);
+        adapterSalarioFamiliar.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spSalarioFamiliar.setAdapter(adapterSalarioFamiliar);
 
     }
 

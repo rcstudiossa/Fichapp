@@ -54,6 +54,13 @@
         <item>Indígena</item>
     </string-array>
 
+    <string-array name="salario_familiar">
+        <item>1/4 sal. mínimo</item>
+        <item>1/2 sal. mínimo</item>
+        <item>1 sal. mínimo</item>
+        <item>2 sal. mínimos</item>
+    </string-array>
+
     <string-array name="parentesco">
         <item>Cônjuge/Companheiro(a)</item>
         <item>Filho(a)</item>

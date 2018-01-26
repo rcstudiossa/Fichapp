@@ -10,21 +10,21 @@ import java.util.List;
  * Created by Rodrigo Costa on 24/12/2017.
  */
 
-public class TipoImovelModel implements Serializable {
+public class SpTipoImovelModel implements Serializable {
 
     private String codigo;
     private String descricao;
 
-    public TipoImovelModel() {
+    public SpTipoImovelModel() {
 
     }
 
-    public TipoImovelModel(String codigo, String descricao) {
+    public SpTipoImovelModel(String codigo, String descricao) {
         this.codigo = codigo;
         this.descricao = descricao;
     }
 
-    public TipoImovelModel(String codigo) {
+    public SpTipoImovelModel(String codigo) {
         this.codigo = codigo;
     }
 
@@ -44,22 +44,22 @@ public class TipoImovelModel implements Serializable {
         this.descricao = descricao;
     }
 
-    public List<TipoImovelModel> getTiposImovel() {
+    public List<SpTipoImovelModel> getTiposImovel() {
 
-        List<TipoImovelModel> tipos = new ArrayList<>();
-        tipos.add(new TipoImovelModel("01", "Domicílio"));
-        tipos.add(new TipoImovelModel("02", "Comércio"));
-        tipos.add(new TipoImovelModel("03", "Terreno"));
-        tipos.add(new TipoImovelModel("04", "Ponto"));
-        tipos.add(new TipoImovelModel("05", "Escola"));
-        tipos.add(new TipoImovelModel("06", "Creche"));
-        tipos.add(new TipoImovelModel("07", "Abrigo"));
-        tipos.add(new TipoImovelModel("08", "Instituição de longa permanência p/ idosos"));
-        tipos.add(new TipoImovelModel("09", "Unidade prisional"));
-        tipos.add(new TipoImovelModel("10", "Unidade de medida socioeducativa"));
-        tipos.add(new TipoImovelModel("11", "Delegacia"));
-        tipos.add(new TipoImovelModel("12", "Estabelecimento religioso"));
-        tipos.add(new TipoImovelModel("99", "Outros"));
+        List<SpTipoImovelModel> tipos = new ArrayList<>();
+        tipos.add(new SpTipoImovelModel("01", "Domicílio"));
+        tipos.add(new SpTipoImovelModel("02", "Comércio"));
+        tipos.add(new SpTipoImovelModel("03", "Terreno"));
+        tipos.add(new SpTipoImovelModel("04", "Ponto"));
+        tipos.add(new SpTipoImovelModel("05", "Escola"));
+        tipos.add(new SpTipoImovelModel("06", "Creche"));
+        tipos.add(new SpTipoImovelModel("07", "Abrigo"));
+        tipos.add(new SpTipoImovelModel("08", "Instituição de longa permanência p/ idosos"));
+        tipos.add(new SpTipoImovelModel("09", "Unidade prisional"));
+        tipos.add(new SpTipoImovelModel("10", "Unidade de medida socioeducativa"));
+        tipos.add(new SpTipoImovelModel("11", "Delegacia"));
+        tipos.add(new SpTipoImovelModel("12", "Estabelecimento religioso"));
+        tipos.add(new SpTipoImovelModel("99", "Outros"));
 
         return tipos;
 
@@ -85,7 +85,7 @@ public class TipoImovelModel implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TipoImovelModel that = (TipoImovelModel) o;
+        SpTipoImovelModel that = (SpTipoImovelModel) o;
 
         return codigo != null ? codigo.equals(that.codigo) : that.codigo == null;
 
