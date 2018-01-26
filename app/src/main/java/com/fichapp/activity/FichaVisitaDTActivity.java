@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -19,9 +18,9 @@ import android.widget.Spinner;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
-import com.fichapp.model.SpTipoImovelModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
@@ -116,7 +115,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.fichaVisitaDTBS = new FichaVisitaDTBS(getApplication());
 
-        this.carregarCombos();
+        this.carregarSpinners();
 
         this.instanciarFichaVisitaDTModel();
 
@@ -205,73 +204,10 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void configDatas() {
 
-        final Calendar registroCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
-        }
+        this.configDatePicker(FichaVisitaDTActivity.this, etDataRegistro.getText().toString(), etDataRegistro);
 
-        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataRegistro, registroCalendar);
-            }
-        };
+        this.configDatePicker(FichaVisitaDTActivity.this, etNascimento.getText().toString(), etNascimento);
 
-        etDataRegistro.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataRegistro,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-
-        final Calendar nascimentoCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etNascimento.getText().toString())) {
-          nascimentoCalendar.setTime(Utilitario.getDate(etNascimento.getText().toString())) ;
-        }
-
-
-
-        final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                nascimentoCalendar.set(Calendar.YEAR, year);
-                nascimentoCalendar.set(Calendar.MONTH, monthOfYear);
-                nascimentoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etNascimento, nascimentoCalendar);
-            }
-        };
-
-        etNascimento.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(FichaVisitaDTActivity.this, dataNascimento,
-                        nascimentoCalendar.get(Calendar.YEAR),
-                        nascimentoCalendar.get(Calendar.MONTH),
-                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-    }
-
-    private void updateLabel(EditText editText, Calendar calendar) {
-
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        editText.setText(sdf.format(calendar.getTime()));
     }
 
     private void configToolbar() {
@@ -295,7 +231,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     }
 
-    private void carregarCombos() {
+    private void carregarSpinners() {
 
         /*ProfissionalBS profissionalBS = new ProfissionalBS(this);
         this.profissionais = profissionalBS.pesquisarAtivos();
@@ -309,9 +245,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         spinnerHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);*/
 
-        ArrayAdapter<SpTipoImovelModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new SpTipoImovelModel().getTiposImovel());
-        spinnerTipoImovel.setAdapter(adapterTipoImovel);
-        adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        this.carregarSpinnerTipoImovel(spinnerTipoImovel);
 
     }
 
@@ -329,7 +263,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        //if (!validaCampos()) { return; }
+        if (!validaCampos()) { return; }
 
         setActivityToModel();
 
@@ -394,7 +328,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
-        spinnerTipoImovel.setSelection(new SpTipoImovelModel().getTiposImovel().indexOf(this.fichaVisitaDTModel.getSpTipoImovelModel()));
+        spinnerTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
 
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
@@ -457,7 +391,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.fichaVisitaDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
         this.fichaVisitaDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
-        this.fichaVisitaDTModel.setSpTipoImovelModel((SpTipoImovelModel) spinnerTipoImovel.getSelectedItem());
+        this.fichaVisitaDTModel.setTipoImovelModel((TipoModel) spinnerTipoImovel.getSelectedItem());
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
 

@@ -2,6 +2,7 @@ package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.fichapp.business.FichaCadastroIndividualBS;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroIndividualModel;
 import com.fichapp.model.ProfissionalModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.text.ParseException;
@@ -469,189 +471,42 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void carregarSpinners() {
 
-        ArrayAdapter spAdapterRaca = ArrayAdapter.createFromResource(this, R.array.raca, R.layout.spinner_item);
-        spAdapterRaca.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spRaca.setAdapter(spAdapterRaca);
+        ArrayAdapter<TipoModel> spAdapter;
 
-        ArrayAdapter spAdapterParentesco = ArrayAdapter.createFromResource(this, R.array.parentesco, R.layout.spinner_item);
-        spAdapterParentesco.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spParentesco.setAdapter(spAdapterParentesco);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRaca());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spRaca.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterCurso = ArrayAdapter.createFromResource(this, R.array.curso, R.layout.spinner_item);
-        spAdapterCurso.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spCurso.setAdapter(spAdapterCurso);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboParentesco());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spParentesco.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterTrabalho = ArrayAdapter.createFromResource(this, R.array.trabalho, R.layout.spinner_item);
-        spAdapterTrabalho.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spTrabalho.setAdapter(spAdapterTrabalho);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboCurso());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spCurso.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterOrientacao = ArrayAdapter.createFromResource(this, R.array.orientacao, R.layout.spinner_item);
-        spAdapterOrientacao.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spOrientacao.setAdapter(spAdapterOrientacao);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTrabalho());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spTrabalho.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterGenero = ArrayAdapter.createFromResource(this, R.array.genero, R.layout.spinner_item);
-        spAdapterGenero.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spGenero.setAdapter(spAdapterGenero);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboOrientacaoSexual());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spOrientacao.setAdapter(spAdapter);
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboGeneroSexual());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spGenero.setAdapter(spAdapter);
 
     }
 
     private void configDatas() {
 
-        final Calendar registroCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
-        }
+        this.configDatePicker(FichaCadastroIndividualActivity.this, etDataRegistro.getText().toString(), etDataRegistro);
+        this.configDatePicker(FichaCadastroIndividualActivity.this, etDataNascimento.getText().toString(), etDataNascimento);
+        this.configDatePicker(FichaCadastroIndividualActivity.this, etDataNaturalizacao.getText().toString(), etDataNaturalizacao);
+        this.configDatePicker(FichaCadastroIndividualActivity.this, etDataEntrada.getText().toString(), etDataEntrada);
+        this.configDatePicker(FichaCadastroIndividualActivity.this, etDataObito.getText().toString(), etDataObito);
 
-        final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                registroCalendar.set(Calendar.YEAR, year);
-                registroCalendar.set(Calendar.MONTH, monthOfYear);
-                registroCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataRegistro, registroCalendar);
-            }
-        };
-
-        etDataRegistro.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataRegistro,
-                        registroCalendar.get(Calendar.YEAR),
-                        registroCalendar.get(Calendar.MONTH),
-                        registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        
-        //-------------------------------------------------------------\\
-
-        final Calendar nascimentoCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataNascimento.getText().toString())) {
-            nascimentoCalendar.setTime(Utilitario.getDate(etDataNascimento.getText().toString())) ;
-        }
-
-        final DatePickerDialog.OnDateSetListener dataNascimento = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                nascimentoCalendar.set(Calendar.YEAR, year);
-                nascimentoCalendar.set(Calendar.MONTH, monthOfYear);
-                nascimentoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataNascimento, nascimentoCalendar);
-            }
-        };
-
-        etDataNascimento.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataNascimento,
-                        nascimentoCalendar.get(Calendar.YEAR),
-                        nascimentoCalendar.get(Calendar.MONTH),
-                        nascimentoCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        //-------------------------------------------------------------\\
-
-        final Calendar naturalizacaoCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString())) {
-            naturalizacaoCalendar.setTime(Utilitario.getDate(etDataNaturalizacao.getText().toString())) ;
-        }
-
-        final DatePickerDialog.OnDateSetListener dataNaturalizacao = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                naturalizacaoCalendar.set(Calendar.YEAR, year);
-                naturalizacaoCalendar.set(Calendar.MONTH, monthOfYear);
-                naturalizacaoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataNaturalizacao, naturalizacaoCalendar);
-            }
-        };
-
-        etDataNaturalizacao.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataNaturalizacao,
-                        naturalizacaoCalendar.get(Calendar.YEAR),
-                        naturalizacaoCalendar.get(Calendar.MONTH),
-                        naturalizacaoCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        //-------------------------------------------------------------\\
-
-        final Calendar entradaCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataEntrada.getText().toString())) {
-            entradaCalendar.setTime(Utilitario.getDate(etDataEntrada.getText().toString())) ;
-        }
-
-        final DatePickerDialog.OnDateSetListener dataEntrada = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                entradaCalendar.set(Calendar.YEAR, year);
-                entradaCalendar.set(Calendar.MONTH, monthOfYear);
-                entradaCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataEntrada, entradaCalendar);
-            }
-        };
-
-        etDataEntrada.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataEntrada,
-                        entradaCalendar.get(Calendar.YEAR),
-                        entradaCalendar.get(Calendar.MONTH),
-                        entradaCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        //-------------------------------------------------------------\\
-
-        final Calendar obitoCalendar = Calendar.getInstance();
-        if (!Utilitario.isEmpty(etDataObito.getText().toString())) {
-            obitoCalendar.setTime(Utilitario.getDate(etDataObito.getText().toString())) ;
-        }
-
-        final DatePickerDialog.OnDateSetListener dataObito = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                obitoCalendar.set(Calendar.YEAR, year);
-                obitoCalendar.set(Calendar.MONTH, monthOfYear);
-                obitoCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(etDataObito, obitoCalendar);
-            }
-        };
-
-        etDataObito.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                new DatePickerDialog(FichaCadastroIndividualActivity.this, dataObito,
-                        obitoCalendar.get(Calendar.YEAR),
-                        obitoCalendar.get(Calendar.MONTH),
-                        obitoCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-    }
-
-    private void updateLabel(EditText editText, Calendar calendar) {
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        editText.setText(sdf.format(calendar.getTime()));
     }
 
     private void instanciarFichaVisitaDTModel() {
@@ -812,6 +667,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         setDatesToModel();
 
+        this.fichaCadastroIndividualModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
+        this.fichaCadastroIndividualModel.setCnesModel(new CNESModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("cnes_id", 0)));
+
         //EditTexts
         this.fichaCadastroIndividualModel.setCnsCidadao(etCnsCidadao.getText().toString());
         this.fichaCadastroIndividualModel.setCnsResponsavelFamiliar(etCnsResponsavelFamiliar.getText().toString());
@@ -838,6 +696,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setQualInstituicao(etQualInstituicao.getText().toString());
 
         //TODO: RADIOS E SPINNERS
+
+
+
 
         //Checkboxes
         this.fichaCadastroIndividualModel.setFlagAcessoBanho(cbAcessoBanho.isChecked());

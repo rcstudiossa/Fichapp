@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.ProfissionalModel;
-import com.fichapp.model.SpTipoImovelModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
@@ -273,7 +273,7 @@ public class FichaCadastroDTDAO {
         fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0); //
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
         fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0); //
-        fichaModel.setSpTipoImovelModel(new SpTipoImovelModel(c.getString(c.getColumnIndex("tipo_imovel"))));
+        fichaModel.setSpTipoImovelModel(new TipoModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setTelResidencia(c.getString(c.getColumnIndex("tel_residencia")));
         fichaModel.setTelContato(c.getString(c.getColumnIndex("tel_contato")));
 

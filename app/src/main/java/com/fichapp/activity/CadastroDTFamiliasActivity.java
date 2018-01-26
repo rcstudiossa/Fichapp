@@ -17,12 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.fichapp.R;
-import com.fichapp.model.SpSalarioFamiliarModel;
 
 public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
@@ -87,13 +84,11 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
         startActivity(intent);
 
         finish();
-        FichaCadastroDTActivity.getInstance().finish();
 
     }
 
     private void carregarSpinner() {
 
-        //ArrayAdapter<SpSalarioFamiliarModel> adapterSalarioFamiliar = new ArrayAdapter<>(this, R.layout.spinner_item, new SpSalarioFamiliarModel().getSalarios());
         ArrayAdapter adapterSalarioFamiliar = ArrayAdapter.createFromResource(this, R.array.salario_familiar, R.layout.spinner_item);
         adapterSalarioFamiliar.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spSalarioFamiliar.setAdapter(adapterSalarioFamiliar);

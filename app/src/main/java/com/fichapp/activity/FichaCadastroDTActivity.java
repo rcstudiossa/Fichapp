@@ -23,6 +23,7 @@ import com.fichapp.business.FichaCadastroDTBS;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.ProfissionalModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.text.ParseException;
@@ -231,17 +232,17 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void carregarSpinners() {
 
-        ArrayAdapter spAdapterTipoImovel = ArrayAdapter.createFromResource(this, R.array.tipo_imovel, R.layout.spinner_item);
-        spAdapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spTipoImovel.setAdapter(spAdapterTipoImovel);
+        this.carregarSpinnerTipoImovel(spTipoImovel);
 
-        ArrayAdapter spAdapterSituacaoMoradia = ArrayAdapter.createFromResource(this, R.array.situacao_moradia, R.layout.spinner_item);
-        spAdapterSituacaoMoradia.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spSituacaoMoradia.setAdapter(spAdapterSituacaoMoradia);
+        ArrayAdapter<TipoModel> spAdapter;
 
-        ArrayAdapter spAdapterPosseTerra = ArrayAdapter.createFromResource(this, R.array.posse_terra, R.layout.spinner_item);
-        spAdapterPosseTerra.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spCondicaoPosseTerra.setAdapter(spAdapterPosseTerra);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboSituacaoMoradia());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spSituacaoMoradia.setAdapter(spAdapter);
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboPosseTerra());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spCondicaoPosseTerra.setAdapter(spAdapter);
 
         ArrayAdapter spAdapterNumMoradores = ArrayAdapter.createFromResource(this, R.array.numeros, R.layout.spinner_item);
         spAdapterNumMoradores.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -303,12 +304,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             }
         });
 
-    }
-    private void updateLabel(EditText editText, Calendar calendar) {
-        String myFormat = "dd/MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        editText.setText(sdf.format(calendar.getTime()));
     }
 
     private void instanciarFichaVisitaDTModel() {

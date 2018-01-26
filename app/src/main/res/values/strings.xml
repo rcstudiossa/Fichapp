@@ -30,116 +30,11 @@
 
     <string name="cadastro_recusado"><u>Cadastro Recusado</u></string>
 
-    <string-array name="tipo_imovel">
-        <item>01: Domicílio</item>
-        <item>02: Comércio</item>
-        <item>03: Terreno baldio</item>
-        <item>04: Ponto estratégico</item>
-        <item>05: Escola</item>
-        <item>06: Creche</item>
-        <item>07: Abrigo</item>
-        <item>08: Instituição de longa permanência p/ idosos</item>
-        <item>09: Unidade prisional</item>
-        <item>10: Unidade de medida socioeducativa</item>
-        <item>11: Delegacia</item>
-        <item>12: Estabelecimento religioso</item>
-        <item>99: Outros</item>
-    </string-array>
-
-    <string-array name="raca">
-        <item>Branca</item>
-        <item>Preta</item>
-        <item>Parda</item>
-        <item>Amarela</item>
-        <item>Indígena</item>
-    </string-array>
-
     <string-array name="salario_familiar">
         <item>1/4 sal. mínimo</item>
         <item>1/2 sal. mínimo</item>
         <item>1 sal. mínimo</item>
         <item>2 sal. mínimos</item>
-    </string-array>
-
-    <string-array name="parentesco">
-        <item>Cônjuge/Companheiro(a)</item>
-        <item>Filho(a)</item>
-        <item>Enteado(a)</item>
-        <item>Neto(a)/Bineto(a)</item>
-        <item>Pai/Mãe</item>
-        <item>Sogro(a)</item>
-        <item>Irmão/Irmã</item>
-        <item>Genro/Nora</item>
-        <item>Outro parente</item>
-        <item>Não parente</item>
-    </string-array>
-
-    <string-array name="curso">
-        <item>Creche</item>
-        <item>Pré-escola (exceto CA)</item>
-        <item>Classe de Alfabetização - CA</item>
-        <item>Ensino Fundamental 1ª a 4ª séries</item>
-        <item>Ensino Fundamental 5ª a 8ª séries</item>
-        <item>Ensino Fundamental Completo</item>
-        <item>Ensino Fundamental Especial</item>
-        <item>Ensino Fundamental EJA - (Supletivo 1ª a 4ª)</item>
-        <item>Ensino Fundamental EJA - (Supletivo 5ª a 8ª)</item>
-        <item>Ensino Médio, Médio 2º Ciclo (Científico, Técnico etc.)</item>
-        <item>Ensino Médio Especial</item>
-        <item>Ensino Fundamental EJA (Supletivo)</item>
-        <item>Superioi, Aperfeiçoamento, Especialização, Mestrado, Doutorado</item>
-        <item>Alfabetização para Adultos</item>
-        <item>Nenhum</item>
-    </string-array>
-
-    <string-array name="trabalho">
-        <item>Empregador</item>
-        <item>Assalariado com carteira de trabalho</item>
-        <item>Assalariado sem carteira de trabalho</item>
-        <item>Autônomo com previdência social</item>
-        <item>Autônomo sem previdência social</item>
-        <item>Aposentado/Pensionista</item>
-        <item>Desempregado</item>
-        <item>Não trabalha</item>
-        <item>Servidor público/militar</item>
-        <item>Outro</item>
-    </string-array>
-
-    <string-array name="orientacao">
-        <item>Heterossexual</item>
-        <item>Bissexual</item>
-        <item>Homossexual (gay/lésbica)</item>
-        <item>Outra</item>
-    </string-array>
-
-    <string-array name="genero">
-        <item>Homem transexual</item>
-        <item>Mulher transexual</item>
-        <item>Travesti</item>
-        <item>Outro</item>
-    </string-array>
-
-
-    <string-array name="situacao_moradia">
-        <item>Próprio</item>
-        <item>Financiado</item>
-        <item>Alugado</item>
-        <item>Arrendado</item>
-        <item>Cedido</item>
-        <item>Ocupação</item>
-        <item>Situação de Rua</item>
-        <item>Outra</item>
-    </string-array>
-
-    <string-array name="posse_terra">
-        <item>Proprietário</item>
-        <item>Parceiro(a)/Meeiro(a)</item>
-        <item>Assentado(a)</item>
-        <item>Posseiro</item>
-        <item>Arrendatário(a)</item>
-        <item>Comodatário(a)</item>
-        <item>Beneficiário(a) do Banco da Terra</item>
-        <item>Não se aplica</item>
     </string-array>
 
     <string-array name="material_paredes">

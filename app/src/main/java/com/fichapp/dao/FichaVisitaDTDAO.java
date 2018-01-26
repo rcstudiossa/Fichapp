@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.model.ProfissionalModel;
-import com.fichapp.model.SpTipoImovelModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class FichaVisitaDTDAO {
                          Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                          fichaModel.getTurno(),
                          fichaModel.getMicroArea(),
-                         fichaModel.getSpTipoImovelModel().getCodigo(),
+                         fichaModel.getTipoImovelModel().getCodigo(),
                          fichaModel.getProntuario(),
                          fichaModel.getCnsCidadao(),
                          Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
@@ -98,7 +98,7 @@ public class FichaVisitaDTDAO {
                 Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                 fichaModel.getTurno(),
                 fichaModel.getMicroArea(),
-                fichaModel.getSpTipoImovelModel().getCodigo(),
+                fichaModel.getTipoImovelModel().getCodigo(),
                 fichaModel.getProntuario(),
                 fichaModel.getCnsCidadao(),
                 Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
@@ -257,7 +257,7 @@ public class FichaVisitaDTDAO {
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
-        fichaModel.setSpTipoImovelModel(new SpTipoImovelModel(c.getString(c.getColumnIndex("tipo_imovel"))));
+        fichaModel.setTipoImovelModel(new TipoModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
         fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));

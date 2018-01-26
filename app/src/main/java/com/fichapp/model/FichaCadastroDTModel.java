@@ -29,7 +29,7 @@ public class FichaCadastroDTModel implements Serializable {
     private Boolean flagSemNumero;
     private String microArea;
     private Boolean flagForaDeArea;
-    private SpTipoImovelModel spTipoImovelModel;
+    private TipoModel spTipoImovelModel;
     private String telResidencia;
     private String telContato;
 
@@ -184,10 +184,10 @@ public class FichaCadastroDTModel implements Serializable {
         this.flagForaDeArea = flagForaDeArea;
     }
 
-    public SpTipoImovelModel getSpTipoImovelModel() {
+    public TipoModel getSpTipoImovelModel() {
         return spTipoImovelModel;
     }
-    public void setSpTipoImovelModel(SpTipoImovelModel spTipoImovelModel) {
+    public void setSpTipoImovelModel(TipoModel spTipoImovelModel) {
         this.spTipoImovelModel = spTipoImovelModel;
     }
 
