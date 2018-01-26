@@ -1,5 +1,6 @@
 package com.fichapp.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -98,12 +99,14 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Integer itemAcessoDomicilio;
     private Integer itemLocalizacao;
 
+    public static FichaCadastroDTActivity fichaCadastroDTActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         setContentView(R.layout.activity_ficha_cadastro_dt);
-
         super.onCreate(savedInstanceState);
+
+        fichaCadastroDTActivity = this;
 
         this.instanciarFichaVisitaDTModel();
 
@@ -127,6 +130,10 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         });
 
 
+    }
+
+    public static FichaCadastroDTActivity getInstance(){
+        return fichaCadastroDTActivity;
     }
 
     private void definirComponentes() {
@@ -318,7 +325,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        //if (!validaCampos()) { return; }
+        /* if (!validaCampos()) { return; }
 
         setActivityToModel();
 
@@ -328,9 +335,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fragment", "FichaCadastroDTFragment");
+        startActivity(intent); */
+
+        Intent intent = new Intent(this, CadastroDTFamiliasActivity.class);
         startActivity(intent);
 
-        finish();
+        //finish();
 
     }
 
