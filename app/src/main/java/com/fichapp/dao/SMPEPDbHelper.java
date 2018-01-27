@@ -40,9 +40,8 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public static final String SQL_DELETE_FICHA_CADASTRO_DT = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial;";
 
     public static final String SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL = "CREATE TABLE IF NOT EXISTS ficha_cadastro_individual" +
-            " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER" +
-            ", data_registro DATE, turno CHAR(1)" +
-            ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo char(1), raca INTEGER, etnia VARCHAR, nis VARCHAR" +
+            " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, data_registro DATE" +
+            ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo INTEGER, raca INTEGER, etnia VARCHAR, nis VARCHAR" +
             ", nome_mae VARCHAR, flag_mae_desconhecido BOOLEAN, nome_pai VARCHAR, flag_pai_desconhecido BOOLEAN" +
             ", nacionalidade INTEGER, pais_nascimento VARCHAR, municipio_uf_nascimento VARCHAR, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
             ", telefone_celular VARCHAR, email_cidadao VARCHAR" +
