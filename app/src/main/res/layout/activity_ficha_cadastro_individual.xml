@@ -48,20 +48,30 @@
                 android:paddingTop="8dp"
                 tools:context="com.fichapp.activity.FichaVisitaDTActivity">
 
+                <TextView
+                    android:id="@+id/tv_dados_cidadao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/field_margin"
+                    android:layout_marginEnd="@dimen/field_margin"
+                    android:background="@color/colorBGDivider"
+                    android:paddingBottom="2dp"
+                    android:paddingStart="6dp"
+                    android:paddingTop="2dp"
+                    android:text="Dados do Cidadão"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin"
                     android:orientation="horizontal">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayout"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp">
-
-                        <!-- TODO: Finally, my only working solution has been to create an AlertDialog and include a DatePicker as a view. Thanks! -->
-                        <!-- https://stackoverflow.com/questions/39429946/how-to-change-the-datepicker-style-for-android -->
+                        android:layout_margin="4dp">
 
                         <EditText
                             android:id="@+id/et_data_registro"
@@ -74,82 +84,27 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayout6"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:orientation="vertical">
+                        android:layout_margin="@dimen/field_margin">
 
-                        <TextView
-                            android:id="@+id/tv_turno"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Turno*"
-                            android:textColor="@color/colorPrimaryDark" />
+                        <EditText
+                            android:id="@+id/et_cns"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="CNS Cidadão"
+                            android:inputType="number"
+                            android:maxLength="15" />
 
-                        <RadioGroup
-                            android:id="@+id/rg_turno"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                    </android.support.design.widget.TextInputLayout>
 
-                            <RadioButton
-                                android:id="@+id/rb_turno_m"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="M" />
-
-                            <RadioButton
-                                android:id="@+id/rb_turno_t"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="T" />
-
-                            <RadioButton
-                                android:id="@+id/rb_turno_n"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="N" />
-
-                        </RadioGroup>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_dados_cidadao"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin"
-                    android:layout_marginEnd="@dimen/field_margin"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/colorBGDivider"
-                    android:paddingBottom="2dp"
-                    android:paddingStart="6dp"
-                    android:paddingTop="2dp"
-                    android:text="Dados do Cidadão"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
 
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin">
-
-                    <EditText
-                        android:id="@+id/et_cns"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="CNS Cidadão"
-                        android:inputType="number"
-                        android:maxLength="15" />
-
-                </android.support.design.widget.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -340,7 +295,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="150dp"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical"
@@ -470,7 +425,8 @@
                                 android:id="@+id/rb_brasileira"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Brasileira" />
+                                android:text="Brasileira"
+                                chec/>
 
                             <RadioButton
                                 android:id="@+id/rb_naturalizado"

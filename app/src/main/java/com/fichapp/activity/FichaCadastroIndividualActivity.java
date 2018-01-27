@@ -50,7 +50,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private Spinner spGenero;
 
     private EditText etDataRegistro;
-    private RadioGroup rgTurno;
 
     private EditText etCnsCidadao;
     private RadioGroup rgResponsavelFamiliar;
@@ -342,7 +341,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         rgSituacaoRua = (RadioGroup) findViewById(R.id.rg_esta_situacao_rua);
         rgTempoSituacaoRua = (RadioGroup) findViewById(R.id.rg_tempo_situacao_rua);
         rgTuberculose = (RadioGroup) findViewById(R.id.rg_tuberculose);
-        rgTurno = (RadioGroup) findViewById(R.id.rg_turno);
         rgVisitaFamiliar = (RadioGroup) findViewById(R.id.rg_visita_familiar);
 
 
@@ -444,9 +442,12 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         itemRgSituacaoRua = rgSituacaoRua.indexOfChild(findViewById(rgSituacaoRua.getCheckedRadioButtonId()));
         itemRgTempoSituacaoRua = rgTempoSituacaoRua.indexOfChild(findViewById(rgTempoSituacaoRua.getCheckedRadioButtonId()));
         itemRgTuberculose = rgTuberculose.indexOfChild(findViewById(rgTuberculose.getCheckedRadioButtonId()));
-        itemRgTurno = rgTurno.indexOfChild(findViewById(rgTurno.getCheckedRadioButtonId()));
         itemRgVisitaFamiliar = rgVisitaFamiliar.indexOfChild(findViewById(rgVisitaFamiliar.getCheckedRadioButtonId()));
 
+    }
+
+    private Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
+        return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
     }
 
     private void configToolbar() {
@@ -527,7 +528,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         setActivityToModel();
 
-        this.fichaCadastroIndividualBS.gravar(this.fichaCadastroIndividualModel);
+        //this.fichaCadastroIndividualBS.gravar(this.fichaCadastroIndividualModel);
 
         Utilitario.avisoSucesso(getApplicationContext());
 
@@ -669,23 +670,31 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.fichaCadastroIndividualModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
         this.fichaCadastroIndividualModel.setCnesModel(new CNESModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("cnes_id", 0)));
-
-        //EditTexts
+        this.fichaCadastroIndividualModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
         this.fichaCadastroIndividualModel.setCnsCidadao(etCnsCidadao.getText().toString());
+        this.fichaCadastroIndividualModel.setFlagResponsavelFamiliar(this.getPosicaoSelecionadoRG(rgResponsavelFamiliar).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgResponsavelFamiliar).equals(0));
         this.fichaCadastroIndividualModel.setCnsResponsavelFamiliar(etCnsResponsavelFamiliar.getText().toString());
         this.fichaCadastroIndividualModel.setMicroarea(etMicroarea.getText().toString());
+        this.fichaCadastroIndividualModel.setFlagForaDeArea(cbForaDeArea.isChecked());
         this.fichaCadastroIndividualModel.setNomeCompleto(etNomeCompleto.getText().toString());
         this.fichaCadastroIndividualModel.setNomeSocial(etNomeSocial.getText().toString());
+        this.fichaCadastroIndividualModel.setDataNascimento(Utilitario.getDate(etDataNascimento.getText().toString()));
+        this.fichaCadastroIndividualModel.setSexo(this.getPosicaoSelecionadoRG(rgSexo).equals(-1) ? 4 : this.getPosicaoSelecionadoRG(rgSexo));
+        this.fichaCadastroIndividualModel.setRaca(new Integer(((TipoModel) this.spRaca.getSelectedItem()).getCodigo()));
         this.fichaCadastroIndividualModel.setEtnia(etEtnia.getText().toString());
         this.fichaCadastroIndividualModel.setNis(etNis.getText().toString());
         this.fichaCadastroIndividualModel.setNomeMae(etNomeMae.getText().toString());
         this.fichaCadastroIndividualModel.setNomePai(etNomePai.getText().toString());
+        this.fichaCadastroIndividualModel.setNacionalidade(this.getPosicaoSelecionadoRG(rgNacionalidade) + 1);
         this.fichaCadastroIndividualModel.setPaisNascimento(etPaisNascimento.getText().toString());
         this.fichaCadastroIndividualModel.setMunicipioUfNascimento(etMunicipioUfNascimento.getText().toString());
         this.fichaCadastroIndividualModel.setPortariaNaturalizacao(etPortariaNaturalizacao.getText().toString());
+        this.fichaCadastroIndividualModel.setDataNaturalizacao(Utilitario.getDate(etDataNaturalizacao.getText().toString()));
+        this.fichaCadastroIndividualModel.setDataEntrada(Utilitario.getDate(etDataEntrada.getText().toString()));
         this.fichaCadastroIndividualModel.setTelefoneCelular(etTelefoneCelular.getText().toString());
         this.fichaCadastroIndividualModel.setEmailCidadao(etEmailCidadao.getText().toString());
-        this.fichaCadastroIndividualModel.setGrauParentesco(etGrauParentesco.getText().toString());
+        this.fichaCadastroIndividualModel.setParentescoResponsavelFamiliar(new Integer(((TipoModel) this.spParentesco.getSelectedItem()).getCodigo()));
+
         this.fichaCadastroIndividualModel.setOcupacao(etOcupacao.getText().toString());
         this.fichaCadastroIndividualModel.setQualComunidade(etQualComunidade.getText().toString());
         this.fichaCadastroIndividualModel.setNumeroDO(etNumeroDO.getText().toString());
@@ -726,7 +735,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setFlagFicaOutro(cbFicaOutro.isChecked());
 
         this.fichaCadastroIndividualModel.setFlagFicaSozinha(cbFicaSozinha.isChecked());
-        this.fichaCadastroIndividualModel.setFlagForaDeArea(cbForaDeArea.isChecked());
         this.fichaCadastroIndividualModel.setFlagInsuficienciaCardiaca(cbInsuficienciaCardiaca.isChecked());
         this.fichaCadastroIndividualModel.setFlagInsuficienciaRenal(cbInsuficienciaRenal.isChecked());
         this.fichaCadastroIndividualModel.setFlagMaeDesconhecido(cbMaeDesconhecido.isChecked());
