@@ -13,6 +13,7 @@ import com.fichapp.R;
 import com.fichapp.activity.FichaCadastroIndividualActivity;
 import com.fichapp.business.FichaCadastroIndividualBS;
 import com.fichapp.model.FichaCadastroIndividualModel;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +44,7 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
         fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNomeCompleto()));
         fichaCadastroIndividualVH.tvCNS.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
-        //fichaCadastroIndividualVH.tvData.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
+        fichaCadastroIndividualVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaCadastroIndividualVH.btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,11 +102,11 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
         public FichaCadastroIndividualVH(View itemView) {
             super(itemView);
-            tvNome = (TextView) itemView.findViewById(R.id.tv_nome);
-            tvCNS = (TextView) itemView.findViewById(R.id.et_cns);
-            tvData = (TextView) itemView.findViewById(R.id.tv_data);
-            btEdit = (ImageButton) itemView.findViewById(R.id.bt_edit);
-            btDelete = (ImageButton) itemView.findViewById(R.id.bt_delete);
+            tvNome = itemView.findViewById(R.id.tv_nome);
+            tvCNS = itemView.findViewById(R.id.tv_cns);
+            tvData = itemView.findViewById(R.id.tv_data);
+            btEdit = itemView.findViewById(R.id.bt_edit);
+            btDelete = itemView.findViewById(R.id.bt_delete);
 
         }
 

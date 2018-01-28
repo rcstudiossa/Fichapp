@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -182,53 +183,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private LinearLayout llRodape;
 
-    private Boolean flagAtivo;
-    private Boolean flagExportado;
-
-
-    private Integer itemRgAcamado;
-    private Integer itemRgAcessoHigienePessoal;
-    private Integer itemRgAcompanhadoInstituicao;
-    private Integer itemRgAlcool;
-    private Integer itemRgAvcDerrame;
-    private Integer itemRgCancer;
-    private Integer itemRgDeficiencia;
-    private Integer itemRgDiabetes;
-    private Integer itemRgDoencaCardiaca;
-    private Integer itemRgDoencaRespiratoria;
-    private Integer itemRgDomiciliado;
-    private Integer itemRgFrequenciaAlimentacao;
-    private Integer itemRgFrequentaCuidador;
-    private Integer itemRgFrequentaEscola;
-    private Integer itemRgFumante;
-    private Integer itemRgGestante;
-    private Integer itemRgHanseniase;
-    private Integer itemRgHipertensao;
-    private Integer itemRgInfarto;
-    private Integer itemRgInformarIdentidadeGenero;
-    private Integer itemRgInformarOrientacao;
-    private Integer itemRgInternado;
-    private Integer itemRgMembroDeComunidade;
-    private Integer itemRgNacionalidade;
-    private Integer itemRgOutrasDrogas;
-    private Integer itemRgOutrasPraticasIntegrativas;
-    private Integer itemRgParticipaGrupoComunitario;
-    private Integer itemRgPeso;
-    private Integer itemRgPlantasMedicinais;
-    private Integer itemRgPossuiPlanoDeSaude;
-    private Integer itemRgProblemaMental;
-    private Integer itemRgProblemaRins;
-    private Integer itemRgRecebeBeneficio;
-    private Integer itemRgReferenciaFamiliar;
-    private Integer itemRgResponsavelFamiliar;
-    private Integer itemRgSaidaCadastro;
-    private Integer itemRgSexo;
-    private Integer itemRgSituacaoRua;
-    private Integer itemRgTempoSituacaoRua;
-    private Integer itemRgTuberculose;
-    private Integer itemRgTurno;
-    private Integer itemRgVisitaFamiliar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,8 +201,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.desabilitaCampos();
 
         this.configDatas();
-
-        this.lerRadios();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -400,56 +352,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
-    private void lerRadios() {
-
-        itemRgAcamado = rgAcamado.indexOfChild(findViewById(rgAcamado.getCheckedRadioButtonId()));
-        itemRgAcessoHigienePessoal = rgAcessoHigienePessoal.indexOfChild(findViewById(rgAcessoHigienePessoal.getCheckedRadioButtonId()));
-        itemRgAcompanhadoInstituicao = rgAcompanhadoInstituicao.indexOfChild(findViewById(rgAcompanhadoInstituicao.getCheckedRadioButtonId()));
-        itemRgAlcool = rgAlcool.indexOfChild(findViewById(rgAlcool.getCheckedRadioButtonId()));
-        itemRgAvcDerrame = rgAvcDerrame.indexOfChild(findViewById(rgAvcDerrame.getCheckedRadioButtonId()));
-        itemRgCancer = rgCancer.indexOfChild(findViewById(rgCancer.getCheckedRadioButtonId()));
-        itemRgDeficiencia = rgDeficiencia.indexOfChild(findViewById(rgDeficiencia.getCheckedRadioButtonId()));
-        itemRgDiabetes = rgDiabetes.indexOfChild(findViewById(rgDiabetes.getCheckedRadioButtonId()));
-        itemRgDoencaCardiaca = rgDoencaCardiaca.indexOfChild(findViewById(rgDoencaCardiaca.getCheckedRadioButtonId()));
-        itemRgDoencaRespiratoria = rgDoencaRespiratoria.indexOfChild(findViewById(rgDoencaRespiratoria.getCheckedRadioButtonId()));
-        itemRgDomiciliado = rgDomiciliado.indexOfChild(findViewById(rgDomiciliado.getCheckedRadioButtonId()));
-        itemRgFrequenciaAlimentacao = rgFrequenciaAlimentacao.indexOfChild(findViewById(rgFrequenciaAlimentacao.getCheckedRadioButtonId()));
-        itemRgFrequentaCuidador = rgFrequentaCuidador.indexOfChild(findViewById(rgFrequentaCuidador.getCheckedRadioButtonId()));
-        itemRgFrequentaEscola = rgFrequentaEscola.indexOfChild(findViewById(rgFrequentaEscola.getCheckedRadioButtonId()));
-        itemRgFumante = rgFumante.indexOfChild(findViewById(rgFumante.getCheckedRadioButtonId()));
-        itemRgGestante = rgGestante.indexOfChild(findViewById(rgGestante.getCheckedRadioButtonId()));
-        itemRgHanseniase = rgHanseniase.indexOfChild(findViewById(rgHanseniase.getCheckedRadioButtonId()));
-        itemRgHipertensao = rgHipertensao.indexOfChild(findViewById(rgHipertensao.getCheckedRadioButtonId()));
-        itemRgInfarto = rgInfarto.indexOfChild(findViewById(rgInfarto.getCheckedRadioButtonId()));
-        itemRgInformarIdentidadeGenero = rgInformarIdentidadeGenero.indexOfChild(findViewById(rgInformarIdentidadeGenero.getCheckedRadioButtonId()));
-        itemRgInformarOrientacao = rgInformarOrientacao.indexOfChild(findViewById(rgInformarOrientacao.getCheckedRadioButtonId()));
-        itemRgInternado = rgInternado.indexOfChild(findViewById(rgInternado.getCheckedRadioButtonId()));
-        itemRgMembroDeComunidade = rgMembroDeComunidade.indexOfChild(findViewById(rgMembroDeComunidade.getCheckedRadioButtonId()));
-        itemRgNacionalidade = rgNacionalidade.indexOfChild(findViewById(rgNacionalidade.getCheckedRadioButtonId()));
-        itemRgOutrasDrogas = rgOutrasDrogas.indexOfChild(findViewById(rgOutrasDrogas.getCheckedRadioButtonId()));
-        itemRgOutrasPraticasIntegrativas = rgOutrasPraticasIntegrativas.indexOfChild(findViewById(rgOutrasPraticasIntegrativas.getCheckedRadioButtonId()));
-        itemRgParticipaGrupoComunitario = rgParticipaGrupoComunitario.indexOfChild(findViewById(rgParticipaGrupoComunitario.getCheckedRadioButtonId()));
-        itemRgPeso = rgPeso.indexOfChild(findViewById(rgPeso.getCheckedRadioButtonId()));
-        itemRgPlantasMedicinais = rgPlantasMedicinais.indexOfChild(findViewById(rgPlantasMedicinais.getCheckedRadioButtonId()));
-        itemRgPossuiPlanoDeSaude = rgPossuiPlanoDeSaude.indexOfChild(findViewById(rgPossuiPlanoDeSaude.getCheckedRadioButtonId()));
-        itemRgProblemaMental = rgProblemaMental.indexOfChild(findViewById(rgProblemaMental.getCheckedRadioButtonId()));
-        itemRgProblemaRins = rgProblemaRins.indexOfChild(findViewById(rgProblemaRins.getCheckedRadioButtonId()));
-        itemRgRecebeBeneficio = rgRecebeBeneficio.indexOfChild(findViewById(rgRecebeBeneficio.getCheckedRadioButtonId()));
-        itemRgReferenciaFamiliar = rgReferenciaFamiliar.indexOfChild(findViewById(rgReferenciaFamiliar.getCheckedRadioButtonId()));
-        itemRgResponsavelFamiliar = rgResponsavelFamiliar.indexOfChild(findViewById(rgResponsavelFamiliar.getCheckedRadioButtonId()));
-        itemRgSaidaCadastro = rgSaidaCadastro.indexOfChild(findViewById(rgSaidaCadastro.getCheckedRadioButtonId()));
-        itemRgSexo = rgSexo.indexOfChild(findViewById(rgSexo.getCheckedRadioButtonId()));
-        itemRgSituacaoRua = rgSituacaoRua.indexOfChild(findViewById(rgSituacaoRua.getCheckedRadioButtonId()));
-        itemRgTempoSituacaoRua = rgTempoSituacaoRua.indexOfChild(findViewById(rgTempoSituacaoRua.getCheckedRadioButtonId()));
-        itemRgTuberculose = rgTuberculose.indexOfChild(findViewById(rgTuberculose.getCheckedRadioButtonId()));
-        itemRgVisitaFamiliar = rgVisitaFamiliar.indexOfChild(findViewById(rgVisitaFamiliar.getCheckedRadioButtonId()));
-
-    }
-
-    private Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
-        return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
-    }
-
     private void configToolbar() {
 
         setSupportActionBar(toolbar);
@@ -528,7 +430,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         setActivityToModel();
 
-        //this.fichaCadastroIndividualBS.gravar(this.fichaCadastroIndividualModel);
+        this.fichaCadastroIndividualBS.gravar(this.fichaCadastroIndividualModel);
 
         Utilitario.avisoSucesso(getApplicationContext());
 
@@ -592,74 +494,124 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
+    private Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
+        return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
+    }
 
-    private void setModelToActivity() {
+    private void ativaRG(RadioGroup radioGroup, Integer posicao) {
 
-        //EditTexts
-        etDataRegistro.setText(this.fichaCadastroIndividualModel.getDataRegistro().toString());
-        etCnsCidadao.setText(this.fichaCadastroIndividualModel.getCnsCidadao());
-        etCnsResponsavelFamiliar.setText(this.fichaCadastroIndividualModel.getCnsResponsavelFamiliar());
-        etMicroarea.setText(this.fichaCadastroIndividualModel.getMicroarea());
-        etNomeCompleto.setText(this.fichaCadastroIndividualModel.getNomeCompleto());
-        etNomeSocial.setText(this.fichaCadastroIndividualModel.getNomeSocial());
-        etDataNascimento.setText(this.fichaCadastroIndividualModel.getDataNascimento().toString());
-        etEtnia.setText(this.fichaCadastroIndividualModel.getEtnia());
-        etNis.setText(this.fichaCadastroIndividualModel.getNis());
-        etNomeMae.setText(this.fichaCadastroIndividualModel.getNomeMae());
-        etNomePai.setText(this.fichaCadastroIndividualModel.getNomePai());
-        etPaisNascimento.setText(this.fichaCadastroIndividualModel.getPaisNascimento());
-        etMunicipioUfNascimento.setText(this.fichaCadastroIndividualModel.getMunicipioUfNascimento());
-        etPortariaNaturalizacao.setText(this.fichaCadastroIndividualModel.getPortariaNaturalizacao());
-        etDataNaturalizacao.setText(this.fichaCadastroIndividualModel.getDataNaturalizacao().toString());
-        etDataEntrada.setText(this.fichaCadastroIndividualModel.getDataEntrada().toString());
-        etTelefoneCelular.setText(this.fichaCadastroIndividualModel.getTelefoneCelular());
-        etEmailCidadao.setText(this.fichaCadastroIndividualModel.getEmailCidadao());
-        etGrauParentesco.setText(this.fichaCadastroIndividualModel.getGrauParentesco());
-        etOcupacao.setText(this.fichaCadastroIndividualModel.getOcupacao());
-        etQualComunidade.setText(this.fichaCadastroIndividualModel.getQualComunidade());
-        etNumeroDO.setText(this.fichaCadastroIndividualModel.getNumeroDO());
-        etDataObito.setText(this.fichaCadastroIndividualModel.getDataObito().toString());
-        etQualMotivoInternamento.setText(this.fichaCadastroIndividualModel.getQualMotivoInternamento());
-        etQuaisPlantas.setText(this.fichaCadastroIndividualModel.getQuaisPlantas());
-        etOutrasCondicoesSaude.setText(this.fichaCadastroIndividualModel.getOutrasCondicoesSaude());
-        etQualInstituicao.setText(this.fichaCadastroIndividualModel.getQualInstituicao());
+        if (!Utilitario.isEmpty(posicao)) {
+            ((RadioButton) radioGroup.getChildAt(posicao)).setChecked(true);
+        }
+    }
 
-        //TODO: RADIOS E SPINNERS
+    private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Boolean valor) {
 
-        //Checkboxes
-        cbAcessoBanho.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoBanho());
-        cbAcessoHigieneBucal.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoHigieneBucal());
-        cbAcessoOutras.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoOutras());
-        cbAcessoSanitario.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoSanitario());
-        cbAlimentacaoDoacaoGrupoReligioso.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoGrupoReligioso());
-        cbAlimentacaoDoacaoPopular.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoPopular());
-        cbAlimentacaoDoacaoRestaurante.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoRestaurante());
-        cbAlimentacaoOutras.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoOutras());
-        cbAlimentacaoRestaurantePopular.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoRestaurantePopular());
-        cbAsma.setChecked(this.fichaCadastroIndividualModel.getFlagAsma());
-        cbDeficienciaAuditiva.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaAuditiva());
-        cbDeficienciaFisica.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaFisica());
-        cbDeficienciaIntelectual.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaIntelectual());
-        cbDeficienciaVisual.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaVisual());
-        cbEnfisema.setChecked(this.fichaCadastroIndividualModel.getFlagEnfisema());
-        cbFicaComAdolescente.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComAdolescente());
-        cbFicaComAdultoResponsavel.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComAdultoResponsavel());
-        cbFicaComOutrasCriancas.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComOutrasCriancas());
-        cbFicaEmCreche.setChecked(this.fichaCadastroIndividualModel.getFlagFicaEmCreche());
-        cbFicaOutro.setChecked(this.fichaCadastroIndividualModel.getFlagFicaOutro());
-        cbFicaSozinha.setChecked(this.fichaCadastroIndividualModel.getFlagFicaSozinha());
-        cbForaDeArea.setChecked(this.fichaCadastroIndividualModel.getFlagForaDeArea());
-        cbInsuficienciaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagInsuficienciaCardiaca());
-        cbInsuficienciaRenal.setChecked(this.fichaCadastroIndividualModel.getFlagInsuficienciaRenal());
-        cbMaeDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagMaeDesconhecido());
-        cbNaoSabeDoencaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeDoencaCardiaca());
-        cbNaoSabeDoencaRespiratoria.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeDoencaRespiratoria());
-        cbNaoSabeProblemaRins.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeProblemaRins());
-        cbOutraDeficiencia.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDeficiencia());
-        cbOutraDoencaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDoencaCardiaca());
-        cbOutraDoencaRespiratoria.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDoencaRespiratoria());
-        cbOutroProblemaRins.setChecked(this.fichaCadastroIndividualModel.getFlagOutroProblemaRins());
-        cbPaiDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagPaiDesconhecido());
+        if (Utilitario.isEmpty(valor)) {
+            return;
+        }
+
+        if (valor) {
+            ativaRG(radioGroup, 0);
+        } else {
+            ativaRG(radioGroup, 1);
+        }
+
+    }
+
+    private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
+
+        if (Utilitario.isEmpty(valor)) {
+            return;
+        }
+
+        if (radioGroup == rgSexo) {
+            switch (valor) {
+                case 0: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 1: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+            }
+        } else if (radioGroup == rgNacionalidade) {
+            switch (valor) {
+                case 1: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 2: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+                case 3: {
+                    ativaRG(radioGroup, 2);
+                    break;
+                }
+            }
+        } else if (radioGroup == rgSaidaCadastro) {
+            switch (valor) {
+                case 135: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 136: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+            }
+        } else if (radioGroup == rgPeso) {
+            switch (valor) {
+                case 21: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 22: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+                case 23: {
+                    ativaRG(radioGroup, 2);
+                    break;
+                }
+            }
+        } else if (radioGroup == rgTempoSituacaoRua) {
+            switch (valor) {
+                case 17: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 18: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+                case 19: {
+                    ativaRG(radioGroup, 2);
+                    break;
+                }
+                case 20: {
+                    ativaRG(radioGroup, 3);
+                    break;
+                }
+            }
+        } else if (radioGroup == rgFrequenciaAlimentacao) {
+            switch (valor) {
+                case 34: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 35: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+                case 36: {
+                    ativaRG(radioGroup, 2);
+                    break;
+                }
+            }
+        }
 
 
     }
@@ -671,6 +623,119 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         }
 
         return new Integer(tipoModel.getCodigo());
+
+    }
+
+    private void setModelToActivity() {
+
+        etDataRegistro.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataRegistro()));
+        etCnsCidadao.setText(this.fichaCadastroIndividualModel.getCnsCidadao());
+        setPosicaoSelecionadoRG(rgResponsavelFamiliar, this.fichaCadastroIndividualModel.getFlagResponsavelFamiliar());
+        etCnsResponsavelFamiliar.setText(this.fichaCadastroIndividualModel.getCnsResponsavelFamiliar());
+        etMicroarea.setText(this.fichaCadastroIndividualModel.getMicroarea());
+        cbForaDeArea.setChecked(this.fichaCadastroIndividualModel.getFlagForaDeArea());
+        etNomeCompleto.setText(this.fichaCadastroIndividualModel.getNomeCompleto());
+        etNomeSocial.setText(this.fichaCadastroIndividualModel.getNomeSocial());
+        etDataNascimento.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataNascimento()));
+        setPosicaoSelecionadoRG(rgSexo, this.fichaCadastroIndividualModel.getSexo());
+        spRaca.setSelection(new TipoModel().getComboRaca().indexOf(this.fichaCadastroIndividualModel.getRaca()));
+        etEtnia.setText(this.fichaCadastroIndividualModel.getEtnia());
+        etNis.setText(this.fichaCadastroIndividualModel.getNis());
+        etNomeMae.setText(this.fichaCadastroIndividualModel.getNomeMae());
+        cbMaeDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagMaeDesconhecido());
+        etNomePai.setText(this.fichaCadastroIndividualModel.getNomePai());
+        cbPaiDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagPaiDesconhecido());
+        setPosicaoSelecionadoRG(rgNacionalidade, this.fichaCadastroIndividualModel.getNacionalidade());
+        etPaisNascimento.setText(this.fichaCadastroIndividualModel.getPaisNascimento());
+        etMunicipioUfNascimento.setText(this.fichaCadastroIndividualModel.getMunicipioUfNascimento());
+        etPortariaNaturalizacao.setText(this.fichaCadastroIndividualModel.getPortariaNaturalizacao());
+        etDataNaturalizacao.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataNaturalizacao()));
+        etDataEntrada.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataEntrada()));
+        etTelefoneCelular.setText(this.fichaCadastroIndividualModel.getTelefoneCelular());
+        etEmailCidadao.setText(this.fichaCadastroIndividualModel.getEmailCidadao());
+        spParentesco.setSelection(new TipoModel().getComboParentesco().indexOf(this.fichaCadastroIndividualModel.getGrauParentesco()));
+        etOcupacao.setText(this.fichaCadastroIndividualModel.getOcupacao());
+        setPosicaoSelecionadoRG(rgFrequentaEscola, this.fichaCadastroIndividualModel.getFlagFrequentaEscola());
+        spCurso.setSelection(new TipoModel().getComboCurso().indexOf(this.fichaCadastroIndividualModel.getCursoMaisElevado()));
+        spTrabalho.setSelection(new TipoModel().getComboTrabalho().indexOf(this.fichaCadastroIndividualModel.getSituacaoMercado()));
+        cbFicaComAdultoResponsavel.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComAdultoResponsavel());
+        cbFicaEmCreche.setChecked(this.fichaCadastroIndividualModel.getFlagFicaEmCreche());
+        cbFicaComOutrasCriancas.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComOutrasCriancas());
+        cbFicaSozinha.setChecked(this.fichaCadastroIndividualModel.getFlagFicaSozinha());
+        cbFicaComAdolescente.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComAdolescente());
+        cbFicaOutro.setChecked(this.fichaCadastroIndividualModel.getFlagFicaOutro());
+        setPosicaoSelecionadoRG(rgFrequentaCuidador, this.fichaCadastroIndividualModel.getFlagFrequentaCuidador());
+        setPosicaoSelecionadoRG(rgParticipaGrupoComunitario, this.fichaCadastroIndividualModel.getFlagParticipaGrupoComunitario());
+        setPosicaoSelecionadoRG(rgPossuiPlanoDeSaude, this.fichaCadastroIndividualModel.getFlagPossuiPlanoDeSaude());
+        setPosicaoSelecionadoRG(rgMembroDeComunidade, this.fichaCadastroIndividualModel.getFlagMembroDeComunidade());
+        etQualComunidade.setText(this.fichaCadastroIndividualModel.getQualComunidade());
+        setPosicaoSelecionadoRG(rgInformarOrientacao, this.fichaCadastroIndividualModel.getFlagInformarOrientacao());
+        spOrientacao.setSelection(new TipoModel().getComboOrientacaoSexual().indexOf(this.fichaCadastroIndividualModel.getOrientacaoSexual()));
+        setPosicaoSelecionadoRG(rgInformarIdentidadeGenero, this.fichaCadastroIndividualModel.getFlagInformarIdentidadeGenero());
+        spGenero.setSelection(new TipoModel().getComboGeneroSexual().indexOf(this.fichaCadastroIndividualModel.getIdentidadeGenero()));
+        setPosicaoSelecionadoRG(rgDeficiencia, this.fichaCadastroIndividualModel.getFlagDeficiencia());
+        cbDeficienciaAuditiva.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaAuditiva());
+        cbDeficienciaFisica.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaFisica());
+        cbDeficienciaIntelectual.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaIntelectual());
+        cbDeficienciaVisual.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaVisual());
+        cbOutraDeficiencia.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDeficiencia());
+        setPosicaoSelecionadoRG(rgSaidaCadastro, this.fichaCadastroIndividualModel.getSaidaCadastro());
+        etNumeroDO.setText(this.fichaCadastroIndividualModel.getNumeroDO());
+        etDataObito.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataObito()));
+        setPosicaoSelecionadoRG(rgGestante, this.fichaCadastroIndividualModel.getFlagGestante());
+        etQualMaternidade.setText(this.fichaCadastroIndividualModel.getQualMaternidade());
+        setPosicaoSelecionadoRG(rgPeso, this.fichaCadastroIndividualModel.getPeso());
+        setPosicaoSelecionadoRG(rgFumante, this.fichaCadastroIndividualModel.getFlagFumante());
+        setPosicaoSelecionadoRG(rgAlcool, this.fichaCadastroIndividualModel.getFlagAlcool());
+        setPosicaoSelecionadoRG(rgOutrasDrogas, this.fichaCadastroIndividualModel.getFlagOutrasDrogas());
+        setPosicaoSelecionadoRG(rgHipertensao, this.fichaCadastroIndividualModel.getFlagHipertensao());
+        setPosicaoSelecionadoRG(rgDiabetes, this.fichaCadastroIndividualModel.getFlagDiabetes());
+        setPosicaoSelecionadoRG(rgAvcDerrame, this.fichaCadastroIndividualModel.getFlagAvcDerrame());
+        setPosicaoSelecionadoRG(rgInfarto, this.fichaCadastroIndividualModel.getFlagInfarto());
+        setPosicaoSelecionadoRG(rgDoencaCardiaca, this.fichaCadastroIndividualModel.getFlagDoencaCardiaca());
+        cbInsuficienciaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagInsuficienciaCardiaca());
+        cbOutraDoencaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDoencaCardiaca());
+        cbNaoSabeDoencaCardiaca.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeDoencaCardiaca());
+        setPosicaoSelecionadoRG(rgProblemaRins, this.fichaCadastroIndividualModel.getFlagProblemaRins());
+        cbInsuficienciaRenal.setChecked(this.fichaCadastroIndividualModel.getFlagInsuficienciaRenal());
+        cbOutroProblemaRins.setChecked(this.fichaCadastroIndividualModel.getFlagOutroProblemaRins());
+        cbNaoSabeProblemaRins.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeProblemaRins());
+        setPosicaoSelecionadoRG(rgDoencaRespiratoria, this.fichaCadastroIndividualModel.getFlagDoencaRespiratoria());
+        cbAsma.setChecked(this.fichaCadastroIndividualModel.getFlagAsma());
+        cbEnfisema.setChecked(this.fichaCadastroIndividualModel.getFlagEnfisema());
+        cbOutraDoencaRespiratoria.setChecked(this.fichaCadastroIndividualModel.getFlagOutraDoencaRespiratoria());
+        cbNaoSabeDoencaRespiratoria.setChecked(this.fichaCadastroIndividualModel.getFlagNaoSabeDoencaRespiratoria());
+        setPosicaoSelecionadoRG(rgHanseniase, this.fichaCadastroIndividualModel.getFlagHanseniase());
+        setPosicaoSelecionadoRG(rgTuberculose, this.fichaCadastroIndividualModel.getFlagTuberculose());
+        setPosicaoSelecionadoRG(rgCancer, this.fichaCadastroIndividualModel.getFlagCancer());
+        setPosicaoSelecionadoRG(rgInternado, this.fichaCadastroIndividualModel.getFlagInternado());
+        etQualMotivoInternamento.setText(this.fichaCadastroIndividualModel.getQualMotivoInternamento());
+        setPosicaoSelecionadoRG(rgProblemaMental, this.fichaCadastroIndividualModel.getFlagProblemaMental());
+        setPosicaoSelecionadoRG(rgAcamado, this.fichaCadastroIndividualModel.getFlagAcamado());
+        setPosicaoSelecionadoRG(rgDomiciliado, this.fichaCadastroIndividualModel.getFlagDomiciliado());
+        setPosicaoSelecionadoRG(rgPlantasMedicinais, this.fichaCadastroIndividualModel.getFlagPlantasMedicinais());
+        etQuaisPlantas.setText(this.fichaCadastroIndividualModel.getQuaisPlantas());
+        setPosicaoSelecionadoRG(rgOutrasPraticasIntegrativas, this.fichaCadastroIndividualModel.getFlagOutrasPraticasIntegrativas());
+        etOutrasCondicoesSaude.setText(this.fichaCadastroIndividualModel.getOutrasCondicoesSaude());
+        setPosicaoSelecionadoRG(rgSituacaoRua, this.fichaCadastroIndividualModel.getFlagSituacaoRua());
+        setPosicaoSelecionadoRG(rgTempoSituacaoRua, this.fichaCadastroIndividualModel.getTempoSituacaoRua());
+        setPosicaoSelecionadoRG(rgRecebeBeneficio, this.fichaCadastroIndividualModel.getFlagRecebeBeneficio());
+        setPosicaoSelecionadoRG(rgReferenciaFamiliar, this.fichaCadastroIndividualModel.getFlagReferenciaFamiliar());
+        setPosicaoSelecionadoRG(rgFrequenciaAlimentacao, this.fichaCadastroIndividualModel.getFrequenciaAlimentacao());
+        cbAlimentacaoRestaurantePopular.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoRestaurantePopular());
+        cbAlimentacaoDoacaoPopular.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoPopular());
+        cbAlimentacaoDoacaoGrupoReligioso.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoGrupoReligioso());
+        cbAlimentacaoOutras.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoOutras());
+        cbAlimentacaoDoacaoRestaurante.setChecked(this.fichaCadastroIndividualModel.getFlagAlimentacaoDoacaoRestaurante());
+        setPosicaoSelecionadoRG(rgAcompanhadoInstituicao, this.fichaCadastroIndividualModel.getFlagAcompanhadoInstituicao());
+        etQualInstituicao.setText(this.fichaCadastroIndividualModel.getQualInstituicao());
+        setPosicaoSelecionadoRG(rgVisitaFamiliar, this.fichaCadastroIndividualModel.getFlagVisitaFamiliar());
+        etGrauParentesco.setText(this.fichaCadastroIndividualModel.getGrauParentesco());
+        setPosicaoSelecionadoRG(rgAcessoHigienePessoal, this.fichaCadastroIndividualModel.getFlagAcessoHigienePessoal());
+        cbAcessoBanho.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoBanho());
+        cbAcessoSanitario.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoSanitario());
+        cbAcessoHigieneBucal.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoHigieneBucal());
+        cbAcessoOutras.setChecked(this.fichaCadastroIndividualModel.getFlagAcessoOutras());
 
     }
 

@@ -29,8 +29,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
 
-                fichaModel.getDataRegistro(),
-                fichaModel.getTurno(),
+                Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
 
                 fichaModel.getCnsCidadao(),
                 fichaModel.getFlagResponsavelFamiliar(),
@@ -39,7 +38,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getFlagForaDeArea(),
                 fichaModel.getNomeCompleto(),
                 fichaModel.getNomeSocial(),
-                fichaModel.getDataNascimento(),
+                Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
                 fichaModel.getRaca(),
                 fichaModel.getEtnia(),
@@ -54,8 +53,8 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getPaisNascimento(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
-                fichaModel.getDataNaturalizacao(),
-                fichaModel.getDataEntrada(),
+                Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
+                Utilitario.getDataFormatada(fichaModel.getDataEntrada()),
 
                 fichaModel.getTelefoneCelular(),
                 fichaModel.getEmailCidadao(),
@@ -93,7 +92,7 @@ public class FichaCadastroIndividualDAO {
 
                 fichaModel.getSaidaCadastro(),
                 fichaModel.getNumeroDO(),
-                fichaModel.getDataObito(),
+                Utilitario.getDataFormatada(fichaModel.getDataObito()),
 
                 fichaModel.getFlagGestante(),
                 fichaModel.getQualMaternidade(),
@@ -163,8 +162,7 @@ public class FichaCadastroIndividualDAO {
                 Boolean.FALSE };
 
         String query = "insert into ficha_cadastro_individual" +
-                " (profissional_id, cnes_id" +
-                ", data_registro, turno" +
+                " (profissional_id, cnes_id, data_registro" +
                 ", cns_cidadao, flag_responsavel_familiar, cns_responsavel_familiar, microarea, flag_fora_de_area, nome_completo, nome_social, data_nascimento, sexo, raca, etnia, nis" +
                 ", nome_mae, flag_mae_desconhecido, nome_pai, flag_pai_desconhecido" +
                 ", nacionalidade, pais_nascimento, municipio_uf_nascimento, portaria_naturalizacao, data_naturalizacao, data_entrada" +
@@ -178,7 +176,7 @@ public class FichaCadastroIndividualDAO {
                 ", flag_gestante, qual_maternidade, peso" +
                 ", flag_fumante, flag_alcool, flag_outras_drogas, flag_hipertensao, flag_diabetes, flag_avc_derrame, flag_infarto" +
                 ", flag_doenca_cardiaca, flag_insuficiencia_cardiaca, flag_outra_doenca_cardiaca, flag_nao_sabe_doenca_cardiaca" +
-                ", flag_problema_rins, flag_insuficiencia_renal, outro_problema_rins, flag_nao_sabe_problema_rins" +
+                ", flag_problema_rins, flag_insuficiencia_renal, flag_outro_problema_rins, flag_nao_sabe_problema_rins" +
                 ", flag_doenca_respiratoria, flag_asma, flag_enfisema, flag_outra_doenca_respiratoria, flag_nao_sabe_doenca_respiratoria" +
                 ", flag_hanseniase, flag_tuberculose, flag_cancer, flag_internado, qual_motivo_internamento, flag_problema_mental, flag_acamado, flag_domiciliado, flag_plantas_medicinais, quais_plantas, outras_praticas_integrativas, outras_condicoes_saude" +
                 ", flag_situacao_rua, tempo_situacao_rua, flag_recebe_beneficio, flag_referencia_familiar" +
@@ -186,7 +184,7 @@ public class FichaCadastroIndividualDAO {
                 ", flag_acompanhado_instituicao, qual_instituicao, flag_visita_familiar, grau_parentesco" +
                 ", flag_acesso_higiene_pessoal, flag_acesso_banho, flag_acesso_sanitario, flag_acesso_higiene_bucal, flag_acesso_outras" +
                 ", flag_ativo, flag_exportado" +
-                ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ") values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
 
@@ -200,8 +198,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
 
-                fichaModel.getDataRegistro(),
-                fichaModel.getTurno(),
+                Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
 
                 fichaModel.getCnsCidadao(),
                 fichaModel.getFlagResponsavelFamiliar(),
@@ -210,7 +207,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getFlagForaDeArea(),
                 fichaModel.getNomeCompleto(),
                 fichaModel.getNomeSocial(),
-                fichaModel.getDataNascimento(),
+                Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
                 fichaModel.getRaca(),
                 fichaModel.getEtnia(),
@@ -225,8 +222,8 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getPaisNascimento(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
-                fichaModel.getDataNaturalizacao(),
-                fichaModel.getDataEntrada(),
+                Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
+                Utilitario.getDataFormatada(fichaModel.getDataEntrada()),
 
                 fichaModel.getTelefoneCelular(),
                 fichaModel.getEmailCidadao(),
@@ -264,7 +261,7 @@ public class FichaCadastroIndividualDAO {
 
                 fichaModel.getSaidaCadastro(),
                 fichaModel.getNumeroDO(),
-                fichaModel.getDataObito(),
+                Utilitario.getDataFormatada(fichaModel.getDataObito()),
 
                 fichaModel.getFlagGestante(),
                 fichaModel.getQualMaternidade(),
@@ -336,8 +333,7 @@ public class FichaCadastroIndividualDAO {
 
 
         String query = "update ficha_cadastro_individual set profissional_id = ?, cnes_id = ?" +
-                ",  data_registro = ?, turno = ?" +
-                ",  cns_cidadao = ?, flag_responsavel_familiar = ?, cns_responsavel_familiar = ?, microarea = ?, flag_fora_de_area = ?, nome_completo = ?, nome_social = ?, data_nascimento = ?, sexo = ?, raca = ?, etnia = ?, nis = ?" +
+                ",  data_registro = ?, cns_cidadao = ?, flag_responsavel_familiar = ?, cns_responsavel_familiar = ?, microarea = ?, flag_fora_de_area = ?, nome_completo = ?, nome_social = ?, data_nascimento = ?, sexo = ?, raca = ?, etnia = ?, nis = ?" +
                 ",  nome_mae = ?, flag_mae_desconhecido = ?, nome_pai = ?, flag_pai_desconhecido = ?" +
                 ",  nacionalidade = ?, pais_nascimento = ?, municipio_uf_nascimento = ?, portaria_naturalizacao = ?, data_naturalizacao = ?, data_entrada = ?" +
                 ",  telefone_celular = ?, email_cidadao = ?" +
@@ -350,14 +346,14 @@ public class FichaCadastroIndividualDAO {
                 ",  flag_gestante = ?, qual_maternidade = ?, peso = ?" +
                 ",  flag_fumante = ?, flag_alcool = ?, flag_outras_drogas = ?, flag_hipertensao = ?, flag_diabetes = ?, flag_avc_derrame = ?, flag_infarto = ?" +
                 ",  flag_doenca_cardiaca = ?, flag_insuficiencia_cardiaca = ?, flag_outra_doenca_cardiaca = ?, flag_nao_sabe_doenca_cardiaca = ?" +
-                ",  flag_problema_rins = ?, flag_insuficiencia_renal = ?, outro_problema_rins = ?, flag_nao_sabe_problema_rins = ?" +
+                ",  flag_problema_rins = ?, flag_insuficiencia_renal = ?, flag_outro_problema_rins = ?, flag_nao_sabe_problema_rins = ?" +
                 ",  flag_doenca_respiratoria = ?, flag_asma = ?, flag_enfisema = ?, flag_outra_doenca_respiratoria = ?, flag_nao_sabe_doenca_respiratoria = ?" +
                 ",  flag_hanseniase = ?, flag_tuberculose = ?, flag_cancer = ?, flag_internado = ?, qual_motivo_internamento = ?, flag_problema_mental = ?, flag_acamado = ?, flag_domiciliado = ?, flag_plantas_medicinais = ?, quais_plantas = ?, outras_praticas_integrativas = ?, outras_condicoes_saude = ?" +
                 ",  flag_situacao_rua = ?, tempo_situacao_rua = ?, flag_recebe_beneficio = ?, flag_referencia_familiar = ?" +
                 ",  frequencia_alimentacao = ?, flag_alimentacao_restaurante_popular = ?, flag_alimentacao_doacao_grupo_religioso = ?, flag_alimentacao_doacao_restaurante = ?, flag_alimentacao_doacao_popular = ?, flag_alimentacao_outras = ?" +
                 ",  flag_acompanhado_instituicao = ?, qual_instituicao = ?, flag_visita_familiar = ?, grau_parentesco = ?" +
                 ",  flag_acesso_higiene_pessoal = ?, flag_acesso_banho = ?, flag_acesso_sanitario = ?, flag_acesso_higiene_bucal = ?, flag_acesso_outras = ?" +
-                ",  flag_ativo = ?, flag_exportado = ? where id = ?";
+                ",  flag_ativo  = ?, flag_exportado  = ? where id = ?";
 
         db.execSQL(query, args);
 
@@ -465,10 +461,9 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
 
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
-        fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
 
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
-        fichaModel.setFlagResponsavelFamiliar(c.getInt(c.getColumnIndex("flag_responsavel_familiar")) < 1);
+        fichaModel.setFlagResponsavelFamiliar(c.getInt(c.getColumnIndex("flag_responsavel_familiar")) > 0);
         fichaModel.setCnsResponsavelFamiliar(c.getString(c.getColumnIndex("cns_responsavel_familiar")));
         fichaModel.setMicroarea(c.getString(c.getColumnIndex("microarea")));
         fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0);
@@ -485,7 +480,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setNomePai(c.getString(c.getColumnIndex("nome_pai")));
         fichaModel.setFlagPaiDesconhecido(c.getInt(c.getColumnIndex("flag_pai_desconhecido")) > 0);
 
-        fichaModel.setNacionalidade(c.getInt(c.getColumnIndex("nascimento")));
+        fichaModel.setNacionalidade(c.getInt(c.getColumnIndex("data_nascimento")));
         fichaModel.setPaisNascimento(c.getString(c.getColumnIndex("pais_nascimento")));
         fichaModel.setMunicipioUfNascimento(c.getString(c.getColumnIndex("municipio_uf_nascimento")));
         fichaModel.setPortariaNaturalizacao(c.getString(c.getColumnIndex("portaria_naturalizacao")));
@@ -497,29 +492,29 @@ public class FichaCadastroIndividualDAO {
 
         fichaModel.setParentescoResponsavelFamiliar(c.getInt(c.getColumnIndex("parentesco_responsavel_familiar")));
         fichaModel.setOcupacao(c.getString(c.getColumnIndex("ocupacao")));
-        fichaModel.setFlagFrequentaEscola(c.getInt(c.getColumnIndex("flag_frequenta_escola")) < 1);
+        fichaModel.setFlagFrequentaEscola(c.getInt(c.getColumnIndex("flag_frequenta_escola")) > 0);
         fichaModel.setCursoMaisElevado(c.getInt(c.getColumnIndex("curso_mais_elevado")));
         fichaModel.setSituacaoMercado(c.getInt(c.getColumnIndex("situacao_mercado")));
 
         fichaModel.setFlagFicaComAdultoResponsavel(c.getInt(c.getColumnIndex("flag_fica_com_adulto_responsavel")) > 0);
         fichaModel.setFlagFicaComOutrasCriancas(c.getInt(c.getColumnIndex("flag_fica_com_outras_criancas")) > 0);
-        fichaModel.setFlagFicaComAdolescente(c.getInt(c.getColumnIndex("flag_fica_com_addolescente")) > 0);
+        fichaModel.setFlagFicaComAdolescente(c.getInt(c.getColumnIndex("flag_fica_com_adolescente")) > 0);
         fichaModel.setFlagFicaEmCreche(c.getInt(c.getColumnIndex("flag_fica_em_creche")) > 0);
         fichaModel.setFlagFicaSozinha(c.getInt(c.getColumnIndex("flag_fica_sozinha")) > 0);
         fichaModel.setFlagFicaOutro(c.getInt(c.getColumnIndex("flag_fica_outro")) > 0);
 
-        fichaModel.setFlagFrequentaCuidador(c.getInt(c.getColumnIndex("flag_frequenta_cuidador")) < 1);
-        fichaModel.setFlagParticipaGrupoComunitario(c.getInt(c.getColumnIndex("flag_participa_grupo_comunitario")) < 1);
-        fichaModel.setFlagPossuiPlanoDeSaude(c.getInt(c.getColumnIndex("flag_possui_plano_de_saude")) < 1);
-        fichaModel.setFlagMembroDeComunidade(c.getInt(c.getColumnIndex("flag_membro_de_comunidade")) < 1);
+        fichaModel.setFlagFrequentaCuidador(c.getInt(c.getColumnIndex("flag_frequenta_cuidador")) > 0);
+        fichaModel.setFlagParticipaGrupoComunitario(c.getInt(c.getColumnIndex("flag_participa_grupo_comunitario")) > 0);
+        fichaModel.setFlagPossuiPlanoDeSaude(c.getInt(c.getColumnIndex("flag_possui_plano_de_saude")) > 0);
+        fichaModel.setFlagMembroDeComunidade(c.getInt(c.getColumnIndex("flag_membro_de_comunidade")) > 0);
         fichaModel.setQualComunidade(c.getString(c.getColumnIndex("qual_comunidade")));
 
-        fichaModel.setFlagInformarOrientacao(c.getInt(c.getColumnIndex("flag_informar_orientacao")) < 1);
+        fichaModel.setFlagInformarOrientacao(c.getInt(c.getColumnIndex("flag_informar_orientacao")) > 0);
         fichaModel.setOrientacaoSexual(c.getInt(c.getColumnIndex("orientacao_sexual")));
-        fichaModel.setFlagInformarIdentidadeGenero(c.getInt(c.getColumnIndex("flag_informar_identidade_genero")) < 1);
+        fichaModel.setFlagInformarIdentidadeGenero(c.getInt(c.getColumnIndex("flag_informar_identidade_genero")) > 0);
         fichaModel.setIdentidadeGenero(c.getInt(c.getColumnIndex("identidade_genero")));
 
-        fichaModel.setFlagDeficiencia(c.getInt(c.getColumnIndex("flag_deficiencia")) < 1);
+        fichaModel.setFlagDeficiencia(c.getInt(c.getColumnIndex("flag_deficiencia")) > 0);
         fichaModel.setFlagDeficienciaAuditiva(c.getInt(c.getColumnIndex("flag_deficiencia_auditiva")) > 0);
         fichaModel.setFlagDeficienciaVisual(c.getInt(c.getColumnIndex("flag_deficiencia_visual")) > 0);
         fichaModel.setFlagDeficienciaIntelectual(c.getInt(c.getColumnIndex("flag_deficiencia_intelectual")) > 0);
@@ -530,76 +525,74 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setNumeroDO(c.getString(c.getColumnIndex("numero_do")));
         fichaModel.setDataObito(Utilitario.getDate(c.getString(c.getColumnIndex("data_obito"))));
 
-        fichaModel.setFlagGestante(c.getInt(c.getColumnIndex("flag_gestante")) < 1);
+        fichaModel.setFlagGestante(c.getInt(c.getColumnIndex("flag_gestante")) > 0);
         fichaModel.setQualMaternidade(c.getString(c.getColumnIndex("qual_maternidade")));
         fichaModel.setPeso(c.getInt(c.getColumnIndex("peso")));
 
-        fichaModel.setFlagFumante(c.getInt(c.getColumnIndex("flag_fumante")) < 1);
-        fichaModel.setFlagAlcool(c.getInt(c.getColumnIndex("flag_alcool")) < 1);
-        fichaModel.setFlagOutrasDrogas(c.getInt(c.getColumnIndex("flag_outras_drogas")) < 1);
-        fichaModel.setFlagHipertensao(c.getInt(c.getColumnIndex("flag_hipertensao")) < 1);
-        fichaModel.setFlagDiabetes(c.getInt(c.getColumnIndex("flag_diabetes")) < 1);
-        fichaModel.setFlagAvcDerrame(c.getInt(c.getColumnIndex("flag_avc_derrame")) < 1);
-        fichaModel.setFlagInfarto(c.getInt(c.getColumnIndex("flag_infarto")) < 1);
+        fichaModel.setFlagFumante(c.getInt(c.getColumnIndex("flag_fumante")) > 0);
+        fichaModel.setFlagAlcool(c.getInt(c.getColumnIndex("flag_alcool")) > 0);
+        fichaModel.setFlagOutrasDrogas(c.getInt(c.getColumnIndex("flag_outras_drogas")) > 0);
+        fichaModel.setFlagHipertensao(c.getInt(c.getColumnIndex("flag_hipertensao")) > 0);
+        fichaModel.setFlagDiabetes(c.getInt(c.getColumnIndex("flag_diabetes")) > 0);
+        fichaModel.setFlagAvcDerrame(c.getInt(c.getColumnIndex("flag_avc_derrame")) > 0);
+        fichaModel.setFlagInfarto(c.getInt(c.getColumnIndex("flag_infarto")) > 0);
 
-        fichaModel.setFlagDoencaCardiaca(c.getInt(c.getColumnIndex("flag_doenca_cardiaca")) < 1);
+        fichaModel.setFlagDoencaCardiaca(c.getInt(c.getColumnIndex("flag_doenca_cardiaca")) > 0);
         fichaModel.setFlagInsuficienciaCardiaca(c.getInt(c.getColumnIndex("flag_insuficiencia_cardiaca")) > 0);
         fichaModel.setFlagOutraDoencaCardiaca(c.getInt(c.getColumnIndex("flag_outra_doenca_cardiaca")) > 0);
         fichaModel.setFlagNaoSabeDoencaCardiaca(c.getInt(c.getColumnIndex("flag_nao_sabe_doenca_cardiaca")) > 0);
 
-        fichaModel.setFlagProblemaRins(c.getInt(c.getColumnIndex("flag_problema_rins")) < 1);
+        fichaModel.setFlagProblemaRins(c.getInt(c.getColumnIndex("flag_problema_rins")) > 0);
         fichaModel.setFlagInsuficienciaRenal(c.getInt(c.getColumnIndex("flag_insuficiencia_renal")) > 0);
         fichaModel.setFlagOutroProblemaRins(c.getInt(c.getColumnIndex("flag_outro_problema_rins")) > 0);
         fichaModel.setFlagNaoSabeProblemaRins(c.getInt(c.getColumnIndex("flag_nao_sabe_problema_rins")) > 0);
 
-        fichaModel.setFlagDoencaRespiratoria(c.getInt(c.getColumnIndex("flag_doenca_respiratoria")) < 1);
+        fichaModel.setFlagDoencaRespiratoria(c.getInt(c.getColumnIndex("flag_doenca_respiratoria")) > 0);
         fichaModel.setFlagAsma(c.getInt(c.getColumnIndex("flag_asma")) > 0);
         fichaModel.setFlagEnfisema(c.getInt(c.getColumnIndex("flag_enfisema")) > 0);
         fichaModel.setFlagOutraDoencaRespiratoria(c.getInt(c.getColumnIndex("flag_outra_doenca_respiratoria")) > 0);
         fichaModel.setFlagNaoSabeDoencaRespiratoria(c.getInt(c.getColumnIndex("flag_nao_sabe_doenca_respiratoria")) > 0);
 
-        fichaModel.setFlagHanseniase(c.getInt(c.getColumnIndex("flag_hanseniase")) < 1);
-        fichaModel.setFlagTuberculose(c.getInt(c.getColumnIndex("flag_tuberculose")) < 1);
-        fichaModel.setFlagCancer(c.getInt(c.getColumnIndex("flag_cancer")) < 1);
-        fichaModel.setFlagInternado(c.getInt(c.getColumnIndex("flag_internado")) < 1);
+        fichaModel.setFlagHanseniase(c.getInt(c.getColumnIndex("flag_hanseniase")) > 0);
+        fichaModel.setFlagTuberculose(c.getInt(c.getColumnIndex("flag_tuberculose")) > 0);
+        fichaModel.setFlagCancer(c.getInt(c.getColumnIndex("flag_cancer")) > 0);
+        fichaModel.setFlagInternado(c.getInt(c.getColumnIndex("flag_internado")) > 0);
         fichaModel.setQualMotivoInternamento(c.getString(c.getColumnIndex("qual_motivo_internamento")));
-        fichaModel.setFlagProblemaMental(c.getInt(c.getColumnIndex("flag_problema_mental")) < 1);
-        fichaModel.setFlagAcamado(c.getInt(c.getColumnIndex("flag_acamado")) < 1);
-        fichaModel.setFlagDomiciliado(c.getInt(c.getColumnIndex("flag_domiciliado")) < 1);
-        fichaModel.setFlagPlantasMedicinais(c.getInt(c.getColumnIndex("flag_plantas_medicinais")) < 1);
+        fichaModel.setFlagProblemaMental(c.getInt(c.getColumnIndex("flag_problema_mental")) > 0);
+        fichaModel.setFlagAcamado(c.getInt(c.getColumnIndex("flag_acamado")) > 0);
+        fichaModel.setFlagDomiciliado(c.getInt(c.getColumnIndex("flag_domiciliado")) > 0);
+        fichaModel.setFlagPlantasMedicinais(c.getInt(c.getColumnIndex("flag_plantas_medicinais")) > 0);
         fichaModel.setQuaisPlantas(c.getString(c.getColumnIndex("quais_plantas")));
-        fichaModel.setFlagOutrasPraticasIntegrativas(c.getInt(c.getColumnIndex("outras_praticas_integrativas")) < 1);
+        fichaModel.setFlagOutrasPraticasIntegrativas(c.getInt(c.getColumnIndex("outras_praticas_integrativas")) > 0);
         fichaModel.setOutrasCondicoesSaude(c.getString(c.getColumnIndex("outras_condicoes_saude")));
 
-        fichaModel.setFlagSituacaoRua(c.getInt(c.getColumnIndex("flag_situacao_rua")) < 1);
+        fichaModel.setFlagSituacaoRua(c.getInt(c.getColumnIndex("flag_situacao_rua")) > 0);
         fichaModel.setTempoSituacaoRua(c.getInt(c.getColumnIndex("tempo_situacao_rua")));
-        fichaModel.setFlagRecebeBeneficio(c.getInt(c.getColumnIndex("flag_recebe_beneficio")) < 1);
-        fichaModel.setFlagReferenciaFamiliar(c.getInt(c.getColumnIndex("flag_referencia_familiar")) < 1);
+        fichaModel.setFlagRecebeBeneficio(c.getInt(c.getColumnIndex("flag_recebe_beneficio")) > 0);
+        fichaModel.setFlagReferenciaFamiliar(c.getInt(c.getColumnIndex("flag_referencia_familiar")) > 0);
 
         fichaModel.setFrequenciaAlimentacao(c.getInt(c.getColumnIndex("frequencia_alimentacao")));
         fichaModel.setFlagAlimentacaoRestaurantePopular(c.getInt(c.getColumnIndex("flag_alimentacao_restaurante_popular")) > 0);
-        fichaModel.setFlagAlimentacaoDoacaoGrupoReligioso(c.getInt(c.getColumnIndex("flag_alimentacao_grupo_religioso")) > 0);
+        fichaModel.setFlagAlimentacaoDoacaoGrupoReligioso(c.getInt(c.getColumnIndex("flag_alimentacao_doacao_grupo_religioso")) > 0);
         fichaModel.setFlagAlimentacaoDoacaoRestaurante(c.getInt(c.getColumnIndex("flag_alimentacao_doacao_restaurante")) > 0);
         fichaModel.setFlagAlimentacaoDoacaoPopular(c.getInt(c.getColumnIndex("flag_alimentacao_doacao_popular")) > 0);
         fichaModel.setFlagAlimentacaoOutras(c.getInt(c.getColumnIndex("flag_alimentacao_outras")) > 0);
 
-        fichaModel.setFlagAcompanhadoInstituicao(c.getInt(c.getColumnIndex("flag_acompanhado_instituicao")) < 1);
+        fichaModel.setFlagAcompanhadoInstituicao(c.getInt(c.getColumnIndex("flag_acompanhado_instituicao")) > 0);
         fichaModel.setQualInstituicao(c.getString(c.getColumnIndex("qual_instituicao")));
-        fichaModel.setFlagVisitaFamiliar(c.getInt(c.getColumnIndex("flag_visita_familiar")) < 1);
+        fichaModel.setFlagVisitaFamiliar(c.getInt(c.getColumnIndex("flag_visita_familiar")) > 0);
         fichaModel.setGrauParentesco(c.getString(c.getColumnIndex("grau_parentesco")));
 
-        fichaModel.setFlagAcessoHigienePessoal(c.getInt(c.getColumnIndex("flag_acesso_higiene_pessoal")) < 1);
+        fichaModel.setFlagAcessoHigienePessoal(c.getInt(c.getColumnIndex("flag_acesso_higiene_pessoal")) > 0);
         fichaModel.setFlagAcessoBanho(c.getInt(c.getColumnIndex("flag_acesso_banho")) > 0);
         fichaModel.setFlagAcessoSanitario(c.getInt(c.getColumnIndex("flag_acesso_sanitario")) > 0);
         fichaModel.setFlagAcessoHigieneBucal(c.getInt(c.getColumnIndex("flag_acesso_higiene_bucal")) > 0);
         fichaModel.setFlagAcessoOutras(c.getInt(c.getColumnIndex("flag_acesso_outras")) > 0);
 
-        fichaModel.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) < 1);
-        fichaModel.setFlagExportado(c.getInt(c.getColumnIndex("flag_exportado")) < 1);
-
+        fichaModel.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) > 0);
+        fichaModel.setFlagExportado(c.getInt(c.getColumnIndex("flag_exportado")) > 0);
 
         return fichaModel;
-
 
     }
 

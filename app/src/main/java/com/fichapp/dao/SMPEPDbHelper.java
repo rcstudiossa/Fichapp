@@ -54,7 +54,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             ", flag_gestante BOOLEAN, qual_maternidade VARCHAR, peso INTEGER" +
             ", flag_fumante BOOLEAN, flag_alcool BOOLEAN, flag_outras_drogas BOOLEAN, flag_hipertensao BOOLEAN, flag_diabetes BOOLEAN, flag_avc_derrame BOOLEAN, flag_infarto BOOLEAN" +
             ", flag_doenca_cardiaca BOOLEAN, flag_insuficiencia_cardiaca BOOLEAN, flag_outra_doenca_cardiaca BOOLEAN, flag_nao_sabe_doenca_cardiaca BOOLEAN" +
-            ", flag_problema_rins BOOLEAN, flag_insuficiencia_renal BOOLEAN, outro_problema_rins BOOLEAN, flag_nao_sabe_problema_rins BOOLEAN" +
+            ", flag_problema_rins BOOLEAN, flag_insuficiencia_renal BOOLEAN, flag_outro_problema_rins BOOLEAN, flag_nao_sabe_problema_rins BOOLEAN" +
             ", flag_doenca_respiratoria BOOLEAN, flag_asma BOOLEAN, flag_enfisema BOOLEAN, flag_outra_doenca_respiratoria BOOLEAN, flag_nao_sabe_doenca_respiratoria BOOLEAN" +
             ", flag_hanseniase BOOLEAN, flag_tuberculose BOOLEAN, flag_cancer BOOLEAN, flag_internado BOOLEAN, qual_motivo_internamento VARCHAR, flag_problema_mental BOOLEAN, flag_acamado BOOLEAN, flag_domiciliado BOOLEAN, flag_plantas_medicinais BOOLEAN, quais_plantas VARCHAR, outras_praticas_integrativas BOOLEAN, outras_condicoes_saude VARCHAR" +
             ", flag_situacao_rua BOOLEAN, tempo_situacao_rua INTEGER, flag_recebe_beneficio BOOLEAN, flag_referencia_familiar BOOLEAN" +

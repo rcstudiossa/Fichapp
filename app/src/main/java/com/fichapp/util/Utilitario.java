@@ -51,11 +51,19 @@ public final class Utilitario {
 
     public static String getDataFormatada(Date data) {
 
+        if (Utilitario.isEmpty(data)) {
+            return null;
+        }
+
         return new SimpleDateFormat("dd/MM/yyyy").format(data);
 
     }
 
     public static Date getDate(String data) {
+
+        if (Utilitario.isEmpty(data)) {
+            return null;
+        }
 
         try {
             //SimpleDateFormat formato = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
