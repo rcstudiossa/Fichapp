@@ -249,9 +249,9 @@ public class TipoModel implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TipoModel that = (TipoModel) o;
+        TipoModel tipoModel = (TipoModel) o;
 
-        return codigo != null ? codigo.equals(that.codigo) : that.codigo == null;
+        return codigo != null ? codigo.equals(tipoModel.codigo) : tipoModel.codigo == null;
 
     }
 

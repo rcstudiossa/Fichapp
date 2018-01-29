@@ -183,7 +183,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private LinearLayout llRodape;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ficha_cadastro_individual);
@@ -194,13 +193,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.configToolbar();
 
-        this.instanciarFichaVisitaDTModel();
-
         this.carregarSpinners();
 
         this.desabilitaCampos();
 
         this.configDatas();
+
+        this.instanciarFichaVisitaDTModel();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +207,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 gravar();
             }
         });
+
+
 
     }
 
@@ -495,6 +496,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     }
 
     private Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
+
         return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
     }
 
@@ -753,7 +755,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setNomeSocial(etNomeSocial.getText().toString());
         this.fichaCadastroIndividualModel.setDataNascimento(Utilitario.getDate(etDataNascimento.getText().toString()));
         this.fichaCadastroIndividualModel.setSexo(this.getPosicaoSelecionadoRG(rgSexo).equals(-1) ? 4 : this.getPosicaoSelecionadoRG(rgSexo));
-        this.fichaCadastroIndividualModel.setRaca(this.getCodigo((TipoModel) this.spRaca.getSelectedItem()));
+        this.fichaCadastroIndividualModel.setRaca((TipoModel) this.spRaca.getSelectedItem());
         this.fichaCadastroIndividualModel.setEtnia(etEtnia.getText().toString());
         this.fichaCadastroIndividualModel.setNis(etNis.getText().toString());
         this.fichaCadastroIndividualModel.setNomeMae(etNomeMae.getText().toString());

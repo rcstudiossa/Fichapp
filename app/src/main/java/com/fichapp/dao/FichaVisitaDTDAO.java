@@ -257,7 +257,7 @@ public class FichaVisitaDTDAO {
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
-        fichaModel.setTipoImovelModel(new TipoModel(c.getString(c.getColumnIndex("tipo_imovel"))));
+        fichaModel.setTipoImovelModel(new TipoModel(c.getInt(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         fichaModel.setCnsCidadao(c.getString(c.getColumnIndex("cns_cidadao")));
         fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));

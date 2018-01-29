@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroIndividualModel;
 import com.fichapp.model.ProfissionalModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getNomeSocial(),
                 Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
-                fichaModel.getRaca(),
+                fichaModel.getRaca().getCodigo(),
                 fichaModel.getEtnia(),
                 fichaModel.getNis(),
 
@@ -209,7 +210,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getNomeSocial(),
                 Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
-                fichaModel.getRaca(),
+                fichaModel.getRaca().getCodigo(),
                 fichaModel.getEtnia(),
                 fichaModel.getNis(),
 
@@ -471,7 +472,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setNomeSocial(c.getString(c.getColumnIndex("nome_social")));
         fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));
         fichaModel.setSexo(c.getInt(c.getColumnIndex("sexo")));
-        fichaModel.setRaca(c.getInt(c.getColumnIndex("raca")));
+        fichaModel.setRaca(new TipoModel(c.getInt(c.getColumnIndex("raca"))));
         fichaModel.setEtnia(c.getString(c.getColumnIndex("etnia")));
         fichaModel.setNis(c.getString(c.getColumnIndex("nis")));
 

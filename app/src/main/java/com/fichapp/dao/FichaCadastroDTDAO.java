@@ -45,7 +45,7 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagSemNumero(),
                 fichaModel.getMicroArea(),
                 fichaModel.getFlagForaDeArea(),
-                fichaModel.getSpTipoImovelModel().getCodigo(),
+                //fichaModel.getSpTipoImovelModel().getCodigo(),
                 fichaModel.getTelResidencia(),
                 fichaModel.getTelContato(),
 
@@ -112,13 +112,12 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagSemNumero(),
                 fichaModel.getMicroArea(),
                 fichaModel.getFlagForaDeArea(),
-                fichaModel.getSpTipoImovelModel().getCodigo(),
                 fichaModel.getTelResidencia(),
                 fichaModel.getTelContato(),
 
                 fichaModel.getSituacaoMoradia(),
                 fichaModel.getLocalizacao(),
-                fichaModel.getTipoImovel(),
+                fichaModel.getTipoImovel().getCodigo(),
                 fichaModel.getAcessoDomicilio(),
                 fichaModel.getCondicaoTerra(),
                 fichaModel.getNumMoradores(),
@@ -273,13 +272,12 @@ public class FichaCadastroDTDAO {
         fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0); //
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
         fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0); //
-        fichaModel.setSpTipoImovelModel(new TipoModel(c.getString(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setTelResidencia(c.getString(c.getColumnIndex("tel_residencia")));
         fichaModel.setTelContato(c.getString(c.getColumnIndex("tel_contato")));
 
         fichaModel.setSituacaoMoradia(c.getInt(c.getColumnIndex("situacao_moradia")));
         fichaModel.setLocalizacao(c.getInt(c.getColumnIndex("localizacao")));
-        fichaModel.setTipoImovel(c.getInt(c.getColumnIndex("tipo_imovel")));
+        fichaModel.setTipoImovel(new TipoModel(c.getInt(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setAcessoDomicilio(c.getInt(c.getColumnIndex("acesso_domicilio")));
         fichaModel.setCondicaoTerra(c.getInt(c.getColumnIndex("condicao_terra")));
         fichaModel.setNumMoradores(c.getInt(c.getColumnIndex("num_moradores")));
