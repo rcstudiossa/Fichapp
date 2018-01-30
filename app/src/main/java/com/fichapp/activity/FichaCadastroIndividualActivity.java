@@ -188,16 +188,15 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         setContentView(R.layout.activity_ficha_cadastro_individual);
         super.onCreate(savedInstanceState);
 
-
         this.definirComponentes();
 
         this.configToolbar();
 
-        this.carregarSpinners();
-
         this.desabilitaCampos();
 
         this.configDatas();
+
+        this.carregarSpinners();
 
         this.instanciarFichaVisitaDTModel();
 
@@ -207,8 +206,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 gravar();
             }
         });
-
-
 
     }
 
@@ -523,22 +520,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
 
-        if (Utilitario.isEmpty(valor)) {
+        if (Utilitario.isEmpty(valor) || valor.equals(-1)) {
             return;
         }
 
-        if (radioGroup == rgSexo) {
-            switch (valor) {
-                case 0: {
-                    ativaRG(radioGroup, 0);
-                    break;
-                }
-                case 1: {
-                    ativaRG(radioGroup, 1);
-                    break;
-                }
-            }
-        } else if (radioGroup == rgNacionalidade) {
+        if (radioGroup == rgNacionalidade) {
             switch (valor) {
                 case 1: {
                     ativaRG(radioGroup, 0);
@@ -613,18 +599,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                     break;
                 }
             }
+        } else {
+            ativaRG(radioGroup, valor);
         }
 
-
-    }
-
-    private Integer getCodigo(TipoModel tipoModel) {
-
-        if (Utilitario.isEmpty(tipoModel) || Utilitario.isEmpty(tipoModel.getCodigo())) {
-            return null;
-        }
-
-        return new Integer(tipoModel.getCodigo());
 
     }
 
@@ -655,7 +633,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etDataEntrada.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataEntrada()));
         etTelefoneCelular.setText(this.fichaCadastroIndividualModel.getTelefoneCelular());
         etEmailCidadao.setText(this.fichaCadastroIndividualModel.getEmailCidadao());
-        spParentesco.setSelection(new TipoModel().getComboParentesco().indexOf(this.fichaCadastroIndividualModel.getGrauParentesco()));
+        spParentesco.setSelection(new TipoModel().getComboParentesco().indexOf(this.fichaCadastroIndividualModel.getParentescoResponsavelFamiliar()));
         etOcupacao.setText(this.fichaCadastroIndividualModel.getOcupacao());
         setPosicaoSelecionadoRG(rgFrequentaEscola, this.fichaCadastroIndividualModel.getFlagFrequentaEscola());
         spCurso.setSelection(new TipoModel().getComboCurso().indexOf(this.fichaCadastroIndividualModel.getCursoMaisElevado()));
@@ -747,7 +725,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setCnesModel(new CNESModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("cnes_id", 0)));
         this.fichaCadastroIndividualModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
         this.fichaCadastroIndividualModel.setCnsCidadao(etCnsCidadao.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagResponsavelFamiliar(this.getPosicaoSelecionadoRG(rgResponsavelFamiliar).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgResponsavelFamiliar).equals(0));
+        this.fichaCadastroIndividualModel.setFlagResponsavelFamiliar(this.getPosicaoSelecionadoRG(rgResponsavelFamiliar));
         this.fichaCadastroIndividualModel.setCnsResponsavelFamiliar(etCnsResponsavelFamiliar.getText().toString());
         this.fichaCadastroIndividualModel.setMicroarea(etMicroarea.getText().toString());
         this.fichaCadastroIndividualModel.setFlagForaDeArea(cbForaDeArea.isChecked());
@@ -768,84 +746,84 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setDataEntrada(Utilitario.getDate(etDataEntrada.getText().toString()));
         this.fichaCadastroIndividualModel.setTelefoneCelular(etTelefoneCelular.getText().toString());
         this.fichaCadastroIndividualModel.setEmailCidadao(etEmailCidadao.getText().toString());
-        this.fichaCadastroIndividualModel.setParentescoResponsavelFamiliar(this.getCodigo((TipoModel) this.spParentesco.getSelectedItem()));
+        this.fichaCadastroIndividualModel.setParentescoResponsavelFamiliar((TipoModel) this.spParentesco.getSelectedItem());
         this.fichaCadastroIndividualModel.setOcupacao(etOcupacao.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagFrequentaEscola(this.getPosicaoSelecionadoRG(rgFrequentaEscola).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgFrequentaEscola).equals(0));
-        this.fichaCadastroIndividualModel.setCursoMaisElevado(this.getCodigo((TipoModel) this.spCurso.getSelectedItem()));
-        this.fichaCadastroIndividualModel.setSituacaoMercado(this.getCodigo((TipoModel) this.spTrabalho.getSelectedItem()));
+        this.fichaCadastroIndividualModel.setFlagFrequentaEscola(this.getPosicaoSelecionadoRG(rgFrequentaEscola));
+        this.fichaCadastroIndividualModel.setCursoMaisElevado((TipoModel) this.spCurso.getSelectedItem());
+        this.fichaCadastroIndividualModel.setSituacaoMercado((TipoModel) this.spTrabalho.getSelectedItem());
         this.fichaCadastroIndividualModel.setFlagFicaComAdultoResponsavel(cbFicaComAdultoResponsavel.isChecked());
         this.fichaCadastroIndividualModel.setFlagFicaEmCreche(cbFicaEmCreche.isChecked());
         this.fichaCadastroIndividualModel.setFlagFicaComOutrasCriancas(cbFicaComOutrasCriancas.isChecked());
         this.fichaCadastroIndividualModel.setFlagFicaSozinha(cbFicaSozinha.isChecked());
         this.fichaCadastroIndividualModel.setFlagFicaComAdolescente(cbFicaComAdolescente.isChecked());
         this.fichaCadastroIndividualModel.setFlagFicaOutro(cbFicaOutro.isChecked());
-        this.fichaCadastroIndividualModel.setFlagFrequentaCuidador(this.getPosicaoSelecionadoRG(rgFrequentaCuidador).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgFrequentaCuidador).equals(0));
-        this.fichaCadastroIndividualModel.setFlagParticipaGrupoComunitario(this.getPosicaoSelecionadoRG(rgParticipaGrupoComunitario).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgParticipaGrupoComunitario).equals(0));
-        this.fichaCadastroIndividualModel.setFlagPossuiPlanoDeSaude(this.getPosicaoSelecionadoRG(rgPossuiPlanoDeSaude).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgPossuiPlanoDeSaude).equals(0));
-        this.fichaCadastroIndividualModel.setFlagMembroDeComunidade(this.getPosicaoSelecionadoRG(rgMembroDeComunidade).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgMembroDeComunidade).equals(0));
+        this.fichaCadastroIndividualModel.setFlagFrequentaCuidador(this.getPosicaoSelecionadoRG(rgFrequentaCuidador));
+        this.fichaCadastroIndividualModel.setFlagParticipaGrupoComunitario(this.getPosicaoSelecionadoRG(rgParticipaGrupoComunitario));
+        this.fichaCadastroIndividualModel.setFlagPossuiPlanoDeSaude(this.getPosicaoSelecionadoRG(rgPossuiPlanoDeSaude));
+        this.fichaCadastroIndividualModel.setFlagMembroDeComunidade(this.getPosicaoSelecionadoRG(rgMembroDeComunidade));
         this.fichaCadastroIndividualModel.setQualComunidade(etQualComunidade.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagInformarOrientacao(this.getPosicaoSelecionadoRG(rgInformarOrientacao).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgInformarOrientacao).equals(0));
-        this.fichaCadastroIndividualModel.setOrientacaoSexual(this.getCodigo((TipoModel) this.spOrientacao.getSelectedItem()));
-        this.fichaCadastroIndividualModel.setFlagInformarIdentidadeGenero(this.getPosicaoSelecionadoRG(rgInformarIdentidadeGenero).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgInformarIdentidadeGenero).equals(0));
-        this.fichaCadastroIndividualModel.setIdentidadeGenero(this.getCodigo((TipoModel) this.spGenero.getSelectedItem()));
-        this.fichaCadastroIndividualModel.setFlagDeficiencia(this.getPosicaoSelecionadoRG(rgDeficiencia).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgDeficiencia).equals(0));
+        this.fichaCadastroIndividualModel.setFlagInformarOrientacao(this.getPosicaoSelecionadoRG(rgInformarOrientacao));
+        this.fichaCadastroIndividualModel.setOrientacaoSexual((TipoModel) this.spOrientacao.getSelectedItem());
+        this.fichaCadastroIndividualModel.setFlagInformarIdentidadeGenero(this.getPosicaoSelecionadoRG(rgInformarIdentidadeGenero));
+        this.fichaCadastroIndividualModel.setIdentidadeGenero((TipoModel) this.spGenero.getSelectedItem());
+        this.fichaCadastroIndividualModel.setFlagDeficiencia(this.getPosicaoSelecionadoRG(rgDeficiencia));
         this.fichaCadastroIndividualModel.setFlagDeficienciaAuditiva(cbDeficienciaAuditiva.isChecked());
         this.fichaCadastroIndividualModel.setFlagDeficienciaFisica(cbDeficienciaFisica.isChecked());
         this.fichaCadastroIndividualModel.setFlagDeficienciaIntelectual(cbDeficienciaIntelectual.isChecked());
         this.fichaCadastroIndividualModel.setFlagDeficienciaVisual(cbDeficienciaVisual.isChecked());
         this.fichaCadastroIndividualModel.setFlagOutraDeficiencia(cbOutraDeficiencia.isChecked());
-        this.fichaCadastroIndividualModel.setSaidaCadastro(this.getPosicaoSelecionadoRG(rgSaidaCadastro).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgSaidaCadastro).equals(0) ? 135 : 136);
+        this.fichaCadastroIndividualModel.setSaidaCadastro(this.getPosicaoSelecionadoRG(rgSaidaCadastro).equals(-1) ? -1 : this.getPosicaoSelecionadoRG(rgSaidaCadastro).equals(0) ? 135 : 136);
         this.fichaCadastroIndividualModel.setNumeroDO(etNumeroDO.getText().toString());
         this.fichaCadastroIndividualModel.setDataObito(Utilitario.getDate(etDataObito.getText().toString()));
-        this.fichaCadastroIndividualModel.setFlagGestante(this.getPosicaoSelecionadoRG(rgGestante).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgGestante).equals(0));
+        this.fichaCadastroIndividualModel.setFlagGestante(this.getPosicaoSelecionadoRG(rgGestante));
         this.fichaCadastroIndividualModel.setQualMaternidade(etQualMaternidade.getText().toString());
-        this.fichaCadastroIndividualModel.setPeso(this.getPosicaoSelecionadoRG(rgPeso).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgPeso).equals(0) ? 21 : this.getPosicaoSelecionadoRG(rgPeso).equals(1) ? 22 : 23);
-        this.fichaCadastroIndividualModel.setFlagFumante(this.getPosicaoSelecionadoRG(rgFumante).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgFumante).equals(0));
-        this.fichaCadastroIndividualModel.setFlagAlcool(this.getPosicaoSelecionadoRG(rgAlcool).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgAlcool).equals(0));
-        this.fichaCadastroIndividualModel.setFlagOutrasDrogas(this.getPosicaoSelecionadoRG(rgOutrasDrogas).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgOutrasDrogas).equals(0));
-        this.fichaCadastroIndividualModel.setFlagHipertensao(this.getPosicaoSelecionadoRG(rgHipertensao).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgHipertensao).equals(0));
-        this.fichaCadastroIndividualModel.setFlagDiabetes(this.getPosicaoSelecionadoRG(rgDiabetes).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgDiabetes).equals(0));
-        this.fichaCadastroIndividualModel.setFlagAvcDerrame(this.getPosicaoSelecionadoRG(rgAvcDerrame).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgAvcDerrame).equals(0));
-        this.fichaCadastroIndividualModel.setFlagInfarto(this.getPosicaoSelecionadoRG(rgInfarto).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgInfarto).equals(0));
-        this.fichaCadastroIndividualModel.setFlagDoencaCardiaca(this.getPosicaoSelecionadoRG(rgDoencaCardiaca).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgDoencaCardiaca).equals(0));
+        this.fichaCadastroIndividualModel.setPeso(this.getPosicaoSelecionadoRG(rgPeso).equals(-1) ? -1 : this.getPosicaoSelecionadoRG(rgPeso).equals(0) ? 21 : this.getPosicaoSelecionadoRG(rgPeso).equals(1) ? 22 : 23);
+        this.fichaCadastroIndividualModel.setFlagFumante(this.getPosicaoSelecionadoRG(rgFumante));
+        this.fichaCadastroIndividualModel.setFlagAlcool(this.getPosicaoSelecionadoRG(rgAlcool));
+        this.fichaCadastroIndividualModel.setFlagOutrasDrogas(this.getPosicaoSelecionadoRG(rgOutrasDrogas));
+        this.fichaCadastroIndividualModel.setFlagHipertensao(this.getPosicaoSelecionadoRG(rgHipertensao));
+        this.fichaCadastroIndividualModel.setFlagDiabetes(this.getPosicaoSelecionadoRG(rgDiabetes));
+        this.fichaCadastroIndividualModel.setFlagAvcDerrame(this.getPosicaoSelecionadoRG(rgAvcDerrame));
+        this.fichaCadastroIndividualModel.setFlagInfarto(this.getPosicaoSelecionadoRG(rgInfarto));
+        this.fichaCadastroIndividualModel.setFlagDoencaCardiaca(this.getPosicaoSelecionadoRG(rgDoencaCardiaca));
         this.fichaCadastroIndividualModel.setFlagInsuficienciaCardiaca(cbInsuficienciaCardiaca.isChecked());
         this.fichaCadastroIndividualModel.setFlagOutraDoencaCardiaca(cbOutraDoencaCardiaca.isChecked());
         this.fichaCadastroIndividualModel.setFlagNaoSabeDoencaCardiaca(cbNaoSabeDoencaCardiaca.isChecked());
-        this.fichaCadastroIndividualModel.setFlagProblemaRins(this.getPosicaoSelecionadoRG(rgProblemaRins).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgProblemaRins).equals(0));
+        this.fichaCadastroIndividualModel.setFlagProblemaRins(this.getPosicaoSelecionadoRG(rgProblemaRins));
         this.fichaCadastroIndividualModel.setFlagInsuficienciaRenal(cbInsuficienciaRenal.isChecked());
         this.fichaCadastroIndividualModel.setFlagOutroProblemaRins(cbOutroProblemaRins.isChecked());
         this.fichaCadastroIndividualModel.setFlagNaoSabeProblemaRins(cbNaoSabeProblemaRins.isChecked());
-        this.fichaCadastroIndividualModel.setFlagDoencaRespiratoria(this.getPosicaoSelecionadoRG(rgDoencaRespiratoria).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgDoencaRespiratoria).equals(0));
+        this.fichaCadastroIndividualModel.setFlagDoencaRespiratoria(this.getPosicaoSelecionadoRG(rgDoencaRespiratoria));
         this.fichaCadastroIndividualModel.setFlagAsma(cbAsma.isChecked());
         this.fichaCadastroIndividualModel.setFlagEnfisema(cbEnfisema.isChecked());
         this.fichaCadastroIndividualModel.setFlagOutraDoencaRespiratoria(cbOutraDoencaRespiratoria.isChecked());
         this.fichaCadastroIndividualModel.setFlagNaoSabeDoencaRespiratoria(cbNaoSabeDoencaRespiratoria.isChecked());
-        this.fichaCadastroIndividualModel.setFlagHanseniase(this.getPosicaoSelecionadoRG(rgHanseniase).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgHanseniase).equals(0));
-        this.fichaCadastroIndividualModel.setFlagTuberculose(this.getPosicaoSelecionadoRG(rgTuberculose).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgTuberculose).equals(0));
-        this.fichaCadastroIndividualModel.setFlagCancer(this.getPosicaoSelecionadoRG(rgCancer).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgCancer).equals(0));
-        this.fichaCadastroIndividualModel.setFlagInternado(this.getPosicaoSelecionadoRG(rgInternado).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgInternado).equals(0));
+        this.fichaCadastroIndividualModel.setFlagHanseniase(this.getPosicaoSelecionadoRG(rgHanseniase));
+        this.fichaCadastroIndividualModel.setFlagTuberculose(this.getPosicaoSelecionadoRG(rgTuberculose));
+        this.fichaCadastroIndividualModel.setFlagCancer(this.getPosicaoSelecionadoRG(rgCancer));
+        this.fichaCadastroIndividualModel.setFlagInternado(this.getPosicaoSelecionadoRG(rgInternado));
         this.fichaCadastroIndividualModel.setQualMotivoInternamento(etQualMotivoInternamento.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagProblemaMental(this.getPosicaoSelecionadoRG(rgProblemaMental).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgProblemaMental).equals(0));
-        this.fichaCadastroIndividualModel.setFlagAcamado(this.getPosicaoSelecionadoRG(rgAcamado).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgAcamado).equals(0));
-        this.fichaCadastroIndividualModel.setFlagDomiciliado(this.getPosicaoSelecionadoRG(rgDomiciliado).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgDomiciliado).equals(0));
-        this.fichaCadastroIndividualModel.setFlagPlantasMedicinais(this.getPosicaoSelecionadoRG(rgPlantasMedicinais).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgPlantasMedicinais).equals(0));
+        this.fichaCadastroIndividualModel.setFlagProblemaMental(this.getPosicaoSelecionadoRG(rgProblemaMental));
+        this.fichaCadastroIndividualModel.setFlagAcamado(this.getPosicaoSelecionadoRG(rgAcamado));
+        this.fichaCadastroIndividualModel.setFlagDomiciliado(this.getPosicaoSelecionadoRG(rgDomiciliado));
+        this.fichaCadastroIndividualModel.setFlagPlantasMedicinais(this.getPosicaoSelecionadoRG(rgPlantasMedicinais));
         this.fichaCadastroIndividualModel.setQuaisPlantas(etQuaisPlantas.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagOutrasPraticasIntegrativas(this.getPosicaoSelecionadoRG(rgOutrasPraticasIntegrativas).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgOutrasPraticasIntegrativas).equals(0));
+        this.fichaCadastroIndividualModel.setFlagOutrasPraticasIntegrativas(this.getPosicaoSelecionadoRG(rgOutrasPraticasIntegrativas));
         this.fichaCadastroIndividualModel.setOutrasCondicoesSaude(etOutrasCondicoesSaude.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagSituacaoRua(this.getPosicaoSelecionadoRG(rgSituacaoRua).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgSituacaoRua).equals(0));
-        this.fichaCadastroIndividualModel.setTempoSituacaoRua(this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(0) ? 17 : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(1) ? 18 : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(2) ? 19 : 20);
-        this.fichaCadastroIndividualModel.setFlagRecebeBeneficio(this.getPosicaoSelecionadoRG(rgRecebeBeneficio).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgRecebeBeneficio).equals(0));
-        this.fichaCadastroIndividualModel.setFlagReferenciaFamiliar(this.getPosicaoSelecionadoRG(rgReferenciaFamiliar).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgReferenciaFamiliar).equals(0));
-        this.fichaCadastroIndividualModel.setFrequenciaAlimentacao(this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(0) ? 34 : this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(1) ? 35 : 36);
+        this.fichaCadastroIndividualModel.setFlagSituacaoRua(this.getPosicaoSelecionadoRG(rgSituacaoRua));
+        this.fichaCadastroIndividualModel.setTempoSituacaoRua(this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(-1) ? -1 : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(0) ? 17 : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(1) ? 18 : this.getPosicaoSelecionadoRG(rgTempoSituacaoRua).equals(2) ? 19 : 20);
+        this.fichaCadastroIndividualModel.setFlagRecebeBeneficio(this.getPosicaoSelecionadoRG(rgRecebeBeneficio));
+        this.fichaCadastroIndividualModel.setFlagReferenciaFamiliar(this.getPosicaoSelecionadoRG(rgReferenciaFamiliar));
+        this.fichaCadastroIndividualModel.setFrequenciaAlimentacao(this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(-1) ? -1 : this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(0) ? 34 : this.getPosicaoSelecionadoRG(rgFrequenciaAlimentacao).equals(1) ? 35 : 36);
         this.fichaCadastroIndividualModel.setFlagAlimentacaoRestaurantePopular(cbAlimentacaoRestaurantePopular.isChecked());
         this.fichaCadastroIndividualModel.setFlagAlimentacaoDoacaoPopular(cbAlimentacaoDoacaoPopular.isChecked());
         this.fichaCadastroIndividualModel.setFlagAlimentacaoDoacaoGrupoReligioso(cbAlimentacaoDoacaoGrupoReligioso.isChecked());
         this.fichaCadastroIndividualModel.setFlagAlimentacaoOutras(cbAlimentacaoOutras.isChecked());
         this.fichaCadastroIndividualModel.setFlagAlimentacaoDoacaoRestaurante(cbAlimentacaoDoacaoRestaurante.isChecked());
-        this.fichaCadastroIndividualModel.setFlagAcompanhadoInstituicao(this.getPosicaoSelecionadoRG(rgAcompanhadoInstituicao).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgAcompanhadoInstituicao).equals(0));
+        this.fichaCadastroIndividualModel.setFlagAcompanhadoInstituicao(this.getPosicaoSelecionadoRG(rgAcompanhadoInstituicao));
         this.fichaCadastroIndividualModel.setQualInstituicao(etQualInstituicao.getText().toString());
-        this.fichaCadastroIndividualModel.setFlagVisitaFamiliar(this.getPosicaoSelecionadoRG(rgVisitaFamiliar).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgVisitaFamiliar).equals(0));
-        this.fichaCadastroIndividualModel.setFlagAcessoHigienePessoal(this.getPosicaoSelecionadoRG(rgAcessoHigienePessoal).equals(-1) ? null : this.getPosicaoSelecionadoRG(rgAcessoHigienePessoal).equals(0));
+        this.fichaCadastroIndividualModel.setFlagVisitaFamiliar(this.getPosicaoSelecionadoRG(rgVisitaFamiliar));
+        this.fichaCadastroIndividualModel.setFlagAcessoHigienePessoal(this.getPosicaoSelecionadoRG(rgAcessoHigienePessoal));
         this.fichaCadastroIndividualModel.setFlagAcessoBanho(cbAcessoBanho.isChecked());
         this.fichaCadastroIndividualModel.setFlagAcessoSanitario(cbAcessoSanitario.isChecked());
         this.fichaCadastroIndividualModel.setFlagAcessoHigieneBucal(cbAcessoHigieneBucal.isChecked());

@@ -116,7 +116,7 @@ public class TemplateActivity extends AppCompatActivity {
                 } else {
                     sp.setEnabled(true);
                     sp.setClickable(true);
-                    sp.performClick();
+                    //sp.performClick();
                 }
             }
         });
