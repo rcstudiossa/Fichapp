@@ -504,20 +504,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         }
     }
 
-    private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Boolean valor) {
-
-        if (Utilitario.isEmpty(valor)) {
-            return;
-        }
-
-        if (valor) {
-            ativaRG(radioGroup, 0);
-        } else {
-            ativaRG(radioGroup, 1);
-        }
-
-    }
-
     private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
 
         if (Utilitario.isEmpty(valor) || valor.equals(-1)) {
@@ -525,6 +511,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         }
 
         if (radioGroup == rgNacionalidade) {
+
             switch (valor) {
                 case 1: {
                     ativaRG(radioGroup, 0);
