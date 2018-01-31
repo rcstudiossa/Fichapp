@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.fichapp.R;
+import com.fichapp.model.TipoModel;
 
 public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
@@ -65,7 +66,7 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        this.carregarSpinner();
+        //this.carregarSpinner();
 
     }
 
@@ -89,9 +90,11 @@ public class CadastroDTFamiliasActivity extends AppCompatActivity {
 
     private void carregarSpinner() {
 
-        ArrayAdapter adapterSalarioFamiliar = ArrayAdapter.createFromResource(this, R.array.salario_familiar, R.layout.spinner_item);
-        adapterSalarioFamiliar.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spSalarioFamiliar.setAdapter(adapterSalarioFamiliar);
+        ArrayAdapter<TipoModel> spAdapter;
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRendaFamiliar());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spSalarioFamiliar.setAdapter(spAdapter);
 
     }
 

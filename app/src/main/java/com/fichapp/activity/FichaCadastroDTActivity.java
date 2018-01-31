@@ -1,15 +1,16 @@
 package com.fichapp.activity;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,7 +30,6 @@ import com.fichapp.util.Utilitario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 public class FichaCadastroDTActivity extends TemplateActivity {
 
@@ -53,7 +53,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Spinner spDestinoLixo;
 
     private EditText etDataRegistro;
-    private RadioGroup rgTurno;
 
     private EditText etCep;
     private EditText etUf;
@@ -93,13 +92,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private LinearLayout llRodape;
 
-    private Integer itemTemEnergiaEletrica;
-    private Integer itemTurnoSelecionado;
-    private Integer itemTemAnimais;
-    private Integer itemOutrosProfissionais;
-    private Integer itemAcessoDomicilio;
-    private Integer itemLocalizacao;
-
     public static FichaCadastroDTActivity fichaCadastroDTActivity;
 
     @Override
@@ -121,8 +113,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.configData();
 
-        this.lerRadios();
-
         fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +123,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    public static FichaCadastroDTActivity getInstance(){
+    public static FichaCadastroDTActivity getInstance() {
         return fichaCadastroDTActivity;
     }
 
@@ -177,7 +167,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         rgLocalizacao = (RadioGroup) findViewById(R.id.rg_localizacao);
         rgOutrosProfissionais = (RadioGroup) findViewById(R.id.rg_outros_profissionais);
         rgTemAnimais = (RadioGroup) findViewById(R.id.rg_animais);
-        rgTurno = (RadioGroup) findViewById(R.id.rg_turno);
         rgTemEnergiaEletrica = (RadioGroup) findViewById(R.id.rg_disponibilidade_energia);
 
         //Checkboxes
@@ -219,17 +208,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    private void lerRadios() {
-
-        itemTemEnergiaEletrica = rgTemEnergiaEletrica.indexOfChild(findViewById(rgTemEnergiaEletrica.getCheckedRadioButtonId()));
-        itemTurnoSelecionado = rgTurno.indexOfChild(findViewById(rgTurno.getCheckedRadioButtonId()));
-        itemTemAnimais = rgTemAnimais.indexOfChild(findViewById(rgTemAnimais.getCheckedRadioButtonId()));
-        itemOutrosProfissionais = rgOutrosProfissionais.indexOfChild(findViewById(rgOutrosProfissionais.getCheckedRadioButtonId()));
-        itemAcessoDomicilio = rgAcessoDomicilio.indexOfChild(findViewById(rgAcessoDomicilio.getCheckedRadioButtonId()));
-        itemLocalizacao = rgLocalizacao.indexOfChild(findViewById(rgLocalizacao.getCheckedRadioButtonId()));
-
-    }
-
     private void carregarSpinners() {
 
         this.carregarSpinnerTipoImovel(spTipoImovel);
@@ -252,25 +230,25 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spAdapterNumComodos.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spNumComodos.setAdapter(spAdapterNumComodos);
 
-        ArrayAdapter spAdapterMaterialParedes = ArrayAdapter.createFromResource(this, R.array.material_paredes, R.layout.spinner_item);
-        spAdapterMaterialParedes.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spMaterialParedes.setAdapter(spAdapterMaterialParedes);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboMaterialParedes());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spMaterialParedes.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterAbastecimentoAgua = ArrayAdapter.createFromResource(this, R.array.abastecimento_agua, R.layout.spinner_item);
-        spAdapterAbastecimentoAgua.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spAbastecimentoAgua.setAdapter(spAdapterAbastecimentoAgua);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboAbastecimentoAgua());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spAbastecimentoAgua.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterAguaConsumo = ArrayAdapter.createFromResource(this, R.array.agua_consumo, R.layout.spinner_item);
-        spAdapterAguaConsumo.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spAguaConsumo.setAdapter(spAdapterAguaConsumo);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboAguaConsumo());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spAguaConsumo.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterEscoamentoBanheiro = ArrayAdapter.createFromResource(this, R.array.escoamento_banheiro, R.layout.spinner_item);
-        spAdapterEscoamentoBanheiro.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spEscoamentoBanheiro.setAdapter(spAdapterEscoamentoBanheiro);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboEscoamentoBanheiro());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spEscoamentoBanheiro.setAdapter(spAdapter);
 
-        ArrayAdapter spAdapterDestinoLixo = ArrayAdapter.createFromResource(this, R.array.destino_lixo, R.layout.spinner_item);
-        spAdapterDestinoLixo.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spDestinoLixo.setAdapter(spAdapterDestinoLixo);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboDestinoLixo());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spDestinoLixo.setAdapter(spAdapter);
 
     }
 
@@ -278,7 +256,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         final Calendar registroCalendar = Calendar.getInstance();
         if (!Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString())) ;
+            registroCalendar.setTime(Utilitario.getDate(etDataRegistro.getText().toString()));
         }
 
         final DatePickerDialog.OnDateSetListener dataRegistro = new DatePickerDialog.OnDateSetListener() {
@@ -313,14 +291,14 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         if (this.fichaCadastroDTModel == null) {
             this.fichaCadastroDTModel = new FichaCadastroDTModel();
         } else {
-            setModelToActivity();
+            this.setModelToActivity();
         }
 
     }
 
     private void gravar() {
 
-        /* if (!validaCampos()) { return; }
+        /* if (!validaCampos()) { return; } */
 
         setActivityToModel();
 
@@ -330,12 +308,14 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("fragment", "FichaCadastroDTFragment");
-        startActivity(intent); */
-
-        Intent intent = new Intent(this, CadastroDTFamiliasActivity.class);
         startActivity(intent);
 
-        //finish();
+        finish();
+
+        /*
+        Intent intent = new Intent(this, CadastroDTFamiliasActivity.class);
+        startActivity(intent); */
+
 
     }
 
@@ -346,8 +326,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.desabilitaEditText(rgTemAnimais, 1, etQuantidadeAnimais);
 
-    }
+        //this.desabilitaRodape(llRodape);
 
+    }
 
     private boolean validaCampos() {
 
@@ -362,10 +343,58 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
+
+    private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
+
+        if (Utilitario.isEmpty(valor) || valor.equals(-1)) {
+            return;
+        }
+
+        if (radioGroup == rgAcessoDomicilio) {
+
+            switch (valor) {
+                case 89: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 90: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+                case 91: {
+                    ativaRG(radioGroup, 2);
+                    break;
+                }
+                case 92: {
+                    ativaRG(radioGroup, 3);
+                    break;
+                }
+            }
+
+        } else if (radioGroup == rgLocalizacao) {
+            switch (valor) {
+                case 83: {
+                    ativaRG(radioGroup, 0);
+                    break;
+                }
+                case 84: {
+                    ativaRG(radioGroup, 1);
+                    break;
+                }
+            }
+
+        } else {
+            ativaRG(radioGroup, valor);
+        }
+
+
+    }
+
+
     private void setModelToActivity() {
 
         //EditTexts
-        etDataRegistro.setText(this.fichaCadastroDTModel.getDataRegistro().toString());
+        etDataRegistro.setText(Utilitario.getDataFormatada(this.fichaCadastroDTModel.getDataRegistro()));
         etCep.setText(this.fichaCadastroDTModel.getCep());
         etUf.setText(this.fichaCadastroDTModel.getUf());
         etMunicipio.setText(this.fichaCadastroDTModel.getMunicipio());
@@ -385,7 +414,22 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etCargoInstituicao.setText(this.fichaCadastroDTModel.getCargoInstituicao());
         etTelefoneContatoResponsavel.setText(this.fichaCadastroDTModel.getTelContatoResponsavel());
 
-        //TODO: RADIOS E SPINNERS
+        //Spinners
+        spTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaCadastroDTModel.getTipoImovel()));
+        spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
+        spMaterialParedes.setSelection(new TipoModel().getComboMaterialParedes().indexOf(this.fichaCadastroDTModel.getMaterialParedes()));
+        spAbastecimentoAgua.setSelection(new TipoModel().getComboAbastecimentoAgua().indexOf(this.fichaCadastroDTModel.getAbastecimentoAgua()));
+        spAguaConsumo.setSelection(new TipoModel().getComboAguaConsumo().indexOf(this.fichaCadastroDTModel.getAguaConsumo()));
+        spEscoamentoBanheiro.setSelection(new TipoModel().getComboEscoamentoBanheiro().indexOf(this.fichaCadastroDTModel.getEscoamentoBanheiro()));
+        spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
+        spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
+
+        //RadioGroups
+        setPosicaoSelecionadoRG(rgAcessoDomicilio, this.fichaCadastroDTModel.getAcessoDomicilio());
+        setPosicaoSelecionadoRG(rgLocalizacao, this.fichaCadastroDTModel.getLocalizacao());
+        setPosicaoSelecionadoRG(rgOutrosProfissionais, this.fichaCadastroDTModel.getFlagOutrosProfissionais());
+        setPosicaoSelecionadoRG(rgTemAnimais, this.fichaCadastroDTModel.getFlagAnimais());
+        setPosicaoSelecionadoRG(rgTemEnergiaEletrica, this.fichaCadastroDTModel.getFlagEnergiaEletrica());
 
         //Checkboxes
         cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero());
@@ -400,20 +444,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void setActivityToModel() {
 
-        //Data de Registro
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            this.fichaCadastroDTModel.setDataRegistro(formato.parse(etDataRegistro.getText().toString()));
-        } catch (ParseException e) {
-            Toast.makeText(getApplication(), "Data de registro cadastrada errada.", Toast.LENGTH_LONG).show();
-        }
-
-        if (etQuantidadeAnimais.getText().toString().isEmpty()) {
-            etQuantidadeAnimais.setText("0");
-        }
-
-        this.fichaCadastroDTModel.setProfissionalModel((ProfissionalModel) this.fichaCadastroDTModel.getProfissionalModel());
-        this.fichaCadastroDTModel.setCnesModel((CNESModel) this.fichaCadastroDTModel.getCnesModel());
+        this.fichaCadastroDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
+        this.fichaCadastroDTModel.setCnesModel(new CNESModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("cnes_id", 0)));
+        this.fichaCadastroDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
         //EditTexts
         this.fichaCadastroDTModel.setCep(etCep.getText().toString());
@@ -428,14 +461,37 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setMicroArea(etMicroarea.getText().toString());
         this.fichaCadastroDTModel.setTelResidencia(etTelefoneResidencia.getText().toString());
         this.fichaCadastroDTModel.setTelContato(etTelefoneContato.getText().toString());
-        this.fichaCadastroDTModel.setQtdAnimais(Integer.valueOf (etQuantidadeAnimais.getText().toString()));
+        this.fichaCadastroDTModel.setQtdAnimais(Utilitario.isEmpty(etQuantidadeAnimais.getText().toString()) ? null : Integer.valueOf(etQuantidadeAnimais.getText().toString()));
         this.fichaCadastroDTModel.setNomeInstituicao(etNomeInstituicao.getText().toString());
         this.fichaCadastroDTModel.setNomeResponsavel(etNomeResponsavel.getText().toString());
         this.fichaCadastroDTModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
         this.fichaCadastroDTModel.setCargoInstituicao(etCargoInstituicao.getText().toString());
         this.fichaCadastroDTModel.setTelContatoResponsavel(etTelefoneContatoResponsavel.getText().toString());
 
-        //TODO: RADIOS E SPINNERS
+        //Spinners
+        this.fichaCadastroDTModel.setTipoImovel((TipoModel) this.spTipoImovel.getSelectedItem());
+        this.fichaCadastroDTModel.setSituacaoMoradia((TipoModel) this.spSituacaoMoradia.getSelectedItem());
+        this.fichaCadastroDTModel.setCondicaoTerra((TipoModel) this.spCondicaoPosseTerra.getSelectedItem());
+        this.fichaCadastroDTModel.setDestinoLixo((TipoModel) this.spDestinoLixo.getSelectedItem());
+        this.fichaCadastroDTModel.setAbastecimentoAgua((TipoModel) this.spAbastecimentoAgua.getSelectedItem());
+        this.fichaCadastroDTModel.setAguaConsumo((TipoModel) this.spAguaConsumo.getSelectedItem());
+        this.fichaCadastroDTModel.setEscoamentoBanheiro((TipoModel) this.spEscoamentoBanheiro.getSelectedItem());
+        this.fichaCadastroDTModel.setMaterialParedes((TipoModel) this.spMaterialParedes.getSelectedItem());
+
+        //RadioGroups
+        this.fichaCadastroDTModel.setAcessoDomicilio
+                (this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(0) ? 89 :
+                        this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(1) ? 90 :
+                                this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(2) ? 91 :
+                                        this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(3) ? 92 : -1);
+
+        this.fichaCadastroDTModel.setLocalizacao
+                (this.getPosicaoSelecionadoRG(rgLocalizacao).equals(0) ? 83 :
+                        this.getPosicaoSelecionadoRG(rgLocalizacao).equals(1) ? 84 : -1);
+
+        this.fichaCadastroDTModel.setFlagOutrosProfissionais(this.getPosicaoSelecionadoRG(rgOutrosProfissionais));
+        this.fichaCadastroDTModel.setFlagAnimais(this.getPosicaoSelecionadoRG(rgTemAnimais));
+        this.fichaCadastroDTModel.setFlagEnergiaEletrica(this.getPosicaoSelecionadoRG(rgTemEnergiaEletrica));
 
         //Checkboxes
         this.fichaCadastroDTModel.setFlagSemNumero(cbSemNumero.isChecked());
@@ -444,12 +500,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setFlagCachorro(cbCachorro.isChecked());
         this.fichaCadastroDTModel.setFlagPassaro(cbPassaro.isChecked());
         this.fichaCadastroDTModel.setFlagOutrosAnimais(cbOutrosAnimais.isChecked());
-        
-        
-        
-        
-        
-        
+
+
     }
 
 

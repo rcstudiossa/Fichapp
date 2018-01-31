@@ -30,56 +30,6 @@
 
     <string name="cadastro_recusado"><u>Cadastro Recusado</u></string>
 
-    <string-array name="salario_familiar">
-        <item>1/4 sal. mínimo</item>
-        <item>1/2 sal. mínimo</item>
-        <item>1 sal. mínimo</item>
-        <item>2 sal. mínimos</item>
-    </string-array>
-
-    <string-array name="material_paredes">
-        <item>Alvenaria/Tijolo com Revestimento</item>
-        <item>Alvenaria/Tijolo sem Revestimento</item>
-        <item>Taipa com Revestimento</item>
-        <item>Taipa sem Revestimento</item>
-        <item>Madeira Aparelhada</item>
-        <item>Material Aproveitado</item>
-        <item>Palha</item>
-        <item>Outro Material</item>
-    </string-array>
-
-    <string-array name="abastecimento_agua">
-        <item>Rede Encanada até o Domicílio</item>
-        <item>Poço/Nascente no Domicílio</item>
-        <item>Cisterna</item>
-        <item>Carro Pipa</item>
-        <item>Outro</item>
-    </string-array>
-
-    <string-array name="agua_consumo">
-        <item>Filtrada</item>
-        <item>Fervida</item>
-        <item>Clorada</item>
-        <item>Mineral</item>
-        <item>Sem Tratamento</item>
-    </string-array>
-
-    <string-array name="escoamento_banheiro">
-        <item>Rede Coletora de Esgoto ou Pluvial</item>
-        <item>Fossa Séptica</item>
-        <item>Fossa Rudimentar</item>
-        <item>Direto para um Rio, Lago ou Mar</item>
-        <item>Céu Aberto</item>
-        <item>Outra Forma</item>
-    </string-array>
-
-    <string-array name="destino_lixo">
-        <item>Coletado</item>
-        <item>Queimado/Enterrado</item>
-        <item>Céu Aberto</item>
-        <item>Outro</item>
-    </string-array>
-
     <string-array name="numeros">
         <item>01</item>
         <item>02</item>

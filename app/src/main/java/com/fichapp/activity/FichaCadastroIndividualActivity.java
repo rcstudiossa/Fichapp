@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -183,6 +184,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private LinearLayout llRodape;
 
+    private RelativeLayout rlMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ficha_cadastro_individual);
@@ -199,6 +202,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.carregarSpinners();
 
         this.instanciarFichaVisitaDTModel();
+
+        this.rlMain.requestFocus();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -343,6 +348,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        rlMain = (RelativeLayout) findViewById(R.id.rl_main);
+
+
         this.fichaCadastroIndividualBS = new FichaCadastroIndividualBS(getApplication());
 
         this.profissionalModel = new ProfissionalModel();
@@ -426,7 +434,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         //if (!validaCampos()) { return; }
 
-        setActivityToModel();
+        this.setActivityToModel();
 
         this.fichaCadastroIndividualBS.gravar(this.fichaCadastroIndividualModel);
 
@@ -490,18 +498,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.desabilitaRadioGroup(rgSituacaoRua, 1, rgTempoSituacaoRua);
 
-    }
-
-    private Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
-
-        return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
-    }
-
-    private void ativaRG(RadioGroup radioGroup, Integer posicao) {
-
-        if (!Utilitario.isEmpty(posicao)) {
-            ((RadioButton) radioGroup.getChildAt(posicao)).setChecked(true);
-        }
     }
 
     private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
@@ -592,6 +588,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
 
     }
+
 
     private void setModelToActivity() {
 
@@ -809,6 +806,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setFlagAlimentacaoDoacaoRestaurante(cbAlimentacaoDoacaoRestaurante.isChecked());
         this.fichaCadastroIndividualModel.setFlagAcompanhadoInstituicao(this.getPosicaoSelecionadoRG(rgAcompanhadoInstituicao));
         this.fichaCadastroIndividualModel.setQualInstituicao(etQualInstituicao.getText().toString());
+        this.fichaCadastroIndividualModel.setGrauParentesco(etGrauParentesco.getText().toString());
         this.fichaCadastroIndividualModel.setFlagVisitaFamiliar(this.getPosicaoSelecionadoRG(rgVisitaFamiliar));
         this.fichaCadastroIndividualModel.setFlagAcessoHigienePessoal(this.getPosicaoSelecionadoRG(rgAcessoHigienePessoal));
         this.fichaCadastroIndividualModel.setFlagAcessoBanho(cbAcessoBanho.isChecked());

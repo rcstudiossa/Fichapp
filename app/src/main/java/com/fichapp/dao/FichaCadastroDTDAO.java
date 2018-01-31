@@ -31,7 +31,6 @@ public class FichaCadastroDTDAO {
                 fichaModel.getCnesModel().getId(),
 
                 fichaModel.getDataRegistro(),
-                fichaModel.getTurno(),
 
                 fichaModel.getCep(),
                 fichaModel.getUf(),
@@ -80,11 +79,11 @@ public class FichaCadastroDTDAO {
                 Boolean.TRUE,
                 Boolean.FALSE };
 
-        String query = "insert into ficha_cadastro_domiciliar_territorial (profissional_id, cnes_id, data_registro, turno, cep, uf, municipio, bairro, tipo_logradouro, nome_logradouro, complemento" +
+        String query = "insert into ficha_cadastro_domiciliar_territorial (profissional_id, cnes_id, data_registro, cep, uf, municipio, bairro, tipo_logradouro, nome_logradouro, complemento" +
                 ", ponto_referencia, numero, flag_sem_numero, microarea, flag_fora_de_area, tipo_imovel, tel_residencia, tel_contato, situacao_moradia, localizacao" +
                 ", tipo_domicilio, acesso_domicilio, condicao_terra, num_moradores, num_comodos, material_paredes, flag_energia_eletrica, abastecimento_agua, agua_consumo" +
                 ", escoamento_banheiro, destino_lixo, flag_animais, qtd_animais, flag_gato, flag_cachorro, flag_passaro, flag_outros, nome_instituicao" +
-                ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
@@ -98,7 +97,6 @@ public class FichaCadastroDTDAO {
                 fichaModel.getCnesModel().getId(),
 
                 fichaModel.getDataRegistro(),
-                fichaModel.getTurno(),
 
                 fichaModel.getCep(),
                 fichaModel.getUf(),
@@ -148,7 +146,7 @@ public class FichaCadastroDTDAO {
                 fichaModel.getId()};
 
 
-        String query = "update ficha_cadastro_domiciliar_territorial set profissional_id   = ?, cnes_id = ?, data_registro = ?, turno = ?, cep = ?, uf = ?, municipio = ?, bairro = ?, tipo_logradouro = ?, nome_logradouro = ?, complemento = ?" +
+        String query = "update ficha_cadastro_domiciliar_territorial set profissional_id   = ?, cnes_id = ?, data_registro = ?, cep = ?, uf = ?, municipio = ?, bairro = ?, tipo_logradouro = ?, nome_logradouro = ?, complemento = ?" +
                 ", ponto_referencia = ?, numero = ?, flag_sem_numero = ?, microarea = ?, flag_fora_de_area = ?, tipo_imovel = ?, tel_residencia = ?, tel_contato = ?, situacao_moradia = ?, localizacao = ?" +
                 ", tipo_domicilio = ?, acesso_domicilio = ?, condicao_terra = ?, num_moradores = ?, num_comodos = ?, material_paredes = ?, flag_energia_eletrica = ?, abastecimento_agua = ?, agua_consumo = ?" +
                 ", escoamento_banheiro = ?, destino_lixo = ?, flag_animais = ?, qtd_animais = ?, flag_gato = ?, flag_cachorro = ?, flag_passaro = ?, flag_outros = ?, nome_instituicao = ?" +
@@ -258,7 +256,6 @@ public class FichaCadastroDTDAO {
         fichaModel.setProfissionalModel(new ProfissionalModel(c.getLong(c.getColumnIndex("profissional_id"))));
         fichaModel.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id"))));
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
-        fichaModel.setTurno(c.getString(c.getColumnIndex("turno")));
 
         fichaModel.setCep(c.getString(c.getColumnIndex("cep")));
         fichaModel.setUf(c.getString(c.getColumnIndex("uf")));
@@ -275,19 +272,19 @@ public class FichaCadastroDTDAO {
         fichaModel.setTelResidencia(c.getString(c.getColumnIndex("tel_residencia")));
         fichaModel.setTelContato(c.getString(c.getColumnIndex("tel_contato")));
 
-        fichaModel.setSituacaoMoradia(c.getInt(c.getColumnIndex("situacao_moradia")));
+        fichaModel.setSituacaoMoradia(new TipoModel(c.getInt(c.getColumnIndex("situacao_moradia"))));
         fichaModel.setLocalizacao(c.getInt(c.getColumnIndex("localizacao")));
         fichaModel.setTipoImovel(new TipoModel(c.getInt(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setAcessoDomicilio(c.getInt(c.getColumnIndex("acesso_domicilio")));
-        fichaModel.setCondicaoTerra(c.getInt(c.getColumnIndex("condicao_terra")));
+        fichaModel.setCondicaoTerra(new TipoModel(c.getInt(c.getColumnIndex("condicao_terra"))));
         fichaModel.setNumMoradores(c.getInt(c.getColumnIndex("num_moradores")));
         fichaModel.setNumComodos(c.getInt(c.getColumnIndex("num_comodos")));
-        fichaModel.setMaterialParedes(c.getInt(c.getColumnIndex("material_paredes")));
-        fichaModel.setFlagEnergiaEletrica(c.getInt(c.getColumnIndex("flag_energia_eletrica")) > 0);
-        fichaModel.setAguaConsumo(c.getInt(c.getColumnIndex("agua_consumo")));
-        fichaModel.setEscoamentoBanheiro(c.getInt(c.getColumnIndex("escoamento_banheiro")));
-        fichaModel.setDestinoLixo(c.getInt(c.getColumnIndex("destino_lixo")));
-        fichaModel.setFlagAnimais(c.getInt(c.getColumnIndex("flag_animais")) > 0);
+        fichaModel.setMaterialParedes(new TipoModel(c.getInt(c.getColumnIndex("material_paredes"))));
+        fichaModel.setFlagEnergiaEletrica(c.getInt(c.getColumnIndex("flag_energia_eletrica")));
+        fichaModel.setAguaConsumo(new TipoModel(c.getInt(c.getColumnIndex("agua_consumo"))));
+        fichaModel.setEscoamentoBanheiro(new TipoModel(c.getInt(c.getColumnIndex("escoamento_banheiro"))));
+        fichaModel.setDestinoLixo(new TipoModel(c.getInt(c.getColumnIndex("destino_lixo"))));
+        fichaModel.setFlagAnimais(c.getInt(c.getColumnIndex("flag_animais")));
         fichaModel.setQtdAnimais(c.getInt(c.getColumnIndex("qtd_animais")));
 
         fichaModel.setFlagGato(c.getInt(c.getColumnIndex("flag_gato")) > 0);
@@ -296,7 +293,7 @@ public class FichaCadastroDTDAO {
         fichaModel.setFlagOutrosAnimais(c.getInt(c.getColumnIndex("flag_outros")) > 0);
 
         fichaModel.setNomeInstituicao(c.getString(c.getColumnIndex("nome_instituicao")));
-        fichaModel.setFlagOutrosProfissionais(c.getInt(c.getColumnIndex("flag_outros_profissionais")) > 0);
+        fichaModel.setFlagOutrosProfissionais(c.getInt(c.getColumnIndex("flag_outros_profissionais")));
         fichaModel.setNomeResponsavel(c.getString(c.getColumnIndex("nome_responsavel")));
         fichaModel.setCnsResponsavel(c.getString(c.getColumnIndex("cns_responsavel")));
         fichaModel.setCargoInstituicao(c.getString(c.getColumnIndex("cargo_instituicao")));

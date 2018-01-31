@@ -81,7 +81,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
-        db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
+        //db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
 
     }
 
@@ -92,7 +92,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
-        db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
+        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }
 

@@ -229,6 +229,83 @@ public class TipoModel implements Serializable {
 
     }
 
+    public List<TipoModel> getComboMaterialParedes() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(null, "Não respondido"));
+        combo.add(new TipoModel(109, "Alvenaria com revestimento"));
+        combo.add(new TipoModel(110, "Alvenaria sem revestimento"));
+        combo.add(new TipoModel(111, "Taipa com revestimento"));
+        combo.add(new TipoModel(112, "Taipa sem revestimento"));
+        combo.add(new TipoModel(113, "Madeira emparelhada"));
+        combo.add(new TipoModel(114, "Material aproveitado"));
+        combo.add(new TipoModel(115, "Palha"));
+        combo.add(new TipoModel(116, "Outro material"));
+
+        return combo;
+
+    }
+
+    public List<TipoModel> getComboAbastecimentoAgua() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(null, "Não respondido"));
+        combo.add(new TipoModel(117, "Rede encanada até o domicílio"));
+        combo.add(new TipoModel(118, "Poço/Nascente no domicílio"));
+        combo.add(new TipoModel(119, "Cisterna"));
+        combo.add(new TipoModel(120, "Carro pipa"));
+        combo.add(new TipoModel(121, "Outro"));
+
+        return combo;
+
+    }
+
+    public List<TipoModel> getComboAguaConsumo() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(null, "Não respondido"));
+        combo.add(new TipoModel(97, "Filtrada"));
+        combo.add(new TipoModel(98, "Fervida"));
+        combo.add(new TipoModel(99, "Clorada"));
+        combo.add(new TipoModel(152, "Mineral"));
+        combo.add(new TipoModel(100, "Sem tratamento"));
+
+        return combo;
+
+    }
+
+    public List<TipoModel> getComboEscoamentoBanheiro() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(null, "Não respondido"));
+        combo.add(new TipoModel(122, "Rede coletora de esgoto/pluvial"));
+        combo.add(new TipoModel(123, "Fossa séptica"));
+        combo.add(new TipoModel(124, "Fossa rudimentar"));
+        combo.add(new TipoModel(125, "Direto para um rio/lago/mar"));
+        combo.add(new TipoModel(126, "Céu aberto"));
+        combo.add(new TipoModel(127, "Outra forma"));
+
+        return combo;
+
+    }
+
+    public List<TipoModel> getComboDestinoLixo() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(null, "Não respondido"));
+        combo.add(new TipoModel(93, "Coletado"));
+        combo.add(new TipoModel(94, "Queimado/Enterrado"));
+        combo.add(new TipoModel(95, "Céu aberto"));
+        combo.add(new TipoModel(96, "Outro"));
+        return combo;
+
+    }
+
     @Override
     public String toString() {
 

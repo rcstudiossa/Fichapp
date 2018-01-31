@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -169,6 +170,19 @@ public class TemplateActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    protected Integer getPosicaoSelecionadoRG(RadioGroup radioGroup) {
+
+        return radioGroup.indexOfChild(findViewById(radioGroup.getCheckedRadioButtonId()));
+    }
+
+    protected void ativaRG(RadioGroup radioGroup, Integer posicao) {
+
+        if (!Utilitario.isEmpty(posicao) && !Utilitario.isEmpty(radioGroup.getChildAt(posicao))) {
+            ((RadioButton) radioGroup.getChildAt(posicao)).setChecked(true);
+        }
     }
 
 
