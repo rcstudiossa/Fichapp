@@ -1,35 +1,39 @@
 package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.fichapp.R;
 import com.fichapp.business.FichaCadastroDTBS;
 import com.fichapp.model.CNESModel;
+import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.Format;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class FichaCadastroDTActivity extends TemplateActivity {
 
@@ -44,8 +48,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Spinner spTipoImovel;
     private Spinner spSituacaoMoradia;
     private Spinner spCondicaoPosseTerra;
-    private Spinner spNumMoradores;
-    private Spinner spNumComodos;
+    private EditText etNumMoradores;
+    private EditText etNumComodos;
     private Spinner spMaterialParedes;
     private Spinner spAbastecimentoAgua;
     private Spinner spAguaConsumo;
@@ -70,17 +74,22 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private EditText etTelefoneContato;
 
     private RadioGroup rgLocalizacao;
+    private RadioGroup rgTipoDomicilio;
     private RadioGroup rgAcessoDomicilio;
     private RadioGroup rgTemEnergiaEletrica;
 
     private RadioGroup rgTemAnimais;
     private EditText etQuantidadeAnimais;
 
+    private LinearLayout llAnimais;
     private CheckBox cbGato;
     private CheckBox cbCachorro;
     private CheckBox cbPassaro;
     private CheckBox cbOutrosAnimais;
 
+    private CheckBox cbVisitaRecusada;
+
+    private LinearLayout llInstituicaoPermanencia;
     private EditText etNomeInstituicao;
     private RadioGroup rgOutrosProfissionais;
     private EditText etNomeResponsavel;
@@ -88,9 +97,16 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private EditText etCargoInstituicao;
     private EditText etTelefoneContatoResponsavel;
 
+    private Button btCadastrarFamilias;
     private FloatingActionButton fabGravar;
 
     private LinearLayout llRodape;
+    private LinearLayout llCondicoesMoradia;
+
+    private Integer indexRgTemAnimais;
+    private Boolean flagVisitaRecusada;
+    private Boolean flagSemNumero;
+    private Boolean flagForaDeArea;
 
     public static FichaCadastroDTActivity fichaCadastroDTActivity;
 
@@ -101,13 +117,15 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         fichaCadastroDTActivity = this;
 
-        this.instanciarFichaVisitaDTModel();
-
         this.definirComponentes();
+
+        this.instanciarFichaVisitaDTModel();
 
         this.configToolbar();
 
         this.carregarSpinners();
+
+        this.lerRestricoes();
 
         this.desabilitaCampos();
 
@@ -141,6 +159,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etPontoReferencia = (EditText) findViewById(R.id.et_ponto_referencia);
         etNumero = (EditText) findViewById(R.id.et_numero_casa);
         etMicroarea = (EditText) findViewById(R.id.et_microarea);
+        etNumMoradores = (EditText) findViewById(R.id.et_num_moradores);
+        etNumComodos = (EditText) findViewById(R.id.et_num_comodos);
         etTelefoneResidencia = (EditText) findViewById(R.id.et_tel_residencial);
         etTelefoneContato = (EditText) findViewById(R.id.et_tel_contato);
         etQuantidadeAnimais = (EditText) findViewById(R.id.et_quantidade_animais);
@@ -154,8 +174,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spTipoImovel = (Spinner) findViewById(R.id.spinner_tipo_imovel);
         spSituacaoMoradia = (Spinner) findViewById(R.id.spinner_situacao_moradia);
         spCondicaoPosseTerra = (Spinner) findViewById(R.id.spinner_condicao_posse_terra);
-        spNumMoradores = (Spinner) findViewById(R.id.spinner_numero_moradores);
-        spNumComodos = (Spinner) findViewById(R.id.spinner_numero_comodos);
         spMaterialParedes = (Spinner) findViewById(R.id.spinner_material_paredes);
         spAbastecimentoAgua = (Spinner) findViewById(R.id.spinner_abastecimento_agua);
         spAguaConsumo = (Spinner) findViewById(R.id.spinner_agua_consumo);
@@ -164,18 +182,26 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         //RadioGroups
         rgAcessoDomicilio = (RadioGroup) findViewById(R.id.rg_acesso_domicilio);
+        rgTipoDomicilio = (RadioGroup) findViewById(R.id.rg_tipo_domicilio);
         rgLocalizacao = (RadioGroup) findViewById(R.id.rg_localizacao);
         rgOutrosProfissionais = (RadioGroup) findViewById(R.id.rg_outros_profissionais);
         rgTemAnimais = (RadioGroup) findViewById(R.id.rg_animais);
         rgTemEnergiaEletrica = (RadioGroup) findViewById(R.id.rg_disponibilidade_energia);
 
         //Checkboxes
+        cbVisitaRecusada = (CheckBox) findViewById(R.id.cb_visita_recusada);
         cbSemNumero = (CheckBox) findViewById(R.id.cb_sem_numero);
         cbForaDeArea = (CheckBox) findViewById(R.id.cb_fora_de_area);
         cbGato = (CheckBox) findViewById(R.id.cb_gato);
         cbCachorro = (CheckBox) findViewById(R.id.cb_cachorro);
         cbPassaro = (CheckBox) findViewById(R.id.cb_passaro);
         cbOutrosAnimais = (CheckBox) findViewById(R.id.cb_outros_animais);
+
+        llAnimais = (LinearLayout) findViewById(R.id.ll_animais);
+        llCondicoesMoradia = (LinearLayout) findViewById(R.id.ll_condicoes_moradia);
+        llInstituicaoPermanencia = (LinearLayout) findViewById(R.id.ll_instituicao_permanencia);
+
+        btCadastrarFamilias = (Button) findViewById(R.id.bt_cadastrar_familias);
 
         fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
@@ -221,14 +247,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboPosseTerra());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCondicaoPosseTerra.setAdapter(spAdapter);
-
-        ArrayAdapter spAdapterNumMoradores = ArrayAdapter.createFromResource(this, R.array.numeros, R.layout.spinner_item);
-        spAdapterNumMoradores.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spNumMoradores.setAdapter(spAdapterNumMoradores);
-
-        ArrayAdapter spAdapterNumComodos = ArrayAdapter.createFromResource(this, R.array.numeros, R.layout.spinner_item);
-        spAdapterNumComodos.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spNumComodos.setAdapter(spAdapterNumComodos);
 
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboMaterialParedes());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -290,6 +308,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         if (this.fichaCadastroDTModel == null) {
             this.fichaCadastroDTModel = new FichaCadastroDTModel();
+            this.fichaCadastroDTModel.setFamilias(new ArrayList<FamiliaModel>());
         } else {
             this.setModelToActivity();
         }
@@ -300,7 +319,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         /* if (!validaCampos()) { return; } */
 
-        setActivityToModel();
+        this.setActivityToModel();
 
         this.fichaCadastroDTBS.gravar(this.fichaCadastroDTModel);
 
@@ -313,9 +332,41 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         finish();
 
         /*
-        Intent intent = new Intent(this, CadastroDTFamiliasActivity.class);
+        Intent intent = new Intent(this, FichaCadastroDTFamiliasActivity.class);
         startActivity(intent); */
 
+
+    }
+
+    private void lerRestricoes() {
+
+        spTipoImovel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                desabilitaCondicoesMoradia(position, cbVisitaRecusada.isChecked());
+                //desabilitaInstituicaoPermanencia(position, cbVisitaRecusada.isChecked());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spTipoImovel.setSelection(0);
+            }
+        });
+
+        cbVisitaRecusada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                desabilitaCondicoesMoradia(spTipoImovel.getSelectedItemPosition(), b);
+                //desabilitaInstituicaoPermanencia(spTipoImovel.getSelectedItemPosition(), b);
+            }
+        });
+
+        rgTemAnimais.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                indexRgTemAnimais = i;
+            }
+        });
 
     }
 
@@ -324,9 +375,77 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.desabilitaEditText(cbSemNumero, etNumero);
         this.desabilitaEditText(cbForaDeArea, etMicroarea);
 
-        this.desabilitaEditText(rgTemAnimais, 1, etQuantidadeAnimais);
+
+        //this.desabilitaAnimais();
 
         //this.desabilitaRodape(llRodape);
+
+    }
+
+   /* private void desabilitaAnimais() {
+
+        if (indexSpTipoImovel != 1 || flagVisitaRecusada) {
+            desabilitaRadioGroup(rgTemAnimais);
+            desabilitaLinearLayout(llAnimais);
+            desabilitaEditText(etQuantidadeAnimais);
+        } else {
+            habilitaRadioGroup(rgTemAnimais);
+            habilitaLinearLayout(llAnimais);
+            habilitaEditText(etQuantidadeAnimais);
+        }
+
+        desabilitaEditText(rgTemAnimais, 1, etQuantidadeAnimais);
+
+        //TODO: Deve ser maior ou igual ao número de opções selecionadas no campo animaisNoDomicilio.
+
+    }*/
+
+    private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
+
+        List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,13));
+
+        boolean desaparecer = tipos.contains(posicaoTipoImovel) || flagVisitaRecusada;
+
+        this.llCondicoesMoradia.setVisibility(desaparecer ? View.GONE : View.VISIBLE);
+
+        if (desaparecer) {
+
+            this.spSituacaoMoradia.setSelection(0);
+            this.rgLocalizacao.clearCheck();
+            this.rgTipoDomicilio.clearCheck();
+            this.rgAcessoDomicilio.clearCheck();
+            this.spCondicaoPosseTerra.setSelection(0);
+            this.spMaterialParedes.setSelection(0);
+            this.rgTemEnergiaEletrica.clearCheck();
+            this.spAbastecimentoAgua.setSelection(0);
+            this.spAguaConsumo.setSelection(0);
+            this.spEscoamentoBanheiro.setSelection(0);
+            this.spDestinoLixo.setSelection(0);
+            this.rgTemAnimais.clearCheck();
+            this.etQuantidadeAnimais.getText().clear();
+            this.cbGato.setChecked(false);
+            this.cbCachorro.setChecked(false);
+            this.cbPassaro.setChecked(false);
+            this.cbOutrosAnimais.setChecked(false);
+
+        }
+
+    }
+
+    private void desabilitaInstituicaoPermanencia(Integer position, Boolean flagVisitaRecusada) {
+
+        if ((!(position == 7 || position == 8 || position == 9 || position == 10 || position == 11)) || (flagVisitaRecusada)) {
+
+            this.llInstituicaoPermanencia.setVisibility(View.GONE);
+
+            this.etNomeInstituicao.getText().clear();
+            this.rgOutrosProfissionais.clearCheck();
+            this.etNomeResponsavel.getText().clear();
+            this.etCnsResponsavel.getText().clear();
+            this.etCargoInstituicao.getText().clear();
+            this.etTelefoneContatoResponsavel.getText().clear();
+
+        }
 
     }
 
@@ -335,9 +454,54 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         boolean valido = true;
 
         if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(fabGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
             valido = false;
         }
+
+        if (!cbVisitaRecusada.isChecked()) {
+
+            //TODO: areaProducaoRural
+
+            if (((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == null) {
+                Snackbar.make(fabGravar, "Selecione o tipo de imóvel.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etBairro.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o bairro.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etCep.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o CEP.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etMunicipio.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o Município.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o nome do logradouro.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if ((Utilitario.isEmpty(etNumero.getText().toString())) && cbSemNumero.isChecked()) {
+                Snackbar.make(fabGravar, "Preencha o número.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etUf.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o UF.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (Utilitario.isEmpty(etTipoLogradouro.getText().toString())) {
+                Snackbar.make(fabGravar, "Preencha o tipo do logradouro.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+                Snackbar.make(fabGravar, "Preencha a microárea.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
+                Snackbar.make(fabGravar, "Selecione a localização.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if ((((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo() == null) && (!(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
+                Snackbar.make(fabGravar, "Selecione a situação de moradia.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            } else if ((Utilitario.isEmpty(etNomeResponsavel.getText().toString()))) {
+                Snackbar.make(fabGravar, "Preencha o nome do responsável técnico.", Snackbar.LENGTH_LONG).show();
+                valido = false;
+            }
+
+        }
+
 
         return valido;
 
@@ -425,6 +589,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
 
         //RadioGroups
+        //TODO: setPosicaoSelecionadoRG(rgTipoDomicilio, this.fichaCadastroDTModel.getTipoDomicilio());
         setPosicaoSelecionadoRG(rgAcessoDomicilio, this.fichaCadastroDTModel.getAcessoDomicilio());
         setPosicaoSelecionadoRG(rgLocalizacao, this.fichaCadastroDTModel.getLocalizacao());
         setPosicaoSelecionadoRG(rgOutrosProfissionais, this.fichaCadastroDTModel.getFlagOutrosProfissionais());
@@ -438,6 +603,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro());
         cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro());
         cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais());
+
+        btCadastrarFamilias.setText(String.format("Familias (%d)", this.fichaCadastroDTModel.getFamilias().size()));
 
 
     }
@@ -488,6 +655,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setLocalizacao
                 (this.getPosicaoSelecionadoRG(rgLocalizacao).equals(0) ? 83 :
                         this.getPosicaoSelecionadoRG(rgLocalizacao).equals(1) ? 84 : -1);
+
+        //TODO: rgTipoDomicilio
 
         this.fichaCadastroDTModel.setFlagOutrosProfissionais(this.getPosicaoSelecionadoRG(rgOutrosProfissionais));
         this.fichaCadastroDTModel.setFlagAnimais(this.getPosicaoSelecionadoRG(rgTemAnimais));

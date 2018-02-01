@@ -2,6 +2,7 @@ package com.fichapp.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Rodrigo Costa on 21/12/2017.
@@ -58,6 +59,9 @@ public class FichaCadastroDTModel implements Serializable {
     private String cnsResponsavel;
     private String cargoInstituicao;
     private String telContatoResponsavel;
+
+    private List<FamiliaModel> familias;
+    private Boolean flagRecusado;
 
     private Boolean flagAtivo;
     private Boolean flagExportado;
@@ -407,6 +411,22 @@ public class FichaCadastroDTModel implements Serializable {
 
     public void setTelContatoResponsavel(String telContatoResponsavel) {
         this.telContatoResponsavel = telContatoResponsavel;
+    }
+
+    public List<FamiliaModel> getFamilias() {
+        return familias;
+    }
+
+    public void setFamilias(List<FamiliaModel> familias) {
+        this.familias = familias;
+    }
+
+    public Boolean getFlagRecusado() {
+        return flagRecusado;
+    }
+
+    public void setFlagRecusado(Boolean flagRecusado) {
+        this.flagRecusado = flagRecusado;
     }
 
     public Boolean getFlagAtivo() {

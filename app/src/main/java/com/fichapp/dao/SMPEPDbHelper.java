@@ -39,6 +39,9 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             ", flag_outros_profissionais BOOLEAN, nome_responsavel VARCHAR, cns_responsavel VARCHAR, cargo_instituicao VARCHAR, tel_contato_responsavel VARCHAR, flag_ativo BOOLEAN, flag_exportado BOOLEAN);";
     public static final String SQL_DELETE_FICHA_CADASTRO_DT = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial;";
 
+    public static final String SQL_CREATE_FICHA_CADASTRO_DT_FAMILIA = "CREATE TABLE IF NOT EXISTS ficha_cadastro_domiciliar_territorial_familia" +
+            " (id INTEGER PRIMARY KEY, ficha_cadastro_domiciliar_territorial_id INTEGER NOT NULL, prontuario VARCHAR, cns_responsavel VARCHAR, data_nascimento_responsavel DATE, renda_familiar INTEGER, numero_membros_familia INTEGER, ano_reside INTEGER, mes_reside INTEGER, flag_mudou BOOLEAN);";
+
     public static final String SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL = "CREATE TABLE IF NOT EXISTS ficha_cadastro_individual" +
             " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, data_registro DATE" +
             ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo INTEGER, raca INTEGER, etnia VARCHAR, nis VARCHAR" +

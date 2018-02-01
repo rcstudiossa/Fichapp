@@ -22,7 +22,7 @@ import android.widget.Spinner;
 import com.fichapp.R;
 import com.fichapp.model.TipoModel;
 
-public class CadastroDTFamiliasActivity extends AppCompatActivity {
+public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;

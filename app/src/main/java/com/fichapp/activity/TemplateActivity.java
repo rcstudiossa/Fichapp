@@ -54,13 +54,57 @@ public class TemplateActivity extends AppCompatActivity {
 
     }
 
+    protected void desabilitaEditText(final EditText et) {
+        et.setEnabled(false);
+        et.getText().clear();
+        et.clearFocus();
+        et.setFocusable(false);
+        et.setFocusableInTouchMode(false);
+    }
+
+    protected void habilitaEditText(final EditText et) {
+        et.setEnabled(true);
+        et.setFocusable(true);
+        et.setFocusableInTouchMode(true);
+        et.requestFocus();
+    }
+
+    protected void desabilitaRadioGroup(final RadioGroup rg) {
+        for (int i = 0; i < rg.getChildCount(); i++) {
+            (rg.getChildAt(i)).setEnabled(false);
+        }
+        rg.clearCheck();
+    }
+
+    protected void habilitaRadioGroup(final RadioGroup rg) {
+        for (int i = 0; i < rg.getChildCount(); i++) {
+            (rg.getChildAt(i)).setEnabled(true);
+        }
+    }
+
+    protected void desabilitaLinearLayout(final LinearLayout ll) {
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            (ll.getChildAt(i)).setEnabled(false);
+            ((CheckBox) ll.getChildAt(i)).setChecked(false);
+
+        }
+    }
+
+    protected void habilitaLinearLayout(final LinearLayout ll) {
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            (ll.getChildAt(i)).setEnabled(true);
+
+        }
+    }
+
+
 
     protected void desabilitaEditText(final CheckBox cb, final EditText et) {
 
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(cb.isChecked()) {
+                if (cb.isChecked()) {
                     et.setEnabled(false);
                     et.getText().clear();
                     et.clearFocus();
@@ -133,13 +177,13 @@ public class TemplateActivity extends AppCompatActivity {
                 Integer indexRg = rg.indexOfChild(findViewById(checkedId));
 
                 if (indexRg == valorIndex) {
-                    for(int i = 0; i < rgDesabilitado.getChildCount(); i++) {
+                    for (int i = 0; i < rgDesabilitado.getChildCount(); i++) {
                         (rgDesabilitado.getChildAt(i)).setEnabled(false);
                     }
                     rgDesabilitado.clearCheck();
 
                 } else {
-                    for(int i = 0; i < rgDesabilitado.getChildCount(); i++) {
+                    for (int i = 0; i < rgDesabilitado.getChildCount(); i++) {
                         (rgDesabilitado.getChildAt(i)).setEnabled(true);
                     }
                 }
@@ -157,13 +201,13 @@ public class TemplateActivity extends AppCompatActivity {
                 Integer indexRg = rg.indexOfChild(findViewById(checkedId));
 
                 if (indexRg == valorIndex) {
-                    for(int i = 0; i < ll.getChildCount(); i++) {
+                    for (int i = 0; i < ll.getChildCount(); i++) {
                         (ll.getChildAt(i)).setEnabled(false);
                         ((CheckBox) ll.getChildAt(i)).setChecked(false);
                     }
 
                 } else {
-                    for(int i = 0; i < ll.getChildCount(); i++) {
+                    for (int i = 0; i < ll.getChildCount(); i++) {
                         (ll.getChildAt(i)).setEnabled(true);
                     }
                 }
