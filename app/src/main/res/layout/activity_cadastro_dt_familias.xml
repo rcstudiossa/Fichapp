@@ -8,40 +8,65 @@
     android:fitsSystemWindows="true"
     tools:context="com.fichapp.activity.FichaCadastroDTFamiliasActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/appbar_padding_top"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/appbar_padding_top"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_ficha_dt"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_rv_cadastro_familias" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_gravar_ficha" />
+        android:orientation="vertical"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="17dp"
+        android:layout_above="@+id/include_rodape_cadastro_dt"
+        android:layout_alignParentEnd="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_adicionar_familia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_familia"
+            android:layout_marginBottom="12dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_gravar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_done" />
+
+    </LinearLayout>
+
+
 
     <include
         android:id="@+id/include_rodape_cadastro_dt"
@@ -49,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

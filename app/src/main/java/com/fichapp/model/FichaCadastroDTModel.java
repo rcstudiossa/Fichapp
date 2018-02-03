@@ -66,6 +66,10 @@ public class FichaCadastroDTModel implements Serializable {
     private Boolean flagAtivo;
     private Boolean flagExportado;
 
+    public FichaCadastroDTModel(long ficha_cadastro_domiciliar_territorial_familia) {}
+
+    public FichaCadastroDTModel() {}
+
     //-----------GETTERS E SETTERS-----------\\
 
 

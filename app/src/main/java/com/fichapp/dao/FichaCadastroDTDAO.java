@@ -26,12 +26,9 @@ public class FichaCadastroDTDAO {
     public void inserir(FichaCadastroDTModel fichaModel) {
 
         Object[] args = {
-
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
-
-                fichaModel.getDataRegistro(),
-
+                Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                 fichaModel.getCep(),
                 fichaModel.getUf(),
                 fichaModel.getMunicipio(),
@@ -44,10 +41,9 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagSemNumero(),
                 fichaModel.getMicroArea(),
                 fichaModel.getFlagForaDeArea(),
-                //fichaModel.getSpTipoImovelModel().getCodigo(),
+                fichaModel.getTipoImovel().getCodigo(),
                 fichaModel.getTelResidencia(),
                 fichaModel.getTelContato(),
-
                 fichaModel.getSituacaoMoradia(),
                 fichaModel.getLocalizacao(),
                 fichaModel.getTipoImovel(),
@@ -63,12 +59,10 @@ public class FichaCadastroDTDAO {
                 fichaModel.getDestinoLixo(),
                 fichaModel.getFlagAnimais(),
                 fichaModel.getQtdAnimais(),
-
                 fichaModel.getFlagGato(),
                 fichaModel.getFlagCachorro(),
                 fichaModel.getFlagPassaro(),
                 fichaModel.getFlagOutrosAnimais(),
-
                 fichaModel.getNomeInstituicao(),
                 fichaModel.getFlagOutrosProfissionais(),
                 fichaModel.getNomeResponsavel(),
@@ -83,7 +77,8 @@ public class FichaCadastroDTDAO {
                 ", ponto_referencia, numero, flag_sem_numero, microarea, flag_fora_de_area, tipo_imovel, tel_residencia, tel_contato, situacao_moradia, localizacao" +
                 ", tipo_domicilio, acesso_domicilio, condicao_terra, num_moradores, num_comodos, material_paredes, flag_energia_eletrica, abastecimento_agua, agua_consumo" +
                 ", escoamento_banheiro, destino_lixo, flag_animais, qtd_animais, flag_gato, flag_cachorro, flag_passaro, flag_outros, nome_instituicao" +
-                ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado)" +
+                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
@@ -96,7 +91,7 @@ public class FichaCadastroDTDAO {
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
 
-                fichaModel.getDataRegistro(),
+                Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
 
                 fichaModel.getCep(),
                 fichaModel.getUf(),

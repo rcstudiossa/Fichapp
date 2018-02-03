@@ -195,15 +195,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.configToolbar();
 
+        this.carregarSpinners();
+
         this.desabilitaCampos();
 
         this.configDatas();
 
-        this.carregarSpinners();
-
         this.instanciarFichaVisitaDTModel();
-
-        this.rlMain.requestFocus();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override

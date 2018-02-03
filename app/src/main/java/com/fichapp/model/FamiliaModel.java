@@ -10,6 +10,7 @@ public class FamiliaModel {
 
     private Long id;
     private FichaCadastroDTModel fichaCadastroDTModel;
+
     private String prontuario;
     private String cnsResponsavel;
     private Date dataNascimentoResponsavel;
@@ -17,7 +18,9 @@ public class FamiliaModel {
     private Integer numeroMembros;
     private Integer resideMes;
     private Integer resideAno;
-    private Boolean mudou;
+    private Boolean flagMudou;
+
+    private Boolean flagAtivo;
 
     public Long getId() {
         return id;
@@ -91,12 +94,20 @@ public class FamiliaModel {
         this.resideAno = resideAno;
     }
 
-    public Boolean getMudou() {
-        return mudou;
+    public Boolean getFlagMudou() {
+        return flagMudou;
     }
 
-    public void setMudou(Boolean mudou) {
-        this.mudou = mudou;
+    public void setFlagMudou(Boolean flagMudou) {
+        this.flagMudou = flagMudou;
+    }
+
+    public Boolean getFlagAtivo() {
+        return flagAtivo;
+    }
+
+    public void setFlagAtivo(Boolean flagAtivo) {
+        this.flagAtivo = flagAtivo;
     }
 
     @Override
@@ -111,7 +122,8 @@ public class FamiliaModel {
             return false;
         if (prontuario != null ? !prontuario.equals(that.prontuario) : that.prontuario != null)
             return false;
-        if (cnsResponsavel != null ? !cnsResponsavel.equals(that.cnsResponsavel) : that.cnsResponsavel != null) return false;
+        if (cnsResponsavel != null ? !cnsResponsavel.equals(that.cnsResponsavel) : that.cnsResponsavel != null)
+            return false;
         if (dataNascimentoResponsavel != null ? !dataNascimentoResponsavel.equals(that.dataNascimentoResponsavel) : that.dataNascimentoResponsavel != null)
             return false;
         if (rendaFamiliar != null ? !rendaFamiliar.equals(that.rendaFamiliar) : that.rendaFamiliar != null)
@@ -122,7 +134,9 @@ public class FamiliaModel {
             return false;
         if (resideAno != null ? !resideAno.equals(that.resideAno) : that.resideAno != null)
             return false;
-        return mudou != null ? mudou.equals(that.mudou) : that.mudou == null;
+        if (flagMudou != null ? !flagMudou.equals(that.flagMudou) : that.flagMudou != null)
+            return false;
+        return flagAtivo != null ? flagAtivo.equals(that.flagAtivo) : that.flagAtivo == null;
 
     }
 
@@ -137,7 +151,8 @@ public class FamiliaModel {
         result = 31 * result + (numeroMembros != null ? numeroMembros.hashCode() : 0);
         result = 31 * result + (resideMes != null ? resideMes.hashCode() : 0);
         result = 31 * result + (resideAno != null ? resideAno.hashCode() : 0);
-        result = 31 * result + (mudou != null ? mudou.hashCode() : 0);
+        result = 31 * result + (flagMudou != null ? flagMudou.hashCode() : 0);
+        result = 31 * result + (flagAtivo != null ? flagAtivo.hashCode() : 0);
         return result;
     }
 }

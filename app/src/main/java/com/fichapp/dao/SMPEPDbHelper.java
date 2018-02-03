@@ -40,7 +40,8 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     public static final String SQL_DELETE_FICHA_CADASTRO_DT = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial;";
 
     public static final String SQL_CREATE_FICHA_CADASTRO_DT_FAMILIA = "CREATE TABLE IF NOT EXISTS ficha_cadastro_domiciliar_territorial_familia" +
-            " (id INTEGER PRIMARY KEY, ficha_cadastro_domiciliar_territorial_id INTEGER NOT NULL, prontuario VARCHAR, cns_responsavel VARCHAR, data_nascimento_responsavel DATE, renda_familiar INTEGER, numero_membros_familia INTEGER, ano_reside INTEGER, mes_reside INTEGER, flag_mudou BOOLEAN);";
+            " (id INTEGER PRIMARY KEY, ficha_cadastro_domiciliar_territorial_id INTEGER NOT NULL, prontuario VARCHAR, cns_responsavel VARCHAR, data_nascimento_responsavel DATE, renda_familiar INTEGER, numero_membros_familia INTEGER, ano_reside INTEGER, mes_reside INTEGER, flag_mudou BOOLEAN, flag_ativo BOOLEAN);";
+    public static final String SQL_DELETE_FICHA_CADASTRO_DT_FAMILIA = "DROP TABLE IF EXISTS ficha_cadastro_domiciliar_territorial_familia;";
 
     public static final String SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL = "CREATE TABLE IF NOT EXISTS ficha_cadastro_individual" +
             " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, data_registro DATE" +
@@ -84,6 +85,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
+        db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT_FAMILIA);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
 
     }
@@ -95,6 +97,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
         //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
+        db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT_FAMILIA);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }

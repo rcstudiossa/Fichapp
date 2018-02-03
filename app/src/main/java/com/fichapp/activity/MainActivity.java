@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void definirComponentes() {
 
         this.sairLL = (LinearLayout) findViewById(R.id.ll_sair);
-        this.fab = (FloatingActionButton) findViewById(R.id.fab);
+        this.fab = (FloatingActionButton) findViewById(R.id.fab_gravar);
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

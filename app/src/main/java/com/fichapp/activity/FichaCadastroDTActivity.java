@@ -382,9 +382,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-   /* private void desabilitaAnimais() {
+    private void desabilitaAnimais() {
 
-        if (indexSpTipoImovel != 1 || flagVisitaRecusada) {
+        if (/*indexSpTipoImovel != 1 ||*/ flagVisitaRecusada) {
             desabilitaRadioGroup(rgTemAnimais);
             desabilitaLinearLayout(llAnimais);
             desabilitaEditText(etQuantidadeAnimais);
@@ -398,7 +398,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         //TODO: Deve ser maior ou igual ao número de opções selecionadas no campo animaisNoDomicilio.
 
-    }*/
+    }
 
     private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
 
@@ -571,7 +571,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etMicroarea.setText(this.fichaCadastroDTModel.getMicroArea());
         etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
         etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
-        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais());
+        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais().toString());
         etNomeInstituicao.setText(this.fichaCadastroDTModel.getNomeInstituicao());
         etNomeResponsavel.setText(this.fichaCadastroDTModel.getNomeResponsavel());
         etCnsResponsavel.setText(this.fichaCadastroDTModel.getCnsResponsavel());
@@ -669,7 +669,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setFlagCachorro(cbCachorro.isChecked());
         this.fichaCadastroDTModel.setFlagPassaro(cbPassaro.isChecked());
         this.fichaCadastroDTModel.setFlagOutrosAnimais(cbOutrosAnimais.isChecked());
-
 
     }
 

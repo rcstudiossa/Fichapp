@@ -256,7 +256,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         if (this.fichaVisitaDTModel == null) {
             this.fichaVisitaDTModel = new FichaVisitaDTModel();
         } else {
-            setModelToActivity();
+            this.setModelToActivity();
         }
 
     }
@@ -265,7 +265,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         if (!validaCampos()) { return; }
 
-        setActivityToModel();
+        this.setActivityToModel();
 
         this.fichaVisitaDTBS.gravar(this.fichaVisitaDTModel);
 

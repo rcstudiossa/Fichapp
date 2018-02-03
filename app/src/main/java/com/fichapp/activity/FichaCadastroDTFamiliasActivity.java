@@ -1,35 +1,52 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.fichapp.R;
+import com.fichapp.business.FichaCadastroDTFamiliasBS;
+import com.fichapp.model.CNESModel;
+import com.fichapp.model.FamiliaModel;
+import com.fichapp.model.FichaCadastroDTModel;
+import com.fichapp.model.FichaVisitaDTModel;
+import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
+import com.fichapp.util.Utilitario;
 
 public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private FamiliaModel familiaModel;
+    private FichaCadastroDTModel fichaCadastroDTModel;
+    private FichaCadastroDTFamiliasBS fichaCadastroDTFamiliasBS;
 
+    private FrameLayout flItemCadastroFamilias;
+    private Toolbar toolbar;
+
+   /* private EditText etProntuarioFamiliar;
+    private EditText etCnsResponsavel;
+    private EditText etDataNascimentoResponsavel;
     private Spinner spSalarioFamiliar;
+    private EditText etResideMes;
+    private EditText etResideAno;
+    private EditText etNumMembros;
+    private CheckBox cbMudou;*/
+
+    private FloatingActionButton fabAdicionarFamilia;
+    private FloatingActionButton fabGravar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +57,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         this.configComponentes();
 
-        this.fab.setOnClickListener(new View.OnClickListener() {
+        this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
@@ -51,10 +68,20 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     private void definirComponentes() {
 
+        flItemCadastroFamilias = (FrameLayout) findViewById(R.id.fl_item_cadastro_familias);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        /*etProntuarioFamiliar = (EditText) findViewById(R.id.et_num_prontuario_familiar);
+        etCnsResponsavel = (EditText) findViewById(R.id.et_cns_responsavel);
+        etDataNascimentoResponsavel = (EditText) findViewById(R.id.et_data_nascimento);
         spSalarioFamiliar = (Spinner) findViewById(R.id.sp_renda_familiar);
+        etResideMes = (EditText) findViewById(R.id.et_reside_mes);
+        etResideAno = (EditText) findViewById(R.id.et_reside_ano);
+        etNumMembros = (EditText) findViewById(R.id.et_num_membros);
+        cbMudou = (CheckBox) findViewById(R.id.cb_mudou_se);*/
+
+        fabAdicionarFamilia = (FloatingActionButton) findViewById(R.id.fab_adicionar_familia);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
     }
 
@@ -63,10 +90,19 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cadastro Familiar");
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        this.carregarSpinner();
 
-        //this.carregarSpinner();
+    }
+
+    private void instanciarFichaVisitaDTModel() {
+
+        this.familiaModel = (FamiliaModel) getIntent().getSerializableExtra("fichaCadastroDTFamilias");
+
+        if (this.familiaModel == null) {
+            this.familiaModel = new FamiliaModel();
+        } else {
+            setModelToActivity();
+        }
 
     }
 
@@ -74,108 +110,54 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         //if (!validaCampos()) { return; }
 
-        //setActivityToModel();
+        setActivityToModel();
 
-        //this.fichaCadastroDTBS.gravar(this.fichaCadastroDTModel);
+        this.fichaCadastroDTFamiliasBS.gravar(this.familiaModel);
 
-        //Utilitario.avisoSucesso(getApplicationContext());
+        Utilitario.avisoSucesso(getApplicationContext());
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fragment", "FichaCadastroDTFragment");
+        Intent intent = new Intent(this, FichaCadastroDTActivity.class);
         startActivity(intent);
-
-        finish();
 
     }
 
     private void carregarSpinner() {
 
+        /*
         ArrayAdapter<TipoModel> spAdapter;
 
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRendaFamiliar());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spSalarioFamiliar.setAdapter(spAdapter);
+        spSalarioFamiliar.setAdapter(spAdapter);*/
 
     }
 
+    private  void setActivityToModel() {
 
+        this.familiaModel.setFichaCadastroDTModel(new FichaCadastroDTModel(fichaCadastroDTModel.getId()));
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_familias, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        /*this.familiaModel.setProntuario(etProntuarioFamiliar.getText().toString());
+        this.familiaModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
+        this.familiaModel.setDataNascimentoResponsavel(Utilitario.getDate(etDataNascimentoResponsavel.getText().toString()));
+        this.familiaModel.setRendaFamiliar((TipoModel) this.spSalarioFamiliar.getSelectedItem());
+        this.familiaModel.setResideMes(Utilitario.isEmpty(etResideMes.getText().toString()) ? null : Integer.valueOf(etResideMes.getText().toString()));
+        this.familiaModel.setResideAno(Utilitario.isEmpty(etResideAno.getText().toString()) ? null : Integer.valueOf(etResideAno.getText().toString()));
+        this.familiaModel.setNumeroMembros(Utilitario.isEmpty(etNumMembros.getText().toString()) ? null : Integer.valueOf(etNumMembros.getText().toString()));
+        this.familiaModel.setFlagMudou(cbMudou.isChecked());*/
 
     }
 
+    private void setModelToActivity() {
 
-    public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {}
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_cadastro_dt_familias, container, false);
-            return rootView;
-        }
+        /*etProntuarioFamiliar.setText(this.familiaModel.getProntuario());
+        etCnsResponsavel.setText(this.familiaModel.getCnsResponsavel());
+        etDataNascimentoResponsavel.setText(Utilitario.getDataFormatada(this.familiaModel.getDataNascimentoResponsavel()));
+        spSalarioFamiliar.setSelection(new TipoModel().getComboRendaFamiliar().indexOf(this.familiaModel.getRendaFamiliar()));
+        etResideMes.setText(this.familiaModel.getResideMes().toString());
+        etResideAno.setText(this.familiaModel.getResideAno().toString());
+        etNumMembros.setText(this.familiaModel.getNumeroMembros().toString());
+        cbMudou.setChecked(this.familiaModel.getFlagMudou());*/
 
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-
-            return PlaceholderFragment.newInstance(position + 1);
-
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-                case 3:
-                    return "SECTION 4";
-            }
-            return null;
-        }
-    }
 }

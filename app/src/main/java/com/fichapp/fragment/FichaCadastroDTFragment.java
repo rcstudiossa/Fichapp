@@ -27,6 +27,7 @@ public class FichaCadastroDTFragment extends TemplateFragment {
         View view = inflater.inflate(R.layout.fragment_ficha_cadastro_dt, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_dt);
+
         configRV();
 
         fichaCadastroDTBS = new FichaCadastroDTBS(getActivity());

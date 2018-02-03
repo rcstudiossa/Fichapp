@@ -13,6 +13,7 @@ import com.fichapp.R;
 import com.fichapp.activity.FichaCadastroDTActivity;
 import com.fichapp.business.FichaCadastroDTBS;
 import com.fichapp.model.FichaCadastroDTModel;
+import com.fichapp.util.Utilitario;
 
 import java.util.List;
 import java.util.Locale;
@@ -44,8 +45,8 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
     public void onBindViewHolder(FichaCadastroDTVH fichaCadastroDTVH, final int position) {
 
         fichaCadastroDTVH.tvCep.setText(String.format(Locale.getDefault(), "CEP: %s", mList.get(position).getCep()));
-        fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "%s, ", mList.get(position).getBairro()));
-        //fichaCadastroDTVH.tvData.setText(String.format("Data: %s", new SimpleDateFormat("dd/MM/yyyy").format(mList.get(position).getDataRegistro())));
+        fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "%s, %s", mList.get(position).getBairro(), mList.get(position).getNumero()));
+        fichaCadastroDTVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaCadastroDTVH.editBT.setOnClickListener(new View.OnClickListener() {
             @Override

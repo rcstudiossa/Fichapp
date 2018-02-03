@@ -3,6 +3,7 @@ package com.fichapp.business;
 import android.content.Context;
 
 import com.fichapp.dao.FichaCadastroDTDAO;
+import com.fichapp.dao.FichaCadastroDTFamiliasDAO;
 import com.fichapp.dao.SMPEPDbHelper;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.util.Utilitario;
@@ -15,51 +16,57 @@ import java.util.List;
 
 public class FichaCadastroDTBS {
 
-    FichaCadastroDTDAO FichaCadastroDTDAO;
+    FichaCadastroDTDAO fichaCadastroDTDAO;
+    FichaCadastroDTFamiliasDAO fichaCadastroDTFamiliasDAO;
 
     public FichaCadastroDTBS() {
     }
 
     public FichaCadastroDTBS(Context context) {
         SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
-        FichaCadastroDTDAO = new FichaCadastroDTDAO(smpepDbHelper);
+        fichaCadastroDTDAO = new FichaCadastroDTDAO(smpepDbHelper);
+        fichaCadastroDTFamiliasDAO = new FichaCadastroDTFamiliasDAO(smpepDbHelper);
     }
 
     public void gravar(FichaCadastroDTModel fichaModel) {
 
         if (fichaModel.getId() != null) {
-            FichaCadastroDTDAO.alterar(fichaModel);
+            fichaCadastroDTDAO.alterar(fichaModel);
         } else {
-            FichaCadastroDTDAO.inserir(fichaModel);
+            fichaCadastroDTDAO.inserir(fichaModel);
         }
 
     }
 
     public void excluir(FichaCadastroDTModel fichaModel) {
-        FichaCadastroDTDAO.excluir(fichaModel);
+        fichaCadastroDTDAO.excluir(fichaModel);
         //profissionalDAO.pesquisar();
     }
 
     public FichaCadastroDTModel obter(FichaCadastroDTModel FichaCadastroDTModel) {
 
-        return this.FichaCadastroDTDAO.obter(FichaCadastroDTModel);
+        FichaCadastroDTModel ficha = this.fichaCadastroDTDAO.obter(FichaCadastroDTModel);
+        ficha.setFamilias(fichaCadastroDTFamiliasDAO.pesquisar(ficha));
+
+        return ficha;
     }
 
     public List<FichaCadastroDTModel> pesquisar() {
-        return FichaCadastroDTDAO.pesquisar();
+        return fichaCadastroDTDAO.pesquisar();
     }
 
     public List<FichaCadastroDTModel> pesquisarAtivos() {
-        return FichaCadastroDTDAO.pesquisarAtivos();
+
+        return fichaCadastroDTDAO.pesquisarAtivos();
     }
 
     public List<FichaCadastroDTModel> pesquisarAtivos(String query) {
 
         if (Utilitario.isEmpty(query)) {
-            return FichaCadastroDTDAO.pesquisarAtivos();
+            return fichaCadastroDTDAO.pesquisarAtivos();
         }
 
-        return FichaCadastroDTDAO.pesquisarAtivos(query);
+        return fichaCadastroDTDAO.pesquisarAtivos(query);
 
     }
 
