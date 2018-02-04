@@ -30,31 +30,44 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/include_cadastro_familia"/>
+            android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_ficha_familias_dt"
-            android:padding="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbarStyle="outsideInset"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/item_rv_familia" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/include_cadastro_familia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_ficha_familias_dt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:padding="16dp"
+                    android:scrollbarStyle="outsideInset"
+                    android:scrollbars="vertical"
+                    tools:listitem="@layout/item_rv_familia" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_above="@+id/include_rodape_cadastro_dt"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="18dp"
         android:layout_marginEnd="17dp"
-        android:layout_above="@+id/include_rodape_cadastro_dt"
-        android:layout_alignParentEnd="true">
+        android:orientation="vertical">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_gravar"
@@ -63,7 +76,6 @@
             android:src="@drawable/ic_done" />
 
     </LinearLayout>
-
 
 
     <include

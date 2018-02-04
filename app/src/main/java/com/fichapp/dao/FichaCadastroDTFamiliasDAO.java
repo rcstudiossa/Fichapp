@@ -44,7 +44,7 @@ public class FichaCadastroDTFamiliasDAO {
 
         String query = "insert into ficha_cadastro_domiciliar_territorial_familia" +
                 " (ficha_cadastro_domiciliar_territorial_id, prontuario, cns_responsavel, data_nascimento_responsavel, renda_familiar, numero_membros_familia, ano_reside, mes_reside, flag_mudou, flag_ativo)" +
-                " values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
@@ -53,8 +53,6 @@ public class FichaCadastroDTFamiliasDAO {
     public void alterar (FamiliaModel familiaModel) {
 
         Object[] args = {
-
-                familiaModel.getFichaCadastroDTModel().getId(),
 
                 familiaModel.getProntuario(),
                 familiaModel.getCnsResponsavel(),
@@ -70,7 +68,7 @@ public class FichaCadastroDTFamiliasDAO {
 
 
         String query = "update ficha_cadastro_domiciliar_territorial_familia" +
-                " set ficha_cadastro_domiciliar_territorial_id = ?, prontuario = ?, cns_responsavel = ?, data_nascimento_responsavel = ?, renda_familiar = ?, numero_membros_familia = ?, ano_reside = ?, mes_reside = ?, flag_mudou = ?, flag_ativo = ?" +
+                " set prontuario = ?, cns_responsavel = ?, data_nascimento_responsavel = ?, renda_familiar = ?, numero_membros_familia = ?, ano_reside = ?, mes_reside = ?, flag_mudou = ?, flag_ativo = ?" +
                 " WHERE id = ?";
 
         db.execSQL(query, args);
@@ -125,8 +123,9 @@ public class FichaCadastroDTFamiliasDAO {
         FamiliaModel familiaModel = new FamiliaModel();
 
         familiaModel.setId(c.getLong(c.getColumnIndex("id")));
-        familiaModel.setFichaCadastroDTModel(new FichaCadastroDTModel(c.getLong(c.getColumnIndex("ficha_cadastro_domiciliar_territorial_familia_id"))));
+        familiaModel.setFichaCadastroDTModel(new FichaCadastroDTModel(c.getLong(c.getColumnIndex("ficha_cadastro_domiciliar_territorial_id"))));
 
+        familiaModel.setProntuario(c.getString(c.getColumnIndex("prontuario")));
         familiaModel.setCnsResponsavel(c.getString(c.getColumnIndex("cns_responsavel")));
         familiaModel.setDataNascimentoResponsavel(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento_responsavel"))));
         familiaModel.setRendaFamiliar(new TipoModel(c.getInt(c.getColumnIndex("renda_familiar"))));

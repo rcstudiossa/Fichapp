@@ -185,6 +185,7 @@
                     android:text="Mudou-se" />
 
                 <Button
+                    android:id="@+id/bt_adicionar_familia"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
