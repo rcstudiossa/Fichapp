@@ -5,7 +5,7 @@ import android.content.Context;
 import com.fichapp.dao.FichaCadastroDTFamiliasDAO;
 import com.fichapp.dao.SMPEPDbHelper;
 import com.fichapp.model.FamiliaModel;
-import com.fichapp.util.Utilitario;
+import com.fichapp.model.FichaCadastroDTModel;
 
 import java.util.List;
 
@@ -15,32 +15,46 @@ import java.util.List;
 
 public class FichaCadastroDTFamiliasBS {
 
-    FichaCadastroDTFamiliasDAO FichaCadastroDTFamiliasDAO;
+    FichaCadastroDTFamiliasDAO fichaCadastroDTFamiliasDAO;
 
     public FichaCadastroDTFamiliasBS() {
     }
 
     public FichaCadastroDTFamiliasBS(Context context) {
         SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
-        FichaCadastroDTFamiliasDAO = new FichaCadastroDTFamiliasDAO(smpepDbHelper);
+        fichaCadastroDTFamiliasDAO = new FichaCadastroDTFamiliasDAO(smpepDbHelper);
+    }
+
+    public void gravar(List<FamiliaModel> familias) {
+
+        for (FamiliaModel familiaModel: familias) {
+
+            this.gravar(familiaModel);
+
+        }
+
     }
 
     public void gravar(FamiliaModel familiaModel) {
 
         if (familiaModel.getId() != null) {
-            FichaCadastroDTFamiliasDAO.alterar(familiaModel);
+            fichaCadastroDTFamiliasDAO.alterar(familiaModel);
         } else {
-            FichaCadastroDTFamiliasDAO.inserir(familiaModel);
+            fichaCadastroDTFamiliasDAO.inserir(familiaModel);
         }
 
     }
 
     public void excluir(FamiliaModel familiaModel) {
-        FichaCadastroDTFamiliasDAO.excluir(familiaModel);
+        fichaCadastroDTFamiliasDAO.excluir(familiaModel);
     }
 
     public FamiliaModel obter(FamiliaModel FamiliaModel) {
-        return this.FichaCadastroDTFamiliasDAO.obter(FamiliaModel);
+        return this.fichaCadastroDTFamiliasDAO.obter(FamiliaModel);
+    }
+
+    public List<FamiliaModel> pesquisar(FichaCadastroDTModel fichaCadastroDTModel) {
+        return this.fichaCadastroDTFamiliasDAO.pesquisar(fichaCadastroDTModel);
     }
 
 

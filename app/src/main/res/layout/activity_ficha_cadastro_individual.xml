@@ -207,6 +207,7 @@
                         android:layout_height="match_parent"
                         android:hint="Nome Completo"
                         android:inputType="textPersonName"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -222,6 +223,7 @@
                         android:layout_height="match_parent"
                         android:hint="Nome Social"
                         android:inputType="textPersonName"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -470,10 +472,10 @@
                             android:layout_height="wrap_content">
 
                             <EditText
-                                android:id="@+id/et_municipio_uf_nascimento"
+                                android:id="@+id/et_municipio_nascimento"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="Município e UF de Nascimento**"
+                                android:hint="Município de Nascimento**"
                                 android:inputType="textPersonName" />
 
                         </android.support.design.widget.TextInputLayout>
@@ -577,6 +579,22 @@
                         android:inputType="textEmailAddress" />
 
                 </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/field_margin"
+                    android:layout_marginEnd="@dimen/field_margin"
+                    android:layout_marginStart="@dimen/field_margin"
+                    android:layout_marginTop="8dp"
+                    android:text="Termo de recusa"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <CheckBox
+                    android:id="@+id/cb_visita_recusada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visita recusada" />
 
 
                 <TextView
@@ -2165,6 +2183,7 @@
                             android:layout_marginEnd="@dimen/field_margin"
                             android:layout_marginStart="@dimen/field_margin"
                             android:hint="Qual(is)?"
+                            android:maxLength="100"
                             android:inputType="textPersonName" />
 
                     </LinearLayout>
@@ -2225,6 +2244,7 @@
                     android:layout_marginBottom="@dimen/field_margin"
                     android:layout_marginEnd="@dimen/field_margin"
                     android:layout_marginStart="@dimen/field_margin"
+                    android:maxLength="300"
                     android:hint="Digite aqui..." />
 
 

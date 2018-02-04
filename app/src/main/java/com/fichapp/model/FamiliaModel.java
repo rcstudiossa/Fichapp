@@ -1,12 +1,13 @@
 package com.fichapp.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Rodrigo Costa on 31/01/2018.
  */
 
-public class FamiliaModel {
+public class FamiliaModel implements Serializable{
 
     private Long id;
     private FichaCadastroDTModel fichaCadastroDTModel;
@@ -21,6 +22,14 @@ public class FamiliaModel {
     private Boolean flagMudou;
 
     private Boolean flagAtivo;
+
+    public FamiliaModel() {
+
+    }
+
+    public FamiliaModel(TipoModel rendaFamiliar) {
+    this.rendaFamiliar = rendaFamiliar;
+    }
 
     public Long getId() {
         return id;

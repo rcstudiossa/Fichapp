@@ -1,27 +1,21 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
 
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.Spinner;
 
 import com.fichapp.R;
+import com.fichapp.adapter.FichaCadastroDTFamiliasAdapter;
 import com.fichapp.business.FichaCadastroDTFamiliasBS;
-import com.fichapp.model.CNESModel;
 import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
-import com.fichapp.model.FichaVisitaDTModel;
-import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
@@ -46,6 +40,9 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
     private FloatingActionButton fabAdicionarFamilia;
     private FloatingActionButton fabGravar;
 
+    private FichaCadastroDTFamiliasAdapter adapter;
+    protected RecyclerView mRecyclerView;
+
 
 
     @Override
@@ -56,6 +53,15 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         this.definirComponentes();
 
         this.configComponentes();
+
+        this.instanciarFichaCadastroDTModel();
+
+        this.fabAdicionarFamilia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adicionarFamilia();
+            }
+        });
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,20 +74,21 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     private void definirComponentes() {
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_ficha_familias_dt);
+
         flItemCadastroFamilias = (FrameLayout) findViewById(R.id.fl_item_cadastro_familias);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        /*etProntuarioFamiliar = (EditText) findViewById(R.id.et_num_prontuario_familiar);
-        etCnsResponsavel = (EditText) findViewById(R.id.et_cns_responsavel);
-        etDataNascimentoResponsavel = (EditText) findViewById(R.id.et_data_nascimento);
-        spSalarioFamiliar = (Spinner) findViewById(R.id.sp_renda_familiar);
-        etResideMes = (EditText) findViewById(R.id.et_reside_mes);
-        etResideAno = (EditText) findViewById(R.id.et_reside_ano);
-        etNumMembros = (EditText) findViewById(R.id.et_num_membros);
-        cbMudou = (CheckBox) findViewById(R.id.cb_mudou_se);*/
-
         fabAdicionarFamilia = (FloatingActionButton) findViewById(R.id.fab_adicionar_familia);
         fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+
+    }
+
+    private void instanciarFichaCadastroDTModel() {
+
+        this.fichaCadastroDTModel = (FichaCadastroDTModel) getIntent().getSerializableExtra("fichaCadastroDT");
+        adapter = new FichaCadastroDTFamiliasAdapter(this, this.fichaCadastroDTModel.getFamilias());
+        mRecyclerView.setAdapter(adapter);
 
     }
 
@@ -94,15 +101,9 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     }
 
-    private void instanciarFichaVisitaDTModel() {
+    private void adicionarFamilia() {
 
-        this.familiaModel = (FamiliaModel) getIntent().getSerializableExtra("fichaCadastroDTFamilias");
-
-        if (this.familiaModel == null) {
-            this.familiaModel = new FamiliaModel();
-        } else {
-            setModelToActivity();
-        }
+        adapter.addListItem(new FamiliaModel(new TipoModel()), adapter.getItemCount());
 
     }
 

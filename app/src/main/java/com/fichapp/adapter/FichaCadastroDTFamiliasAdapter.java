@@ -72,6 +72,7 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
     public void addListItem(FamiliaModel c, int position){
         mList.add(c);
         notifyItemInserted(position);
+        notifyDataSetChanged();
     }
 
 

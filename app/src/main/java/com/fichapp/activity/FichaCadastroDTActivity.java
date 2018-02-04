@@ -29,7 +29,6 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -119,22 +118,31 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.definirComponentes();
 
-        this.instanciarFichaVisitaDTModel();
-
         this.configToolbar();
 
         this.carregarSpinners();
+
+        this.configData();
+
+        this.instanciarFichaCadastroDTModel();
 
         this.lerRestricoes();
 
         this.desabilitaCampos();
 
-        this.configData();
-
         fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
+            }
+        });
+
+        btCadastrarFamilias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FichaCadastroDTActivity.this, FichaCadastroDTFamiliasActivity.class);
+                intent.putExtra("fichaCadastroDT", fichaCadastroDTModel);
+                startActivity(intent);
             }
         });
 
@@ -302,7 +310,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    private void instanciarFichaVisitaDTModel() {
+    private void instanciarFichaCadastroDTModel() {
 
         this.fichaCadastroDTModel = (FichaCadastroDTModel) getIntent().getSerializableExtra("fichaCadastroDT");
 

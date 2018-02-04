@@ -31,7 +31,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_ficha_dt"
+            android:id="@+id/rv_ficha_familias_dt"
             android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -5,9 +5,11 @@ import android.content.Context;
 import com.fichapp.dao.FichaCadastroDTDAO;
 import com.fichapp.dao.FichaCadastroDTFamiliasDAO;
 import com.fichapp.dao.SMPEPDbHelper;
+import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.util.Utilitario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
 public class FichaCadastroDTBS {
 
     FichaCadastroDTDAO fichaCadastroDTDAO;
-    FichaCadastroDTFamiliasDAO fichaCadastroDTFamiliasDAO;
+    FichaCadastroDTFamiliasBS fichaCadastroDTFamiliasBS;
 
     public FichaCadastroDTBS() {
     }
@@ -25,7 +27,7 @@ public class FichaCadastroDTBS {
     public FichaCadastroDTBS(Context context) {
         SMPEPDbHelper smpepDbHelper = new SMPEPDbHelper(context);
         fichaCadastroDTDAO = new FichaCadastroDTDAO(smpepDbHelper);
-        fichaCadastroDTFamiliasDAO = new FichaCadastroDTFamiliasDAO(smpepDbHelper);
+        fichaCadastroDTFamiliasBS = new FichaCadastroDTFamiliasBS(context);
     }
 
     public void gravar(FichaCadastroDTModel fichaModel) {
@@ -36,17 +38,21 @@ public class FichaCadastroDTBS {
             fichaCadastroDTDAO.inserir(fichaModel);
         }
 
+        fichaCadastroDTFamiliasBS.gravar(fichaModel.getFamilias());
+
     }
 
     public void excluir(FichaCadastroDTModel fichaModel) {
         fichaCadastroDTDAO.excluir(fichaModel);
-        //profissionalDAO.pesquisar();
     }
 
     public FichaCadastroDTModel obter(FichaCadastroDTModel FichaCadastroDTModel) {
 
         FichaCadastroDTModel ficha = this.fichaCadastroDTDAO.obter(FichaCadastroDTModel);
-        ficha.setFamilias(fichaCadastroDTFamiliasDAO.pesquisar(ficha));
+
+        List<FamiliaModel> familias = fichaCadastroDTFamiliasBS.pesquisar(ficha);
+
+        ficha.setFamilias(familias == null ? new ArrayList<FamiliaModel>() : familias);
 
         return ficha;
     }
