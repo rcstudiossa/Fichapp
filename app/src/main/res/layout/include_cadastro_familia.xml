@@ -1,23 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_item_cadastro_familias"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:longClickable="true"
     android:layout_marginBottom="16dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@drawable/rv_item_familias_background"
+    android:paddingBottom="15dp"
+    android:background="@drawable/spinner_dropdown_item_layout"
     tools:context="com.fichapp.activity.FichaCadastroDTFamiliasActivity">
 
     <LinearLayout
+        android:id="@+id/ll_cadastro_familia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="8dp"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -165,19 +169,36 @@
 
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/cb_mudou_se"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mudou-se"
+                android:orientation="horizontal"
                 android:layout_marginTop="12dp"
                 android:layout_marginStart="@dimen/field_margin"
-                android:layout_marginBottom="@dimen/field_margin"/>
+                android:layout_marginBottom="@dimen/field_margin">
+
+                <CheckBox
+                    android:id="@+id/cb_mudou_se"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Mudou-se" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:text="Adicionar"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@drawable/bt_add_background"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
 
     </LinearLayout>
 
-
-</FrameLayout>
+</RelativeLayout>

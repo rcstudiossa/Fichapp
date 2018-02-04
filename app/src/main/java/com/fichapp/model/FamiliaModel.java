@@ -28,7 +28,7 @@ public class FamiliaModel implements Serializable{
     }
 
     public FamiliaModel(TipoModel rendaFamiliar) {
-    this.rendaFamiliar = rendaFamiliar;
+        this.rendaFamiliar = rendaFamiliar;
     }
 
     public Long getId() {

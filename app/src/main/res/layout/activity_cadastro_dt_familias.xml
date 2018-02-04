@@ -30,6 +30,11 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/include_cadastro_familia"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_ficha_familias_dt"
             android:padding="16dp"
@@ -38,7 +43,7 @@
             android:clipToPadding="false"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
-            tools:listitem="@layout/item_rv_cadastro_familias" />
+            tools:listitem="@layout/item_rv_familia" />
 
     </LinearLayout>
 
@@ -50,13 +55,6 @@
         android:layout_marginEnd="17dp"
         android:layout_above="@+id/include_rodape_cadastro_dt"
         android:layout_alignParentEnd="true">
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_adicionar_familia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_add_familia"
-            android:layout_marginBottom="12dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_gravar"

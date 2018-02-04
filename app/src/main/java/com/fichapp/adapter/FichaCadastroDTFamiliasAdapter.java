@@ -2,6 +2,8 @@ package com.fichapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,6 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
 
     private List<FamiliaModel> mList;
     private LayoutInflater mLayoutInflater;
-    private FamiliaModel familiaModel;
 
 
     public FichaCadastroDTFamiliasAdapter(Context c, List<FamiliaModel> l){
@@ -36,31 +37,24 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
 
     @Override
     public FichaCadastroDTFamiliasVH onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View v = mLayoutInflater.inflate(R.layout.item_rv_cadastro_familias, viewGroup, false);
-        FichaCadastroDTFamiliasVH mvh = new FichaCadastroDTFamiliasVH(v);
+        View v = mLayoutInflater.inflate(R.layout.include_cadastro_familia, viewGroup, false);
+        FichaCadastroDTFamiliasVH mvh = new FichaCadastroDTFamiliasVH(v, new RecyclerToModelListener());
         return mvh;
     }
 
     @Override
     public void onBindViewHolder(FichaCadastroDTFamiliasVH fichaCadastroDTFamiliasVH, final int position) {
 
+        fichaCadastroDTFamiliasVH.recyclerToModelListener.updatePosition(position);
+
         fichaCadastroDTFamiliasVH.etProntuarioFamiliar.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getProntuario()));
         fichaCadastroDTFamiliasVH.etCnsResponsavel.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getCnsResponsavel()));
         fichaCadastroDTFamiliasVH.etDataNascimentoResponsavel.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataNascimentoResponsavel())));
-        fichaCadastroDTFamiliasVH.spSalarioFamiliar.setSelection(new TipoModel().getComboRendaFamiliar().indexOf(this.familiaModel.getRendaFamiliar()));
+        fichaCadastroDTFamiliasVH.spSalarioFamiliar.setSelection(new TipoModel().getComboRendaFamiliar().indexOf(mList.get(position).getRendaFamiliar()));
         fichaCadastroDTFamiliasVH.etResideMes.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getResideMes()));
         fichaCadastroDTFamiliasVH.etResideAno.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getResideAno()));
         fichaCadastroDTFamiliasVH.etNumMembros.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNumeroMembros()));
-        fichaCadastroDTFamiliasVH.cbMudou.setChecked(mList.get(position).getFlagMudou());
-
-        mList.get(position).setProntuario(fichaCadastroDTFamiliasVH.etProntuarioFamiliar.getText().toString());
-        mList.get(position).setCnsResponsavel(fichaCadastroDTFamiliasVH.etCnsResponsavel.getText().toString());
-        mList.get(position).setProntuario(fichaCadastroDTFamiliasVH.etProntuarioFamiliar.getText().toString());
-        mList.get(position).setRendaFamiliar((TipoModel) fichaCadastroDTFamiliasVH.spSalarioFamiliar.getSelectedItem());
-        mList.get(position).setResideMes(Integer.valueOf(fichaCadastroDTFamiliasVH.etResideMes.getText().toString()));
-        mList.get(position).setResideAno(Integer.valueOf(fichaCadastroDTFamiliasVH.etResideAno.getText().toString()));
-        mList.get(position).setNumeroMembros(Integer.valueOf(fichaCadastroDTFamiliasVH.etNumMembros.getText().toString()));
-        mList.get(position).setFlagMudou(fichaCadastroDTFamiliasVH.cbMudou.isChecked());
+        fichaCadastroDTFamiliasVH.cbMudou.setChecked(mList.get(position).getFlagMudou() == null ? false : mList.get(position).getFlagMudou());
 
     }
 
@@ -69,10 +63,14 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
         return mList.size();
     }
 
-    public void addListItem(FamiliaModel c, int position){
+    public void addListItem(FamiliaModel c) {
+        addListItem(c, mList.size());
+    }
+
+
+    protected void addListItem(FamiliaModel c, int position){
         mList.add(c);
         notifyItemInserted(position);
-        notifyDataSetChanged();
     }
 
 
@@ -95,18 +93,22 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
         private EditText etResideAno;
         private EditText etNumMembros;
         private CheckBox cbMudou;
+        public RecyclerToModelListener recyclerToModelListener;
 
-        public FichaCadastroDTFamiliasVH(View itemView) {
+        public FichaCadastroDTFamiliasVH(View itemView, RecyclerToModelListener listener) {
 
             super(itemView);
-            etProntuarioFamiliar = (EditText) itemView.findViewById(R.id.et_num_prontuario_familiar);
-            etCnsResponsavel = (EditText) itemView.findViewById(R.id.et_cns_responsavel);
+            recyclerToModelListener = listener;
+
+            etProntuarioFamiliar = itemView.findViewById(R.id.et_num_prontuario_familiar);
+            etProntuarioFamiliar.addTextChangedListener(listener);
+            etCnsResponsavel = itemView.findViewById(R.id.et_cns_responsavel);
             etDataNascimentoResponsavel = (EditText) itemView.findViewById(R.id.et_data_nascimento);
-            spSalarioFamiliar = (Spinner) itemView.findViewById(R.id.sp_renda_familiar);
-            etResideMes = (EditText) itemView.findViewById(R.id.et_reside_mes);
-            etResideAno = (EditText) itemView.findViewById(R.id.et_reside_ano);
-            etNumMembros = (EditText) itemView.findViewById(R.id.et_num_membros);
-            cbMudou = (CheckBox) itemView.findViewById(R.id.cb_mudou_se);
+            spSalarioFamiliar = itemView.findViewById(R.id.sp_renda_familiar);
+            etResideMes = itemView.findViewById(R.id.et_reside_mes);
+            etResideAno = itemView.findViewById(R.id.et_reside_ano);
+            etNumMembros = itemView.findViewById(R.id.et_num_membros);
+            cbMudou = itemView.findViewById(R.id.cb_mudou_se);
 
         }
 
@@ -119,5 +121,30 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
 
     public void setList(List<FamiliaModel> mList) {
         this.mList = mList;
+    }
+
+
+    private class RecyclerToModelListener implements TextWatcher {
+
+        private int position;
+
+        public void updatePosition(int position) {
+            this.position = position;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            // no op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            mList.get(position).setProntuario(editable.toString());
+        }
     }
 }

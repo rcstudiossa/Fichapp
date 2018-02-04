@@ -3,6 +3,8 @@ package com.fichapp.activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -21,21 +23,10 @@ import com.fichapp.util.Utilitario;
 
 public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
-    private FamiliaModel familiaModel;
     private FichaCadastroDTModel fichaCadastroDTModel;
     private FichaCadastroDTFamiliasBS fichaCadastroDTFamiliasBS;
 
-    private FrameLayout flItemCadastroFamilias;
     private Toolbar toolbar;
-
-   /* private EditText etProntuarioFamiliar;
-    private EditText etCnsResponsavel;
-    private EditText etDataNascimentoResponsavel;
-    private Spinner spSalarioFamiliar;
-    private EditText etResideMes;
-    private EditText etResideAno;
-    private EditText etNumMembros;
-    private CheckBox cbMudou;*/
 
     private FloatingActionButton fabAdicionarFamilia;
     private FloatingActionButton fabGravar;
@@ -47,6 +38,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_dt_familias);
 
@@ -76,7 +68,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_ficha_familias_dt);
 
-        flItemCadastroFamilias = (FrameLayout) findViewById(R.id.fl_item_cadastro_familias);
+        //flItemCadastroFamilias = (FrameLayout) findViewById(R.id.fl_item_cadastro_familias);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         fabAdicionarFamilia = (FloatingActionButton) findViewById(R.id.fab_adicionar_familia);
@@ -99,11 +91,14 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         this.carregarSpinner();
 
+        this.configRV();
+
     }
 
     private void adicionarFamilia() {
 
-        adapter.addListItem(new FamiliaModel(new TipoModel()), adapter.getItemCount());
+        adapter.addListItem(new FamiliaModel(new TipoModel()));
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -113,11 +108,10 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         setActivityToModel();
 
-        this.fichaCadastroDTFamiliasBS.gravar(this.familiaModel);
-
         Utilitario.avisoSucesso(getApplicationContext());
 
         Intent intent = new Intent(this, FichaCadastroDTActivity.class);
+        intent.putExtra("fichaCadastroDT", fichaCadastroDTModel);
         startActivity(intent);
 
     }
@@ -135,7 +129,6 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     private  void setActivityToModel() {
 
-        this.familiaModel.setFichaCadastroDTModel(new FichaCadastroDTModel(fichaCadastroDTModel.getId()));
 
         /*this.familiaModel.setProntuario(etProntuarioFamiliar.getText().toString());
         this.familiaModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
@@ -158,6 +151,14 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         etResideAno.setText(this.familiaModel.getResideAno().toString());
         etNumMembros.setText(this.familiaModel.getNumeroMembros().toString());
         cbMudou.setChecked(this.familiaModel.getFlagMudou());*/
+
+    }
+
+    protected void configRV() {
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(llm);
 
     }
 

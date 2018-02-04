@@ -83,8 +83,6 @@ public class CNESAdapter extends RecyclerView.Adapter<CNESAdapter.CNESViewHolder
         notifyItemRemoved(position);
     }
 
-    //VIEWHOLDER
-
     public class CNESViewHolder extends RecyclerView.ViewHolder {
 
         public TextView cnes;
