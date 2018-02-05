@@ -579,7 +579,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etMicroarea.setText(this.fichaCadastroDTModel.getMicroArea());
         etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
         etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
-        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais().toString());
+        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais() == null ? null : this.fichaCadastroDTModel.getQtdAnimais().toString());
         etNomeInstituicao.setText(this.fichaCadastroDTModel.getNomeInstituicao());
         etNomeResponsavel.setText(this.fichaCadastroDTModel.getNomeResponsavel());
         etCnsResponsavel.setText(this.fichaCadastroDTModel.getCnsResponsavel());
@@ -605,12 +605,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         setPosicaoSelecionadoRG(rgTemEnergiaEletrica, this.fichaCadastroDTModel.getFlagEnergiaEletrica());
 
         //Checkboxes
-        cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero());
-        cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea());
-        cbGato.setChecked(this.fichaCadastroDTModel.getFlagGato());
-        cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro());
-        cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro());
-        cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais());
+        cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero() == null ? false : this.fichaCadastroDTModel.getFlagSemNumero());
+        cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea() == null ? false : this.fichaCadastroDTModel.getFlagForaDeArea());
+        cbGato.setChecked(this.fichaCadastroDTModel.getFlagGato() == null ? false : this.fichaCadastroDTModel.getFlagGato());
+        cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro() == null ? false : this.fichaCadastroDTModel.getFlagCachorro());
+        cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro() == null ? false : this.fichaCadastroDTModel.getFlagPassaro());
+        cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais() == null ? false: this.fichaCadastroDTModel.getFlagOutrosAnimais());
 
         btCadastrarFamilias.setText(String.format("Familias (%d)", this.fichaCadastroDTModel.getFamilias().size()));
 

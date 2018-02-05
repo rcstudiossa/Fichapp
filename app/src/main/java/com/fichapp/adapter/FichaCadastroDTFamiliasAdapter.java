@@ -73,11 +73,11 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
     public void removeListItem(View view, int position){
 
         FichaCadastroDTFamiliasBS fichaCadastroDTFamiliasBS = new FichaCadastroDTFamiliasBS(view.getContext());
-        if (!Utilitario.isEmpty(mList.get(position).getId())) {
+        if (!Utilitario.isEmpty(mList) && !Utilitario.isEmpty(mList.get(position).getId())) {
             fichaCadastroDTFamiliasBS.excluir(mList.get(position));
         }
         mList.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
 

@@ -119,9 +119,31 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cadastro Familiar");
 
+        this.configToolbar();
+
         this.carregarSpinner();
 
         this.configRV();
+
+    }
+
+    private void configToolbar() {
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Cadastro de Famílias");
+
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FichaCadastroDTFamiliasActivity.this, FichaCadastroDTActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
