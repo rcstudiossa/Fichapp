@@ -139,8 +139,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FichaCadastroDTFamiliasActivity.this, FichaCadastroDTActivity.class);
-                startActivity(intent);
+                navegarTelaCadastroDT();
                 finish();
             }
         });
@@ -159,10 +158,14 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         Utilitario.avisoSucesso(getApplicationContext());
 
+        navegarTelaCadastroDT();
+
+    }
+
+    private void navegarTelaCadastroDT() {
         Intent intent = new Intent(this, FichaCadastroDTActivity.class);
         intent.putExtra("fichaCadastroDT", fichaCadastroDTModel);
         startActivity(intent);
-
     }
 
     private void carregarSpinner() {

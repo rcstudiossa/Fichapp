@@ -587,14 +587,30 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etTelefoneContatoResponsavel.setText(this.fichaCadastroDTModel.getTelContatoResponsavel());
 
         //Spinners
-        spTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaCadastroDTModel.getTipoImovel()));
-        spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
-        spMaterialParedes.setSelection(new TipoModel().getComboMaterialParedes().indexOf(this.fichaCadastroDTModel.getMaterialParedes()));
-        spAbastecimentoAgua.setSelection(new TipoModel().getComboAbastecimentoAgua().indexOf(this.fichaCadastroDTModel.getAbastecimentoAgua()));
-        spAguaConsumo.setSelection(new TipoModel().getComboAguaConsumo().indexOf(this.fichaCadastroDTModel.getAguaConsumo()));
-        spEscoamentoBanheiro.setSelection(new TipoModel().getComboEscoamentoBanheiro().indexOf(this.fichaCadastroDTModel.getEscoamentoBanheiro()));
-        spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
-        spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoImovel()) && this.fichaCadastroDTModel.getTipoImovel().getCodigo() > 0) {
+            spTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaCadastroDTModel.getTipoImovel()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo()) && this.fichaCadastroDTModel.getDestinoLixo().getCodigo() > 0) {
+            spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMaterialParedes()) && this.fichaCadastroDTModel.getMaterialParedes().getCodigo() > 0) {
+            spMaterialParedes.setSelection(new TipoModel().getComboMaterialParedes().indexOf(this.fichaCadastroDTModel.getMaterialParedes()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAbastecimentoAgua()) && this.fichaCadastroDTModel.getAbastecimentoAgua().getCodigo() > 0) {
+            spAbastecimentoAgua.setSelection(new TipoModel().getComboAbastecimentoAgua().indexOf(this.fichaCadastroDTModel.getAbastecimentoAgua()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAguaConsumo()) && this.fichaCadastroDTModel.getAguaConsumo().getCodigo() > 0) {
+            spAguaConsumo.setSelection(new TipoModel().getComboAguaConsumo().indexOf(this.fichaCadastroDTModel.getAguaConsumo()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getEscoamentoBanheiro()) && this.fichaCadastroDTModel.getEscoamentoBanheiro().getCodigo() > 0) {
+            spEscoamentoBanheiro.setSelection(new TipoModel().getComboEscoamentoBanheiro().indexOf(this.fichaCadastroDTModel.getEscoamentoBanheiro()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getSituacaoMoradia()) && this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo() > 0) {
+            spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getCondicaoTerra()) && this.fichaCadastroDTModel.getCondicaoTerra().getCodigo() > 0) {
+            spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
+        }
 
         //RadioGroups
         //TODO: setPosicaoSelecionadoRG(rgTipoDomicilio, this.fichaCadastroDTModel.getTipoDomicilio());

@@ -108,7 +108,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         setContentView(R.layout.activity_ficha_visita_dt);
         super.onCreate(savedInstanceState);
 
-
         this.definirComponentes();
 
         this.configToolbar();
@@ -328,7 +327,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
 
-        spinnerTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
+        if (!Utilitario.isEmpty(this.fichaVisitaDTModel.getTipoImovelModel()) && this.fichaVisitaDTModel.getTipoImovelModel().getCodigo() > 0) {
+            spinnerTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
+        }
 
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());

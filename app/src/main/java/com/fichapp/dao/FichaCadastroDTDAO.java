@@ -239,6 +239,7 @@ public class FichaCadastroDTDAO {
         fichaModel.setId(c.getLong(c.getColumnIndex("id")));
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
         fichaModel.setCep(c.getString(c.getColumnIndex("cep")));
+        fichaModel.setBairro(c.getString(c.getColumnIndex("bairro")));
         fichaModel.setNumero(c.getString(c.getColumnIndex("numero")));
 
         return fichaModel;

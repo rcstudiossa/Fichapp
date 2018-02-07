@@ -133,6 +133,7 @@ public class FichaCadastroDTFamiliasDAO {
         familiaModel.setResideAno(c.getInt(c.getColumnIndex("ano_reside")));
         familiaModel.setResideMes(c.getInt(c.getColumnIndex("mes_reside")));
         familiaModel.setFlagMudou(c.getInt(c.getColumnIndex("flag_mudou")) > 0);
+        familiaModel.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) > 0);
 
         return familiaModel;
 

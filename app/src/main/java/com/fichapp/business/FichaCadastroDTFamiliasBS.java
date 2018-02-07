@@ -37,7 +37,7 @@ public class FichaCadastroDTFamiliasBS {
 
     public void gravar(FamiliaModel familiaModel) {
 
-        if (familiaModel.getId() != null) {
+        if (familiaModel.getId() != null && familiaModel.getId() > 0) {
             fichaCadastroDTFamiliasDAO.alterar(familiaModel);
         } else {
             fichaCadastroDTFamiliasDAO.inserir(familiaModel);

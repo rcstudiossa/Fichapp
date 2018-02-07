@@ -693,7 +693,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etNomeSocial.setText(this.fichaCadastroIndividualModel.getNomeSocial());
         etDataNascimento.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataNascimento()));
         setPosicaoSelecionadoRG(rgSexo, this.fichaCadastroIndividualModel.getSexo());
-        spRaca.setSelection(new TipoModel().getComboRaca().indexOf(this.fichaCadastroIndividualModel.getRaca()));
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getRaca()) && this.fichaCadastroIndividualModel.getRaca().getCodigo() > 0) {
+            spRaca.setSelection(new TipoModel().getComboRaca().indexOf(this.fichaCadastroIndividualModel.getRaca()));
+        }
         etEtnia.setText(this.fichaCadastroIndividualModel.getEtnia());
         etNis.setText(this.fichaCadastroIndividualModel.getNis());
         etNomeMae.setText(this.fichaCadastroIndividualModel.getNomeMae());
@@ -708,11 +710,17 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etDataEntrada.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataEntrada()));
         etTelefoneCelular.setText(this.fichaCadastroIndividualModel.getTelefoneCelular());
         etEmailCidadao.setText(this.fichaCadastroIndividualModel.getEmailCidadao());
-        spParentesco.setSelection(new TipoModel().getComboParentesco().indexOf(this.fichaCadastroIndividualModel.getParentescoResponsavelFamiliar()));
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getParentescoResponsavelFamiliar()) && this.fichaCadastroIndividualModel.getParentescoResponsavelFamiliar().getCodigo() > 0) {
+            spParentesco.setSelection(new TipoModel().getComboParentesco().indexOf(this.fichaCadastroIndividualModel.getParentescoResponsavelFamiliar()));
+        }
         etOcupacao.setText(this.fichaCadastroIndividualModel.getOcupacao());
         setPosicaoSelecionadoRG(rgFrequentaEscola, this.fichaCadastroIndividualModel.getFlagFrequentaEscola());
-        spCurso.setSelection(new TipoModel().getComboCurso().indexOf(this.fichaCadastroIndividualModel.getCursoMaisElevado()));
-        spTrabalho.setSelection(new TipoModel().getComboTrabalho().indexOf(this.fichaCadastroIndividualModel.getSituacaoMercado()));
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getCursoMaisElevado()) && this.fichaCadastroIndividualModel.getCursoMaisElevado().getCodigo() > 0) {
+            spCurso.setSelection(new TipoModel().getComboCurso().indexOf(this.fichaCadastroIndividualModel.getCursoMaisElevado()));
+        }
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getSituacaoMercado()) && this.fichaCadastroIndividualModel.getSituacaoMercado().getCodigo() > 0) {
+            spTrabalho.setSelection(new TipoModel().getComboTrabalho().indexOf(this.fichaCadastroIndividualModel.getSituacaoMercado()));
+        }
         cbFicaComAdultoResponsavel.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComAdultoResponsavel());
         cbFicaEmCreche.setChecked(this.fichaCadastroIndividualModel.getFlagFicaEmCreche());
         cbFicaComOutrasCriancas.setChecked(this.fichaCadastroIndividualModel.getFlagFicaComOutrasCriancas());
@@ -725,9 +733,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         setPosicaoSelecionadoRG(rgMembroDeComunidade, this.fichaCadastroIndividualModel.getFlagMembroDeComunidade());
         etQualComunidade.setText(this.fichaCadastroIndividualModel.getQualComunidade());
         setPosicaoSelecionadoRG(rgInformarOrientacao, this.fichaCadastroIndividualModel.getFlagInformarOrientacao());
-        spOrientacao.setSelection(new TipoModel().getComboOrientacaoSexual().indexOf(this.fichaCadastroIndividualModel.getOrientacaoSexual()));
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getOrientacaoSexual()) && this.fichaCadastroIndividualModel.getOrientacaoSexual().getCodigo() > 0) {
+            spOrientacao.setSelection(new TipoModel().getComboOrientacaoSexual().indexOf(this.fichaCadastroIndividualModel.getOrientacaoSexual()));
+        }
         setPosicaoSelecionadoRG(rgInformarIdentidadeGenero, this.fichaCadastroIndividualModel.getFlagInformarIdentidadeGenero());
-        spGenero.setSelection(new TipoModel().getComboGeneroSexual().indexOf(this.fichaCadastroIndividualModel.getIdentidadeGenero()));
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getIdentidadeGenero()) && this.fichaCadastroIndividualModel.getIdentidadeGenero().getCodigo() > 0) {
+            spGenero.setSelection(new TipoModel().getComboGeneroSexual().indexOf(this.fichaCadastroIndividualModel.getIdentidadeGenero()));
+        }
         setPosicaoSelecionadoRG(rgDeficiencia, this.fichaCadastroIndividualModel.getFlagDeficiencia());
         cbDeficienciaAuditiva.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaAuditiva());
         cbDeficienciaFisica.setChecked(this.fichaCadastroIndividualModel.getFlagDeficienciaFisica());

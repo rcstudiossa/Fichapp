@@ -1,7 +1,9 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fichapp.fragment.CNESFragment;
 import com.fichapp.fragment.FichaCadastroDTFragment;
@@ -37,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+
+    private TextView tvNomeBar;
+    private TextView tvCboBar;
+    private TextView tvHospitalBar;
+
+    private TextView tvInicial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configDrawer();
 
+        this.atualizarDadosUsuarioLogado();
+
     }
 
     private void definirComponentes() {
@@ -70,6 +81,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tvInicial = (TextView) findViewById(R.id.tv_inicial);
+
+        View v = navigationView.getHeaderView(0);
+
+        tvNomeBar = v.findViewById(R.id.tv_capa_nome_bar);
+        tvCboBar = v.findViewById(R.id.tv_capa_cbo_bar);
+        tvHospitalBar = v.findViewById(R.id.tv_capa_hospital_bar);
+
+    }
+
+    private void atualizarDadosUsuarioLogado() {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        this.tvNomeBar.setText("Usuário: " + prefs.getString("nome", ""));
+        this.tvCboBar.setText("CBO: " + prefs.getString("cbo", ""));
+        this.tvHospitalBar.setText("Origem: " + prefs.getString("cnes", ""));
 
     }
 
@@ -121,6 +149,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (fragment != null) {
 
+            habilitarComandosSemFragment(Boolean.TRUE);
+
             if (fragment.equals("CNESFragment")) {
                 setContent(new CNESFragment());
                 getSupportActionBar().setTitle(this.barTitleCNES);
@@ -144,9 +174,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         } else {
-            setContent(new FichaCadastroIndividualFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaCadastroIndividual);
+            getSupportActionBar().setTitle("Cadastro de Fichas");
+            habilitarComandosSemFragment(Boolean.FALSE);
         }
+
+    }
+
+    private void habilitarComandosSemFragment(Boolean flagHabilitar) {
+
+        if (flagHabilitar) {
+            this.fab.setVisibility(View.VISIBLE);
+            this.tvInicial.setVisibility(View.GONE);
+        } else {
+            this.fab.setVisibility(View.GONE);
+            this.tvInicial.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -204,6 +247,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        habilitarComandosSemFragment(Boolean.TRUE);
 
         if (id == R.id.nav_cnes) {
             setContent(new CNESFragment());
