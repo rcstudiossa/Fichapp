@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -99,13 +98,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Button btCadastrarFamilias;
     private FloatingActionButton fabGravar;
 
-    private LinearLayout llRodape;
     private LinearLayout llCondicoesMoradia;
 
-    private Integer indexRgTemAnimais;
-    private Boolean flagVisitaRecusada;
-    private Boolean flagSemNumero;
-    private Boolean flagForaDeArea;
 
     public static FichaCadastroDTActivity fichaCadastroDTActivity;
 
@@ -126,7 +120,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.instanciarFichaCadastroDTModel();
 
-        this.lerRestricoes();
+        this.configListeners();
 
         this.desabilitaCampos();
 
@@ -212,8 +206,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         btCadastrarFamilias = (Button) findViewById(R.id.bt_cadastrar_familias);
 
         fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
-
-        llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -325,7 +317,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        /* if (!validaCampos()) { return; } */
+        if (!validaCampos()) { return; }
 
         this.setActivityToModel();
 
@@ -346,33 +338,93 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    private void lerRestricoes() {
+    private void configListeners() {
+
+        this.desabilitaEditText(cbSemNumero, etNumero);
+        this.desabilitaEditText(cbForaDeArea, etMicroarea);
 
         spTipoImovel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
                 desabilitaCondicoesMoradia(position, cbVisitaRecusada.isChecked());
-                //desabilitaInstituicaoPermanencia(position, cbVisitaRecusada.isChecked());
+
+                if (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 1) {
+                    habilitarComponentes(rgTemAnimais);
+                } else {
+                    desabilitarComponentes(rgTemAnimais);
+                }
+
+                List<Integer> tipos = new ArrayList<>(Arrays.asList(7,8,9,10,11));
+                if (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
+                    desabilitarComponentes(spSituacaoMoradia);
+                    desabilitarComponentes(rgTipoDomicilio);
+                    desabilitarComponentes(rgAcessoDomicilio);
+                    desabilitarComponentes(spCondicaoPosseTerra);
+                    desabilitarComponentes(etNumComodos);
+                    desabilitarComponentes(spMaterialParedes);
+                    habilitarComponentes(llInstituicaoPermanencia);
+                    llInstituicaoPermanencia.setVisibility(View.VISIBLE);
+                } else {
+                    habilitarComponentes(spSituacaoMoradia);
+                    habilitarComponentes(rgTipoDomicilio);
+                    habilitarComponentes(rgAcessoDomicilio);
+                    habilitarComponentes(spCondicaoPosseTerra);
+                    habilitarComponentes(etNumComodos);
+                    habilitarComponentes(spMaterialParedes);
+                    desabilitarComponentes(llInstituicaoPermanencia);
+                    llInstituicaoPermanencia.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 spTipoImovel.setSelection(0);
             }
+
         });
 
         cbVisitaRecusada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 desabilitaCondicoesMoradia(spTipoImovel.getSelectedItemPosition(), b);
-                //desabilitaInstituicaoPermanencia(spTipoImovel.getSelectedItemPosition(), b);
+                if (b) {
+                    desabilitaLinearLayout(llInstituicaoPermanencia);
+                    llCondicoesMoradia.setVisibility(View.GONE);
+                    btCadastrarFamilias.setVisibility(View.GONE);
+                } else {
+                    habilitaLinearLayout(llInstituicaoPermanencia);
+                    llCondicoesMoradia.setVisibility(View.VISIBLE);
+                    btCadastrarFamilias.setVisibility(View.VISIBLE);
+                }
             }
         });
 
         rgTemAnimais.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                indexRgTemAnimais = i;
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+                if (indexRg == 0) {
+                    habilitarComponentes(etQuantidadeAnimais);
+                    habilitarComponentes(llAnimais);
+                } else {
+                    desabilitarComponentes(etQuantidadeAnimais);
+                    desabilitarComponentes(llAnimais);
+                }
+            }
+        });
+
+        rgLocalizacao.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+                if (indexRg == 1) {
+                    habilitarComponentes(spCondicaoPosseTerra);
+                } else {
+                    desabilitarComponentes(spCondicaoPosseTerra);
+                }
             }
         });
 
@@ -380,33 +432,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void desabilitaCampos() {
 
-        this.desabilitaEditText(cbSemNumero, etNumero);
-        this.desabilitaEditText(cbForaDeArea, etMicroarea);
-
-
-        //this.desabilitaAnimais();
-
-        //this.desabilitaRodape(llRodape);
-
     }
 
-    private void desabilitaAnimais() {
 
-        if (/*indexSpTipoImovel != 1 ||*/ flagVisitaRecusada) {
-            desabilitaRadioGroup(rgTemAnimais);
-            desabilitaLinearLayout(llAnimais);
-            desabilitaEditText(etQuantidadeAnimais);
-        } else {
-            habilitaRadioGroup(rgTemAnimais);
-            habilitaLinearLayout(llAnimais);
-            habilitaEditText(etQuantidadeAnimais);
-        }
-
-        desabilitaEditText(rgTemAnimais, 1, etQuantidadeAnimais);
-
-        //TODO: Deve ser maior ou igual ao número de opções selecionadas no campo animaisNoDomicilio.
-
-    }
 
     private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
 
@@ -424,6 +452,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             this.rgAcessoDomicilio.clearCheck();
             this.spCondicaoPosseTerra.setSelection(0);
             this.spMaterialParedes.setSelection(0);
+
             this.rgTemEnergiaEletrica.clearCheck();
             this.spAbastecimentoAgua.setSelection(0);
             this.spAguaConsumo.setSelection(0);
@@ -440,23 +469,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    private void desabilitaInstituicaoPermanencia(Integer position, Boolean flagVisitaRecusada) {
-
-        if ((!(position == 7 || position == 8 || position == 9 || position == 10 || position == 11)) || (flagVisitaRecusada)) {
-
-            this.llInstituicaoPermanencia.setVisibility(View.GONE);
-
-            this.etNomeInstituicao.getText().clear();
-            this.rgOutrosProfissionais.clearCheck();
-            this.etNomeResponsavel.getText().clear();
-            this.etCnsResponsavel.getText().clear();
-            this.etCargoInstituicao.getText().clear();
-            this.etTelefoneContatoResponsavel.getText().clear();
-
-        }
-
-    }
-
     private boolean validaCampos() {
 
         boolean valido = true;
@@ -468,45 +480,70 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
+        if (Utilitario.isEmpty(etCep.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o CEP.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etUf.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o UF.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etMunicipio.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o Município.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etBairro.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etTipoLogradouro.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o nome do logradouro.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etNumero.getText().toString())) && cbSemNumero.isChecked()) {
+            aviso = Utilitario.addAviso("Preencha o número.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+            aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
+            aviso = Utilitario.addAviso("Selecione o tipo de imóvel.", aviso);
+            valido = false;
+        }
+
         if (!cbVisitaRecusada.isChecked()) {
 
-            //TODO: areaProducaoRural
-
-            if (((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == null) {
-                aviso = Utilitario.addAviso("Selecione o tipo de imóvel.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etBairro.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etCep.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o CEP.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etMunicipio.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o Município.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o nome do logradouro.", aviso);
-                valido = false;
-            } else if ((Utilitario.isEmpty(etNumero.getText().toString())) && cbSemNumero.isChecked()) {
-                aviso = Utilitario.addAviso("Preencha o número.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etUf.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o UF.", aviso);
-                valido = false;
-            } else if (Utilitario.isEmpty(etTipoLogradouro.getText().toString())) {
-                aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
-                valido = false;
-            } else if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-                aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
-                valido = false;
-            } else if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
-                aviso = Utilitario.addAviso("Selecione a localização.", aviso);
-                valido = false;
-            } else if ((((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo() == null) && (!(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
+            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
                 aviso = Utilitario.addAviso("Selecione a situação de moradia.", aviso);
                 valido = false;
-            } else if ((Utilitario.isEmpty(etNomeResponsavel.getText().toString()))) {
+            }
+
+            if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Selecione a localização.", aviso);
+                valido = false;
+            }
+
+            if ((Utilitario.isEmpty(etNomeResponsavel.getText().toString()))) {
                 aviso = Utilitario.addAviso("Preencha o nome do responsável técnico.", aviso);
+                valido = false;
+            }
+
+            if (!Utilitario.isEmpty(etNumero.getText().toString()) && this.fichaCadastroDTModel.getFamilias().size() > new Integer(etNumero.getText().toString())) {
+                aviso = Utilitario.addAviso("Número de moradores errado.", aviso);
                 valido = false;
             }
 
@@ -570,7 +607,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void setModelToActivity() {
 
-        //EditTexts
         etDataRegistro.setText(Utilitario.getDataFormatada(this.fichaCadastroDTModel.getDataRegistro()));
         etCep.setText(this.fichaCadastroDTModel.getCep());
         etUf.setText(this.fichaCadastroDTModel.getUf());
@@ -581,26 +617,40 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etComplemento.setText(this.fichaCadastroDTModel.getComplemento());
         etPontoReferencia.setText(this.fichaCadastroDTModel.getPontoReferencia());
         etNumero.setText(this.fichaCadastroDTModel.getNumero());
+        cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero() == null ? false : this.fichaCadastroDTModel.getFlagSemNumero());
         etMicroarea.setText(this.fichaCadastroDTModel.getMicroArea());
-        etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
-        etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
-        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais() == null ? null : this.fichaCadastroDTModel.getQtdAnimais().toString());
-        etNomeInstituicao.setText(this.fichaCadastroDTModel.getNomeInstituicao());
-        etNomeResponsavel.setText(this.fichaCadastroDTModel.getNomeResponsavel());
-        etCnsResponsavel.setText(this.fichaCadastroDTModel.getCnsResponsavel());
-        etCargoInstituicao.setText(this.fichaCadastroDTModel.getCargoInstituicao());
-        etTelefoneContatoResponsavel.setText(this.fichaCadastroDTModel.getTelContatoResponsavel());
+        cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea() == null ? false : this.fichaCadastroDTModel.getFlagForaDeArea());
 
-        //Spinners
         if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoImovel()) && this.fichaCadastroDTModel.getTipoImovel().getCodigo() > 0) {
             spTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaCadastroDTModel.getTipoImovel()));
         }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo()) && this.fichaCadastroDTModel.getDestinoLixo().getCodigo() > 0) {
-            spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
+
+        etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
+        etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
+
+        cbVisitaRecusada.setChecked(this.fichaCadastroDTModel.getFlagRecusado());
+
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getSituacaoMoradia()) && this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo() > 0) {
+            spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
         }
+
+        setPosicaoSelecionadoRG(rgLocalizacao, this.fichaCadastroDTModel.getLocalizacao());
+        setPosicaoSelecionadoRG(rgTipoDomicilio, this.fichaCadastroDTModel.getTipoDomicilio());
+        setPosicaoSelecionadoRG(rgAcessoDomicilio, this.fichaCadastroDTModel.getAcessoDomicilio());
+
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getCondicaoTerra()) && this.fichaCadastroDTModel.getCondicaoTerra().getCodigo() > 0) {
+            spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
+        }
+
+        etNumMoradores.setText(this.fichaCadastroDTModel.getNumMoradores());
+        etNumComodos.setText(this.fichaCadastroDTModel.getNumComodos());
+
         if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMaterialParedes()) && this.fichaCadastroDTModel.getMaterialParedes().getCodigo() > 0) {
             spMaterialParedes.setSelection(new TipoModel().getComboMaterialParedes().indexOf(this.fichaCadastroDTModel.getMaterialParedes()));
         }
+
+        setPosicaoSelecionadoRG(rgTemEnergiaEletrica, this.fichaCadastroDTModel.getFlagEnergiaEletrica());
+
         if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAbastecimentoAgua()) && this.fichaCadastroDTModel.getAbastecimentoAgua().getCodigo() > 0) {
             spAbastecimentoAgua.setSelection(new TipoModel().getComboAbastecimentoAgua().indexOf(this.fichaCadastroDTModel.getAbastecimentoAgua()));
         }
@@ -610,24 +660,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getEscoamentoBanheiro()) && this.fichaCadastroDTModel.getEscoamentoBanheiro().getCodigo() > 0) {
             spEscoamentoBanheiro.setSelection(new TipoModel().getComboEscoamentoBanheiro().indexOf(this.fichaCadastroDTModel.getEscoamentoBanheiro()));
         }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getSituacaoMoradia()) && this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo() > 0) {
-            spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
-        }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getCondicaoTerra()) && this.fichaCadastroDTModel.getCondicaoTerra().getCodigo() > 0) {
-            spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo()) && this.fichaCadastroDTModel.getDestinoLixo().getCodigo() > 0) {
+            spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
         }
 
-        //RadioGroups
-        //TODO: setPosicaoSelecionadoRG(rgTipoDomicilio, this.fichaCadastroDTModel.getTipoDomicilio());
-        setPosicaoSelecionadoRG(rgAcessoDomicilio, this.fichaCadastroDTModel.getAcessoDomicilio());
-        setPosicaoSelecionadoRG(rgLocalizacao, this.fichaCadastroDTModel.getLocalizacao());
-        setPosicaoSelecionadoRG(rgOutrosProfissionais, this.fichaCadastroDTModel.getFlagOutrosProfissionais());
         setPosicaoSelecionadoRG(rgTemAnimais, this.fichaCadastroDTModel.getFlagAnimais());
-        setPosicaoSelecionadoRG(rgTemEnergiaEletrica, this.fichaCadastroDTModel.getFlagEnergiaEletrica());
-
-        //Checkboxes
-        cbSemNumero.setChecked(this.fichaCadastroDTModel.getFlagSemNumero() == null ? false : this.fichaCadastroDTModel.getFlagSemNumero());
-        cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea() == null ? false : this.fichaCadastroDTModel.getFlagForaDeArea());
+        etQuantidadeAnimais.setText(this.fichaCadastroDTModel.getQtdAnimais() == null ? null : this.fichaCadastroDTModel.getQtdAnimais().toString());
         cbGato.setChecked(this.fichaCadastroDTModel.getFlagGato() == null ? false : this.fichaCadastroDTModel.getFlagGato());
         cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro() == null ? false : this.fichaCadastroDTModel.getFlagCachorro());
         cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro() == null ? false : this.fichaCadastroDTModel.getFlagPassaro());
@@ -635,6 +673,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         btCadastrarFamilias.setText(String.format("Familias (%d)", this.fichaCadastroDTModel.getFamilias().size()));
 
+        etNomeInstituicao.setText(this.fichaCadastroDTModel.getNomeInstituicao());
+        setPosicaoSelecionadoRG(rgOutrosProfissionais, this.fichaCadastroDTModel.getFlagOutrosProfissionais());
+        etNomeResponsavel.setText(this.fichaCadastroDTModel.getNomeResponsavel());
+        etCnsResponsavel.setText(this.fichaCadastroDTModel.getCnsResponsavel());
+        etCargoInstituicao.setText(this.fichaCadastroDTModel.getCargoInstituicao());
+        etTelefoneContatoResponsavel.setText(this.fichaCadastroDTModel.getTelContatoResponsavel());
 
     }
 
@@ -642,9 +686,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.fichaCadastroDTModel.setProfissionalModel(new ProfissionalModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("id", 0)));
         this.fichaCadastroDTModel.setCnesModel(new CNESModel(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getLong("cnes_id", 0)));
+
         this.fichaCadastroDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
-        //EditTexts
         this.fichaCadastroDTModel.setCep(etCep.getText().toString());
         this.fichaCadastroDTModel.setUf(etUf.getText().toString());
         this.fichaCadastroDTModel.setMunicipio(etMunicipio.getText().toString());
@@ -654,50 +698,61 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setComplemento(etComplemento.getText().toString());
         this.fichaCadastroDTModel.setPontoReferencia(etPontoReferencia.getText().toString());
         this.fichaCadastroDTModel.setNumero(etNumero.getText().toString());
+        this.fichaCadastroDTModel.setFlagSemNumero(cbSemNumero.isChecked());
         this.fichaCadastroDTModel.setMicroArea(etMicroarea.getText().toString());
+        this.fichaCadastroDTModel.setFlagForaDeArea(cbForaDeArea.isChecked());
+
+        this.fichaCadastroDTModel.setTipoImovel((TipoModel) this.spTipoImovel.getSelectedItem());
+
         this.fichaCadastroDTModel.setTelResidencia(etTelefoneResidencia.getText().toString());
         this.fichaCadastroDTModel.setTelContato(etTelefoneContato.getText().toString());
-        this.fichaCadastroDTModel.setQtdAnimais(Utilitario.isEmpty(etQuantidadeAnimais.getText().toString()) ? null : Integer.valueOf(etQuantidadeAnimais.getText().toString()));
-        this.fichaCadastroDTModel.setNomeInstituicao(etNomeInstituicao.getText().toString());
-        this.fichaCadastroDTModel.setNomeResponsavel(etNomeResponsavel.getText().toString());
-        this.fichaCadastroDTModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
-        this.fichaCadastroDTModel.setCargoInstituicao(etCargoInstituicao.getText().toString());
-        this.fichaCadastroDTModel.setTelContatoResponsavel(etTelefoneContatoResponsavel.getText().toString());
 
-        //Spinners
-        this.fichaCadastroDTModel.setTipoImovel((TipoModel) this.spTipoImovel.getSelectedItem());
+        this.fichaCadastroDTModel.setFlagRecusado(cbVisitaRecusada.isChecked());
+
         this.fichaCadastroDTModel.setSituacaoMoradia((TipoModel) this.spSituacaoMoradia.getSelectedItem());
-        this.fichaCadastroDTModel.setCondicaoTerra((TipoModel) this.spCondicaoPosseTerra.getSelectedItem());
-        this.fichaCadastroDTModel.setDestinoLixo((TipoModel) this.spDestinoLixo.getSelectedItem());
-        this.fichaCadastroDTModel.setAbastecimentoAgua((TipoModel) this.spAbastecimentoAgua.getSelectedItem());
-        this.fichaCadastroDTModel.setAguaConsumo((TipoModel) this.spAguaConsumo.getSelectedItem());
-        this.fichaCadastroDTModel.setEscoamentoBanheiro((TipoModel) this.spEscoamentoBanheiro.getSelectedItem());
-        this.fichaCadastroDTModel.setMaterialParedes((TipoModel) this.spMaterialParedes.getSelectedItem());
 
-        //RadioGroups
+        this.fichaCadastroDTModel.setLocalizacao
+                (this.getPosicaoSelecionadoRG(rgLocalizacao).equals(0) ? 83 :
+                        this.getPosicaoSelecionadoRG(rgLocalizacao).equals(1) ? 84 : -1);
+
+        this.fichaCadastroDTModel.setTipoDomicilio
+                (this.getPosicaoSelecionadoRG(rgTipoDomicilio).equals(0) ? 85 :
+                        this.getPosicaoSelecionadoRG(rgTipoDomicilio).equals(1) ? 86 :
+                                this.getPosicaoSelecionadoRG(rgTipoDomicilio).equals(2) ? 87 :
+                                        this.getPosicaoSelecionadoRG(rgTipoDomicilio).equals(3) ? 88 : -1);
+
         this.fichaCadastroDTModel.setAcessoDomicilio
                 (this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(0) ? 89 :
                         this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(1) ? 90 :
                                 this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(2) ? 91 :
                                         this.getPosicaoSelecionadoRG(rgAcessoDomicilio).equals(3) ? 92 : -1);
 
-        this.fichaCadastroDTModel.setLocalizacao
-                (this.getPosicaoSelecionadoRG(rgLocalizacao).equals(0) ? 83 :
-                        this.getPosicaoSelecionadoRG(rgLocalizacao).equals(1) ? 84 : -1);
+        this.fichaCadastroDTModel.setCondicaoTerra((TipoModel) this.spCondicaoPosseTerra.getSelectedItem());
+        this.fichaCadastroDTModel.setNumMoradores(Utilitario.isEmpty(etNumMoradores.getText().toString()) ? null : new Integer(etNumMoradores.getText().toString()));
+        this.fichaCadastroDTModel.setNumComodos(Utilitario.isEmpty(etNumComodos.getText().toString()) ? null : new Integer(etNumComodos.getText().toString()));
 
-        //TODO: rgTipoDomicilio
+        this.fichaCadastroDTModel.setMaterialParedes((TipoModel) this.spMaterialParedes.getSelectedItem());
 
-        this.fichaCadastroDTModel.setFlagOutrosProfissionais(this.getPosicaoSelecionadoRG(rgOutrosProfissionais));
-        this.fichaCadastroDTModel.setFlagAnimais(this.getPosicaoSelecionadoRG(rgTemAnimais));
         this.fichaCadastroDTModel.setFlagEnergiaEletrica(this.getPosicaoSelecionadoRG(rgTemEnergiaEletrica));
 
-        //Checkboxes
-        this.fichaCadastroDTModel.setFlagSemNumero(cbSemNumero.isChecked());
-        this.fichaCadastroDTModel.setFlagForaDeArea(cbForaDeArea.isChecked());
+        this.fichaCadastroDTModel.setAbastecimentoAgua((TipoModel) this.spAbastecimentoAgua.getSelectedItem());
+        this.fichaCadastroDTModel.setAguaConsumo((TipoModel) this.spAguaConsumo.getSelectedItem());
+        this.fichaCadastroDTModel.setEscoamentoBanheiro((TipoModel) this.spEscoamentoBanheiro.getSelectedItem());
+        this.fichaCadastroDTModel.setDestinoLixo((TipoModel) this.spDestinoLixo.getSelectedItem());
+
+        this.fichaCadastroDTModel.setFlagAnimais(this.getPosicaoSelecionadoRG(rgTemAnimais));
+        this.fichaCadastroDTModel.setQtdAnimais(Utilitario.isEmpty(etQuantidadeAnimais.getText().toString()) ? null : Integer.valueOf(etQuantidadeAnimais.getText().toString()));
         this.fichaCadastroDTModel.setFlagGato(cbGato.isChecked());
         this.fichaCadastroDTModel.setFlagCachorro(cbCachorro.isChecked());
         this.fichaCadastroDTModel.setFlagPassaro(cbPassaro.isChecked());
         this.fichaCadastroDTModel.setFlagOutrosAnimais(cbOutrosAnimais.isChecked());
+
+        this.fichaCadastroDTModel.setNomeInstituicao(etNomeInstituicao.getText().toString());
+        this.fichaCadastroDTModel.setFlagOutrosProfissionais(this.getPosicaoSelecionadoRG(rgOutrosProfissionais));
+        this.fichaCadastroDTModel.setNomeResponsavel(etNomeResponsavel.getText().toString());
+        this.fichaCadastroDTModel.setCnsResponsavel(etCnsResponsavel.getText().toString());
+        this.fichaCadastroDTModel.setCargoInstituicao(etCargoInstituicao.getText().toString());
+        this.fichaCadastroDTModel.setTelContatoResponsavel(etTelefoneContatoResponsavel.getText().toString());
 
     }
 

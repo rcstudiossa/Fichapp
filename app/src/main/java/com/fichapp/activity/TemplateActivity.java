@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -82,22 +84,68 @@ public class TemplateActivity extends AppCompatActivity {
         }
     }
 
-    protected void desabilitaLinearLayout(final LinearLayout ll) {
-        for (int i = 0; i < ll.getChildCount(); i++) {
-            (ll.getChildAt(i)).setEnabled(false);
-            ((CheckBox) ll.getChildAt(i)).setChecked(false);
+    protected void desabilitarComponentes(View componente) {
 
+       componente.setEnabled(false);
+
+        if (componente instanceof CheckBox) {
+            ((CheckBox) componente).setChecked(false);
+        } else if (componente instanceof EditText) {
+            ((EditText) componente).getText().clear();
+        } else if (componente instanceof Spinner) {
+            ((Spinner) componente).setSelection(0);
+        } else if (componente instanceof RadioGroup) {
+            desabilitaRadioGroup((RadioGroup) componente);
+        } else if (componente instanceof TextInputLayout) {
+            desabilitaLinearLayout((TextInputLayout) componente);
+        } else if (componente instanceof LinearLayout) {
+            desabilitaLinearLayout((LinearLayout) componente);
+        } else if (componente instanceof FrameLayout) {
+            desabilitaLinearLayout((FrameLayout) componente);
+        }
+    }
+
+    protected void habilitarComponentes(View componente) {
+
+        componente.setEnabled(true);
+
+        if (componente instanceof TextInputLayout) {
+            habilitaLinearLayout((TextInputLayout) componente);
+        } else if (componente instanceof LinearLayout) {
+            habilitaLinearLayout((LinearLayout) componente);
+        } else if (componente instanceof FrameLayout) {
+            habilitaLinearLayout((FrameLayout) componente);
+        } else if (componente instanceof RadioGroup) {
+            habilitaRadioGroup((RadioGroup) componente);
+        }
+
+    }
+
+    protected void desabilitaLinearLayout(final LinearLayout ll) {
+
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            desabilitarComponentes(ll.getChildAt(i));
+        }
+    }
+
+    protected void desabilitaLinearLayout(final FrameLayout ll) {
+
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            desabilitarComponentes(ll.getChildAt(i));
         }
     }
 
     protected void habilitaLinearLayout(final LinearLayout ll) {
         for (int i = 0; i < ll.getChildCount(); i++) {
-            (ll.getChildAt(i)).setEnabled(true);
-
+            habilitarComponentes(ll.getChildAt(i));
         }
     }
 
-
+    protected void habilitaLinearLayout(final FrameLayout ll) {
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            habilitarComponentes(ll.getChildAt(i));
+        }
+    }
 
     protected void desabilitaEditText(final CheckBox cb, final EditText et) {
 
@@ -130,7 +178,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void validaHabilitacaoEditText(final EditText et, boolean flagHabilitacao) {
 
-        if (flagHabilitacao) {
+        if (!flagHabilitacao) {
             et.setEnabled(false);
             et.getText().clear();
             et.clearFocus();
@@ -141,6 +189,18 @@ public class TemplateActivity extends AppCompatActivity {
             et.setFocusableInTouchMode(true);
         }
 
+    }
+
+    protected void validaHabilitacaoComponente(final View componente, boolean flagHabilitacao) {
+        if (!flagHabilitacao) {
+            componente.setEnabled(false);
+            componente.clearFocus();
+            componente.setFocusable(false);
+        } else {
+            componente.setEnabled(true);
+            componente.setFocusable(true);
+            componente.setFocusableInTouchMode(true);
+        }
     }
 
     protected void desabilitaEditText(final RadioGroup rg, final Integer[] valorIndex, final EditText et) {
@@ -228,13 +288,12 @@ public class TemplateActivity extends AppCompatActivity {
 
                 if (indexRg == valorIndex) {
                     for (int i = 0; i < ll.getChildCount(); i++) {
-                        (ll.getChildAt(i)).setEnabled(false);
-                        ((CheckBox) ll.getChildAt(i)).setChecked(false);
+                        desabilitarComponentes(ll.getChildAt(i));
                     }
 
                 } else {
                     for (int i = 0; i < ll.getChildCount(); i++) {
-                        (ll.getChildAt(i)).setEnabled(true);
+                        habilitarComponentes(ll.getChildAt(i));
                     }
                 }
             }

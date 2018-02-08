@@ -93,7 +93,7 @@
                         android:id="@+id/tv_cep"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="CEP"
+                        android:hint="CEP*"
                         android:inputType="number"
                         android:maxLength="8"
                         android:maxLines="1" />
@@ -114,7 +114,7 @@
                             android:id="@+id/et_uf"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="UF"
+                            android:hint="UF*"
                             android:inputType="text"
                             android:maxLength="2" />
 
@@ -130,8 +130,8 @@
                             android:id="@+id/et_municipio"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Municipio"
-                            android:inputType="text" />
+                            android:hint="Municipio (Cód. IBGE)*"
+                            android:inputType="number" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -146,7 +146,7 @@
                         android:id="@+id/et_bairro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Bairro"
+                        android:hint="Bairro*"
                         android:inputType="text"
                         android:maxLength="72"
                         android:maxLines="1" />
@@ -162,7 +162,7 @@
                         android:id="@+id/et_tipo_logradouro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Tipo do Logradouro"
+                        android:hint="Tipo do Logradouro*"
                         android:inputType="text"
                         android:maxLines="1" />
 
@@ -177,7 +177,7 @@
                         android:id="@+id/et_nome_logradouro"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Nome do Logradouro"
+                        android:hint="Nome do Logradouro*"
                         android:inputType="text"
                         android:maxLength="72"
                         android:maxLines="1" />

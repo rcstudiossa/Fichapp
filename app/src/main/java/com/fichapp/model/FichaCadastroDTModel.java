@@ -35,6 +35,7 @@ public class FichaCadastroDTModel implements Serializable {
     private TipoModel situacaoMoradia;
     private Integer localizacao;
     private TipoModel tipoImovel;
+    private Integer tipoDomicilio;
     private Integer acessoDomicilio;
     private TipoModel condicaoTerra;
     private Integer numMoradores;
@@ -239,6 +240,14 @@ public class FichaCadastroDTModel implements Serializable {
 
     public void setTipoImovel(TipoModel tipoImovel) {
         this.tipoImovel = tipoImovel;
+    }
+
+    public Integer getTipoDomicilio() {
+        return tipoDomicilio;
+    }
+
+    public void setTipoDomicilio(Integer tipoDomicilio) {
+        this.tipoDomicilio = tipoDomicilio;
     }
 
     public Integer getAcessoDomicilio() {

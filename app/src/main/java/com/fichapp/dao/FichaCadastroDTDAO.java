@@ -44,19 +44,20 @@ public class FichaCadastroDTDAO {
                 fichaModel.getTipoImovel().getCodigo(),
                 fichaModel.getTelResidencia(),
                 fichaModel.getTelContato(),
-                fichaModel.getSituacaoMoradia(),
+                fichaModel.getFlagRecusado(),
+                fichaModel.getSituacaoMoradia().getCodigo(),
                 fichaModel.getLocalizacao(),
-                fichaModel.getTipoImovel(),
+                fichaModel.getTipoDomicilio(),
                 fichaModel.getAcessoDomicilio(),
-                fichaModel.getCondicaoTerra(),
+                fichaModel.getCondicaoTerra().getCodigo(),
                 fichaModel.getNumMoradores(),
                 fichaModel.getNumComodos(),
-                fichaModel.getMaterialParedes(),
+                fichaModel.getMaterialParedes().getCodigo(),
                 fichaModel.getFlagEnergiaEletrica(),
-                fichaModel.getAbastecimentoAgua(),
-                fichaModel.getAguaConsumo(),
-                fichaModel.getEscoamentoBanheiro(),
-                fichaModel.getDestinoLixo(),
+                fichaModel.getAbastecimentoAgua().getCodigo(),
+                fichaModel.getAguaConsumo().getCodigo(),
+                fichaModel.getEscoamentoBanheiro().getCodigo(),
+                fichaModel.getDestinoLixo().getCodigo(),
                 fichaModel.getFlagAnimais(),
                 fichaModel.getQtdAnimais(),
                 fichaModel.getFlagGato(),
@@ -74,11 +75,11 @@ public class FichaCadastroDTDAO {
                 Boolean.FALSE };
 
         String query = "insert into ficha_cadastro_domiciliar_territorial (profissional_id, cnes_id, data_registro, cep, uf, municipio, bairro, tipo_logradouro, nome_logradouro, complemento" +
-                ", ponto_referencia, numero, flag_sem_numero, microarea, flag_fora_de_area, tipo_imovel, tel_residencia, tel_contato, situacao_moradia, localizacao" +
+                ", ponto_referencia, numero, flag_sem_numero, microarea, flag_fora_de_area, tipo_imovel, tel_residencia, tel_contato, flag_recusado, situacao_moradia, localizacao" +
                 ", tipo_domicilio, acesso_domicilio, condicao_terra, num_moradores, num_comodos, material_paredes, flag_energia_eletrica, abastecimento_agua, agua_consumo" +
                 ", escoamento_banheiro, destino_lixo, flag_animais, qtd_animais, flag_gato, flag_cachorro, flag_passaro, flag_outros, nome_instituicao" +
                 ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado)" +
-                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
@@ -90,9 +91,7 @@ public class FichaCadastroDTDAO {
 
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
-
                 Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
-
                 fichaModel.getCep(),
                 fichaModel.getUf(),
                 fichaModel.getMunicipio(),
@@ -105,30 +104,29 @@ public class FichaCadastroDTDAO {
                 fichaModel.getFlagSemNumero(),
                 fichaModel.getMicroArea(),
                 fichaModel.getFlagForaDeArea(),
+                fichaModel.getTipoImovel().getCodigo(),
                 fichaModel.getTelResidencia(),
                 fichaModel.getTelContato(),
-
-                fichaModel.getSituacaoMoradia(),
+                fichaModel.getFlagRecusado(),
+                fichaModel.getSituacaoMoradia().getCodigo(),
                 fichaModel.getLocalizacao(),
-                fichaModel.getTipoImovel().getCodigo(),
+                fichaModel.getTipoDomicilio(),
                 fichaModel.getAcessoDomicilio(),
-                fichaModel.getCondicaoTerra(),
+                fichaModel.getCondicaoTerra().getCodigo(),
                 fichaModel.getNumMoradores(),
                 fichaModel.getNumComodos(),
-                fichaModel.getMaterialParedes(),
+                fichaModel.getMaterialParedes().getCodigo(),
                 fichaModel.getFlagEnergiaEletrica(),
-                fichaModel.getAbastecimentoAgua(),
-                fichaModel.getAguaConsumo(),
-                fichaModel.getEscoamentoBanheiro(),
-                fichaModel.getDestinoLixo(),
+                fichaModel.getAbastecimentoAgua().getCodigo(),
+                fichaModel.getAguaConsumo().getCodigo(),
+                fichaModel.getEscoamentoBanheiro().getCodigo(),
+                fichaModel.getDestinoLixo().getCodigo(),
                 fichaModel.getFlagAnimais(),
                 fichaModel.getQtdAnimais(),
-
                 fichaModel.getFlagGato(),
                 fichaModel.getFlagCachorro(),
                 fichaModel.getFlagPassaro(),
                 fichaModel.getFlagOutrosAnimais(),
-
                 fichaModel.getNomeInstituicao(),
                 fichaModel.getFlagOutrosProfissionais(),
                 fichaModel.getNomeResponsavel(),
@@ -142,7 +140,7 @@ public class FichaCadastroDTDAO {
 
 
         String query = "update ficha_cadastro_domiciliar_territorial set profissional_id   = ?, cnes_id = ?, data_registro = ?, cep = ?, uf = ?, municipio = ?, bairro = ?, tipo_logradouro = ?, nome_logradouro = ?, complemento = ?" +
-                ", ponto_referencia = ?, numero = ?, flag_sem_numero = ?, microarea = ?, flag_fora_de_area = ?, tipo_imovel = ?, tel_residencia = ?, tel_contato = ?, situacao_moradia = ?, localizacao = ?" +
+                ", ponto_referencia = ?, numero = ?, flag_sem_numero = ?, microarea = ?, flag_fora_de_area = ?, tipo_imovel = ?, tel_residencia = ?, tel_contato = ?, flag_recusado = ?, situacao_moradia = ?, localizacao = ?" +
                 ", tipo_domicilio = ?, acesso_domicilio = ?, condicao_terra = ?, num_moradores = ?, num_comodos = ?, material_paredes = ?, flag_energia_eletrica = ?, abastecimento_agua = ?, agua_consumo = ?" +
                 ", escoamento_banheiro = ?, destino_lixo = ?, flag_animais = ?, qtd_animais = ?, flag_gato = ?, flag_cachorro = ?, flag_passaro = ?, flag_outros = ?, nome_instituicao = ?" +
                 ", flag_outros_profissionais = ?, nome_responsavel = ?, cns_responsavel = ?, cargo_instituicao = ?, tel_contato_responsavel = ?, flag_ativo = ?, flag_exportado = ? where id = ?";
@@ -262,15 +260,17 @@ public class FichaCadastroDTDAO {
         fichaModel.setComplemento(c.getString(c.getColumnIndex("complemento")));
         fichaModel.setPontoReferencia(c.getString(c.getColumnIndex("ponto_referencia")));
         fichaModel.setNumero(c.getString(c.getColumnIndex("numero")));
-        fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0); //
+        fichaModel.setFlagSemNumero(c.getInt(c.getColumnIndex("flag_sem_numero")) > 0);
         fichaModel.setMicroArea(c.getString(c.getColumnIndex("microarea")));
-        fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0); //
+        fichaModel.setFlagForaDeArea(c.getInt(c.getColumnIndex("flag_fora_de_area")) > 0);
+        fichaModel.setTipoImovel(new TipoModel(c.getInt(c.getColumnIndex("tipo_imovel"))));
         fichaModel.setTelResidencia(c.getString(c.getColumnIndex("tel_residencia")));
         fichaModel.setTelContato(c.getString(c.getColumnIndex("tel_contato")));
+        fichaModel.setFlagRecusado(c.getInt(c.getColumnIndex("flag_recusado")) > 0);
 
         fichaModel.setSituacaoMoradia(new TipoModel(c.getInt(c.getColumnIndex("situacao_moradia"))));
         fichaModel.setLocalizacao(c.getInt(c.getColumnIndex("localizacao")));
-        fichaModel.setTipoImovel(new TipoModel(c.getInt(c.getColumnIndex("tipo_imovel"))));
+        fichaModel.setTipoDomicilio(c.getInt(c.getColumnIndex("tipo_domicilio")));
         fichaModel.setAcessoDomicilio(c.getInt(c.getColumnIndex("acesso_domicilio")));
         fichaModel.setCondicaoTerra(new TipoModel(c.getInt(c.getColumnIndex("condicao_terra"))));
         fichaModel.setNumMoradores(c.getInt(c.getColumnIndex("num_moradores")));

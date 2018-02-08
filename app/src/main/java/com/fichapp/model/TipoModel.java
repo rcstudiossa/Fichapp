@@ -67,6 +67,42 @@ public class TipoModel implements Serializable {
 
     }
 
+    public List<TipoModel> getComboUF() {
+
+        List<TipoModel> combo = new ArrayList<>();
+
+        combo.add(new TipoModel(1,"ACRE"));
+        combo.add(new TipoModel(2,"ALAGOAS"));
+        combo.add(new TipoModel(3,"AMAPÁ"));
+        combo.add(new TipoModel(4,"AMAZONAS"));
+        combo.add(new TipoModel(5,"BAHIA"));
+        combo.add(new TipoModel(6,"CEARÁ"));
+        combo.add(new TipoModel(7,"DISTRITO FEDERAL"));
+        combo.add(new TipoModel(8,"ESPÍRITO SANTO"));
+        combo.add(new TipoModel(10,"GOIÁS"));
+        combo.add(new TipoModel(11,"MARANHÃO"));
+        combo.add(new TipoModel(12,"MATO GROSSO"));
+        combo.add(new TipoModel(13,"MATO GROSSO DO SUL"));
+        combo.add(new TipoModel(14,"MINAS GERAIS"));
+        combo.add(new TipoModel(15,"PARÁ"));
+        combo.add(new TipoModel(16,"PARAÍBA"));
+        combo.add(new TipoModel(17,"PARANÁ"));
+        combo.add(new TipoModel(18,"PERNAMBUCO"));
+        combo.add(new TipoModel(19,"PIAUÍ"));
+        combo.add(new TipoModel(20,"RIO DE JANEIRO"));
+        combo.add(new TipoModel(21,"RIO GRANDE DO NORTE"));
+        combo.add(new TipoModel(22,"RIO GRANDE DO SUL"));
+        combo.add(new TipoModel(23,"RONDÔNIA"));
+        combo.add(new TipoModel(9,"RORAIMA"));
+        combo.add(new TipoModel(25,"SANTA CATARINA"));
+        combo.add(new TipoModel(26,"SÃO PAULO"));
+        combo.add(new TipoModel(27,"SERGIPE"));
+        combo.add(new TipoModel(24,"TOCANTINS"));
+
+        return combo;
+
+    }
+
     public List<TipoModel> getComboRendaFamiliar() {
 
         List<TipoModel> combo = new ArrayList<>();
@@ -557,6 +593,8 @@ public class TipoModel implements Serializable {
         return combo;
 
     }
+
+
 
     @Override
     public String toString() {

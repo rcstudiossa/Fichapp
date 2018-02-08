@@ -2,12 +2,14 @@ package com.fichapp.activity;
 
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -92,6 +94,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgInformarIdentidadeGenero;
 
     private LinearLayout llTemDeficiencia;
+    private LinearLayout llTipoDeficiencia;
     private RadioGroup rgDeficiencia;
     private CheckBox cbDeficienciaAuditiva;
     private CheckBox cbDeficienciaVisual;
@@ -173,12 +176,16 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private FloatingActionButton fabGravar;
 
-    private LinearLayout llRodape;
+    private LinearLayout llSocioDemografico;
+    private LinearLayout llCondicoesSaude;
+    private LinearLayout llSituacaoRua;
+    private LinearLayout llSeSituacaoRua;
 
     private RelativeLayout rlMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setContentView(R.layout.activity_ficha_cadastro_individual);
 
         super.onCreate(savedInstanceState);
@@ -335,15 +342,19 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         //LinearLayouts
         llTemDeficiencia = (LinearLayout) findViewById(R.id.ll_tem_deficiencia);
+        llTipoDeficiencia = (LinearLayout) findViewById(R.id.ll_tipo_deficiencia);
         llNaturalizacao = (LinearLayout) findViewById(R.id.ll_naturalizacao);
         llDoencaCardiaca = (LinearLayout) findViewById(R.id.ll_doenca_cardiaca);
         llProblemaRins = (LinearLayout) findViewById(R.id.ll_problema_rins);
         llDoencaRespiratoria = (LinearLayout) findViewById(R.id.ll_doenca_respiratoria);
         llHigienePessoal = (LinearLayout) findViewById(R.id.ll_higiene_pessoal);
 
-        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+        llSocioDemografico = (LinearLayout) findViewById(R.id.ll_socio_demografico);
+        llCondicoesSaude = (LinearLayout) findViewById(R.id.ll_condicoes_saude);
+        llSituacaoRua = (LinearLayout) findViewById(R.id.ll_situacao_rua);
+        llSeSituacaoRua = (LinearLayout) findViewById(R.id.ll_se_situacao_rua);
 
-        llRodape = (LinearLayout) findViewById(R.id.include_rodape_cadastro_dt);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -461,6 +472,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 if (((CheckBox) ll.getChildAt(i)).isChecked()) {
                     checks++;
                 }
+            } else if (ll.getChildAt(i) instanceof LinearLayout) {
+
+                if (algumCheckBoxMarcado((LinearLayout) ll.getChildAt(i))) {
+                    checks++;
+                }
             }
         }
 
@@ -481,16 +497,32 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         int indexInternado = rgInternado.indexOfChild(findViewById(rgInternado.getCheckedRadioButtonId()));
         int indexUsaPlantas = rgPlantasMedicinais.indexOfChild(findViewById(rgPlantasMedicinais.getCheckedRadioButtonId()));
         int indexSituacaoRua = rgSituacaoRua.indexOfChild(findViewById(rgSituacaoRua.getCheckedRadioButtonId()));
-        int indexVisitaFamiliar = rgVisitaFamiliar.indexOfChild(findViewById(rgVisitaFamiliar.getCheckedRadioButtonId()));
-        int indexDoencaCardiaca = rgDoencaCardiaca.indexOfChild(findViewById(rgDoencaRespiratoria.getCheckedRadioButtonId()));
+        int indexResponsavel = rgResponsavelFamiliar.indexOfChild(findViewById(rgResponsavelFamiliar.getCheckedRadioButtonId()));
+        int indexDoencaCardiaca = rgDoencaCardiaca.indexOfChild(findViewById(rgDoencaCardiaca.getCheckedRadioButtonId()));
         int indexDoencaRespiratoria = rgDoencaRespiratoria.indexOfChild(findViewById(rgDoencaRespiratoria.getCheckedRadioButtonId()));
         int indexProblemaRins = rgProblemaRins.indexOfChild(findViewById(rgProblemaRins.getCheckedRadioButtonId()));
         int indexHigienePessoal = rgAcessoHigienePessoal.indexOfChild(findViewById(rgAcessoHigienePessoal.getCheckedRadioButtonId()));
         int indexDeficiencia = rgDeficiencia.indexOfChild(findViewById(rgDeficiencia.getCheckedRadioButtonId()));
+        int indexSaidaCadastro = rgSaidaCadastro.indexOfChild(findViewById(rgSaidaCadastro.getCheckedRadioButtonId()));
         int indexNacionalidade = rgNacionalidade.indexOfChild(findViewById(rgNacionalidade.getCheckedRadioButtonId()));
 
         if ((Utilitario.isEmpty(etDataRegistro.getText().toString()))) {
             aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
+            valido = false;
+        }
+
+        if ((!Utilitario.isEmpty(etCnsCidadao.getText().toString())) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+            aviso = Utilitario.addAviso("CNS do cidadão é inválido.", aviso);
+            valido = false;
+        }
+
+        if (indexResponsavel == 1 && Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o CNS do responsável familiar", aviso);
+            valido = false;
+        }
+
+        if ((!Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString())) && !Utilitario.isCNSValido(etCnsResponsavelFamiliar.getText().toString())) {
+            aviso = Utilitario.addAviso("CNS do responsável familiar é inválido.", aviso);
             valido = false;
         }
 
@@ -516,6 +548,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         if (Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Selecione a raça/cor do cidadão.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etEtnia.getText().toString()) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+            aviso = Utilitario.addAviso("Preencha a etnia do paciente.", aviso);
             valido = false;
         }
 
@@ -545,7 +582,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         }
 
         if (Utilitario.isEmpty(etPortariaNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
-            aviso = Utilitario.addAviso("Preencha o portaria de naturalização.", aviso);
+            aviso = Utilitario.addAviso("Preencha a portaria de naturalização.", aviso);
             valido = false;
         }
 
@@ -561,73 +598,63 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         if (!cbVisitaRecusada.isChecked()) {
 
+            if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Informe se o cidadão frequenta escola ou creche.", aviso);
+                valido = false;
+            }
+
+            if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Informe se o cidadão tem alguma deficiência.", aviso);
+                valido = false;
+            }
+
+            if (!this.algumCheckBoxMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) deficiência(s) apresentada(s) pelo cidadão.", aviso);
+                valido = false;
+            }
+
+            if ((Utilitario.isEmpty(etNumeroDO.getText().toString()) || Utilitario.isEmpty(etDataObito.getText().toString())) && indexSaidaCadastro == 1) {
+                aviso = Utilitario.addAviso("Preencha o numero do D.O e a data do óbito.", aviso);
+                valido = false;
+            }
+
+            if (!this.algumCheckBoxMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) doença(s) cardíaca(s) do cidadão.", aviso);
+                valido = false;
+            }
+
+            if (!this.algumCheckBoxMarcado(llProblemaRins) && indexProblemaRins == 0) {
+                aviso = Utilitario.addAviso("Selecione o(s) problema(s) nos rins do cidadão.", aviso);
+                valido = false;
+            }
+
+            if (!this.algumCheckBoxMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) doença(s) respiratória(s) do cidadão.", aviso);
+                valido = false;
+            }
 
             if (Utilitario.isEmpty(etQualMotivoInternamento.getText().toString()) && indexInternado == 0) {
                 aviso = Utilitario.addAviso("Preencha o motivo do internamento.", aviso);
                 valido = false;
             }
+
             if (Utilitario.isEmpty(etQuaisPlantas.getText().toString()) && indexUsaPlantas == 0) {
                 aviso = Utilitario.addAviso("Preencha qual(is) planta(s) utilizada(s).", aviso);
                 valido = false;
             }
-            if (Utilitario.isEmpty(etGrauParentesco.getText().toString()) && (indexSituacaoRua == 1 || indexVisitaFamiliar == 1)) {
-                aviso = Utilitario.addAviso("Preencha o grau de parentesco do familiar frequentado.", aviso);
-                valido = false;
-            }
-            if (!this.algumCheckBoxMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
-                aviso = Utilitario.addAviso("Selecione a(s) doença(s) cardíaca(s) do cidadão.", aviso);
-                valido = false;
-            }
-            if (!this.algumCheckBoxMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
-                aviso = Utilitario.addAviso("Selecione a(s) doença(s) respiratória(s) do cidadão.", aviso);
-                valido = false;
-            }
-            if (!this.algumCheckBoxMarcado(llProblemaRins) && indexProblemaRins == 0) {
-                aviso = Utilitario.addAviso("Selecione o(s) problema(s) nos rins do cidadão.", aviso);
-                valido = false;
-            }
-            if (!this.algumCheckBoxMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
-                aviso = Utilitario.addAviso("Selecione as opções de higiene pessoal.", aviso);
-                valido = false;
-            }
-            if (!this.algumCheckBoxMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
-                aviso = Utilitario.addAviso("Selecione a(s) deficiência(s) apresentada(s) pelo cidadão.", aviso);
-                valido = false;
-            }
+
             if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
                 aviso = Utilitario.addAviso("Selecione se o cidadão está em situação de rua.", aviso);
                 valido = false;
             }
 
-            if ((Utilitario.isEmpty(etMunicipioNascimento.getText().toString())) && (indexNacionalidade == 0)) {
-                aviso = Utilitario.addAviso("Preencha o município de nascimento.", aviso);
-                valido = false;
-            }
+            if (indexSituacaoRua == 0) {
 
-            if (Utilitario.isEmpty(etEtnia.getText().toString()) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
-                aviso = Utilitario.addAviso("Preencha a etnia do paciente.", aviso);
-                valido = false;
-            }
+                if (!this.algumCheckBoxMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
+                    aviso = Utilitario.addAviso("Selecione as opções de higiene pessoal.", aviso);
+                    valido = false;
+                }
 
-            if ((Utilitario.isEmpty(etDataNaturalizacao.getText().toString())) && indexNacionalidade == 1) {
-                aviso = Utilitario.addAviso("Preencha a data de naturalização.", aviso);
-                valido = false;
-            }
-            if ((Utilitario.isEmpty(etDataEntrada.getText().toString())) && indexNacionalidade == 2) {
-                aviso = Utilitario.addAviso("Preencha a data de entrada.", aviso);
-                valido = false;
-            }
-            if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-                aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
-                valido = false;
-            }
-            if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
-                aviso = Utilitario.addAviso("Informe se o cidadão frequenta escola ou creche.", aviso);
-                valido = false;
-            }
-            if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
-                aviso = Utilitario.addAviso("Informe se o cidadão é portador de deficiência.", aviso);
-                valido = false;
             }
 
         }
@@ -642,8 +669,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void configListeners() {
 
-        this.desabilitaEditText(rgResponsavelFamiliar, 1, etCnsResponsavelFamiliar);
-
         this.desabilitaEditText(rgMembroDeComunidade, 1, etQualComunidade);
         this.desabilitaEditText(rgGestante, 1, etQualMaternidade);
         this.desabilitaEditText(rgInternado, 1, etQualMotivoInternamento);
@@ -655,6 +680,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.desabilitaEditText(cbMaeDesconhecido, etNomeMae);
         this.desabilitaEditText(cbPaiDesconhecido, etNomePai);
 
+        this.desabilitaLinearLayout(rgDeficiencia, 1, llTipoDeficiencia);
         this.desabilitaLinearLayout(rgDoencaCardiaca, 1, llDoencaCardiaca);
         this.desabilitaLinearLayout(rgProblemaRins, 1, llProblemaRins);
         this.desabilitaLinearLayout(rgDoencaRespiratoria, 1, llDoencaRespiratoria);
@@ -663,7 +689,50 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.desabilitaSpinner(rgInformarOrientacao, 1, spOrientacao);
         this.desabilitaSpinner(rgInformarIdentidadeGenero, 1, spGenero);
 
-        this.desabilitaRadioGroup(rgSituacaoRua, 1, rgTempoSituacaoRua);
+        rgResponsavelFamiliar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+                if (indexRg == 1) {
+                    habilitarComponentes(etCnsResponsavelFamiliar);
+                    habilitarComponentes(spParentesco);
+                } else {
+                    desabilitarComponentes(etCnsResponsavelFamiliar);
+                    desabilitarComponentes(spParentesco);
+                }
+            }
+        });
+
+        rgSaidaCadastro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+                if (indexRg == 1) {
+                    habilitarComponentes(etNumeroDO);
+                    habilitarComponentes(etDataObito);
+                } else {
+                    desabilitarComponentes(etNumeroDO);
+                    desabilitarComponentes(etDataObito);
+                }
+            }
+        });
+
+        rgSituacaoRua.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+                if (indexRg == 0) {
+                    habilitarComponentes(rgTempoSituacaoRua);
+                    habilitarComponentes(llSeSituacaoRua);
+                } else {
+                    desabilitarComponentes(rgTempoSituacaoRua);
+                    desabilitarComponentes(llSeSituacaoRua);
+                }
+            }
+        });
 
         rgNacionalidade.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -671,7 +740,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
                 Integer indexRg = rg.indexOfChild(findViewById(checkedId));
 
-                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataEntrada, indexRg != 2);
                 if (indexRg != 2) {
                     spPais.setEnabled(false);
                     spPais.setClickable(false);
@@ -686,11 +754,33 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                     spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
                 }
 
-                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etMunicipioNascimento, indexRg != 0);
-                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataNaturalizacao, indexRg != 1);
-                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etPortariaNaturalizacao, indexRg != 1);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etMunicipioNascimento, indexRg == 0);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataEntrada, indexRg == 2);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataNaturalizacao, indexRg == 1);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etPortariaNaturalizacao, indexRg == 1);
 
 
+            }
+        });
+
+        cbVisitaRecusada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    desabilitaLinearLayout(llSocioDemografico);
+                    desabilitaLinearLayout(llCondicoesSaude);
+                    desabilitaLinearLayout(llSituacaoRua);
+                    llSocioDemografico.setVisibility(View.GONE);
+                    llCondicoesSaude.setVisibility(View.GONE);
+                    llSituacaoRua.setVisibility(View.GONE);
+                } else {
+                    llSocioDemografico.setVisibility(View.VISIBLE);
+                    llCondicoesSaude.setVisibility(View.VISIBLE);
+                    llSituacaoRua.setVisibility(View.VISIBLE);
+                    habilitaLinearLayout(llSocioDemografico);
+                    habilitaLinearLayout(llCondicoesSaude);
+                    habilitaLinearLayout(llSituacaoRua);
+                }
             }
         });
 
