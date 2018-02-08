@@ -14,16 +14,16 @@
 
     <string name="action_export">Exportar Fichas</string>
 
-    <string name="prompt_cnes">Código CNES</string>
-    <string name="prompt_hospital">Nome do Hospital</string>
+    <string name="prompt_cnes">Código CNES*</string>
+    <string name="prompt_hospital">Nome do Hospital*</string>
     <string name="cadastrar">Gravar</string>
 
-    <string name="prompt_cns">Código CNS</string>
-    <string name="prompt_cbo">Código CBO</string>
-    <string name="prompt_usuario">Usuário</string>
-    <string name="prompt_senha">Senha</string>
-    <string name="prompt_confirmar_senha">Confirmar Senha</string>
-    <string name="prompt_profissional">Nome do Profissional</string>
+    <string name="prompt_cns">Código CNS*</string>
+    <string name="prompt_cbo">Código CBO*</string>
+    <string name="prompt_usuario">Usuário*</string>
+    <string name="prompt_senha">Senha*</string>
+    <string name="prompt_confirmar_senha">Confirmar Senha*</string>
+    <string name="prompt_profissional">Nome do Profissional*</string>
     <string name="title_activity_settings">Settings</string>
 
     <string name="alterar_senha"><u>Alterar Senha</u></string>

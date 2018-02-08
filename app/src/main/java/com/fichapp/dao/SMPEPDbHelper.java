@@ -22,7 +22,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
     //public static final String SQL_DELETE_PROFISSIONAL_CNES = "DROP TABLE IF EXISTS profissional_cnes;";
 
     public static final String SQL_CREATE_FICHA_VISITA_DT = "CREATE TABLE IF NOT EXISTS ficha_visita_domiciliar_territorial" +
-        " (id INTEGER PRIMARY KEY, profissional_id INTEGER, data_registro DATE, turno CHAR(1), microarea CHAR(2), tipo_imovel CHAR(2)" +
+        " (id INTEGER PRIMARY KEY, profissional_id INTEGER, data_registro DATE, turno CHAR(1), microarea CHAR(2), flag_fora_area boolean, tipo_imovel CHAR(2)" +
         ", prontuario VARCHAR, cns_cidadao VARCHAR, data_nascimento date, sexo char(1), flag_visita_compartilhada boolean, flag_cadastramento  boolean, flag_visita_periodica boolean" +
         ", flag_consulta boolean, flag_exame boolean, flag_vacina boolean, flag_bolsa_familia boolean, flag_gestante boolean, flag_puerpera boolean, flag_recem_nascido boolean, flag_crianca boolean, flag_desnutricao boolean" +
         ", flag_reabilitacao boolean, flag_hipertensao boolean, flag_diabetes boolean, flag_asma boolean, flag_enfisema boolean, flag_cancer boolean, flag_doencas_cronicas boolean, flag_hanseniase boolean, flag_tuberculose boolean" +
@@ -47,7 +47,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
             " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, data_registro DATE" +
             ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo INTEGER, raca INTEGER, etnia VARCHAR, nis VARCHAR" +
             ", nome_mae VARCHAR, flag_mae_desconhecido BOOLEAN, nome_pai VARCHAR, flag_pai_desconhecido BOOLEAN" +
-            ", nacionalidade INTEGER, pais_nascimento VARCHAR, municipio_uf_nascimento VARCHAR, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
+            ", nacionalidade INTEGER, pais_nascimento INTEGER, municipio_uf_nascimento INTEGER, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
             ", telefone_celular VARCHAR, email_cidadao VARCHAR" +
             ", parentesco_responsavel_familiar INTEGER, ocupacao VARCHAR, flag_frequenta_escola BOOLEAN, curso_mais_elevado INTEGER, situacao_mercado INTEGER" +
             ", flag_fica_com_adulto_responsavel BOOLEAN, flag_fica_com_outras_criancas BOOLEAN, flag_fica_com_adolescente BOOLEAN, flag_fica_em_creche BOOLEAN, flag_fica_sozinha BOOLEAN, flag_fica_outro BOOLEAN" +
@@ -83,10 +83,10 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_CREATE_PROFISSIONAL);
         //db.execSQL(SQL_INSERT_PROFISSIONAL);
         //db.execSQL(SQL_CREATE_PROFISSIONAL_CNES);
-        //db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
+        db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
         //db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT_FAMILIA);
-        //db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
+        db.execSQL(SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL);
 
     }
 
@@ -95,10 +95,10 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         //db.execSQL(SQL_DELETE_CNES);
         //db.execSQL(SQL_DELETE_PROFISSIONAL);
         //db.execSQL(SQL_DELETE_PROFISSIONAL_CNES);
-        //db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
+        db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
         //db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT_FAMILIA);
-        //db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
+        db.execSQL(SQL_DELETE_FICHA_CADASTRO_INDIVIDUAL);
         onCreate(db);
     }
 

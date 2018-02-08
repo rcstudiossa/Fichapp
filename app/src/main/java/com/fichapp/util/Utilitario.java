@@ -1,5 +1,6 @@
 package com.fichapp.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public final class Utilitario {
     }
 
     public static String addAviso(String texto, String aviso) {
+
+        texto = "- " + texto;
 
         if (isEmpty(aviso)) {
             aviso = texto;
@@ -79,6 +82,16 @@ public final class Utilitario {
     public static void avisoSucesso(Context context) {
 
         Toast.makeText(context, "Operação realizada com sucesso", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public static void alertar(Context context, String texto) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Alerta");
+        builder.setMessage(texto);
+        AlertDialog alerta = builder.create();
+        alerta.show();
 
     }
 }

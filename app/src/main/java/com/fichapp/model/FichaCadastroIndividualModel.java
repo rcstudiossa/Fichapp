@@ -36,7 +36,7 @@ public class FichaCadastroIndividualModel implements Serializable{
     private Boolean flagPaiDesconhecido;
 
     private Integer nacionalidade;
-    private String paisNascimento;
+    private TipoModel paisNascimento;
     private String municipioUfNascimento;
     private String portariaNaturalizacao;
     private Date dataNaturalizacao;
@@ -328,11 +328,11 @@ public class FichaCadastroIndividualModel implements Serializable{
         this.nacionalidade = nacionalidade;
     }
 
-    public String getPaisNascimento() {
+    public TipoModel getPaisNascimento() {
         return paisNascimento;
     }
 
-    public void setPaisNascimento(String paisNascimento) {
+    public void setPaisNascimento(TipoModel paisNascimento) {
         this.paisNascimento = paisNascimento;
     }
 

@@ -3,7 +3,6 @@ package com.fichapp.activity;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -34,6 +33,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private Toolbar toolbar;
 
+    private Spinner spPais;
     private Spinner spRaca;
     private Spinner spParentesco;
     private Spinner spCurso;
@@ -61,7 +61,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private CheckBox cbPaiDesconhecido;
 
     private RadioGroup rgNacionalidade;
-    private EditText etPaisNascimento;
     private EditText etMunicipioNascimento;
     private LinearLayout llNaturalizacao;
     private EditText etPortariaNaturalizacao;
@@ -181,6 +180,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ficha_cadastro_individual);
+
         super.onCreate(savedInstanceState);
 
         this.definirComponentes();
@@ -189,11 +189,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.carregarSpinners();
 
-        this.desabilitaCampos();
+        this.configListeners();
 
         this.configDatas();
 
         this.instanciarFichaCadastroIndividualModel();
+
+        this.configComponentes();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,6 +206,12 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
+    private void configComponentes() {
+
+        spPais.setEnabled(false);
+        spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
+
+    }
 
     private void definirComponentes() {
 
@@ -219,7 +227,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etNis = (EditText) findViewById(R.id.et_nis);
         etNomeMae = (EditText) findViewById(R.id.et_nome_mae);
         etNomePai = (EditText) findViewById(R.id.et_nome_pai);
-        etPaisNascimento = (EditText) findViewById(R.id.et_pais_nascimento);
         etMunicipioNascimento = (EditText) findViewById(R.id.et_municipio_nascimento);
         etPortariaNaturalizacao = (EditText) findViewById(R.id.et_portaria_naturalizacao);
         etDataNaturalizacao = (EditText) findViewById(R.id.et_data_naturalizacao);
@@ -238,6 +245,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etQualInstituicao = (EditText) findViewById(R.id.et_qual_instituicao);
 
         //Spinners
+        spPais = (Spinner) findViewById(R.id.spinner_pais);
         spRaca = (Spinner) findViewById(R.id.spinner_raca);
         spParentesco = (Spinner) findViewById(R.id.spinner_parentesco);
         spCurso = (Spinner) findViewById(R.id.spinner_curso_frequentado);
@@ -373,6 +381,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         ArrayAdapter<TipoModel> spAdapter;
 
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboPais());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spPais.setAdapter(spAdapter);
+
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRaca());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spRaca.setAdapter(spAdapter);
@@ -423,7 +435,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void gravar() {
 
-        //if (!validaCampos()) { return; }
+        if (!validaCampos()) { return; }
 
         this.setActivityToModel();
 
@@ -445,8 +457,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         int checks = 0;
 
         for (int i = 0; i < ll.getChildCount(); i++) {
-            if (((CheckBox) ll.getChildAt(i)).isChecked()) {
-                checks++;
+            if (ll.getChildAt(i) instanceof CheckBox) {
+                if (((CheckBox) ll.getChildAt(i)).isChecked()) {
+                    checks++;
+                }
             }
         }
 
@@ -462,10 +476,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         boolean valido = true;
 
-        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(fabGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
-            valido = false;
-        }
+        String aviso = "";
 
         int indexInternado = rgInternado.indexOfChild(findViewById(rgInternado.getCheckedRadioButtonId()));
         int indexUsaPlantas = rgPlantasMedicinais.indexOfChild(findViewById(rgPlantasMedicinais.getCheckedRadioButtonId()));
@@ -478,96 +489,161 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         int indexDeficiencia = rgDeficiencia.indexOfChild(findViewById(rgDeficiencia.getCheckedRadioButtonId()));
         int indexNacionalidade = rgNacionalidade.indexOfChild(findViewById(rgNacionalidade.getCheckedRadioButtonId()));
 
+        if ((Utilitario.isEmpty(etDataRegistro.getText().toString()))) {
+            aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+            aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etNomeCompleto.getText().toString()))) {
+            aviso = Utilitario.addAviso("Preencha o nome do cidadão.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etDataNascimento.getText().toString()))) {
+            aviso = Utilitario.addAviso("Preencha a data de nascimento.", aviso);
+            valido = false;
+        }
+
+        if (rgSexo.getCheckedRadioButtonId() == -1) {
+            aviso = Utilitario.addAviso("Selecione o sexo do cidadão.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo())) {
+            aviso = Utilitario.addAviso("Selecione a raça/cor do cidadão.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etNomeMae.getText().toString())) && !cbMaeDesconhecido.isChecked()) {
+            aviso = Utilitario.addAviso("Preencha o nome da mãe.", aviso);
+            valido = false;
+        }
+
+        if ((Utilitario.isEmpty(etNomePai.getText().toString())) && !cbPaiDesconhecido.isChecked()) {
+            aviso = Utilitario.addAviso("Preencha o nome do pai.", aviso);
+            valido = false;
+        }
+
+        if (rgNacionalidade.getCheckedRadioButtonId() == -1) {
+            aviso = Utilitario.addAviso("Selecione a nacionalidade do cidadão.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(((TipoModel) spPais.getSelectedItem()).getCodigo()) && (indexNacionalidade == 2)) {
+            aviso = Utilitario.addAviso("Preencha o país de nascimento.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etMunicipioNascimento.getText().toString()) && (indexNacionalidade == 0)) {
+            aviso = Utilitario.addAviso("Preencha o município de nascimento.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etPortariaNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
+            aviso = Utilitario.addAviso("Preencha o portaria de naturalização.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
+            aviso = Utilitario.addAviso("Preencha a data de naturalização.", aviso);
+            valido = false;
+        }
+
+        if (Utilitario.isEmpty(etDataEntrada.getText().toString()) && (indexNacionalidade == 2)) {
+            aviso = Utilitario.addAviso("Preencha a data de entrada.", aviso);
+            valido = false;
+        }
+
         if (!cbVisitaRecusada.isChecked()) {
 
-            //TODO: areaProducaoRural
 
             if (Utilitario.isEmpty(etQualMotivoInternamento.getText().toString()) && indexInternado == 0) {
-                Snackbar.make(fabGravar, "Preencha o motivo do internamento.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o motivo do internamento.", aviso);
                 valido = false;
-            } else if (Utilitario.isEmpty(etQuaisPlantas.getText().toString()) && indexUsaPlantas == 0) {
-                Snackbar.make(fabGravar, "Preencha qual(is) planta(s) utilizada(s).", Snackbar.LENGTH_LONG).show();
+            }
+            if (Utilitario.isEmpty(etQuaisPlantas.getText().toString()) && indexUsaPlantas == 0) {
+                aviso = Utilitario.addAviso("Preencha qual(is) planta(s) utilizada(s).", aviso);
                 valido = false;
-            } else if (Utilitario.isEmpty(etGrauParentesco.getText().toString()) && (indexSituacaoRua == 1 || indexVisitaFamiliar == 1)) {
-                Snackbar.make(fabGravar, "Preencha o grau de parentesco do familiar frequentado.", Snackbar.LENGTH_LONG).show();
+            }
+            if (Utilitario.isEmpty(etGrauParentesco.getText().toString()) && (indexSituacaoRua == 1 || indexVisitaFamiliar == 1)) {
+                aviso = Utilitario.addAviso("Preencha o grau de parentesco do familiar frequentado.", aviso);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
-                Snackbar.make(fabGravar, "Selecione a(s) doença(s) cardíaca(s) do cidadão.", Snackbar.LENGTH_LONG).show();
+            }
+            if (!this.algumCheckBoxMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) doença(s) cardíaca(s) do cidadão.", aviso);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
-                Snackbar.make(fabGravar, "Selecione a(s) doença(s) respiratória(s) do cidadão.", Snackbar.LENGTH_LONG).show();
+            }
+            if (!this.algumCheckBoxMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) doença(s) respiratória(s) do cidadão.", aviso);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llProblemaRins) && indexProblemaRins == 0) {
-                Snackbar.make(fabGravar, "Selecione o(s) problema(s) nos rins do cidadão.", Snackbar.LENGTH_LONG).show();
+            }
+            if (!this.algumCheckBoxMarcado(llProblemaRins) && indexProblemaRins == 0) {
+                aviso = Utilitario.addAviso("Selecione o(s) problema(s) nos rins do cidadão.", aviso);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
-                Snackbar.make(fabGravar, "Selecione as opções de higiene pessoal.", Snackbar.LENGTH_LONG).show();
+            }
+            if (!this.algumCheckBoxMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
+                aviso = Utilitario.addAviso("Selecione as opções de higiene pessoal.", aviso);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
-                Snackbar.make(fabGravar, "Selecione a(s) deficiência(s) apresentada(s) pelo cidadão.", Snackbar.LENGTH_LONG).show();
+            }
+            if (!this.algumCheckBoxMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
+                aviso = Utilitario.addAviso("Selecione a(s) deficiência(s) apresentada(s) pelo cidadão.", aviso);
                 valido = false;
-            } else if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Selecione se o cidadão está em situação de rua.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if (rgNacionalidade.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Selecione a nacionalidade do cidadão.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etNomeCompleto.getText().toString()))) {
-                Snackbar.make(fabGravar, "Preencha o nome do cidadão.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etMunicipioNascimento.getText().toString())) && (indexNacionalidade == 0)) {
-                Snackbar.make(fabGravar, "Preencha o município de nascimento.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etNomeMae.getText().toString())) && !cbMaeDesconhecido.isChecked()) {
-                Snackbar.make(fabGravar, "Preencha o nome da mãe.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etDataNascimento.getText().toString()))) {
-                Snackbar.make(fabGravar, "Preencha a data de nascimento.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etPaisNascimento.getText().toString())) && (indexNacionalidade == 2)) {
-                Snackbar.make(fabGravar, "Preencha o país de nascimento.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if (((TipoModel) spRaca.getSelectedItem()).getCodigo() == null) {
-                Snackbar.make(fabGravar, "Selecione o raça/cor do cidadão.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if (rgSexo.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Selecione o sexo do cidadão.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etEtnia.getText().toString())) && (((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5)) {
-                Snackbar.make(fabGravar, "Preencha a etnia do paciente.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etNomePai.getText().toString())) && !cbPaiDesconhecido.isChecked()) {
-                Snackbar.make(fabGravar, "Preencha o nome do pai.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etDataNaturalizacao.getText().toString())) && indexNacionalidade == 1) {
-                Snackbar.make(fabGravar, "Preencha a data de naturalização.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etDataEntrada.getText().toString())) && indexNacionalidade == 2) {
-                Snackbar.make(fabGravar, "Preencha a data de entrada.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-                Snackbar.make(fabGravar, "Preencha a microárea.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Informe se o cidadão frequenta escola ou creche.", Snackbar.LENGTH_LONG).show();
-                valido = false;
-            } else if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Informe se o cidadão é portador de deficiência.", Snackbar.LENGTH_LONG).show();
+            }
+            if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Selecione se o cidadão está em situação de rua.", aviso);
                 valido = false;
             }
 
+            if ((Utilitario.isEmpty(etMunicipioNascimento.getText().toString())) && (indexNacionalidade == 0)) {
+                aviso = Utilitario.addAviso("Preencha o município de nascimento.", aviso);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etEtnia.getText().toString()) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+                aviso = Utilitario.addAviso("Preencha a etnia do paciente.", aviso);
+                valido = false;
+            }
+
+            if ((Utilitario.isEmpty(etDataNaturalizacao.getText().toString())) && indexNacionalidade == 1) {
+                aviso = Utilitario.addAviso("Preencha a data de naturalização.", aviso);
+                valido = false;
+            }
+            if ((Utilitario.isEmpty(etDataEntrada.getText().toString())) && indexNacionalidade == 2) {
+                aviso = Utilitario.addAviso("Preencha a data de entrada.", aviso);
+                valido = false;
+            }
+            if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+                aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
+                valido = false;
+            }
+            if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Informe se o cidadão frequenta escola ou creche.", aviso);
+                valido = false;
+            }
+            if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
+                aviso = Utilitario.addAviso("Informe se o cidadão é portador de deficiência.", aviso);
+                valido = false;
+            }
 
         }
 
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(FichaCadastroIndividualActivity.this, aviso);
+        }
 
         return valido;
 
     }
 
-    private void desabilitaCampos() {
+    private void configListeners() {
 
         this.desabilitaEditText(rgResponsavelFamiliar, 1, etCnsResponsavelFamiliar);
-        this.desabilitaEditText(rgNacionalidade, 0, etPaisNascimento);
+
         this.desabilitaEditText(rgMembroDeComunidade, 1, etQualComunidade);
         this.desabilitaEditText(rgGestante, 1, etQualMaternidade);
         this.desabilitaEditText(rgInternado, 1, etQualMotivoInternamento);
@@ -588,6 +664,35 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.desabilitaSpinner(rgInformarIdentidadeGenero, 1, spGenero);
 
         this.desabilitaRadioGroup(rgSituacaoRua, 1, rgTempoSituacaoRua);
+
+        rgNacionalidade.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataEntrada, indexRg != 2);
+                if (indexRg != 2) {
+                    spPais.setEnabled(false);
+                    spPais.setClickable(false);
+                    spPais.setSelection(0);
+                } else {
+                    spPais.setEnabled(true);
+                    spPais.setClickable(true);
+                    spPais.performClick();
+                }
+
+                if (!spPais.isEnabled()) {
+                    spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
+                }
+
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etMunicipioNascimento, indexRg != 0);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etDataNaturalizacao, indexRg != 1);
+                FichaCadastroIndividualActivity.this.validaHabilitacaoEditText(etPortariaNaturalizacao, indexRg != 1);
+
+
+            }
+        });
 
     }
 
@@ -703,7 +808,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etNomePai.setText(this.fichaCadastroIndividualModel.getNomePai());
         cbPaiDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagPaiDesconhecido());
         setPosicaoSelecionadoRG(rgNacionalidade, this.fichaCadastroIndividualModel.getNacionalidade());
-        etPaisNascimento.setText(this.fichaCadastroIndividualModel.getPaisNascimento());
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getPaisNascimento()) && this.fichaCadastroIndividualModel.getPaisNascimento().getCodigo() > 0) {
+            spPais.setSelection(new TipoModel().getComboPais().indexOf(this.fichaCadastroIndividualModel.getPaisNascimento()));
+        }
         etMunicipioNascimento.setText(this.fichaCadastroIndividualModel.getMunicipioUfNascimento());
         etPortariaNaturalizacao.setText(this.fichaCadastroIndividualModel.getPortariaNaturalizacao());
         etDataNaturalizacao.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataNaturalizacao()));
@@ -826,7 +933,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setNomeMae(etNomeMae.getText().toString());
         this.fichaCadastroIndividualModel.setNomePai(etNomePai.getText().toString());
         this.fichaCadastroIndividualModel.setNacionalidade(this.getPosicaoSelecionadoRG(rgNacionalidade) + 1);
-        this.fichaCadastroIndividualModel.setPaisNascimento(etPaisNascimento.getText().toString());
+        this.fichaCadastroIndividualModel.setPaisNascimento((TipoModel) this.spPais.getSelectedItem());
         this.fichaCadastroIndividualModel.setMunicipioUfNascimento(etMunicipioNascimento.getText().toString());
         this.fichaCadastroIndividualModel.setPortariaNaturalizacao(etPortariaNaturalizacao.getText().toString());
         this.fichaCadastroIndividualModel.setDataNaturalizacao(Utilitario.getDate(etDataNaturalizacao.getText().toString()));

@@ -66,9 +66,9 @@ public class ProfissionalActivity extends TemplateActivity {
             }
         });
 
-        this.leitorCampos();
+        //this.leitorCampos();
 
-        this.validadorBotao();
+        //this.validadorBotao();
 
     }
 
@@ -133,7 +133,7 @@ public class ProfissionalActivity extends TemplateActivity {
 
         CNESBS cnesBS = new CNESBS(this);
         hospitais = cnesBS.pesquisarAtivos();
-        hospitais.add(0, new CNESModel("Selecione o CNES"));
+        hospitais.add(0, new CNESModel("Selecione o CNES*"));
         ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
         spHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -159,6 +159,11 @@ public class ProfissionalActivity extends TemplateActivity {
             valido = false;
         }
 
+        if (Utilitario.isEmpty(etIne.getText().toString())) {
+            aviso = Utilitario.addAviso("O código INE está vazio", aviso);
+            valido = false;
+        }
+
         if (Utilitario.isEmpty(etCbo.getText().toString())) {
             aviso = Utilitario.addAviso("O código CBO está vazio", aviso);
             valido = false;
@@ -176,13 +181,13 @@ public class ProfissionalActivity extends TemplateActivity {
             aviso = Utilitario.addAviso("As senhas não conferem", aviso);
             valido = false;
         }
-        if (Utilitario.isEmpty(spHospital.getSelectedItem()) && Utilitario.isEmpty(((CNESModel) spHospital.getSelectedItem()).getId())) {
+        if (Utilitario.isEmpty(((CNESModel) spHospital.getSelectedItem()).getId())) {
             aviso = Utilitario.addAviso("O CNES está vazio", aviso);
             valido = false;
         }
 
-        if (!valido) {
-            Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(ProfissionalActivity.this, aviso);
         }
 
         return valido;

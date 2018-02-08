@@ -1,18 +1,19 @@
 package com.fichapp.activity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.fichapp.model.CNESModel;
@@ -23,8 +24,8 @@ import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FichaVisitaDTActivity extends TemplateActivity {
@@ -42,6 +43,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private RadioButton rbTurnoT;
     private RadioButton rbTurnoN;
     private EditText etMicroarea;
+    private CheckBox cbForaDeArea;
     private Spinner spinnerTipoImovel;
 
     private EditText etProntuario;
@@ -50,6 +52,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private RadioButton rbSexoM;
     private RadioButton rbSexoF;
     private CheckBox cbVisitaCompartilhada;
+
+    private LinearLayout llMotivosVisita;
 
     private CheckBox cbCadastramentoAtt;
     private CheckBox cbVisitaPeriodica;
@@ -95,6 +99,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     private EditText etPeso;
     private EditText etAltura;
 
+    private RadioGroup rgDesfecho;
     private RadioButton rbVisitaRealizada;
     private RadioButton rbVisitaRecusada;
     private RadioButton rbAusente;
@@ -105,7 +110,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setContentView(R.layout.activity_ficha_visita_dt);
+
         super.onCreate(savedInstanceState);
 
         this.definirComponentes();
@@ -116,13 +123,16 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.carregarSpinners();
 
-        this.instanciarFichaVisitaDTModel();
+        this.configListeners();
 
         this.configDatas();
+
+        this.instanciarFichaVisitaDTModel();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 gravar();
             }
         });
@@ -138,6 +148,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         rbTurnoT = (RadioButton) findViewById(R.id.rb_turno_t);
         rbTurnoN = (RadioButton) findViewById(R.id.rb_turno_n);
         etMicroarea = (EditText) findViewById(R.id.et_microarea);
+        cbForaDeArea = (CheckBox) findViewById(R.id.cb_fora_de_area);
         spinnerTipoImovel = (Spinner) findViewById(R.id.spinner_tipo_imovel);
         etProntuario = (EditText) findViewById(R.id.et_prontuario);
         etCnsCidadao = (EditText) findViewById(R.id.et_cns);
@@ -153,6 +164,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         cbExame = (CheckBox) findViewById(R.id.cb_exame);
         cbVacina = (CheckBox) findViewById(R.id.cb_vacina);
         cbBolsaFamilia = (CheckBox) findViewById(R.id.cb_cond_bolsa_familia);
+
+        llMotivosVisita = (LinearLayout) findViewById(R.id.ll_motivos_visita);
 
         cbGestante = (CheckBox) findViewById(R.id.cb_gestante);
         cbPuerpera = (CheckBox) findViewById(R.id.cb_puerpera);
@@ -190,6 +203,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         etPeso = (EditText) findViewById(R.id.et_peso);
         etAltura = (EditText) findViewById(R.id.et_altura);
 
+        rgDesfecho = (RadioGroup) findViewById(R.id.rg_desfecho);
         rbVisitaRealizada = (RadioButton) findViewById(R.id.rb_visita_realizada);
         rbVisitaRecusada = (RadioButton) findViewById(R.id.rb_visita_recusada);
         rbAusente = (RadioButton) findViewById(R.id.rb_ausente);
@@ -278,39 +292,255 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     }
 
+    private boolean flagPossuiOpcaoGrupoAcompanhamento() {
+      return cbGestante.isChecked() || cbPuerpera.isChecked() || cbRecemNascido.isChecked()
+          || cbCrianca.isChecked() || cbDesnutricao.isChecked() || cbReabilitacao.isChecked()
+          || cbHipertensao.isChecked() || cbDiabetes.isChecked() || cbAsma.isChecked()
+          || cbEnfisema.isChecked() || cbCancer.isChecked() || cbOutrasDoencas.isChecked()
+          || cbHanseniase.isChecked() || cbTuberculose.isChecked() || cbSintomaticosRespiratorios.isChecked()
+          || cbTabagista.isChecked() || cbAcamados.isChecked() || cbVulnerabilidadeSocial.isChecked()
+          || cbBolsaFamilia.isChecked() || cbSaudeMental.isChecked() || cbUsuarioAlcool.isChecked() || cbUsuarioOutrasDrogas.isChecked();
+    }
+
+    private boolean flagPossuiOpcaoGrupoBuscaAtiva() {
+        return cbConsulta.isChecked() || cbExame.isChecked() || cbVacina.isChecked() || cbBolsaFamilia.isChecked();
+    }
+
+    private void configListeners() {
+
+        rgDesfecho.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                desabilitaMotivosVisita(rgDesfecho.indexOfChild(findViewById(rgDesfecho.getCheckedRadioButtonId())));
+            }
+        });
+
+        spinnerTipoImovel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validaHabilitacaoCheckBoxesMotivosVisita(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinnerTipoImovel.setSelection(0);
+            }
+        });
+        
+        this.desabilitaEditText(cbForaDeArea, etMicroarea);
+
+    }
+
+    private void desmarcarCheckBoxesMotivoVisita() {
+
+            this.cbCadastramentoAtt.setChecked(false);
+            this.cbVisitaPeriodica.setChecked(false);
+
+            this.cbConsulta.setChecked(false);
+            this.cbExame.setChecked(false);
+            this.cbVacina.setChecked(false);
+            this.cbBolsaFamilia.setChecked(false);
+
+            this.cbGestante.setChecked(false);
+            this.cbPuerpera.setChecked(false);
+            this.cbRecemNascido.setChecked(false);
+            this.cbCrianca.setChecked(false);
+
+            this.cbDesnutricao.setChecked(false);
+            this.cbReabilitacao.setChecked(false);
+            this.cbHipertensao.setChecked(false);
+            this.cbDiabetes.setChecked(false);
+            this.cbAsma.setChecked(false);
+            this.cbEnfisema.setChecked(false);
+            this.cbCancer.setChecked(false);
+            this.cbOutrasDoencas.setChecked(false);
+            this.cbHanseniase.setChecked(false);
+            this.cbTuberculose.setChecked(false);
+            this.cbSintomaticosRespiratorios.setChecked(false);
+
+            this.cbTabagista.setChecked(false);
+            this.cbAcamados.setChecked(false);
+            this.cbVulnerabilidadeSocial.setChecked(false);
+            this.cbAcompanhamentoBolsaFamilia.setChecked(false);
+            this.cbSaudeMental.setChecked(false);
+
+            this.cbUsuarioAlcool.setChecked(false);
+            this.cbUsuarioOutrasDrogas.setChecked(false);
+
+            this.cbAcaoEducativa.setChecked(false);
+            this.cbImovelComFoco.setChecked(false);
+            this.cbAcaoMecanica.setChecked(false);
+            this.cbTratamentoFocal.setChecked(false);
+
+            this.cbEgressoInternacao.setChecked(false);
+            this.cbConvite.setChecked(false);
+            this.cbOrientacao.setChecked(false);
+            this.cbOutros.setChecked(false);
+
+    }
+
+    private void desabilitaMotivosVisita(Integer posicaoDesfecho) {
+
+        List<Integer> tipos = new ArrayList<>(Arrays.asList(1,2));
+
+        boolean desaparecer = tipos.contains(posicaoDesfecho);
+
+        if (desaparecer) {
+
+            this.llMotivosVisita.setVisibility(View.GONE);
+
+            desmarcarCheckBoxesMotivoVisita();
+
+        }
+
+        else {
+            this.llMotivosVisita.setVisibility(View.VISIBLE);
+        }
+
+    }
+    
+    private void validaHabilitacaoCheckBoxesMotivosVisita(int posicaoTipoImovel) {
+
+        List<Integer> tipos = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12));
+
+        boolean desabilitar = tipos.contains(posicaoTipoImovel);
+
+        this.cbVisitaPeriodica.setEnabled(!desabilitar);
+        this.cbConsulta.setEnabled(!desabilitar);
+        this.cbExame.setEnabled(!desabilitar);
+        this.cbVacina.setEnabled(!desabilitar);
+        this.cbBolsaFamilia.setEnabled(!desabilitar);
+        this.cbGestante.setEnabled(!desabilitar);
+        this.cbPuerpera.setEnabled(!desabilitar);
+        this.cbRecemNascido.setEnabled(!desabilitar);
+        this.cbCrianca.setEnabled(!desabilitar);
+        this.cbDesnutricao.setEnabled(!desabilitar);
+        this.cbReabilitacao.setEnabled(!desabilitar);
+        this.cbHipertensao.setEnabled(!desabilitar);
+        this.cbDiabetes.setEnabled(!desabilitar);
+        this.cbAsma.setEnabled(!desabilitar);
+        this.cbEnfisema.setEnabled(!desabilitar);
+        this.cbCancer.setEnabled(!desabilitar);
+        this.cbOutrasDoencas.setEnabled(!desabilitar);
+        this.cbHanseniase.setEnabled(!desabilitar);
+        this.cbTuberculose.setEnabled(!desabilitar);
+        this.cbSintomaticosRespiratorios.setEnabled(!desabilitar);
+        this.cbTabagista.setEnabled(!desabilitar);
+        this.cbAcamados.setEnabled(!desabilitar);
+        this.cbVulnerabilidadeSocial.setEnabled(!desabilitar);
+        this.cbAcompanhamentoBolsaFamilia.setEnabled(!desabilitar);
+        this.cbSaudeMental.setEnabled(!desabilitar);
+        this.cbUsuarioAlcool.setEnabled(!desabilitar);
+        this.cbUsuarioOutrasDrogas.setEnabled(!desabilitar);
+        this.cbEgressoInternacao.setEnabled(!desabilitar);
+
+        if (desabilitar) {
+            this.cbVisitaPeriodica.setChecked(false);
+            this.cbConsulta.setChecked(false);
+            this.cbExame.setChecked(false);
+            this.cbVacina.setChecked(false);
+            this.cbBolsaFamilia.setChecked(false);
+            this.cbGestante.setChecked(false);
+            this.cbPuerpera.setChecked(false);
+            this.cbRecemNascido.setChecked(false);
+            this.cbCrianca.setChecked(false);
+            this.cbDesnutricao.setChecked(false);
+            this.cbReabilitacao.setChecked(false);
+            this.cbHipertensao.setChecked(false);
+            this.cbDiabetes.setChecked(false);
+            this.cbAsma.setChecked(false);
+            this.cbEnfisema.setChecked(false);
+            this.cbCancer.setChecked(false);
+            this.cbOutrasDoencas.setChecked(false);
+            this.cbHanseniase.setChecked(false);
+            this.cbTuberculose.setChecked(false);
+            this.cbSintomaticosRespiratorios.setChecked(false);
+            this.cbTabagista.setChecked(false);
+            this.cbAcamados.setChecked(false);
+            this.cbVulnerabilidadeSocial.setChecked(false);
+            this.cbAcompanhamentoBolsaFamilia.setChecked(false);
+            this.cbSaudeMental.setChecked(false);
+            this.cbUsuarioAlcool.setChecked(false);
+            this.cbUsuarioOutrasDrogas.setChecked(false);
+            this.cbEgressoInternacao.setChecked(false);
+        }
+
+    }
+
+
     private boolean validaCampos() {
 
         boolean valido = true;
 
+        String aviso = "";
+
         String cboProfissional = prefs.getString("cbo", "");
 
-        if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
+        if (!(cboProfissional.equals("515105") || cboProfissional.equals("515120") || cboProfissional.equals("515310") || cboProfissional.equals("51514"))) {
+            aviso = Utilitario.addAviso("Sua ocupação não permite registrar esta ficha.", aviso);
+            valido = false;
+        } else {
 
-            if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
-                Snackbar.make(getCurrentFocus(), "CNS do cidadão inválido.", Snackbar.LENGTH_LONG).show();
+            if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+                aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
                 valido = false;
             }
 
-        } else {
-            Snackbar.make(getCurrentFocus(), "Preencha a CNS do cidadão.", Snackbar.LENGTH_LONG).show();
-            valido = false;
+            if (!rbTurnoM.isChecked() && !rbTurnoT.isChecked() && !rbTurnoN.isChecked()) {
+                aviso = Utilitario.addAviso("Preencha o turno da visita.", aviso);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etMicroarea.getText().toString()) && !cbForaDeArea.isChecked()) {
+                aviso = Utilitario.addAviso("Preencha a microarea.", aviso);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty((((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo()))) {
+                aviso = Utilitario.addAviso("Preencha o tipo de imóvel.", aviso);
+                valido = false;
+
+            } else {
+
+                if (!new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12)).contains(((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo())) {
+
+                    if (Utilitario.isEmpty(etProntuario.getText().toString())) {
+                        aviso = Utilitario.addAviso("Preencha o prontuário.", aviso);
+                        valido = false;
+                    }
+
+                    if (!Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
+
+                        if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                            aviso = Utilitario.addAviso("CNS do cidadão inválido.", aviso);
+                            valido = false;
+                        }
+
+                    } else {
+                        aviso = Utilitario.addAviso("Preencha a CNS do cidadão.", aviso);
+                        valido = false;
+                    }
+
+                    if (flagPossuiOpcaoGrupoBuscaAtiva() || flagPossuiOpcaoGrupoAcompanhamento() || cbEgressoInternacao.isChecked() || cbOrientacao.isChecked() || !Utilitario.isEmpty(etPeso.getText().toString()) || !Utilitario.isEmpty(etAltura.getText().toString())) {
+
+                        if (Utilitario.isEmpty(etNascimento.getText().toString())) {
+                            aviso = Utilitario.addAviso("Preencha a data de nascimento.", aviso);
+                            valido = false;
+                        }
+
+                        if (!rbSexoM.isChecked() && !rbSexoF.isChecked()) {
+                            aviso = Utilitario.addAviso("Preencha o sexo.", aviso);
+                            valido = false;
+                        }
+                    }
+
+                }
+
+            }
         }
 
-        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(getCurrentFocus(), "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
-            valido = false;
-        }
-
-        if (rbVisitaRealizada.isChecked() && Utilitario.isEmpty(etNascimento.getText().toString())) {
-            Snackbar.make(getCurrentFocus(), "Preencha a data de nascimento.", Snackbar.LENGTH_LONG).show();
-            valido = false;
-        }
-
-        if (!(cboProfissional.equals("515105") || cboProfissional.equals("515120") || cboProfissional.equals("515310") || cboProfissional.equals("51514"))) {
-            Snackbar.make(getCurrentFocus(), "Sua ocupação não permite registrar esta ficha.", Snackbar.LENGTH_LONG).show();
-            valido = false;
-
-
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(FichaVisitaDTActivity.this, aviso);
         }
 
         return valido;
@@ -326,6 +556,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             rbTurnoN.setChecked(this.fichaVisitaDTModel.getTurno().equals("N"));
         }
         etMicroarea.setText(this.fichaVisitaDTModel.getMicroArea());
+        cbForaDeArea.setChecked(this.fichaVisitaDTModel.getFlagForaArea());
 
         if (!Utilitario.isEmpty(this.fichaVisitaDTModel.getTipoImovelModel()) && this.fichaVisitaDTModel.getTipoImovelModel().getCodigo() > 0) {
             spinnerTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaVisitaDTModel.getTipoImovelModel()));
@@ -334,8 +565,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         etProntuario.setText(this.fichaVisitaDTModel.getProntuario());
         etCnsCidadao.setText(this.fichaVisitaDTModel.getCnsCidadao());
         etNascimento.setText(Utilitario.getDataFormatada(this.fichaVisitaDTModel.getDataNascimento()));
-        rbSexoM.setChecked(this.fichaVisitaDTModel.getSexo().equals("M"));
-        rbSexoF.setChecked(this.fichaVisitaDTModel.getSexo().equals("F"));
+        rbSexoM.setChecked(!Utilitario.isEmpty(this.fichaVisitaDTModel.getSexo()) && this.fichaVisitaDTModel.getSexo().equals("M"));
+        rbSexoF.setChecked(!Utilitario.isEmpty(this.fichaVisitaDTModel.getSexo()) && this.fichaVisitaDTModel.getSexo().equals("F"));
         cbVisitaCompartilhada.setChecked(this.fichaVisitaDTModel.getFlagVisitaCompartilhada());
 
         cbCadastramentoAtt.setChecked(this.fichaVisitaDTModel.getFlagCadastramento());
@@ -395,6 +626,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.fichaVisitaDTModel.setTipoImovelModel((TipoModel) spinnerTipoImovel.getSelectedItem());
         this.fichaVisitaDTModel.setTurno(rbTurnoM.isChecked() ? "M" : rbTurnoT.isChecked() ? "T" : rbTurnoN.isChecked() ? "N" : null);
         this.fichaVisitaDTModel.setMicroArea(etMicroarea.getText().toString());
+        this.fichaVisitaDTModel.setFlagForaArea(cbForaDeArea.isChecked());
 
         this.fichaVisitaDTModel.setProntuario(etProntuario.getText().toString());
         this.fichaVisitaDTModel.setCnsCidadao(etCnsCidadao.getText().toString());

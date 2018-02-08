@@ -123,23 +123,49 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void desabilitaEditText(final RadioGroup rg, final Integer valorIndex, final EditText et) {
 
+        Integer[] i = {valorIndex};
+
+        desabilitaEditText(rg, i, et);
+    }
+
+    protected void validaHabilitacaoEditText(final EditText et, boolean flagHabilitacao) {
+
+        if (flagHabilitacao) {
+            et.setEnabled(false);
+            et.getText().clear();
+            et.clearFocus();
+            et.setFocusable(false);
+        } else {
+            et.setEnabled(true);
+            et.setFocusable(true);
+            et.setFocusableInTouchMode(true);
+        }
+
+    }
+
+    protected void desabilitaEditText(final RadioGroup rg, final Integer[] valorIndex, final EditText et) {
+
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup rg, int checkedId) {
 
                 Integer indexRg = rg.indexOfChild(findViewById(checkedId));
 
-                if (indexRg == valorIndex) {
-                    et.setEnabled(false);
-                    et.getText().clear();
-                    et.clearFocus();
-                    et.setFocusable(false);
-                    et.setFocusableInTouchMode(false);
-                } else {
-                    et.setEnabled(true);
-                    et.setFocusable(true);
-                    et.setFocusableInTouchMode(true);
-                    et.requestFocus();
+                for (int i = 0; i < valorIndex.length; i++) {
+
+                    if (indexRg == valorIndex[i]) {
+                        et.setEnabled(false);
+                        et.getText().clear();
+                        et.clearFocus();
+                        et.setFocusable(false);
+                        et.setFocusableInTouchMode(false);
+                    } else {
+                        et.setEnabled(true);
+                        et.setFocusable(true);
+                        et.setFocusableInTouchMode(true);
+                        et.requestFocus();
+                    }
+
                 }
             }
         });

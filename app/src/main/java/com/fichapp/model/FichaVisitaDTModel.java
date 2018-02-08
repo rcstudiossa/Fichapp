@@ -14,6 +14,7 @@ public class FichaVisitaDTModel implements Serializable{
     private Date dataRegistro;
     private String turno;
     private String microArea;
+    private Boolean flagForaArea;
     private TipoModel TipoImovelModel;
 
     private String prontuario;
@@ -109,6 +110,14 @@ public class FichaVisitaDTModel implements Serializable{
 
     public void setMicroArea(String microArea) {
         this.microArea = microArea;
+    }
+
+    public Boolean getFlagForaArea() {
+        return flagForaArea;
+    }
+
+    public void setFlagForaArea(Boolean flagForaArea) {
+        this.flagForaArea = flagForaArea;
     }
 
     public TipoModel getTipoImovelModel() {

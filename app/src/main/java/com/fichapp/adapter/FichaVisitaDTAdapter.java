@@ -45,6 +45,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     @Override
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
+        fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha: %s", mList.get(position).getId()));
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
         fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
@@ -99,6 +100,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
     public class FichaVisitaDTVH extends RecyclerView.ViewHolder {
 
+        public TextView fichaTV;
         public TextView cnsTV;
         public TextView prontuarioTV;
         public TextView dataTV;
@@ -107,6 +109,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         public FichaVisitaDTVH(View itemView) {
             super(itemView);
+            fichaTV = (TextView) itemView.findViewById(R.id.et_ficha);
             cnsTV = (TextView) itemView.findViewById(R.id.et_cns);
             prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
             dataTV = (TextView) itemView.findViewById(R.id.tv_data);

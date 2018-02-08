@@ -71,7 +71,7 @@
             android:hint="Usuário"
             android:inputType="textEmailAddress"
             android:padding="4dp"
-            android:text="smpep" />
+            android:text="roque" />
 
 
         <EditText
@@ -86,7 +86,7 @@
             android:hint="Senha"
             android:inputType="textPassword"
             android:padding="4dp"
-            android:text="topsys" />
+            android:text="1qaz2wsx" />
 
         <Spinner
             android:id="@+id/spinner_hospital"

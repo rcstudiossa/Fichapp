@@ -49,11 +49,11 @@
                     android:id="@+id/tv_cabecalho"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBGDivider"
                     android:layout_margin="@dimen/field_margin"
+                    android:background="@color/colorBGDivider"
+                    android:paddingBottom="2dp"
                     android:paddingStart="6dp"
                     android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
                     android:text="Dados Gerais"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
@@ -127,42 +127,50 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayout2"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginStart="@dimen/field_margin"
-                        android:layout_marginEnd="@dimen/field_margin"
-                        android:layout_marginBottom="@dimen/field_margin">
-
-                        <EditText
-                            android:id="@+id/et_microarea"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginEnd="16dp"
-                            android:hint="Microárea*"
-                            android:maxLength="2"
-                            android:inputType="number" />
-                    </android.support.design.widget.TextInputLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".60"
-                        android:orientation="vertical">
+                        android:layout_margin="@dimen/field_margin"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/textInputLayout2"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/et_microarea"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginEnd="16dp"
+                                android:hint="Microárea*"
+                                android:inputType="number"
+                                android:maxLength="2" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <CheckBox
+                            android:id="@+id/cb_fora_de_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/field_margin_start"
+                            android:text="Fora de Área" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/field_margin">
 
                         <TextView
                             android:id="@+id/tv_tipo_imovel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/field_margin"
                             android:text="Tipo de Imóvel*"
                             android:layout_marginBottom="6dp"
                             android:textColor="@color/colorPrimaryDark" />
@@ -171,14 +179,9 @@
                             android:id="@+id/spinner_tipo_imovel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/field_margin"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-
 
                 <TextView
                     android:id="@+id/tv_dados_cidadao"
@@ -187,6 +190,7 @@
                     android:background="@color/colorBGDivider"
                     android:layout_marginTop="12dp"
                     android:layout_marginStart="@dimen/field_margin"
+                    android:layout_marginEnd="@dimen/field_margin"
                     android:paddingStart="6dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp"
@@ -205,6 +209,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Nº Prontuário"
+                        android:maxLength="30"
                         android:inputType="number" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -297,310 +302,358 @@
                     android:text="Visita compartilhada com outro profissional" />
 
                 <TextView
-                    android:id="@+id/tv_motivos_visita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Desfecho*"
+                    android:textColor="@color/colorPrimaryDark" />
+
+                <RadioGroup
+                    android:id="@+id/rg_desfecho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/field_margin">
+
+                    <RadioButton
+                        android:id="@+id/rb_visita_realizada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Visita realizada"
+                        android:checked="true"
+                        android:layout_marginStart="@dimen/field_margin_start"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_visita_recusada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Visita recusada"
+                        android:layout_marginStart="@dimen/field_margin_start"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_ausente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ausente"
+                        android:layout_marginStart="@dimen/field_margin_start"/>
+
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/ll_motivos_visita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBGDivider"
-                    android:layout_marginTop="@dimen/field_margin"
-                    android:paddingStart="6dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="Motivo da Visita**"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/cb_cadastramento_atualizacao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Cadastramento/Atualização" />
+                    <TextView
+                        android:id="@+id/tv_motivos_visita"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBGDivider"
+                        android:layout_marginTop="8dp"
+                        android:paddingStart="6dp"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:text="Motivo da Visita**"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
 
-                <CheckBox
-                    android:id="@+id/cb_visita_periodica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Visita Periódica" />
+                    <CheckBox
+                        android:id="@+id/cb_cadastramento_atualizacao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Cadastramento/Atualização" />
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Busca ativa"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <CheckBox
-                    android:id="@+id/cb_consulta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Consulta" />
-
-                <CheckBox
-                    android:id="@+id/cb_exame"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Exame" />
-
-                <CheckBox
-                    android:id="@+id/cb_vacina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Vacina" />
-
-                <CheckBox
-                    android:id="@+id/cb_cond_bolsa_familia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Condicionalidades do Bolsa Família" />
+                    <CheckBox
+                        android:id="@+id/cb_visita_periodica"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Visita Periódica" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Acompanhamento"
-                    android:textColor="@color/colorPrimaryDark" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Busca ativa"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                <CheckBox
-                    android:id="@+id/cb_gestante"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Gestante" />
+                    <CheckBox
+                        android:id="@+id/cb_consulta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Consulta" />
 
-                <CheckBox
-                    android:id="@+id/cb_puerpera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Puérpera" />
+                    <CheckBox
+                        android:id="@+id/cb_exame"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Exame" />
 
-                <CheckBox
-                    android:id="@+id/cb_recem_nascido"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Recém Nascido" />
+                    <CheckBox
+                        android:id="@+id/cb_vacina"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Vacina" />
 
-                <CheckBox
-                    android:id="@+id/cb_crianca"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Criança" />
-
-                <CheckBox
-                    android:id="@+id/cb_desnutricao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com desnutrição" />
-
-                <CheckBox
-                    android:id="@+id/cb_reabilitacao_deficiencia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa em reabilitação com deficiência" />
-
-                <CheckBox
-                    android:id="@+id/cb_hipertencao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com hipertensão" />
-
-                <CheckBox
-                    android:id="@+id/cb_diabetes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com diabetes" />
-
-                <CheckBox
-                    android:id="@+id/cb_asma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com asma" />
-
-                <CheckBox
-                    android:id="@+id/cb_dpoc_enfisema"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pesooa com DPOC/enfisema" />
-
-                <CheckBox
-                    android:id="@+id/cb_cancer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com câncer" />
-
-                <CheckBox
-                    android:id="@+id/cb_outras_doencas_cronicas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com outras doenças crônicas" />
-
-                <CheckBox
-                    android:id="@+id/cb_hanseniase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com hanseníase" />
-
-                <CheckBox
-                    android:id="@+id/cb_tuberculose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com tuberculose" />
-
-                <CheckBox
-                    android:id="@+id/cb_sintomaticos_respiratorios"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Pessoa com sintomáticos respiratórios" />
-
-                <CheckBox
-                    android:id="@+id/cb_tabagista"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Tabagista" />
-
-                <CheckBox
-                    android:id="@+id/cb_domiciliados_acamados"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Domiciliados/Acamados" />
-
-                <CheckBox
-                    android:id="@+id/cb_vulnerabilidade_social"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Condições de vulnerabilidade social" />
-
-                <CheckBox
-                    android:id="@+id/cb_acompanhamento_cond_bolsa_familia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Condicionalidades do Bolsa Familia" />
-
-                <CheckBox
-                    android:id="@+id/cb_saude_mental"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Saude mental" />
-
-                <CheckBox
-                    android:id="@+id/cb_usuario_alcool"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Usuario de álcool" />
-
-                <CheckBox
-                    android:id="@+id/cb_usuario_outras_drogas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Usuário de outras drogas" />
+                    <CheckBox
+                        android:id="@+id/cb_cond_bolsa_familia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Condicionalidades do Bolsa Família" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Controle ambiental/vetorial"
-                    android:textColor="@color/colorPrimaryDark" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Acompanhamento"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                <CheckBox
-                    android:id="@+id/cb_acao_educativa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Açao educativa" />
+                    <CheckBox
+                        android:id="@+id/cb_gestante"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Gestante" />
 
-                <CheckBox
-                    android:id="@+id/cb_imovel_foco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Imóvel com foco" />
+                    <CheckBox
+                        android:id="@+id/cb_puerpera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Puérpera" />
 
-                <CheckBox
-                    android:id="@+id/cb_acao_mecanica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Ação mecanica" />
+                    <CheckBox
+                        android:id="@+id/cb_recem_nascido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Recém Nascido" />
 
-                <CheckBox
-                    android:id="@+id/cb_tratamento_focal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Tratamento focal" />
+                    <CheckBox
+                        android:id="@+id/cb_crianca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Criança" />
+
+                    <CheckBox
+                        android:id="@+id/cb_desnutricao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com desnutrição" />
+
+                    <CheckBox
+                        android:id="@+id/cb_reabilitacao_deficiencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa em reabilitação com deficiência" />
+
+                    <CheckBox
+                        android:id="@+id/cb_hipertencao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com hipertensão" />
+
+                    <CheckBox
+                        android:id="@+id/cb_diabetes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com diabetes" />
+
+                    <CheckBox
+                        android:id="@+id/cb_asma"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com asma" />
+
+                    <CheckBox
+                        android:id="@+id/cb_dpoc_enfisema"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pesooa com DPOC/enfisema" />
+
+                    <CheckBox
+                        android:id="@+id/cb_cancer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com câncer" />
+
+                    <CheckBox
+                        android:id="@+id/cb_outras_doencas_cronicas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com outras doenças crônicas" />
+
+                    <CheckBox
+                        android:id="@+id/cb_hanseniase"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com hanseníase" />
+
+                    <CheckBox
+                        android:id="@+id/cb_tuberculose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com tuberculose" />
+
+                    <CheckBox
+                        android:id="@+id/cb_sintomaticos_respiratorios"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Pessoa com sintomáticos respiratórios" />
+
+                    <CheckBox
+                        android:id="@+id/cb_tabagista"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Tabagista" />
+
+                    <CheckBox
+                        android:id="@+id/cb_domiciliados_acamados"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Domiciliados/Acamados" />
+
+                    <CheckBox
+                        android:id="@+id/cb_vulnerabilidade_social"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Condições de vulnerabilidade social" />
+
+                    <CheckBox
+                        android:id="@+id/cb_acompanhamento_cond_bolsa_familia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Condicionalidades do Bolsa Familia" />
+
+                    <CheckBox
+                        android:id="@+id/cb_saude_mental"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Saude mental" />
+
+                    <CheckBox
+                        android:id="@+id/cb_usuario_alcool"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Usuario de álcool" />
+
+                    <CheckBox
+                        android:id="@+id/cb_usuario_outras_drogas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Usuário de outras drogas" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Motivo da visita"
-                    android:textColor="@color/colorPrimaryDark" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Controle ambiental/vetorial"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                <CheckBox
-                    android:id="@+id/cb_egresso_internacao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Egresso de internação" />
+                    <CheckBox
+                        android:id="@+id/cb_acao_educativa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Açao educativa" />
 
-                <CheckBox
-                    android:id="@+id/cb_convite_atividades"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Convite atividades coletivas/campanha de saúde" />
+                    <CheckBox
+                        android:id="@+id/cb_imovel_foco"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Imóvel com foco" />
 
-                <CheckBox
-                    android:id="@+id/cb_orientaçao_prevenção"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Orientação/prevenção" />
+                    <CheckBox
+                        android:id="@+id/cb_acao_mecanica"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Ação mecanica" />
 
-                <CheckBox
-                    android:id="@+id/cb_outros_animais"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/field_margin_start"
-                    android:text="Outros" />
+                    <CheckBox
+                        android:id="@+id/cb_tratamento_focal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Tratamento focal" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Motivo da visita"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <CheckBox
+                        android:id="@+id/cb_egresso_internacao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Egresso de internação" />
+
+                    <CheckBox
+                        android:id="@+id/cb_convite_atividades"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Convite atividades coletivas/campanha de saúde" />
+
+                    <CheckBox
+                        android:id="@+id/cb_orientaçao_prevenção"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Orientação/prevenção" />
+
+                    <CheckBox
+                        android:id="@+id/cb_outros_animais"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Outros" />
+
+                </LinearLayout>
 
 
                 <TextView
@@ -646,45 +699,6 @@
                     </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Desfecho*"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <RadioGroup
-                    android:id="@+id/rgDesfecho"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rb_visita_realizada"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Visita realizada"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
-
-                    <RadioButton
-                        android:id="@+id/rb_visita_recusada"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Visita recusada"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
-
-                    <RadioButton
-                        android:id="@+id/rb_ausente"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ausente"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
-
-                </RadioGroup>
 
             </LinearLayout>
 

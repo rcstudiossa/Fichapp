@@ -51,7 +51,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getFlagPaiDesconhecido(),
 
                 fichaModel.getNacionalidade(),
-                fichaModel.getPaisNascimento(),
+                fichaModel.getPaisNascimento().getCodigo(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
                 Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
@@ -220,7 +220,7 @@ public class FichaCadastroIndividualDAO {
                 fichaModel.getFlagPaiDesconhecido(),
 
                 fichaModel.getNacionalidade(),
-                fichaModel.getPaisNascimento(),
+                fichaModel.getPaisNascimento().getCodigo(),
                 fichaModel.getMunicipioUfNascimento(),
                 fichaModel.getPortariaNaturalizacao(),
                 Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
@@ -482,7 +482,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setFlagPaiDesconhecido(c.getInt(c.getColumnIndex("flag_pai_desconhecido")) > 0);
 
         fichaModel.setNacionalidade(c.getInt(c.getColumnIndex("nacionalidade")));
-        fichaModel.setPaisNascimento(c.getString(c.getColumnIndex("pais_nascimento")));
+        fichaModel.setPaisNascimento(new TipoModel(c.getInt(c.getColumnIndex("pais_nascimento"))));
         fichaModel.setMunicipioUfNascimento(c.getString(c.getColumnIndex("municipio_uf_nascimento")));
         fichaModel.setPortariaNaturalizacao(c.getString(c.getColumnIndex("portaria_naturalizacao")));
         fichaModel.setDataNaturalizacao(Utilitario.getDate(c.getString(c.getColumnIndex("data_naturalizacao"))));

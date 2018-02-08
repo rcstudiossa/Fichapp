@@ -18,6 +18,15 @@
         android:layout_centerVertical="true">
 
         <TextView
+            android:id="@+id/et_ficha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ficha: 0001"
+            android:textSize="@dimen/item_rv_text_size"
+            android:textColor="@android:color/black"
+            android:layout_alignParentStart="true" />
+
+        <TextView
             android:id="@+id/et_cns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

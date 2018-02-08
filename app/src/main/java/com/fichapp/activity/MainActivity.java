@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private TextView tvInicial;
 
+    private Long usuarioId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -67,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.actionFab();
 
-        this.configDrawer();
-
         this.atualizarDadosUsuarioLogado();
+
+        this.configDrawer();
 
     }
 
@@ -81,10 +83,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         tvInicial = (TextView) findViewById(R.id.tv_inicial);
-
         View v = navigationView.getHeaderView(0);
-
         tvNomeBar = v.findViewById(R.id.tv_capa_nome_bar);
         tvCboBar = v.findViewById(R.id.tv_capa_cbo_bar);
         tvHospitalBar = v.findViewById(R.id.tv_capa_hospital_bar);
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
+        this.usuarioId = prefs.getLong("id", 0);
         this.tvNomeBar.setText("Usuário: " + prefs.getString("nome", ""));
         this.tvCboBar.setText("CBO: " + prefs.getString("cbo", ""));
         this.tvHospitalBar.setText("Origem: " + prefs.getString("cnes", ""));
@@ -200,6 +202,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+        if (!usuarioId.equals(1L)) {
+            MenuItem item = menu.getItem(0);
+            item.setVisible(false);
+        } else {
+            MenuItem item = menu.getItem(1);
+            item.setVisible(false);
+        }
 
     }
 

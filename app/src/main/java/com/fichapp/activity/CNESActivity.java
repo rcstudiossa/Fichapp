@@ -57,7 +57,7 @@ public class CNESActivity extends TemplateActivity {
             }
         });
 
-        this.leitorCampos();
+        //this.leitorCampos();
 
     }
 
@@ -113,7 +113,7 @@ public class CNESActivity extends TemplateActivity {
         String aviso = "";
 
         if (Utilitario.isEmpty(nomeET.getText().toString())) {
-            aviso = Utilitario.addAviso("O nomeET do hospital está vazio", aviso);
+            aviso = Utilitario.addAviso("O nome do hospital está vazio", aviso);
             valido = false;
         }
 
@@ -122,8 +122,8 @@ public class CNESActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (!valido) {
-            Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(CNESActivity.this, aviso);
         }
 
         return valido;

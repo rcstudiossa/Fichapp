@@ -461,8 +461,10 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         boolean valido = true;
 
+        String aviso = "";
+
         if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            Snackbar.make(fabGravar, "Preencha a data de registro.", Snackbar.LENGTH_LONG).show();
+            aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
             valido = false;
         }
 
@@ -471,45 +473,48 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             //TODO: areaProducaoRural
 
             if (((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == null) {
-                Snackbar.make(fabGravar, "Selecione o tipo de imóvel.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Selecione o tipo de imóvel.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etBairro.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o bairro.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etCep.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o CEP.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o CEP.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etMunicipio.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o Município.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o Município.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o nome do logradouro.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o nome do logradouro.", aviso);
                 valido = false;
             } else if ((Utilitario.isEmpty(etNumero.getText().toString())) && cbSemNumero.isChecked()) {
-                Snackbar.make(fabGravar, "Preencha o número.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o número.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etUf.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o UF.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o UF.", aviso);
                 valido = false;
             } else if (Utilitario.isEmpty(etTipoLogradouro.getText().toString())) {
-                Snackbar.make(fabGravar, "Preencha o tipo do logradouro.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
                 valido = false;
             } else if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-                Snackbar.make(fabGravar, "Preencha a microárea.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
                 valido = false;
             } else if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
-                Snackbar.make(fabGravar, "Selecione a localização.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Selecione a localização.", aviso);
                 valido = false;
             } else if ((((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo() == null) && (!(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
-                Snackbar.make(fabGravar, "Selecione a situação de moradia.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Selecione a situação de moradia.", aviso);
                 valido = false;
             } else if ((Utilitario.isEmpty(etNomeResponsavel.getText().toString()))) {
-                Snackbar.make(fabGravar, "Preencha o nome do responsável técnico.", Snackbar.LENGTH_LONG).show();
+                aviso = Utilitario.addAviso("Preencha o nome do responsável técnico.", aviso);
                 valido = false;
             }
 
         }
 
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(FichaCadastroDTActivity.this, aviso);
+        }
 
         return valido;
 
