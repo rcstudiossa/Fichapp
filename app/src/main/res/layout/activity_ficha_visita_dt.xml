@@ -70,9 +70,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp">
 
-                        <!-- TODO: Finally, my only working solution has been to create an AlertDialog and include a DatePicker as a view. Thanks! -->
-                        <!-- https://stackoverflow.com/questions/39429946/how-to-change-the-datepicker-style-for-android -->
-
                         <EditText
                             android:id="@+id/et_data_registro"
                             android:layout_width="match_parent"
@@ -329,7 +326,7 @@
                         android:id="@+id/rb_visita_recusada"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Visita recusada"
+                        android:text="Recusada"
                         android:layout_marginStart="@dimen/field_margin_start"/>
 
                     <RadioButton

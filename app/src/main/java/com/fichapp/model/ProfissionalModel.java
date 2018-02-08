@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class ProfissionalModel implements Serializable{
 
     private Long id;
-    private String cbo;
+    private TipoModel cbo;
     private String cns;
     private String nome;
     private CNESModel cnesModel;
@@ -25,7 +25,7 @@ public class ProfissionalModel implements Serializable{
         this.id = id;
     }
 
-    public ProfissionalModel(Long id, String cbo, String cns, String nome, Boolean flagAtivo, Long cnesId) {
+    public ProfissionalModel(Long id, TipoModel cbo, String cns, String nome, Boolean flagAtivo, Long cnesId) {
         this.id = id;
         this.cbo = cbo;
         this.cns = cns;
@@ -47,11 +47,11 @@ public class ProfissionalModel implements Serializable{
         this.id = id;
     }
 
-    public String getCbo() {
+    public TipoModel getCbo() {
         return cbo;
     }
 
-    public void setCbo(String cbo) {
+    public void setCbo(TipoModel cbo) {
         this.cbo = cbo;
     }
 

@@ -143,9 +143,11 @@ public class LoginActivity extends AppCompatActivity {
 
         prefs.edit().putLong("id", profissionalModel.getId()).commit();
         prefs.edit().putString("nome", profissionalModel.getNome()).commit();
-        prefs.edit().putString("cbo", profissionalModel.getCbo()).commit();
+        if (!Utilitario.isEmpty(profissionalModel.getCbo().getCodigo())) {
+            prefs.edit().putString("cbo", profissionalModel.getCbo().getCodigo().toString()).commit();
+        }
         prefs.edit().putLong("cnes_id", profissionalModel.getCnesModel().getId()).commit();
-        prefs.edit().putString("cnes", profissionalModel.getCnesModel().getNome()).commit();
+        prefs.edit().putString("cnes", profissionalModel.getCnesModel().getCodigo()).commit();
 
     }
 

@@ -773,6 +773,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                     llSocioDemografico.setVisibility(View.GONE);
                     llCondicoesSaude.setVisibility(View.GONE);
                     llSituacaoRua.setVisibility(View.GONE);
+
                 } else {
                     llSocioDemografico.setVisibility(View.VISIBLE);
                     llCondicoesSaude.setVisibility(View.VISIBLE);

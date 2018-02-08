@@ -21,12 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fichapp.R;
+import com.fichapp.business.MunicipioBS;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Rodrigo Costa on 29/12/2017.
@@ -328,6 +331,14 @@ public class TemplateActivity extends AppCompatActivity {
         ArrayAdapter<TipoModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTipoImovel());
         spinner.setAdapter(adapterTipoImovel);
         adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+    }
+
+    protected void carregarSpinnerMunicipio(Spinner spinner, List<MunicipioModel> lista) {
+
+        ArrayAdapter<MunicipioModel> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
+        spinner.setAdapter(adapter);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
     }
 

@@ -19,6 +19,7 @@ import com.fichapp.model.CNESModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.List;
@@ -28,7 +29,6 @@ public class ProfissionalActivity extends TemplateActivity {
     private ProfissionalModel profissionalModel;
     private ProfissionalBS profissionalBS;
 
-    private EditText etCbo;
     private EditText etCns;
     private EditText etIne;
     private EditText etNome;
@@ -37,6 +37,7 @@ public class ProfissionalActivity extends TemplateActivity {
     private EditText etConfirmarSenha;
     private CheckBox mFlagAtivo;
     private Spinner spHospital;
+    private Spinner spCbo;
     private Button btGravar;
     private Toolbar toolbar;
 
@@ -66,16 +67,12 @@ public class ProfissionalActivity extends TemplateActivity {
             }
         });
 
-        //this.leitorCampos();
-
-        //this.validadorBotao();
-
     }
 
     private void definirComponentes() {
 
         btGravar = (Button) findViewById(R.id.bt_gravar);
-        etCbo = (EditText) findViewById(R.id.et_cbo);
+        spCbo = (Spinner) findViewById(R.id.spinner_cbo);
         etCns = (EditText) findViewById(R.id.et_cns);
         etIne = (EditText) findViewById(R.id.et_ine);
         etNome = (EditText) findViewById(R.id.et_nome);
@@ -116,7 +113,7 @@ public class ProfissionalActivity extends TemplateActivity {
             this.profissionalModel = new ProfissionalModel();
             mFlagAtivo.setChecked(Boolean.TRUE);
         } else {
-            etCbo.setText(this.profissionalModel.getCbo());
+            spCbo.setSelection(new TipoModel().getComboCBO().indexOf(this.profissionalModel.getCbo()));
             etCns.setText(this.profissionalModel.getCns());
             etIne.setText(this.profissionalModel.getIne());
             etNome.setText(this.profissionalModel.getNome());
@@ -137,6 +134,12 @@ public class ProfissionalActivity extends TemplateActivity {
         ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
         spHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
+
+        ArrayAdapter<TipoModel> spAdapter;
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboCBO());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spCbo.setAdapter(spAdapter);
 
     }
 
@@ -164,7 +167,7 @@ public class ProfissionalActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(etCbo.getText().toString())) {
+        if (Utilitario.isEmpty(((TipoModel)spCbo.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("O código CBO está vazio", aviso);
             valido = false;
         }
@@ -199,7 +202,7 @@ public class ProfissionalActivity extends TemplateActivity {
             return;
         }
 
-        this.profissionalModel.setCbo(etCbo.getText().toString());
+        this.profissionalModel.setCbo((TipoModel)spCbo.getSelectedItem());
         this.profissionalModel.setCns(etCns.getText().toString());
         this.profissionalModel.setIne(etIne.getText().toString());
         this.profissionalModel.setNome(etNome.getText().toString());
@@ -217,55 +220,6 @@ public class ProfissionalActivity extends TemplateActivity {
         startActivity(intent);
 
         finish();
-
-    }
-
-    private void leitorCampos() {
-
-        btGravar.setEnabled(false);
-
-        TextWatcher validador = new Validador();
-
-        etNome.addTextChangedListener(validador);
-        etCns.addTextChangedListener(validador);
-        etCbo.addTextChangedListener(validador);
-        etUsuario.addTextChangedListener(validador);
-        etSenha.addTextChangedListener(validador);
-        etConfirmarSenha.addTextChangedListener(validador);
-
-    }
-
-    private boolean camposValidosBotao() {
-
-
-        return !Utilitario.isEmpty(etNome.getText().toString()) && !Utilitario.isEmpty(etUsuario.getText().toString()) && !Utilitario.isEmpty(etSenha.getText().toString()) && !Utilitario.isEmpty(etConfirmarSenha.getText().toString()) && etCns.getText().length() == 15 && etCbo.getText().length() == 6;
-
-    }
-
-    private void validadorBotao() {
-
-        btGravar.setEnabled(false);
-
-        if (camposValidosBotao()) {
-            btGravar.setEnabled(true);
-        }
-
-    }
-
-    private class Validador implements TextWatcher {
-
-        @Override
-        public void afterTextChanged(Editable s) {
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            validadorBotao();
-        }
 
     }
 

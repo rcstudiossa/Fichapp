@@ -2,7 +2,7 @@
     <string name="app_name">Fichapp</string>
 
     <string name="cadastros">Cadastros</string>
-    <string name="cnes">Hospitais</string>
+    <string name="cnes">UBS</string>
     <string name="profissional">Profissionais</string>
     <string name="fichas">Fichas</string>
     <string name="ficha_visita_dt">Visita Dom. e Territorial</string>
@@ -15,7 +15,7 @@
     <string name="action_export">Exportar Fichas</string>
 
     <string name="prompt_cnes">Código CNES*</string>
-    <string name="prompt_hospital">Nome do Hospital*</string>
+    <string name="prompt_hospital">Nome da UBS*</string>
     <string name="cadastrar">Gravar</string>
 
     <string name="prompt_cns">Código CNS*</string>

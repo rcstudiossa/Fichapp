@@ -21,9 +21,11 @@ import android.widget.Spinner;
 
 import com.fichapp.R;
 import com.fichapp.business.FichaCadastroDTBS;
+import com.fichapp.business.MunicipioBS;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
@@ -37,12 +39,15 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private FichaCadastroDTModel fichaCadastroDTModel;
     private FichaCadastroDTBS fichaCadastroDTBS;
+    private MunicipioBS municipioBS;
 
     private ProfissionalModel profissionalModel;
     private CNESModel cnesModel;
 
     private Toolbar toolbar;
 
+    private Spinner spUF;
+    private Spinner spTipoLogradouro;
     private Spinner spTipoImovel;
     private Spinner spSituacaoMoradia;
     private Spinner spCondicaoPosseTerra;
@@ -57,10 +62,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private EditText etDataRegistro;
 
     private EditText etCep;
-    private EditText etUf;
-    private EditText etMunicipio;
+    private Spinner spMunicipio;
     private EditText etBairro;
-    private EditText etTipoLogradouro;
     private EditText etNomeLogradouro;
     private EditText etComplemento;
     private EditText etPontoReferencia;
@@ -105,6 +108,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setContentView(R.layout.activity_ficha_cadastro_dt);
         super.onCreate(savedInstanceState);
 
@@ -116,11 +120,11 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.carregarSpinners();
 
+        this.configListeners();
+
         this.configData();
 
         this.instanciarFichaCadastroDTModel();
-
-        this.configListeners();
 
         this.desabilitaCampos();
 
@@ -135,6 +139,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(FichaCadastroDTActivity.this, FichaCadastroDTFamiliasActivity.class);
+                setActivityToModel();
                 intent.putExtra("fichaCadastroDT", fichaCadastroDTModel);
                 startActivity(intent);
             }
@@ -149,13 +154,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void definirComponentes() {
 
-        //EditTexts
         etDataRegistro = (EditText) findViewById(R.id.et_data_registro);
         etCep = (EditText) findViewById(R.id.tv_cep);
-        etUf = (EditText) findViewById(R.id.et_uf);
-        etMunicipio = (EditText) findViewById(R.id.et_municipio);
+        spUF = (Spinner) findViewById(R.id.spinner_uf);
+        spMunicipio = (Spinner) findViewById(R.id.spinner_municipio);
         etBairro = (EditText) findViewById(R.id.et_bairro);
-        etTipoLogradouro = (EditText) findViewById(R.id.et_tipo_logradouro);
+        spTipoLogradouro = (Spinner) findViewById(R.id.spinner_tipo_logradouro);
         etNomeLogradouro = (EditText) findViewById(R.id.et_nome_logradouro);
         etComplemento = (EditText) findViewById(R.id.et_complemento);
         etPontoReferencia = (EditText) findViewById(R.id.et_ponto_referencia);
@@ -210,6 +214,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         this.fichaCadastroDTBS = new FichaCadastroDTBS(getApplication());
+        this.municipioBS = new MunicipioBS(getApplication());
 
     }
 
@@ -267,6 +272,14 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboDestinoLixo());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spDestinoLixo.setAdapter(spAdapter);
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboUF());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spUF.setAdapter(spAdapter);
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTipoLogradouro());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spTipoLogradouro.setAdapter(spAdapter);
 
     }
 
@@ -342,6 +355,34 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.desabilitaEditText(cbSemNumero, etNumero);
         this.desabilitaEditText(cbForaDeArea, etMicroarea);
+
+        spUF.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                if (!Utilitario.isEmpty(((TipoModel)spUF.getSelectedItem()).getCodigo())) {
+
+                    List<MunicipioModel> municipios = new MunicipioBS(fichaCadastroDTActivity).pesquisar(((TipoModel) spUF.getSelectedItem()).getAbreviacao());
+
+                    if (!Utilitario.isEmpty(municipios) && municipios.size() > 0) {
+
+                        FichaCadastroDTActivity.this.carregarSpinnerMunicipio(spMunicipio, municipios);
+
+                        spMunicipio.setSelection(municipios.indexOf(fichaCadastroDTModel.getMunicipio()));
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spUF.setSelection(0);
+            }
+
+        });
 
         spTipoImovel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -485,12 +526,12 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(etUf.getText().toString())) {
+        if (Utilitario.isEmpty(((TipoModel)spUF.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o UF.", aviso);
             valido = false;
         }
 
-        if (Utilitario.isEmpty(etMunicipio.getText().toString())) {
+        if (Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o Município.", aviso);
             valido = false;
         }
@@ -500,7 +541,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(etTipoLogradouro.getText().toString())) {
+        if (Utilitario.isEmpty(((TipoModel)spTipoLogradouro.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
             valido = false;
         }
@@ -510,7 +551,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
-        if ((Utilitario.isEmpty(etNumero.getText().toString())) && cbSemNumero.isChecked()) {
+        if ((Utilitario.isEmpty(etNumero.getText().toString())) && !cbSemNumero.isChecked()) {
             aviso = Utilitario.addAviso("Preencha o número.", aviso);
             valido = false;
         }
@@ -527,18 +568,13 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         if (!cbVisitaRecusada.isChecked()) {
 
-            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
+            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && !(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
                 aviso = Utilitario.addAviso("Selecione a situação de moradia.", aviso);
                 valido = false;
             }
 
             if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
                 aviso = Utilitario.addAviso("Selecione a localização.", aviso);
-                valido = false;
-            }
-
-            if ((Utilitario.isEmpty(etNomeResponsavel.getText().toString()))) {
-                aviso = Utilitario.addAviso("Preencha o nome do responsável técnico.", aviso);
                 valido = false;
             }
 
@@ -609,10 +645,20 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         etDataRegistro.setText(Utilitario.getDataFormatada(this.fichaCadastroDTModel.getDataRegistro()));
         etCep.setText(this.fichaCadastroDTModel.getCep());
-        etUf.setText(this.fichaCadastroDTModel.getUf());
-        etMunicipio.setText(this.fichaCadastroDTModel.getMunicipio());
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getUf().getCodigo()) && this.fichaCadastroDTModel.getUf().getCodigo() > 0) {
+
+            spUF.setSelection(new TipoModel().getComboUF().indexOf(this.fichaCadastroDTModel.getUf()));
+
+            if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMunicipio().getCodigo()) && this.fichaCadastroDTModel.getMunicipio().getCodigo() > 0) {
+                spMunicipio.setSelection(municipioBS.pesquisar(((TipoModel)spUF.getSelectedItem()).getDescricao()).indexOf(this.fichaCadastroDTModel.getMunicipio()));
+            }
+
+        }
+
         etBairro.setText(this.fichaCadastroDTModel.getBairro());
-        etTipoLogradouro.setText(this.fichaCadastroDTModel.getTipoLogradouro());
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro().getCodigo()) && this.fichaCadastroDTModel.getTipoLogradouro().getCodigo() > 0) {
+            spTipoLogradouro.setSelection(new TipoModel().getComboTipoLogradouro().indexOf(this.fichaCadastroDTModel.getTipoLogradouro()));
+        }
         etNomeLogradouro.setText(this.fichaCadastroDTModel.getNomeLogragouro());
         etComplemento.setText(this.fichaCadastroDTModel.getComplemento());
         etPontoReferencia.setText(this.fichaCadastroDTModel.getPontoReferencia());
@@ -621,16 +667,16 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         etMicroarea.setText(this.fichaCadastroDTModel.getMicroArea());
         cbForaDeArea.setChecked(this.fichaCadastroDTModel.getFlagForaDeArea() == null ? false : this.fichaCadastroDTModel.getFlagForaDeArea());
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoImovel()) && this.fichaCadastroDTModel.getTipoImovel().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoImovel().getCodigo()) && this.fichaCadastroDTModel.getTipoImovel().getCodigo() > 0) {
             spTipoImovel.setSelection(new TipoModel().getComboTipoImovel().indexOf(this.fichaCadastroDTModel.getTipoImovel()));
         }
 
         etTelefoneResidencia.setText(this.fichaCadastroDTModel.getTelResidencia());
         etTelefoneContato.setText(this.fichaCadastroDTModel.getTelContato());
 
-        cbVisitaRecusada.setChecked(this.fichaCadastroDTModel.getFlagRecusado());
+        cbVisitaRecusada.setChecked(Utilitario.isEmpty(this.fichaCadastroDTModel.getFlagRecusado()) ? false : this.fichaCadastroDTModel.getFlagRecusado());
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getSituacaoMoradia()) && this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo()) && this.fichaCadastroDTModel.getSituacaoMoradia().getCodigo() > 0) {
             spSituacaoMoradia.setSelection(new TipoModel().getComboSituacaoMoradia().indexOf(this.fichaCadastroDTModel.getSituacaoMoradia()));
         }
 
@@ -638,29 +684,34 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         setPosicaoSelecionadoRG(rgTipoDomicilio, this.fichaCadastroDTModel.getTipoDomicilio());
         setPosicaoSelecionadoRG(rgAcessoDomicilio, this.fichaCadastroDTModel.getAcessoDomicilio());
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getCondicaoTerra()) && this.fichaCadastroDTModel.getCondicaoTerra().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getCondicaoTerra().getCodigo()) && this.fichaCadastroDTModel.getCondicaoTerra().getCodigo() > 0) {
             spCondicaoPosseTerra.setSelection(new TipoModel().getComboPosseTerra().indexOf(this.fichaCadastroDTModel.getCondicaoTerra()));
         }
 
-        etNumMoradores.setText(this.fichaCadastroDTModel.getNumMoradores());
-        etNumComodos.setText(this.fichaCadastroDTModel.getNumComodos());
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getNumMoradores()) && this.fichaCadastroDTModel.getNumMoradores() > 0) {
+            etNumMoradores.setText(this.fichaCadastroDTModel.getNumMoradores().toString());
+        }
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMaterialParedes()) && this.fichaCadastroDTModel.getMaterialParedes().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getNumComodos()) && this.fichaCadastroDTModel.getNumComodos() > 0) {
+            etNumComodos.setText(this.fichaCadastroDTModel.getNumComodos().toString());
+        }
+
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMaterialParedes().getCodigo()) && this.fichaCadastroDTModel.getMaterialParedes().getCodigo() > 0) {
             spMaterialParedes.setSelection(new TipoModel().getComboMaterialParedes().indexOf(this.fichaCadastroDTModel.getMaterialParedes()));
         }
 
         setPosicaoSelecionadoRG(rgTemEnergiaEletrica, this.fichaCadastroDTModel.getFlagEnergiaEletrica());
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAbastecimentoAgua()) && this.fichaCadastroDTModel.getAbastecimentoAgua().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAbastecimentoAgua()) && !Utilitario.isEmpty(this.fichaCadastroDTModel.getAbastecimentoAgua().getCodigo()) && this.fichaCadastroDTModel.getAbastecimentoAgua().getCodigo() > 0) {
             spAbastecimentoAgua.setSelection(new TipoModel().getComboAbastecimentoAgua().indexOf(this.fichaCadastroDTModel.getAbastecimentoAgua()));
         }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAguaConsumo()) && this.fichaCadastroDTModel.getAguaConsumo().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getAguaConsumo()) && !Utilitario.isEmpty(this.fichaCadastroDTModel.getAguaConsumo().getCodigo()) && this.fichaCadastroDTModel.getAguaConsumo().getCodigo() > 0) {
             spAguaConsumo.setSelection(new TipoModel().getComboAguaConsumo().indexOf(this.fichaCadastroDTModel.getAguaConsumo()));
         }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getEscoamentoBanheiro()) && this.fichaCadastroDTModel.getEscoamentoBanheiro().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getEscoamentoBanheiro()) && !Utilitario.isEmpty(this.fichaCadastroDTModel.getEscoamentoBanheiro().getCodigo()) && this.fichaCadastroDTModel.getEscoamentoBanheiro().getCodigo() > 0) {
             spEscoamentoBanheiro.setSelection(new TipoModel().getComboEscoamentoBanheiro().indexOf(this.fichaCadastroDTModel.getEscoamentoBanheiro()));
         }
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo()) && this.fichaCadastroDTModel.getDestinoLixo().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo()) && !Utilitario.isEmpty(this.fichaCadastroDTModel.getDestinoLixo().getCodigo()) && this.fichaCadastroDTModel.getDestinoLixo().getCodigo() > 0) {
             spDestinoLixo.setSelection(new TipoModel().getComboDestinoLixo().indexOf(this.fichaCadastroDTModel.getDestinoLixo()));
         }
 
@@ -690,10 +741,10 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setDataRegistro(Utilitario.getDate(etDataRegistro.getText().toString()));
 
         this.fichaCadastroDTModel.setCep(etCep.getText().toString());
-        this.fichaCadastroDTModel.setUf(etUf.getText().toString());
-        this.fichaCadastroDTModel.setMunicipio(etMunicipio.getText().toString());
+        this.fichaCadastroDTModel.setUf((TipoModel) spUF.getSelectedItem());
+        this.fichaCadastroDTModel.setMunicipio((MunicipioModel) spMunicipio.getSelectedItem());
         this.fichaCadastroDTModel.setBairro(etBairro.getText().toString());
-        this.fichaCadastroDTModel.setTipoLogradouro(etTipoLogradouro.getText().toString());
+        this.fichaCadastroDTModel.setTipoLogradouro((TipoModel) spTipoLogradouro.getSelectedItem());
         this.fichaCadastroDTModel.setNomeLogragouro(etNomeLogradouro.getText().toString());
         this.fichaCadastroDTModel.setComplemento(etComplemento.getText().toString());
         this.fichaCadastroDTModel.setPontoReferencia(etPontoReferencia.getText().toString());

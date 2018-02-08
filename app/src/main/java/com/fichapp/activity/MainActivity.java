@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void setFragments() {
 
-        this.barTitleCNES = new String("Hospitais");
+        this.barTitleCNES = new String("UBS");
         this.barTitleProfissionais = new String("Profissionais");
         this.barTitleFichaVisitaDT = new String("Visita Domiciliar/Territorial");
         this.barTitleFichaCadastroDT = new String("Cadastro Domiciliar/Territorial");

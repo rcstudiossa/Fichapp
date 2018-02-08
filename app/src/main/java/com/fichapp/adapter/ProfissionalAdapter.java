@@ -44,7 +44,7 @@ public class ProfissionalAdapter extends RecyclerView.Adapter<ProfissionalAdapte
 
         profissionalViewHolder.nomeTV.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNome()));
         profissionalViewHolder.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCns()));
-        profissionalViewHolder.cboTV.setText(String.format(Locale.getDefault(), "CBO: %s", mList.get(position).getCbo()));
+        profissionalViewHolder.cboTV.setText(String.format(Locale.getDefault(), "CBO: %s", mList.get(position).getCbo().getCodigo()));
 
         profissionalViewHolder.editBT.setOnClickListener(new View.OnClickListener() {
             @Override

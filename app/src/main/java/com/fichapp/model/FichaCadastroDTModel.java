@@ -18,10 +18,10 @@ public class FichaCadastroDTModel implements Serializable {
     private Date dataRegistro;
 
     private String cep;
-    private String uf;
-    private String municipio;
+    private TipoModel uf;
+    private MunicipioModel municipio;
     private String bairro;
-    private String tipoLogradouro;
+    private TipoModel tipoLogradouro;
     private String nomeLogragouro;
     private String complemento;
     private String pontoReferencia;
@@ -114,19 +114,19 @@ public class FichaCadastroDTModel implements Serializable {
         this.cep = cep;
     }
 
-    public String getUf() {
+    public TipoModel getUf() {
         return uf;
     }
 
-    public void setUf(String uf) {
+    public void setUf(TipoModel uf) {
         this.uf = uf;
     }
 
-    public String getMunicipio() {
+    public MunicipioModel getMunicipio() {
         return municipio;
     }
 
-    public void setMunicipio(String municipio) {
+    public void setMunicipio(MunicipioModel municipio) {
         this.municipio = municipio;
     }
 
@@ -138,11 +138,11 @@ public class FichaCadastroDTModel implements Serializable {
         this.bairro = bairro;
     }
 
-    public String getTipoLogradouro() {
+    public TipoModel getTipoLogradouro() {
         return tipoLogradouro;
     }
 
-    public void setTipoLogradouro(String tipoLogradouro) {
+    public void setTipoLogradouro(TipoModel tipoLogradouro) {
         this.tipoLogradouro = tipoLogradouro;
     }
 

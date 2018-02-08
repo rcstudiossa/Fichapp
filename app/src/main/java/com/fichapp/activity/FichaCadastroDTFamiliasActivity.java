@@ -26,6 +26,7 @@ import com.fichapp.adapter.FichaCadastroDTFamiliasAdapter;
 import com.fichapp.business.FichaCadastroDTFamiliasBS;
 import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
@@ -146,9 +147,38 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     }
 
+    private boolean validaCampos() {
+
+        boolean valido = true;
+
+        String aviso = "";
+
+        if (Utilitario.isEmpty(etCnsResponsavel.getText().toString())) {
+            aviso = Utilitario.addAviso("Preencha o CNS do responsável.", aviso);
+            valido = false;
+        }
+
+        if ((!Utilitario.isEmpty(etCnsResponsavel.getText().toString())) && !Utilitario.isCNSValido(etCnsResponsavel.getText().toString())) {
+            aviso = Utilitario.addAviso("CNS do responsável é inválido.", aviso);
+            valido = false;
+        }
+
+        if ((!Utilitario.isEmpty(etNumMembros.getText().toString())) && new Integer(etNumMembros.getText().toString()) == 0) {
+            aviso = Utilitario.addAviso("Nº de membros não pode ser zero.", aviso);
+            valido = false;
+        }
+
+        if (!aviso.isEmpty()) {
+            Utilitario.alertar(FichaCadastroDTFamiliasActivity.this, aviso);
+        }
+
+        return valido;
+
+    }
+
     private void adicionarFamilia() {
 
-        //if (!validaCampos()) { return; }
+        if (!validaCampos()) { return; }
 
         adapter.addListItem(getFamilia());
 

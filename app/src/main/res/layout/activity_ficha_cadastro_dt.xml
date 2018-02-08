@@ -104,36 +104,56 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/field_margin"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/et_uf"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="UF*"
-                            android:inputType="text"
-                            android:maxLength="2" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp">
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="@dimen/field_margin"
+                        android:orientation="vertical">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/et_municipio"
+                        <TextView
+                            android:id="@+id/tv_uf"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Municipio (Cód. IBGE)*"
-                            android:inputType="number" />
+                            android:layout_height="wrap_content"
+                            android:text="UF*"
+                            android:layout_marginBottom="2dp"
+                            android:textColor="@color/colorPrimaryDark" />
 
-                    </android.support.design.widget.TextInputLayout>
+                        <Spinner
+                            android:id="@+id/spinner_uf"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/spinner_item_layout" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="@dimen/field_margin"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_municipio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Município*"
+                            android:layout_marginBottom="2dp"
+                            android:textColor="@color/colorPrimaryDark" />
+
+                        <Spinner
+                            android:id="@+id/spinner_municipio"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/spinner_item_layout" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -153,20 +173,29 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/field_margin">
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/field_margin"
+                    android:orientation="vertical">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/et_tipo_logradouro"
+                    <TextView
+                        android:id="@+id/tv_tipo_logradouro"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Tipo do Logradouro*"
-                        android:inputType="text"
-                        android:maxLines="1" />
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de Logradouro*"
+                        android:layout_marginBottom="2dp"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                </android.support.design.widget.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spinner_tipo_logradouro"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="@drawable/spinner_item_layout" />
+
+                </LinearLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"

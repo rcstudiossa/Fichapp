@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroDTModel;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
@@ -22,7 +23,6 @@ public class FichaCadastroDTDAO {
         this.db = smpepDbHelper.getWritableDatabase();
     }
 
-    //INSERIR
     public void inserir(FichaCadastroDTModel fichaModel) {
 
         Object[] args = {
@@ -30,10 +30,10 @@ public class FichaCadastroDTDAO {
                 fichaModel.getCnesModel().getId(),
                 Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                 fichaModel.getCep(),
-                fichaModel.getUf(),
-                fichaModel.getMunicipio(),
+                fichaModel.getUf().getCodigo(),
+                fichaModel.getMunicipio().getCodigo(),
                 fichaModel.getBairro(),
-                fichaModel.getTipoLogradouro(),
+                fichaModel.getTipoLogradouro().getCodigo(),
                 fichaModel.getNomeLogragouro(),
                 fichaModel.getComplemento(),
                 fichaModel.getPontoReferencia(),
@@ -84,7 +84,6 @@ public class FichaCadastroDTDAO {
         db.execSQL(query, args);
     }
 
-    //ALTERAR
     public void alterar (FichaCadastroDTModel fichaModel) {
 
         Object[] args = {
@@ -93,10 +92,10 @@ public class FichaCadastroDTDAO {
                 fichaModel.getCnesModel().getId(),
                 Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
                 fichaModel.getCep(),
-                fichaModel.getUf(),
-                fichaModel.getMunicipio(),
+                fichaModel.getUf().getCodigo(),
+                fichaModel.getMunicipio().getCodigo(),
                 fichaModel.getBairro(),
-                fichaModel.getTipoLogradouro(),
+                fichaModel.getTipoLogradouro().getCodigo(),
                 fichaModel.getNomeLogragouro(),
                 fichaModel.getComplemento(),
                 fichaModel.getPontoReferencia(),
@@ -202,7 +201,7 @@ public class FichaCadastroDTDAO {
 
         String[] args = {s,s,s};
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (cep like ? or strftime( '%d/%m/%Y', data_registro) like ? or bairro like ?) order by id;", args);
+        Cursor c = db.rawQuery("SELECT id, data_registro, cep, bairro, numero FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and (cep like ? or strftime( '%d/%m/%Y', data_registro) like ? or bairro like ?) order by id;", args);
 
         if (c.moveToFirst()) {
             do {
@@ -252,10 +251,10 @@ public class FichaCadastroDTDAO {
         fichaModel.setDataRegistro(Utilitario.getDate(c.getString(c.getColumnIndex("data_registro"))));
 
         fichaModel.setCep(c.getString(c.getColumnIndex("cep")));
-        fichaModel.setUf(c.getString(c.getColumnIndex("uf")));
-        fichaModel.setMunicipio(c.getString(c.getColumnIndex("municipio")));
+        fichaModel.setUf(new TipoModel(c.getInt(c.getColumnIndex("uf"))));
+        fichaModel.setMunicipio(new MunicipioModel(c.getInt(c.getColumnIndex("municipio"))));
         fichaModel.setBairro(c.getString(c.getColumnIndex("bairro")));
-        fichaModel.setTipoLogradouro(c.getString(c.getColumnIndex("tipo_logradouro")));
+        fichaModel.setTipoLogradouro(new TipoModel(c.getInt(c.getColumnIndex("tipo_logradouro"))));
         fichaModel.setNomeLogragouro(c.getString(c.getColumnIndex("nome_logradouro")));
         fichaModel.setComplemento(c.getString(c.getColumnIndex("complemento")));
         fichaModel.setPontoReferencia(c.getString(c.getColumnIndex("ponto_referencia")));

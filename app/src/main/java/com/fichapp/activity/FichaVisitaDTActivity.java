@@ -610,8 +610,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         cbOrientacao.setChecked(this.fichaVisitaDTModel.getFlagOrientacao());
         cbOutros.setChecked(this.fichaVisitaDTModel.getFlagOutros());
 
-        etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
-        etAltura.setText(this.fichaVisitaDTModel.getAltura().toString());
+        if (this.fichaVisitaDTModel.getPeso() > 0) {
+            etPeso.setText(this.fichaVisitaDTModel.getPeso().toString());
+        }
+
+        if (this.fichaVisitaDTModel.getAltura() > 0) {
+            etAltura.setText(this.fichaVisitaDTModel.getAltura().toString());
+        }
 
         rbVisitaRealizada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 1);
         rbVisitaRecusada.setChecked(this.fichaVisitaDTModel.getDesfecho() == 2);

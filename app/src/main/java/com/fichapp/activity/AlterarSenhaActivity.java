@@ -27,8 +27,6 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         confirmarSenhaET = (EditText) findViewById(R.id.et_confirmar_senha);
         alterarSenhaBT = (Button) findViewById(R.id.bt_alterar_senha);
 
-        
-
     }
 
 
