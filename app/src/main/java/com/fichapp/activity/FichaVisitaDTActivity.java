@@ -22,6 +22,7 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.model.TipoModel;
+import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private Toolbar toolbar;
 
-    private EditText etDataRegistro;
     private RadioButton rbTurnoM;
     private RadioButton rbTurnoT;
     private RadioButton rbTurnoN;
@@ -125,9 +125,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.configListeners();
 
-        this.configDatas();
+        //this.configDatas();
+
+        this.configMascaras();
 
         this.instanciarFichaVisitaDTModel();
+
+        this.configComponentes();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -486,6 +490,11 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                 valido = false;
             }
 
+            if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
+                aviso = Utilitario.addAviso("A data de registro não é válida.", aviso);
+                valido = false;
+            }
+
             if (!rbTurnoM.isChecked() && !rbTurnoT.isChecked() && !rbTurnoN.isChecked()) {
                 aviso = Utilitario.addAviso("Preencha o turno da visita.", aviso);
                 valido = false;
@@ -525,6 +534,11 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
                         if (Utilitario.isEmpty(etNascimento.getText().toString())) {
                             aviso = Utilitario.addAviso("Preencha a data de nascimento.", aviso);
+                            valido = false;
+                        }
+
+                        if (!Utilitario.isEmpty(etNascimento.getText().toString()) && !Utilitario.dataValida(etNascimento.getText().toString())) {
+                            aviso = Utilitario.addAviso("A data de nascimento não é válida.", aviso);
                             valido = false;
                         }
 
@@ -687,6 +701,17 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         }
 
         this.fichaVisitaDTModel.setDesfecho(rbVisitaRealizada.isChecked() ? 1 : rbVisitaRecusada.isChecked() ? 2 : rbAusente.isChecked() ? 3 : 0);
+
+    }
+
+    private void configMascaras() {
+
+        String mascaraData = "##/##/####";
+
+        etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
+        etDataRegistro.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataRegistro));
+        etNascimento.addTextChangedListener(Mascara.insert(mascaraData, etNascimento));
+        etNascimento.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etNascimento));
 
     }
 

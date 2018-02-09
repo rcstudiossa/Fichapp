@@ -57,8 +57,7 @@
         android:layout_alignBottom="@id/bottom_bar"
         android:layout_alignEnd="@id/bottom_bar"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="36dp"
-        android:layout_marginEnd="16dp"
+        android:layout_margin="16dp"
         app:srcCompat="@drawable/ic_add" />
 
 

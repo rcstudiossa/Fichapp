@@ -41,6 +41,7 @@ public class TemplateActivity extends AppCompatActivity {
     protected TextView nomeBarTV;
     protected TextView cboBarTV;
     protected TextView hospitalBarTV;
+    protected EditText etDataRegistro;
 
     protected SharedPreferences prefs;
 
@@ -56,6 +57,14 @@ public class TemplateActivity extends AppCompatActivity {
         this.hospitalBarTV = (TextView) findViewById(R.id.tv_hospital_bar);
 
         atualizarRodape();
+
+    }
+
+    protected void configComponentes() {
+
+        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+            etDataRegistro.setText(Utilitario.getDataHojeFormatada());
+        }
 
     }
 

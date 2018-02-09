@@ -27,7 +27,7 @@ public class FichaCadastroIndividualModel implements Serializable{
     private Date dataNascimento;
     private Integer sexo;
     private TipoModel raca;
-    private String etnia;
+    private TipoModel etnia;
     private String nis;
 
     private String nomeMae;
@@ -272,11 +272,11 @@ public class FichaCadastroIndividualModel implements Serializable{
         this.raca = raca;
     }
 
-    public String getEtnia() {
+    public TipoModel getEtnia() {
         return etnia;
     }
 
-    public void setEtnia(String etnia) {
+    public void setEtnia(TipoModel etnia) {
         this.etnia = etnia;
     }
 

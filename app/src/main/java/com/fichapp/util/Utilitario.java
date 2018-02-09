@@ -2,12 +2,13 @@ package com.fichapp.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.text.TextUtils;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -58,6 +59,12 @@ public final class Utilitario {
 
     }
 
+    public static String getDataHojeFormatada() {
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+    }
+
     public static String getDataFormatada(Date data) {
 
         if (Utilitario.isEmpty(data)) {
@@ -100,6 +107,46 @@ public final class Utilitario {
 
         AlertDialog alerta = builder.create();
         alerta.show();
+
+    }
+
+    public static void enviarMsgErro(EditText componente, String msg) {
+
+        componente.setError(msg);
+        componente.setFocusable(true);
+        componente.requestFocus();
+
+    }
+
+    public static boolean dataValida(String data) {
+
+        Date dataValida;
+        SimpleDateFormat padrao = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            padrao.setLenient(false);
+            dataValida = padrao.parse(data);
+
+            Calendar dataCadastro = Calendar.getInstance();
+            dataCadastro.setTime(dataValida);
+
+            Calendar hoje = Calendar.getInstance();
+
+            if (dataCadastro.after(hoje)) {
+                return false;
+            }
+
+            int meses = (hoje.get(Calendar.YEAR) * 12 + hoje.get(Calendar.MONTH)) - (dataCadastro.get(Calendar.YEAR) * 12 + dataCadastro.get(Calendar.MONTH));
+
+            if (Math.abs(meses) > (130 * 12) ) {
+                return false;
+            }
+
+
+        } catch (ParseException e) {
+            return false;
+        }
+
+        return true;
 
     }
 }

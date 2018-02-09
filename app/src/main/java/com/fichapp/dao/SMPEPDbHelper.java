@@ -48,7 +48,7 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE_FICHA_CADASTRO_INDIVIDUAL = "CREATE TABLE IF NOT EXISTS ficha_cadastro_individual" +
             " (id INTEGER PRIMARY KEY, profissional_id INTEGER, cnes_id INTEGER, data_registro DATE" +
-            ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo INTEGER, raca INTEGER, etnia VARCHAR, nis VARCHAR" +
+            ", cns_cidadao VARCHAR, flag_responsavel_familiar BOOLEAN, cns_responsavel_familiar VARCHAR, microarea VARCHAR, flag_fora_de_area BOOLEAN, nome_completo VARCHAR, nome_social VARCHAR, data_nascimento DATE, sexo INTEGER, raca INTEGER, etnia integer, nis VARCHAR" +
             ", nome_mae VARCHAR, flag_mae_desconhecido BOOLEAN, nome_pai VARCHAR, flag_pai_desconhecido BOOLEAN" +
             ", nacionalidade INTEGER, pais_nascimento INTEGER, municipio_uf_nascimento INTEGER, portaria_naturalizacao VARCHAR, data_naturalizacao DATE, data_entrada DATE" +
             ", telefone_celular VARCHAR, email_cidadao VARCHAR" +
@@ -82,11 +82,11 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(SQL_CREATE_MUNICIPIO);
-        carregarMunicipios(db);
-        db.execSQL(SQL_CREATE_CNES);
-        db.execSQL(SQL_CREATE_PROFISSIONAL);
-        db.execSQL(SQL_INSERT_PROFISSIONAL);
+        //db.execSQL(SQL_CREATE_MUNICIPIO);
+        //carregarMunicipios(db);
+        //db.execSQL(SQL_CREATE_CNES);
+        //db.execSQL(SQL_CREATE_PROFISSIONAL);
+        //db.execSQL(SQL_INSERT_PROFISSIONAL);
         db.execSQL(SQL_CREATE_FICHA_VISITA_DT);
         db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT);
         db.execSQL(SQL_CREATE_FICHA_CADASTRO_DT_FAMILIA);
@@ -96,9 +96,9 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL(SQL_DELETE_MUNICIPIO);
-        db.execSQL(SQL_DELETE_CNES);
-        db.execSQL(SQL_DELETE_PROFISSIONAL);
+        //db.execSQL(SQL_DELETE_MUNICIPIO);
+        //db.execSQL(SQL_DELETE_CNES);
+        //db.execSQL(SQL_DELETE_PROFISSIONAL);
         db.execSQL(SQL_DELETE_FICHA_VISITA_DT);
         db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT);
         db.execSQL(SQL_DELETE_FICHA_CADASTRO_DT_FAMILIA);

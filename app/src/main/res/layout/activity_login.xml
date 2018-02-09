@@ -69,7 +69,7 @@
             android:drawableLeft="@drawable/ic_doctor"
             android:drawablePadding="6dp"
             android:hint="Usuário"
-            android:text="rodrigo.costa"
+            android:text=""
             android:inputType="textEmailAddress"
             android:padding="4dp" />
 
@@ -84,7 +84,7 @@
             android:drawablePadding="6dp"
             android:fontFamily=""
             android:hint="Senha"
-            android:text="15Rt010312"
+            android:text=""
             android:inputType="textPassword"
             android:padding="4dp" />
 

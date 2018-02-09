@@ -2,6 +2,7 @@ package com.fichapp.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 public class Mascara {
@@ -10,6 +11,19 @@ public class Mascara {
         return s.replaceAll("[.]", "").replaceAll("[-]", "")
                 .replaceAll("[/]", "").replaceAll("[(]", "")
                 .replaceAll("[)]", "");
+    }
+
+    public static View.OnFocusChangeListener onBlurValidaMascara(final String mask, final EditText ediTxt) {
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    if (ediTxt.length() != mask.length()) {
+                        ediTxt.getText().clear();
+                    }
+                }
+            }
+        };
     }
 
     public static TextWatcher insert(final String mask, final EditText ediTxt) {
@@ -26,7 +40,7 @@ public class Mascara {
                 }
                 int i = 0;
                 for (char m : mask.toCharArray()) {
-                    if (m != '#' && str.length() > old.length()) {
+                    if (m != '#' && str.length() > 0) {
                         mascara += m;
                         continue;
                     }

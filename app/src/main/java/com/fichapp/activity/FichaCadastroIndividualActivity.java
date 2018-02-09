@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -25,8 +26,6 @@ import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
 
-import java.util.Date;
-
 
 public class FichaCadastroIndividualActivity extends TemplateActivity {
 
@@ -40,13 +39,12 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private Spinner spPais;
     private Spinner spRaca;
+    private Spinner spEtnia;
     private Spinner spParentesco;
     private Spinner spCurso;
     private Spinner spTrabalho;
     private Spinner spOrientacao;
     private Spinner spGenero;
-
-    private EditText etDataRegistro;
 
     private EditText etCnsCidadao;
     private RadioGroup rgResponsavelFamiliar;
@@ -57,7 +55,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private EditText etNomeSocial;
     private EditText etDataNascimento;
     private RadioGroup rgSexo;
-    private EditText etEtnia;
     private EditText etNis;
 
     private EditText etNomeMae;
@@ -219,11 +216,15 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
-    private void configComponentes() {
+    @Override
+    protected void configComponentes() {
 
         //rgNacionalidade.check(0);
 
+        super.configComponentes();
+
         rbBrasileira.setChecked(true);
+        spRaca.setSelection(0);
 
         spPais.setEnabled(false);
         spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
@@ -240,7 +241,6 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etNomeCompleto = (EditText) findViewById(R.id.et_nome);
         etNomeSocial = (EditText) findViewById(R.id.et_nome_social);
         etDataNascimento = (EditText) findViewById(R.id.et_data_nascimento);
-        etEtnia = (EditText) findViewById(R.id.et_etnia);
         etNis = (EditText) findViewById(R.id.et_nis);
         etNomeMae = (EditText) findViewById(R.id.et_nome_mae);
         etNomePai = (EditText) findViewById(R.id.et_nome_pai);
@@ -264,6 +264,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         //Spinners
         spPais = (Spinner) findViewById(R.id.spinner_pais);
         spRaca = (Spinner) findViewById(R.id.spinner_raca);
+        spEtnia = (Spinner) findViewById(R.id.spinner_etnia);
         spParentesco = (Spinner) findViewById(R.id.spinner_parentesco);
         spCurso = (Spinner) findViewById(R.id.spinner_curso_frequentado);
         spTrabalho = (Spinner) findViewById(R.id.spinner_situacao_trabalho);
@@ -411,6 +412,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spRaca.setAdapter(spAdapter);
 
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboEtnia());
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spEtnia.setAdapter(spAdapter);
+
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboParentesco());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spParentesco.setAdapter(spAdapter);
@@ -517,8 +522,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         int indexSaidaCadastro = rgSaidaCadastro.indexOfChild(findViewById(rgSaidaCadastro.getCheckedRadioButtonId()));
         int indexNacionalidade = rgNacionalidade.indexOfChild(findViewById(rgNacionalidade.getCheckedRadioButtonId()));
 
-        if ((Utilitario.isEmpty(etDataRegistro.getText().toString()))) {
+        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
             aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
+            valido = false;
+        }
+
+        if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
+            aviso = Utilitario.addAviso("A data de registro não é válida.", aviso);
             valido = false;
         }
 
@@ -552,6 +562,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
+        if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && !Utilitario.dataValida(etDataNascimento.getText().toString())) {
+            aviso = Utilitario.addAviso("A data de nascimento não é válida.", aviso);
+            valido = false;
+        }
+
         if (rgSexo.getCheckedRadioButtonId() == -1) {
             aviso = Utilitario.addAviso("Selecione o sexo do cidadão.", aviso);
             valido = false;
@@ -562,7 +577,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(etEtnia.getText().toString()) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+        if (!Utilitario.isEmpty((spRaca.getSelectedItem())) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
             aviso = Utilitario.addAviso("Preencha a etnia do paciente.", aviso);
             valido = false;
         }
@@ -602,8 +617,18 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
+        if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && !Utilitario.dataValida(etDataNaturalizacao.getText().toString())) {
+            aviso = Utilitario.addAviso("A data de naturalização não é válida.", aviso);
+            valido = false;
+        }
+
         if (Utilitario.isEmpty(etDataEntrada.getText().toString()) && (indexNacionalidade == 2)) {
             aviso = Utilitario.addAviso("Preencha a data de entrada.", aviso);
+            valido = false;
+        }
+
+        if (!Utilitario.isEmpty(etDataEntrada.getText().toString()) && !Utilitario.dataValida(etDataEntrada.getText().toString())) {
+            aviso = Utilitario.addAviso("A data de entrada não é válida.", aviso);
             valido = false;
         }
 
@@ -631,6 +656,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
             if ((Utilitario.isEmpty(etNumeroDO.getText().toString()) || Utilitario.isEmpty(etDataObito.getText().toString())) && indexSaidaCadastro == 1) {
                 aviso = Utilitario.addAviso("Preencha o numero do D.O e a data do óbito.", aviso);
+                valido = false;
+            }
+
+            if (!Utilitario.isEmpty(etDataObito.getText().toString()) && !Utilitario.dataValida(etDataObito.getText().toString())) {
+                aviso = Utilitario.addAviso("A data de óbito não é válida.", aviso);
                 valido = false;
             }
 
@@ -704,6 +734,24 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.desabilitaSpinner(rgInformarOrientacao, 1, spOrientacao);
         this.desabilitaSpinner(rgInformarIdentidadeGenero, 1, spGenero);
+
+        spRaca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                desabilitarComponentes(spEtnia);
+
+                if (!Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+                    habilitarComponentes(spEtnia);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spRaca.setSelection(0);
+            }
+
+        });
 
         rgResponsavelFamiliar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -822,16 +870,22 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void configMascaras() {
 
-        String mascaraData = "##/##/####";
-        String mascaraTelefone = "(##)#####-####";
+        final String mascaraData = "##/##/####";
+        final String mascaraTelefone = "(##)#####-####";
 
         etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
+        etDataRegistro.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataRegistro));
         etDataNascimento.addTextChangedListener(Mascara.insert(mascaraData, etDataNascimento));
+        etDataNascimento.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataNascimento));
         etDataNaturalizacao.addTextChangedListener(Mascara.insert(mascaraData, etDataNaturalizacao));
+        etDataNaturalizacao.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataNaturalizacao));
         etDataEntrada.addTextChangedListener(Mascara.insert(mascaraData, etDataEntrada));
+        etDataEntrada.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataEntrada));
         etDataObito.addTextChangedListener(Mascara.insert(mascaraData, etDataObito));
+        etDataObito.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataObito));
 
         etTelefoneCelular.addTextChangedListener(Mascara.insert(mascaraTelefone, etTelefoneCelular));
+        etTelefoneCelular.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraTelefone, etTelefoneCelular));
 
     }
 
@@ -948,7 +1002,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getRaca()) && this.fichaCadastroIndividualModel.getRaca().getCodigo() > 0) {
             spRaca.setSelection(new TipoModel().getComboRaca().indexOf(this.fichaCadastroIndividualModel.getRaca()));
         }
-        etEtnia.setText(this.fichaCadastroIndividualModel.getEtnia());
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getEtnia()) && this.fichaCadastroIndividualModel.getEtnia().getCodigo() > 0) {
+            spEtnia.setSelection(new TipoModel().getComboEtnia().indexOf(this.fichaCadastroIndividualModel.getEtnia()));
+        }
         etNis.setText(this.fichaCadastroIndividualModel.getNis());
         etNomeMae.setText(this.fichaCadastroIndividualModel.getNomeMae());
         cbMaeDesconhecido.setChecked(this.fichaCadastroIndividualModel.getFlagMaeDesconhecido());
@@ -1075,7 +1131,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setDataNascimento(Utilitario.getDate(etDataNascimento.getText().toString()));
         this.fichaCadastroIndividualModel.setSexo(this.getPosicaoSelecionadoRG(rgSexo).equals(-1) ? 4 : this.getPosicaoSelecionadoRG(rgSexo));
         this.fichaCadastroIndividualModel.setRaca((TipoModel) this.spRaca.getSelectedItem());
-        this.fichaCadastroIndividualModel.setEtnia(etEtnia.getText().toString());
+        this.fichaCadastroIndividualModel.setEtnia((TipoModel) this.spEtnia.getSelectedItem());
         this.fichaCadastroIndividualModel.setNis(etNis.getText().toString());
         this.fichaCadastroIndividualModel.setNomeMae(etNomeMae.getText().toString());
         this.fichaCadastroIndividualModel.setNomePai(etNomePai.getText().toString());

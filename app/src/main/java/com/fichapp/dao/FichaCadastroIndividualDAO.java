@@ -42,7 +42,7 @@ public class FichaCadastroIndividualDAO {
                 Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
                 fichaModel.getRaca().getCodigo(),
-                fichaModel.getEtnia(),
+                fichaModel.getEtnia().getCodigo(),
                 fichaModel.getNis(),
 
                 fichaModel.getNomeMae(),
@@ -211,7 +211,7 @@ public class FichaCadastroIndividualDAO {
                 Utilitario.getDataFormatada(fichaModel.getDataNascimento()),
                 fichaModel.getSexo(),
                 fichaModel.getRaca().getCodigo(),
-                fichaModel.getEtnia(),
+                fichaModel.getEtnia().getCodigo(),
                 fichaModel.getNis(),
 
                 fichaModel.getNomeMae(),
@@ -473,7 +473,7 @@ public class FichaCadastroIndividualDAO {
         fichaModel.setDataNascimento(Utilitario.getDate(c.getString(c.getColumnIndex("data_nascimento"))));
         fichaModel.setSexo(c.getInt(c.getColumnIndex("sexo")));
         fichaModel.setRaca(new TipoModel(c.getInt(c.getColumnIndex("raca"))));
-        fichaModel.setEtnia(c.getString(c.getColumnIndex("etnia")));
+        fichaModel.setEtnia(new TipoModel(c.getInt(c.getColumnIndex("etnia"))));
         fichaModel.setNis(c.getString(c.getColumnIndex("nis")));
 
         fichaModel.setNomeMae(c.getString(c.getColumnIndex("nome_mae")));

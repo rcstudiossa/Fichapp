@@ -74,8 +74,6 @@
                             android:id="@+id/et_data_registro"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="Data Registro*"
                             android:inputType="date" />
 
@@ -244,8 +242,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="18dp"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="Nascimento**"
                             android:inputType="date" />
 

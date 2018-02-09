@@ -25,6 +25,11 @@ public class ProfissionalModel implements Serializable{
         this.id = id;
     }
 
+    public ProfissionalModel(Long id, String senha) {
+        this.id = id;
+        this.senha = senha;
+    }
+
     public ProfissionalModel(Long id, TipoModel cbo, String cns, String nome, Boolean flagAtivo, Long cnesId) {
         this.id = id;
         this.cbo = cbo;
@@ -37,6 +42,12 @@ public class ProfissionalModel implements Serializable{
     public ProfissionalModel(String usuario, String senha) {
         this.usuario = usuario;
         this.senha = senha;
+    }
+
+    public ProfissionalModel(String usuario, String senha, Boolean flagAdministrador) {
+        this.usuario = usuario;
+        this.senha = senha;
+        this.flagAdministrador = flagAdministrador;
     }
 
     public Long getId() {

@@ -199,9 +199,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:text="Adicionar"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:background="@drawable/bt_add_background"/>
+                    android:text="Adicionar" />
 
             </LinearLayout>
 

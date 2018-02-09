@@ -3,7 +3,6 @@ package com.fichapp.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -59,8 +58,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Spinner spAguaConsumo;
     private Spinner spEscoamentoBanheiro;
     private Spinner spDestinoLixo;
-
-    private EditText etDataRegistro;
 
     private EditText etCep;
     private Spinner spMunicipio;
@@ -129,7 +126,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.configMascaras();
 
-        this.desabilitaCampos();
+        this.configComponentes();
 
         fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,12 +323,16 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         String mascaraTelCelular = "(##)#####-####";
 
         etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
+        etDataRegistro.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataRegistro));
 
         //etCep.addTextChangedListener(Mascara.insert(mascaraCep, etCep));
 
         etTelefoneResidencia.addTextChangedListener(Mascara.insert(mascaraTelefone, etTelefoneResidencia));
+        etTelefoneResidencia.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraTelefone, etTelefoneResidencia));
         etTelefoneContato.addTextChangedListener(Mascara.insert(mascaraTelCelular, etTelefoneContato));
+        etTelefoneContato.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraTelCelular, etTelefoneContato));
         etTelefoneContatoResponsavel.addTextChangedListener(Mascara.insert(mascaraTelCelular, etTelefoneContatoResponsavel));
+        etTelefoneContatoResponsavel.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraTelCelular, etTelefoneContatoResponsavel));
 
 
     }
@@ -492,12 +493,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
-    private void desabilitaCampos() {
-
-    }
-
-
-
     private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
 
         List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,13));
@@ -542,6 +537,11 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
+        if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
+            aviso = Utilitario.addAviso("A data de registro não é válida.", aviso);
+            valido = false;
+        }
+
         if (Utilitario.isEmpty(etCep.getText().toString())) {
             aviso = Utilitario.addAviso("Preencha o CEP.", aviso);
             valido = false;
@@ -553,7 +553,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         }
 
         if (Utilitario.isEmpty((spMunicipio.getSelectedItem())) || Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
-            aviso = Utilitario.addAviso("Preencha o Município.", aviso);
+            aviso = Utilitario.addAviso("Preencha o município.", aviso);
             valido = false;
         }
 
@@ -561,8 +561,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
             valido = false;
         }
-
-
 
         if (Utilitario.isEmpty(((TipoModel)spTipoLogradouro.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
