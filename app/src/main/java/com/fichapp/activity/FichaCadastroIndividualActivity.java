@@ -2,7 +2,6 @@ package com.fichapp.activity;
 
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -22,7 +22,10 @@ import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroIndividualModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
+import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
+
+import java.util.Date;
 
 
 public class FichaCadastroIndividualActivity extends TemplateActivity {
@@ -156,6 +159,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private RadioGroup rgReferenciaFamiliar;
 
     private RadioGroup rgFrequenciaAlimentacao;
+    private RadioButton rbBrasileira;
     private CheckBox cbAlimentacaoRestaurantePopular;
     private CheckBox cbAlimentacaoDoacaoGrupoReligioso;
     private CheckBox cbAlimentacaoDoacaoRestaurante;
@@ -198,11 +202,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.configListeners();
 
-        this.configDatas();
+        //this.configDatas();
 
         this.instanciarFichaCadastroIndividualModel();
 
         this.configComponentes();
+
+        this.configMascaras();
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +220,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     }
 
     private void configComponentes() {
+
+        //rgNacionalidade.check(0);
+
+        rbBrasileira.setChecked(true);
 
         spPais.setEnabled(false);
         spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
@@ -285,6 +295,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         rgInternado = (RadioGroup) findViewById(R.id.rg_internacao);
         rgMembroDeComunidade = (RadioGroup) findViewById(R.id.rg_povo_comunidade);
         rgNacionalidade = (RadioGroup) findViewById(R.id.rg_nacionalidade);
+        rbBrasileira = (RadioButton) findViewById(R.id.rb_brasileira);
         rgOutrasDrogas = (RadioGroup) findViewById(R.id.rg_outras_drogas);
         rgOutrasPraticasIntegrativas = (RadioGroup) findViewById(R.id.rg_praticas_integrativas);
         rgParticipaGrupoComunitario = (RadioGroup) findViewById(R.id.rg_participa_grupo_comunitario);
@@ -596,6 +607,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
+        if ((!Utilitario.isEmpty(etEmailCidadao.getText().toString())) && !Utilitario.isEmailValido(etEmailCidadao.getText().toString())) {
+            aviso = Utilitario.addAviso("E-mail é inválido.", aviso);
+            valido = false;
+        }
+
         if (!cbVisitaRecusada.isChecked()) {
 
             if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
@@ -763,6 +779,23 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             }
         });
 
+        rgSaidaCadastro.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup rg, int checkedId) {
+
+                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
+
+                if (indexRg == 0) {
+                    desabilitaEditText(etNumeroDO);
+                    desabilitaEditText(etDataObito);
+                } else {
+                    habilitaEditText(etNumeroDO);
+                    habilitaEditText(etDataObito);
+                }
+
+            }
+        });
+
         cbVisitaRecusada.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -784,6 +817,29 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 }
             }
         });
+
+    }
+
+    private void configMascaras() {
+
+        String mascaraData = "##/##/####";
+        String mascaraTelefone = "(##)#####-####";
+
+        etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
+        etDataNascimento.addTextChangedListener(Mascara.insert(mascaraData, etDataNascimento));
+        etDataNaturalizacao.addTextChangedListener(Mascara.insert(mascaraData, etDataNaturalizacao));
+        etDataEntrada.addTextChangedListener(Mascara.insert(mascaraData, etDataEntrada));
+        etDataObito.addTextChangedListener(Mascara.insert(mascaraData, etDataObito));
+
+        etTelefoneCelular.addTextChangedListener(Mascara.insert(mascaraTelefone, etTelefoneCelular));
+
+    }
+
+    private boolean validaDatas() {
+
+        boolean valido = true;
+
+        return valido;
 
     }
 

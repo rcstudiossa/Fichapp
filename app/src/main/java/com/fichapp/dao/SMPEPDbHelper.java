@@ -5686,7 +5686,6 @@ public class SMPEPDbHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO MUNICIPIO (NOME, UF, CODIGO) VALUES ('ZÉ DOCA','MA','2114007');");
         db.execSQL("INSERT INTO MUNICIPIO (NOME, UF, CODIGO) VALUES ('ZORTÉA','SC','4219853');");
 
-
     }
 
 }

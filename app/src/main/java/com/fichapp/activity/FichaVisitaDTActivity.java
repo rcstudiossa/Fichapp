@@ -139,7 +139,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     }
 
-    private void definirComponentes () {
+    private void definirComponentes() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -276,7 +276,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        if (!validaCampos()) { return; }
+        if (!validaCampos()) {
+            return;
+        }
 
         this.setActivityToModel();
 
@@ -293,13 +295,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
     }
 
     private boolean flagPossuiOpcaoGrupoAcompanhamento() {
-      return cbGestante.isChecked() || cbPuerpera.isChecked() || cbRecemNascido.isChecked()
-          || cbCrianca.isChecked() || cbDesnutricao.isChecked() || cbReabilitacao.isChecked()
-          || cbHipertensao.isChecked() || cbDiabetes.isChecked() || cbAsma.isChecked()
-          || cbEnfisema.isChecked() || cbCancer.isChecked() || cbOutrasDoencas.isChecked()
-          || cbHanseniase.isChecked() || cbTuberculose.isChecked() || cbSintomaticosRespiratorios.isChecked()
-          || cbTabagista.isChecked() || cbAcamados.isChecked() || cbVulnerabilidadeSocial.isChecked()
-          || cbBolsaFamilia.isChecked() || cbSaudeMental.isChecked() || cbUsuarioAlcool.isChecked() || cbUsuarioOutrasDrogas.isChecked();
+        return cbGestante.isChecked() || cbPuerpera.isChecked() || cbRecemNascido.isChecked()
+                || cbCrianca.isChecked() || cbDesnutricao.isChecked() || cbReabilitacao.isChecked()
+                || cbHipertensao.isChecked() || cbDiabetes.isChecked() || cbAsma.isChecked()
+                || cbEnfisema.isChecked() || cbCancer.isChecked() || cbOutrasDoencas.isChecked()
+                || cbHanseniase.isChecked() || cbTuberculose.isChecked() || cbSintomaticosRespiratorios.isChecked()
+                || cbTabagista.isChecked() || cbAcamados.isChecked() || cbVulnerabilidadeSocial.isChecked()
+                || cbBolsaFamilia.isChecked() || cbSaudeMental.isChecked() || cbUsuarioAlcool.isChecked() || cbUsuarioOutrasDrogas.isChecked();
     }
 
     private boolean flagPossuiOpcaoGrupoBuscaAtiva() {
@@ -326,62 +328,62 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                 spinnerTipoImovel.setSelection(0);
             }
         });
-        
+
         this.desabilitaEditText(cbForaDeArea, etMicroarea);
 
     }
 
     private void desmarcarCheckBoxesMotivoVisita() {
 
-            this.cbCadastramentoAtt.setChecked(false);
-            this.cbVisitaPeriodica.setChecked(false);
+        this.cbCadastramentoAtt.setChecked(false);
+        this.cbVisitaPeriodica.setChecked(false);
 
-            this.cbConsulta.setChecked(false);
-            this.cbExame.setChecked(false);
-            this.cbVacina.setChecked(false);
-            this.cbBolsaFamilia.setChecked(false);
+        this.cbConsulta.setChecked(false);
+        this.cbExame.setChecked(false);
+        this.cbVacina.setChecked(false);
+        this.cbBolsaFamilia.setChecked(false);
 
-            this.cbGestante.setChecked(false);
-            this.cbPuerpera.setChecked(false);
-            this.cbRecemNascido.setChecked(false);
-            this.cbCrianca.setChecked(false);
+        this.cbGestante.setChecked(false);
+        this.cbPuerpera.setChecked(false);
+        this.cbRecemNascido.setChecked(false);
+        this.cbCrianca.setChecked(false);
 
-            this.cbDesnutricao.setChecked(false);
-            this.cbReabilitacao.setChecked(false);
-            this.cbHipertensao.setChecked(false);
-            this.cbDiabetes.setChecked(false);
-            this.cbAsma.setChecked(false);
-            this.cbEnfisema.setChecked(false);
-            this.cbCancer.setChecked(false);
-            this.cbOutrasDoencas.setChecked(false);
-            this.cbHanseniase.setChecked(false);
-            this.cbTuberculose.setChecked(false);
-            this.cbSintomaticosRespiratorios.setChecked(false);
+        this.cbDesnutricao.setChecked(false);
+        this.cbReabilitacao.setChecked(false);
+        this.cbHipertensao.setChecked(false);
+        this.cbDiabetes.setChecked(false);
+        this.cbAsma.setChecked(false);
+        this.cbEnfisema.setChecked(false);
+        this.cbCancer.setChecked(false);
+        this.cbOutrasDoencas.setChecked(false);
+        this.cbHanseniase.setChecked(false);
+        this.cbTuberculose.setChecked(false);
+        this.cbSintomaticosRespiratorios.setChecked(false);
 
-            this.cbTabagista.setChecked(false);
-            this.cbAcamados.setChecked(false);
-            this.cbVulnerabilidadeSocial.setChecked(false);
-            this.cbAcompanhamentoBolsaFamilia.setChecked(false);
-            this.cbSaudeMental.setChecked(false);
+        this.cbTabagista.setChecked(false);
+        this.cbAcamados.setChecked(false);
+        this.cbVulnerabilidadeSocial.setChecked(false);
+        this.cbAcompanhamentoBolsaFamilia.setChecked(false);
+        this.cbSaudeMental.setChecked(false);
 
-            this.cbUsuarioAlcool.setChecked(false);
-            this.cbUsuarioOutrasDrogas.setChecked(false);
+        this.cbUsuarioAlcool.setChecked(false);
+        this.cbUsuarioOutrasDrogas.setChecked(false);
 
-            this.cbAcaoEducativa.setChecked(false);
-            this.cbImovelComFoco.setChecked(false);
-            this.cbAcaoMecanica.setChecked(false);
-            this.cbTratamentoFocal.setChecked(false);
+        this.cbAcaoEducativa.setChecked(false);
+        this.cbImovelComFoco.setChecked(false);
+        this.cbAcaoMecanica.setChecked(false);
+        this.cbTratamentoFocal.setChecked(false);
 
-            this.cbEgressoInternacao.setChecked(false);
-            this.cbConvite.setChecked(false);
-            this.cbOrientacao.setChecked(false);
-            this.cbOutros.setChecked(false);
+        this.cbEgressoInternacao.setChecked(false);
+        this.cbConvite.setChecked(false);
+        this.cbOrientacao.setChecked(false);
+        this.cbOutros.setChecked(false);
 
     }
 
     private void desabilitaMotivosVisita(Integer posicaoDesfecho) {
 
-        List<Integer> tipos = new ArrayList<>(Arrays.asList(1,2));
+        List<Integer> tipos = new ArrayList<>(Arrays.asList(1, 2));
 
         boolean desaparecer = tipos.contains(posicaoDesfecho);
 
@@ -391,14 +393,12 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
             desmarcarCheckBoxesMotivoVisita();
 
-        }
-
-        else {
+        } else {
             this.llMotivosVisita.setVisibility(View.VISIBLE);
         }
 
     }
-    
+
     private void validaHabilitacaoCheckBoxesMotivosVisita(int posicaoTipoImovel) {
 
         List<Integer> tipos = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12));
@@ -533,9 +533,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                             valido = false;
                         }
                     }
-
                 }
-
             }
         }
 

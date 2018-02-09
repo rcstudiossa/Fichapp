@@ -40,6 +40,7 @@
                     android:layout_height="match_parent"
                     android:hint="Nº Prontuário Familiar"
                     android:inputType="text"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>

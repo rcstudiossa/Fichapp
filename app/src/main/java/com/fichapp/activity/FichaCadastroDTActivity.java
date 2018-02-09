@@ -28,6 +28,7 @@ import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
+import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
 
 import java.util.ArrayList;
@@ -122,9 +123,11 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.configListeners();
 
-        this.configData();
+        //this.configData();
 
         this.instanciarFichaCadastroDTModel();
+
+        this.configMascaras();
 
         this.desabilitaCampos();
 
@@ -312,6 +315,24 @@ public class FichaCadastroDTActivity extends TemplateActivity {
                         registroCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+    }
+
+    private void configMascaras() {
+
+        String mascaraData = "##/##/####";
+        //String mascaraCep = "#####-###";
+        String mascaraTelefone = "(##)####-####";
+        String mascaraTelCelular = "(##)#####-####";
+
+        etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
+
+        //etCep.addTextChangedListener(Mascara.insert(mascaraCep, etCep));
+
+        etTelefoneResidencia.addTextChangedListener(Mascara.insert(mascaraTelefone, etTelefoneResidencia));
+        etTelefoneContato.addTextChangedListener(Mascara.insert(mascaraTelCelular, etTelefoneContato));
+        etTelefoneContatoResponsavel.addTextChangedListener(Mascara.insert(mascaraTelCelular, etTelefoneContatoResponsavel));
+
 
     }
 
@@ -531,7 +552,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
+        if (Utilitario.isEmpty((spMunicipio.getSelectedItem())) || Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o Município.", aviso);
             valido = false;
         }
@@ -540,6 +561,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
             valido = false;
         }
+
+
 
         if (Utilitario.isEmpty(((TipoModel)spTipoLogradouro.getSelectedItem()).getCodigo())) {
             aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
@@ -568,12 +591,13 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         if (!cbVisitaRecusada.isChecked()) {
 
-            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && !(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 7 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 8 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 9 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 10 || ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 11))) {
+            List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,99));
+            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()))) {
                 aviso = Utilitario.addAviso("Selecione a situação de moradia.", aviso);
                 valido = false;
             }
 
-            if (rgLocalizacao.getCheckedRadioButtonId() == -1) {
+            if (rgLocalizacao.getCheckedRadioButtonId() == -1 && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
                 aviso = Utilitario.addAviso("Selecione a localização.", aviso);
                 valido = false;
             }

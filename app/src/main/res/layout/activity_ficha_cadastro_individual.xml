@@ -13,7 +13,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/search_edit_frame"
@@ -78,8 +80,6 @@
                             android:id="@+id/et_data_registro"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="Data Registro*"
                             android:inputType="date" />
 
@@ -223,7 +223,7 @@
                         android:layout_height="match_parent"
                         android:hint="Nome Social"
                         android:inputType="textPersonName"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -244,8 +244,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="18dp"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="Nascimento**"
                             android:inputType="date" />
 
@@ -332,7 +330,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Etnia**"
-                            android:inputType="textPersonName"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                             android:maxLines="1" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -428,8 +426,7 @@
                                 android:id="@+id/rb_brasileira"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Brasileira"
-                                android:checked="true"/>
+                                android:text="Brasileira"/>
 
                             <RadioButton
                                 android:id="@+id/rb_naturalizado"
@@ -532,8 +529,6 @@
                                 android:id="@+id/et_data_naturalizacao"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:focusable="false"
                                 android:hint="Data Naturalização"
                                 android:inputType="date" />
 
@@ -549,8 +544,6 @@
                                 android:id="@+id/et_data_entrada"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:focusable="false"
                                 android:hint="Data Entrada"
                                 android:inputType="date" />
 
@@ -1275,8 +1268,6 @@
                             android:id="@+id/et_data_obito"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="Data Óbito"
                             android:inputType="date" />
 

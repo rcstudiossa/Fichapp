@@ -2,6 +2,8 @@ package com.fichapp.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -27,6 +29,10 @@ public final class Utilitario {
             return somaPonderada(s) % 11 == 0;
         }
         return false;
+    }
+
+    public final static boolean isEmailValido(String txtEmail) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(txtEmail).matches();
     }
 
     private static int somaPonderada(String s) {
@@ -90,6 +96,8 @@ public final class Utilitario {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Alerta");
         builder.setMessage(texto);
+        builder.setPositiveButton("OK", null);
+
         AlertDialog alerta = builder.create();
         alerta.show();
 
