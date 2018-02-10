@@ -86,20 +86,14 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean valido = true;
 
-        String aviso = "";
-
         if (Utilitario.isEmpty(usuarioET.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha o usuário", aviso);
+            Utilitario.enviarMsgErro(usuarioET, "Preencha o usuário");
             valido = false;
         }
 
         if (Utilitario.isEmpty(senhaET.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha a senha", aviso);
+            Utilitario.enviarMsgErro(senhaET, "Preencha a senha");
             valido = false;
-        }
-
-        if (!Utilitario.isEmpty(aviso)) {
-            Snackbar.make(getCurrentFocus(), aviso, Snackbar.LENGTH_LONG).show();
         }
 
         return valido;

@@ -37,8 +37,19 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_version"
+            android:textColor="@color/colorSMPEPLogoWhite"
+            android:textSize="8sp"
+            android:layout_marginStart="4dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
+
 
 
     <TextView
@@ -48,7 +59,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Rodrigo Costa"
+        android:text="Usuário"
         android:textSize="16sp" />
 
 
@@ -58,7 +69,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="2dp"
-        android:text="CBO: 2206-04"
+        android:text="CBO: 000000"
         android:textSize="14sp" />
 
     <TextView
@@ -67,8 +78,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="2dp"
-        android:text="HRSAJ"
+        android:text="UBS"
         android:textSize="14sp" />
-
 
 </LinearLayout>

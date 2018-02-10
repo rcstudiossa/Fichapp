@@ -340,7 +340,7 @@
                         android:layout_height="match_parent"
                         android:hint="Telefone da Residência"
                         android:inputType="phone"
-                        android:maxLength="11"
+                        android:maxLength="13"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -356,7 +356,7 @@
                         android:layout_height="match_parent"
                         android:hint="Telefone de Contato"
                         android:inputType="phone"
-                        android:maxLength="11"
+                        android:maxLength="14"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>

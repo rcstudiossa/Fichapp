@@ -36,7 +36,10 @@ public class FichaCadastroIndividualBS {
 
     public void excluir(FichaCadastroIndividualModel fichaModel) {
         FichaCadastroIndividualDAO.excluir(fichaModel);
-        //profissionalDAO.pesquisar();
+    }
+
+    public void restaurar(FichaCadastroIndividualModel fichaModel) {
+        FichaCadastroIndividualDAO.restaurar(fichaModel);
     }
 
     public FichaCadastroIndividualModel obter(FichaCadastroIndividualModel FichaCadastroIndividualModel) {

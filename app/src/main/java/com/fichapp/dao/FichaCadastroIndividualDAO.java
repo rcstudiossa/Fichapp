@@ -369,6 +369,14 @@ public class FichaCadastroIndividualDAO {
 
     }
 
+    public void restaurar(FichaCadastroIndividualModel fichaCadastroIndividualModel) {
+
+        Object[] args = {Boolean.TRUE, fichaCadastroIndividualModel.getId()};
+
+        db.execSQL("UPDATE ficha_cadastro_individual SET flag_ativo = ? where id = ? ", args);
+
+    }
+
     public List<FichaCadastroIndividualModel> pesquisar() {
 
         List<FichaCadastroIndividualModel> fichas = new ArrayList<>();

@@ -167,6 +167,14 @@ public class FichaVisitaDTDAO {
 
     }
 
+    public void restaurar(FichaVisitaDTModel fichaVisitaDTModel) {
+
+        Object[] args = {Boolean.TRUE, fichaVisitaDTModel.getId()};
+
+        db.execSQL("UPDATE ficha_visita_domiciliar_territorial SET flag_ativo = ? where id = ? ", args);
+
+    }
+
     public List<FichaVisitaDTModel> pesquisar() {
 
         List<FichaVisitaDTModel> fichas = new ArrayList<>();

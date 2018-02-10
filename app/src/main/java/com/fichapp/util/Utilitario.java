@@ -2,7 +2,17 @@ package com.fichapp.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.support.design.widget.TextInputLayout;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -110,13 +120,7 @@ public final class Utilitario {
 
     }
 
-    public static void enviarMsgErro(EditText componente, String msg) {
 
-        componente.setError(msg);
-        componente.setFocusable(true);
-        componente.requestFocus();
-
-    }
 
     public static boolean dataValida(String data) {
 
@@ -149,4 +153,39 @@ public final class Utilitario {
         return true;
 
     }
+
+    public static void enviarMsgErro(View view, String msg) {
+
+        if (view instanceof CheckBox) {
+            ((CheckBox) view).setError(msg);
+        } else if (view instanceof EditText) {
+            ((EditText) view).setError(msg);
+        } else if (view instanceof TextView) {
+            ((TextView) view).setError(msg);
+        } else if (view instanceof TextInputLayout) {
+            ((TextInputLayout) view).setError(msg);
+        }
+
+        view.setFocusable(true);
+        view.requestFocus();
+
+    }
+
+
+
+    public static void limparMsgErro(View view) {
+
+        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+            if (((ViewGroup) view).getChildAt(i) instanceof ViewGroup) {
+                limparMsgErro(((ViewGroup) view).getChildAt(i));
+            }
+
+            enviarMsgErro(((ViewGroup) view).getChildAt(i), null);
+
+        }
+    }
+
+
+
 }

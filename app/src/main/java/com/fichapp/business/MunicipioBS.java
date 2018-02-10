@@ -27,10 +27,6 @@ public class MunicipioBS {
         municipioDAO = new MunicipioDAO(smpepDbHelper);
     }
 
-    public List<MunicipioModel> pesquisar(Integer codigo) {
-        return municipioDAO.pesquisar(codigo);
-    }
-
     public List<MunicipioModel> pesquisar(String uf) {
         return municipioDAO.pesquisar(uf);
     }

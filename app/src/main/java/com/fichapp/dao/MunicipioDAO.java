@@ -32,25 +32,7 @@ public class MunicipioDAO {
 
         Cursor c = db.rawQuery("SELECT * FROM municipio where uf = ? order by nome;", args);
 
-        if (c.moveToFirst()) {
-            do {
-                lista.add(new MunicipioModel(c.getString(c.getColumnIndex("nome")), c.getString(c.getColumnIndex("uf")), c.getInt(c.getColumnIndex("codigo"))));
-            } while (c.moveToNext());
-        }
-
-        c.close();
-
-        return lista;
-
-    }
-
-    public List<MunicipioModel> pesquisar(Integer codigo) {
-
-        List<MunicipioModel> lista = new ArrayList<>();
-
-        String[] args = {codigo.toString()};
-
-        Cursor c = db.rawQuery("SELECT * FROM municipio where uf = ? order by nome;", args);
+        lista.add(new MunicipioModel("Não respondido"));
 
         if (c.moveToFirst()) {
             do {

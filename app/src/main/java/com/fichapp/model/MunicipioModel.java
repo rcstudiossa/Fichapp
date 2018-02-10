@@ -21,6 +21,10 @@ public class MunicipioModel implements Serializable {
         
     }
 
+    public MunicipioModel(String nome) {
+        this.nome = nome;
+    }
+
     public MunicipioModel(Integer codigo) {
         this.codigo = codigo;
     }

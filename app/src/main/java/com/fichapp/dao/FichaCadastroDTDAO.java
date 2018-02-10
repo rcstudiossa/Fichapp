@@ -157,6 +157,14 @@ public class FichaCadastroDTDAO {
 
     }
 
+    public void restaurar(FichaCadastroDTModel fichaCadastroDTModel) {
+
+        Object[] args = {Boolean.TRUE, fichaCadastroDTModel.getId()};
+
+        db.execSQL("UPDATE ficha_cadastro_domiciliar_territorial SET flag_ativo = ? where id = ? ", args);
+
+    }
+
     public List<FichaCadastroDTModel> pesquisar() {
 
         List<FichaCadastroDTModel> fichas = new ArrayList<>();

@@ -3,8 +3,10 @@ package com.fichapp.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fichapp.fragment.CNESFragment;
 import com.fichapp.fragment.FichaCadastroDTFragment;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private TextView tvInicial;
 
+    boolean doubleBackToExitPressedOnce = false;
     private Long usuarioId;
 
     @Override
@@ -219,7 +223,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            logout();
+            if (doubleBackToExitPressedOnce) {
+                this.logout();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Clique novamente para sair", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
+
         }
     }
 

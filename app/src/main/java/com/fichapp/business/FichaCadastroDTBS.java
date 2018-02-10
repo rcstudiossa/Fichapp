@@ -46,6 +46,10 @@ public class FichaCadastroDTBS {
         fichaCadastroDTDAO.excluir(fichaModel);
     }
 
+    public void restaurar(FichaCadastroDTModel fichaModel) {
+        fichaCadastroDTDAO.restaurar(fichaModel);
+    }
+
     public FichaCadastroDTModel obter(FichaCadastroDTModel FichaCadastroDTModel) {
 
         FichaCadastroDTModel ficha = this.fichaCadastroDTDAO.obter(FichaCadastroDTModel);

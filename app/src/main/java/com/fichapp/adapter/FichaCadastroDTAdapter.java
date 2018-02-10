@@ -2,12 +2,15 @@ package com.fichapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fichapp.R;
 import com.fichapp.activity.FichaCadastroDTActivity;
@@ -26,6 +29,7 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
 
     private List<FichaCadastroDTModel> mList;
     private LayoutInflater mLayoutInflater;
+    private FichaCadastroDTModel fichaSelecionada;
 
 
     public FichaCadastroDTAdapter(Context c, List<FichaCadastroDTModel> l){
@@ -66,7 +70,22 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
         fichaCadastroDTVH.deleteBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeListItem(view, position);
+
+                removerFicha(view, position);
+
+                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        restaurarFicha(view, position);
+
+                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+
+                snackbar.show();
             }
         });
 
@@ -78,21 +97,29 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
         return mList.size();
     }
 
-
-
-
     public void addListItem(FichaCadastroDTModel c, int position){
         mList.add(c);
         notifyItemInserted(position);
     }
 
-
-    public void removeListItem(View view, int position){
+    public void restaurarFicha(View view, int position) {
 
         FichaCadastroDTBS fichaCadastroDTBS = new FichaCadastroDTBS(view.getContext());
-        fichaCadastroDTBS.excluir(mList.get(position));
+        fichaCadastroDTBS.restaurar(fichaSelecionada);
+        mList.add(position, fichaSelecionada);
+        notifyItemInserted(position);
+
+    }
+
+
+    public void removerFicha(View view, int position) {
+
+        FichaCadastroDTBS fichaCadastroDTBS = new FichaCadastroDTBS(view.getContext());
+        fichaSelecionada = mList.get(position);
+        fichaCadastroDTBS.excluir(fichaSelecionada);
         mList.remove(position);
         notifyItemRemoved(position);
+
     }
 
 

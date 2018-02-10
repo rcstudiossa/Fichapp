@@ -2,12 +2,15 @@ package com.fichapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fichapp.R;
 import com.fichapp.activity.FichaCadastroIndividualActivity;
@@ -26,6 +29,7 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
     private List<FichaCadastroIndividualModel> mList;
     private LayoutInflater mLayoutInflater;
+    private FichaCadastroIndividualModel fichaSelecionada;
 
     public FichaCadastroIndividualAdapter(Context c, List<FichaCadastroIndividualModel> l) {
         mList = l;
@@ -64,7 +68,22 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
         fichaCadastroIndividualVH.btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeListItem(view, position);
+
+                removerFicha(view, position);
+
+                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        restaurarFicha(view, position);
+
+                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+
+                snackbar.show();
             }
         });
 
@@ -82,13 +101,24 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
         notifyItemInserted(position);
     }
 
-
-    public void removeListItem(View view, int position) {
+    public void restaurarFicha(View view, int position) {
 
         FichaCadastroIndividualBS fichaCadastroIndividualBS = new FichaCadastroIndividualBS(view.getContext());
-        fichaCadastroIndividualBS.excluir(mList.get(position));
+        fichaCadastroIndividualBS.restaurar(fichaSelecionada);
+        mList.add(position, fichaSelecionada);
+        notifyItemInserted(position);
+
+    }
+
+
+    public void removerFicha(View view, int position) {
+
+        FichaCadastroIndividualBS fichaCadastroIndividualBS = new FichaCadastroIndividualBS(view.getContext());
+        fichaSelecionada = mList.get(position);
+        fichaCadastroIndividualBS.excluir(fichaSelecionada);
         mList.remove(position);
         notifyItemRemoved(position);
+
     }
 
 

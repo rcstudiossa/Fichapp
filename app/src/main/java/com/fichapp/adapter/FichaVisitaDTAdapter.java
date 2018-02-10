@@ -2,12 +2,15 @@ package com.fichapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fichapp.activity.FichaVisitaDTActivity;
 import com.fichapp.model.FichaVisitaDTModel;
@@ -15,7 +18,6 @@ import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.util.Utilitario;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,9 +29,10 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
     private List<FichaVisitaDTModel> mList;
     private LayoutInflater mLayoutInflater;
+    private FichaVisitaDTModel fichaSelecionada;
 
 
-    public FichaVisitaDTAdapter(Context c, List<FichaVisitaDTModel> l){
+    public FichaVisitaDTAdapter(Context c, List<FichaVisitaDTModel> l) {
         mList = l;
         mLayoutInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -68,10 +71,25 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
         fichaVisitaDTVH.deleteBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeListItem(view, position);
+
+                removerFicha(view, position);
+
+                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        restaurarFicha(view, position);
+
+                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                snackbar.setActionTextColor(Color.YELLOW);
+
+                snackbar.show();
+
             }
         });
-
 
     }
 
@@ -81,18 +99,26 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     }
 
 
-
-
-    public void addListItem(FichaVisitaDTModel c, int position){
+    public void addListItem(FichaVisitaDTModel c, int position) {
         mList.add(c);
         notifyItemInserted(position);
     }
 
-
-    public void removeListItem(View view, int position){
+    public void restaurarFicha(View view, int position) {
 
         FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
-        fichaVisitaDTBS.excluir(mList.get(position));
+        fichaVisitaDTBS.restaurar(fichaSelecionada);
+        mList.add(position, fichaSelecionada);
+        notifyItemInserted(position);
+
+    }
+
+
+    public void removerFicha(View view, int position) {
+
+        FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
+        fichaSelecionada = mList.get(position);
+        fichaVisitaDTBS.excluir(fichaSelecionada);
         mList.remove(position);
         notifyItemRemoved(position);
     }

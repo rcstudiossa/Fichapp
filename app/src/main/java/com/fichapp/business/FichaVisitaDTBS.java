@@ -37,7 +37,10 @@ public class FichaVisitaDTBS {
 
     public void excluir(FichaVisitaDTModel fichaModel) {
         fichaVisitaDTDAO.excluir(fichaModel);
-        //profissionalDAO.pesquisar();
+    }
+
+    public void restaurar(FichaVisitaDTModel fichaModel) {
+        fichaVisitaDTDAO.restaurar(fichaModel);
     }
 
     public FichaVisitaDTModel obter(FichaVisitaDTModel fichaVisitaDTModel) {

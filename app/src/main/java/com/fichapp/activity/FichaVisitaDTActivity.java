@@ -477,8 +477,11 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         boolean valido = true;
 
         String aviso = "";
+        String msg;
 
         String cboProfissional = prefs.getString("cbo", "");
+
+        //Utilitario.limparMsgErro(findViewById(R.id.ll_geral));
 
         if (!(cboProfissional.equals("515105") || cboProfissional.equals("515120") || cboProfissional.equals("515310") || cboProfissional.equals("51514"))) {
             aviso = Utilitario.addAviso("Sua ocupação não permite registrar esta ficha.", aviso);
@@ -501,12 +504,15 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             }
 
             if (Utilitario.isEmpty(etMicroarea.getText().toString()) && !cbForaDeArea.isChecked()) {
-                aviso = Utilitario.addAviso("Preencha a microarea.", aviso);
+                msg = "Preencha a microárea";
+                aviso = Utilitario.addAviso(msg, aviso);
+                //Utilitario.enviarMsgErro(findViewById(R.id.til_microarea), msg);
                 valido = false;
             }
 
             if (Utilitario.isEmpty((((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo()))) {
-                aviso = Utilitario.addAviso("Preencha o tipo de imóvel.", aviso);
+                aviso = Utilitario.addAviso("Selecione o tipo de imóvel.", aviso);
+                //Utilitario.enviarMsgErro(findViewById(R.id.tv_tipo_imovel), "Selecione o tipo de imóvel");
                 valido = false;
 
             } else {
