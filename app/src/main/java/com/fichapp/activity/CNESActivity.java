@@ -1,8 +1,6 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -12,13 +10,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.fichapp.fragment.CNESFragment;
 import com.fichapp.model.CNESModel;
 import com.fichapp.R;
 import com.fichapp.business.CNESBS;
 import com.fichapp.util.Utilitario;
-
-import static android.support.v7.appcompat.R.styleable.MenuItem;
 
 public class CNESActivity extends TemplateActivity {
 
@@ -65,7 +60,7 @@ public class CNESActivity extends TemplateActivity {
 
         this.gravarBT = (Button) findViewById(R.id.bt_gravar);
         this.cnesET = (EditText) findViewById(R.id.codigo);
-        this.nomeET = (EditText) findViewById(R.id.et_nome);
+        this.nomeET = (EditText) findViewById(R.id.et_nome_completo);
         this.mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
 

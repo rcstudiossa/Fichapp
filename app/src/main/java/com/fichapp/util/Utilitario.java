@@ -1,18 +1,12 @@
 package com.fichapp.util;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -111,15 +105,10 @@ public final class Utilitario {
 
     }
 
-    public static void alertar(Context context, String texto) {
+    public static void alertar(Activity activity, String texto) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Alerta");
-        builder.setMessage(texto);
-        builder.setPositiveButton("OK", null);
-
-        AlertDialog alerta = builder.create();
-        alerta.show();
+        ViewDialog alert = new ViewDialog();
+        alert.showDialog(activity, texto);
 
     }
 
@@ -156,11 +145,13 @@ public final class Utilitario {
 
     }
 
-    public static void mostrarErro(View view, String msg) {
+    public static void exibirErro(View view, String msg) {
 
         if (view instanceof TextView) {
             ((TextView) view).setText(msg);
+            ((TextView) view).setTextSize(13);
             ((TextView) view).setTextColor(Color.parseColor("#D50000"));
+
             view.setFocusable(true);
             view.requestFocus();
         } else if (view instanceof TextInputLayout) {
@@ -184,14 +175,16 @@ public final class Utilitario {
             }
 
             if (componente instanceof TextView) {
-                if (((TextView) componente).getCurrentTextColor() == Color.parseColor("#D50000")) {
+                if (((TextView) componente).getCurrentTextColor() == Color.parseColor("#D60000")) {
                     ((TextView) componente).setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark));
                 }
             } else if (componente instanceof TextInputLayout) {
-                mostrarErro(view, null);
+                if (((TextInputLayout) componente).getError() != null) {
+                    ((TextInputLayout) componente).setError(null);
+                    ((TextInputLayout) componente).setErrorEnabled(false);
+                    componente.clearFocus();
+                }
             }
-
-
         }
     }
 

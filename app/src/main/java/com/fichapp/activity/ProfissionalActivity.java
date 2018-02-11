@@ -1,12 +1,8 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -75,7 +71,7 @@ public class ProfissionalActivity extends TemplateActivity {
         spCbo = (Spinner) findViewById(R.id.spinner_cbo);
         etCns = (EditText) findViewById(R.id.et_cns);
         etIne = (EditText) findViewById(R.id.et_ine);
-        etNome = (EditText) findViewById(R.id.et_nome);
+        etNome = (EditText) findViewById(R.id.et_nome_completo);
         etUsuario = (EditText) findViewById(R.id.et_usuario);
         etSenha = (EditText) findViewById(R.id.et_senha);
         etConfirmarSenha = (EditText) findViewById(R.id.et_confirmar_senha);

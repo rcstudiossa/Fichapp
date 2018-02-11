@@ -84,12 +84,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean valido = true;
 
         if (Utilitario.isEmpty(usuarioET.getText().toString())) {
-            Utilitario.mostrarErro(usuarioET, "Preencha o usuário");
+            Utilitario.exibirErro(usuarioET, "Preencha o usuário");
             valido = false;
         }
 
         if (Utilitario.isEmpty(senhaET.getText().toString())) {
-            Utilitario.mostrarErro(senhaET, "Preencha a senha");
+            Utilitario.exibirErro(senhaET, "Preencha a senha");
             valido = false;
         }
 

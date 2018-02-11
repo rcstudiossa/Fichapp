@@ -1,6 +1,5 @@
 package com.fichapp.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -9,8 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -19,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaVisitaDTModel;
@@ -29,7 +25,6 @@ import com.fichapp.business.FichaVisitaDTBS;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
-import com.fichapp.util.ViewDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -499,33 +494,33 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
                 msg = "Preencha a data de registro";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.mostrarErro(findViewById(R.id.til_data_registro), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
                 valido = false;
-            } else if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
+            } else if (!Utilitario.dataValida(etDataRegistro.getText().toString())) {
                 msg = "A data de registro não é válida";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.mostrarErro(findViewById(R.id.til_data_registro), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
                 valido = false;
             }
 
             if (!rbTurnoM.isChecked() && !rbTurnoT.isChecked() && !rbTurnoN.isChecked()) {
                 msg = "Preencha o turno da visita";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.mostrarErro(findViewById(R.id.tv_turno), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_turno), msg);
                 valido = false;
             }
 
             if (Utilitario.isEmpty(etMicroarea.getText().toString()) && !cbForaDeArea.isChecked()) {
                 msg = "Preencha a microárea";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.mostrarErro(findViewById(R.id.til_microarea), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
                 valido = false;
             }
 
             if (Utilitario.isEmpty((((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo()))) {
                 msg = "Selecione o tipo de imóvel";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.mostrarErro(findViewById(R.id.tv_tipo_imovel), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_tipo_imovel), msg);
                 valido = false;
 
             } else {
@@ -535,19 +530,19 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                     if (Utilitario.isEmpty(etProntuario.getText().toString())) {
                         msg = "Preencha o prontuário";
                         aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.mostrarErro(findViewById(R.id.til_prontuario), msg);
+                        Utilitario.exibirErro(findViewById(R.id.til_prontuario), msg);
                         valido = false;
                     }
 
                     if (Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
                         msg = "Preencha a CNS do cidadão";
                         aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.mostrarErro(findViewById(R.id.til_cns_cidadao), msg);
+                        Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
                         valido = false;
                     } else if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
                         msg = "CNS do cidadão inválido";
                         aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.mostrarErro(findViewById(R.id.til_cns_cidadao), msg);
+                        Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
                         valido = false;
                     }
 
@@ -556,21 +551,21 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                         if (Utilitario.isEmpty(etNascimento.getText().toString())) {
                             msg = "Preencha a data de nascimento";
                             aviso = Utilitario.addAviso(msg, aviso);
-                            Utilitario.mostrarErro(findViewById(R.id.til_data_nascimento), msg);
+                            Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
                             valido = false;
                         }
 
                         if (!Utilitario.isEmpty(etNascimento.getText().toString()) && !Utilitario.dataValida(etNascimento.getText().toString())) {
                             msg = "A data de nascimento não é válida";
                             aviso = Utilitario.addAviso(msg, aviso);
-                            Utilitario.mostrarErro(findViewById(R.id.til_data_nascimento), msg);
+                            Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
                             valido = false;
                         }
 
                         if (!rbSexoM.isChecked() && !rbSexoF.isChecked()) {
                             msg = "Selecione o sexo";
                             aviso = Utilitario.addAviso(msg, aviso);
-                            Utilitario.mostrarErro(findViewById(R.id.tv_sexo), msg);
+                            Utilitario.exibirErro(findViewById(R.id.tv_sexo), msg);
                             valido = false;
                         }
                     }
@@ -583,8 +578,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             Snackbar snackbar = Snackbar.make(fabGravar, "Alguns itens estão pendentes", Snackbar.LENGTH_LONG).setAction("DETALHES", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ViewDialog alert = new ViewDialog();
-                    alert.showDialog(FichaVisitaDTActivity.this, finalAviso);
+                    Utilitario.alertar(FichaVisitaDTActivity.this, finalAviso);
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);

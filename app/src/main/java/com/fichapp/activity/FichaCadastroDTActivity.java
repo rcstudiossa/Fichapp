@@ -31,7 +31,6 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
-import com.fichapp.util.ViewDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -533,60 +532,83 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         boolean valido = true;
 
+        Utilitario.limparErros(findViewById(R.id.ll_main));
+
         String aviso = "";
+        String msg;
 
         if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha a data de registro.", aviso);
+            msg = "Preencha a data de registro";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
             valido = false;
-        }
-
-        if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
-            aviso = Utilitario.addAviso("A data de registro não é válida.", aviso);
+        } else if (!Utilitario.dataValida(etDataRegistro.getText().toString())) {
+            msg = "A data de registro não é válida";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(etCep.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha o CEP.", aviso);
+            msg = "Preencha o CEP";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_cep), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(((TipoModel)spUF.getSelectedItem()).getCodigo())) {
-            aviso = Utilitario.addAviso("Preencha o UF.", aviso);
+            msg = "Selecione o UF";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.tv_uf), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty((spMunicipio.getSelectedItem())) || Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
-            aviso = Utilitario.addAviso("Preencha o município.", aviso);
+            msg = "Selecione o município";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.tv_municipio), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(etBairro.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha o bairro.", aviso);
+            msg = "Preencha o bairro";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_bairro), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(((TipoModel)spTipoLogradouro.getSelectedItem()).getCodigo())) {
-            aviso = Utilitario.addAviso("Preencha o tipo do logradouro.", aviso);
+            msg = "Selecione o tipo de logradouro";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.tv_tipo_logradouro), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha o nome do logradouro.", aviso);
+            msg = "Preencha o nome do logradouro";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_nome_logradouro), msg);
             valido = false;
         }
 
         if ((Utilitario.isEmpty(etNumero.getText().toString())) && !cbSemNumero.isChecked()) {
-            aviso = Utilitario.addAviso("Preencha o número.", aviso);
+            msg = "Preencha o número";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_numero), msg);
             valido = false;
         }
 
         if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-            aviso = Utilitario.addAviso("Preencha a microárea.", aviso);
+            msg = "Preencha a microárea";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
             valido = false;
         }
 
         if (Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
-            aviso = Utilitario.addAviso("Selecione o tipo de imóvel.", aviso);
+            msg = "Selecione o tipo de imóvel";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.tv_tipo_imovel), msg);
             valido = false;
         }
 
@@ -594,17 +616,23 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
             List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,99));
             if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()))) {
-                aviso = Utilitario.addAviso("Selecione a situação de moradia.", aviso);
+                msg = "Selecione a situação de moradia";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_situacao_moradia), msg);
                 valido = false;
             }
 
             if (rgLocalizacao.getCheckedRadioButtonId() == -1 && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
-                aviso = Utilitario.addAviso("Selecione a localização.", aviso);
+                msg = "Selecione a localização";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_localizacao), msg);
                 valido = false;
             }
 
-            if (!Utilitario.isEmpty(etNumero.getText().toString()) && this.fichaCadastroDTModel.getFamilias().size() > new Integer(etNumero.getText().toString())) {
-                aviso = Utilitario.addAviso("Número de moradores errado.", aviso);
+            if (!Utilitario.isEmpty(etNumMoradores.getText().toString()) && this.fichaCadastroDTModel.getFamilias().size() > Integer.valueOf(etNumMoradores.getText().toString())) {
+                msg = "Número de moradores inválido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_num_moradores), msg);
                 valido = false;
             }
 
@@ -615,8 +643,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             Snackbar snackbar = Snackbar.make(fabGravar, "Alguns itens estão pendentes", Snackbar.LENGTH_LONG).setAction("DETALHES", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ViewDialog alert = new ViewDialog();
-                    alert.showDialog(FichaCadastroDTActivity.this, finalAviso);
+                    Utilitario.alertar(FichaCadastroDTActivity.this, finalAviso);
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);
