@@ -46,4 +46,26 @@ public class MunicipioDAO {
 
     }
 
+    public List<MunicipioModel> pesquisar() {
+
+        List<MunicipioModel> lista = new ArrayList<>();
+
+        String[] args = {};
+
+        Cursor c = db.rawQuery("SELECT * FROM municipio ORDER BY nome;", args);
+
+        lista.add(new MunicipioModel("Não respondido"));
+
+        if (c.moveToFirst()) {
+            do {
+                lista.add(new MunicipioModel(c.getString(c.getColumnIndex("nome")), c.getString(c.getColumnIndex("uf")), c.getInt(c.getColumnIndex("codigo"))));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return lista;
+
+    }
+
 }

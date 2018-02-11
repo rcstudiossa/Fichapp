@@ -117,6 +117,7 @@ public final class Utilitario {
 
         Date dataValida;
         SimpleDateFormat padrao = new SimpleDateFormat("dd/MM/yyyy");
+
         try {
             padrao.setLenient(false);
             dataValida = padrao.parse(data);

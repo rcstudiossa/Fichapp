@@ -31,4 +31,8 @@ public class MunicipioBS {
         return municipioDAO.pesquisar(uf);
     }
 
+    public List<MunicipioModel> pesquisar() {
+        return municipioDAO.pesquisar();
+    }
+
 }

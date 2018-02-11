@@ -253,18 +253,6 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
     private void carregarSpinners() {
 
-        /*ProfissionalBS profissionalBS = new ProfissionalBS(this);
-        this.profissionais = profissionalBS.pesquisarAtivos();
-        ArrayAdapter<ProfissionalModel> adapterProfissional = new ArrayAdapter<>(this, R.layout.spinner_item, this.profissionais);
-        spinnerProfissional.setAdapter(adapterProfissional);
-        adapterProfissional.setDropDownViewResource(R.layout.spinner_dropdown_item);
-
-        CNESBS cnesBS = new CNESBS(this);
-        this.hospitais = cnesBS.pesquisarAtivos();
-        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, this.hospitais);
-        spinnerHospital.setAdapter(adapterHospital);
-        adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);*/
-
         this.carregarSpinnerTipoImovel(spinnerTipoImovel);
 
     }

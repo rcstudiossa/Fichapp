@@ -327,7 +327,7 @@
                     <Spinner
                         android:id="@+id/spinner_tipo_imovel"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="40dp"
                         android:background="@drawable/spinner_item_layout" />
 
                 </LinearLayout>
@@ -420,7 +420,7 @@
                         <Spinner
                             android:id="@+id/spinner_situacao_moradia"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -588,7 +588,7 @@
                         <Spinner
                             android:id="@+id/spinner_condicao_posse_terra"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -670,7 +670,7 @@
                         <Spinner
                             android:id="@+id/spinner_material_paredes"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -731,7 +731,7 @@
                         <Spinner
                             android:id="@+id/spinner_abastecimento_agua"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -753,7 +753,7 @@
                         <Spinner
                             android:id="@+id/spinner_agua_consumo"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -775,7 +775,7 @@
                         <Spinner
                             android:id="@+id/spinner_escoamento_banheiro"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>
@@ -797,7 +797,7 @@
                         <Spinner
                             android:id="@+id/spinner_destino_lixo"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:background="@drawable/spinner_item_layout" />
 
                     </LinearLayout>

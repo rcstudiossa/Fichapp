@@ -266,10 +266,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etQualInstituicao = (EditText) findViewById(R.id.et_qual_instituicao);
 
         //Spinners
-        spPais = (Spinner) findViewById(R.id.spinner_municipio);
+        spPais = (Spinner) findViewById(R.id.spinner_pais);
         spRaca = (Spinner) findViewById(R.id.spinner_raca);
         spEtnia = (Spinner) findViewById(R.id.spinner_etnia);
-        spPais = (Spinner) findViewById(R.id.spinner_municipio);
         spParentesco = (Spinner) findViewById(R.id.spinner_parentesco);
         spCurso = (Spinner) findViewById(R.id.spinner_curso_frequentado);
         spTrabalho = (Spinner) findViewById(R.id.spinner_situacao_trabalho);
@@ -549,7 +548,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
             valido = false;
-        } else if (!Utilitario.dataValida(etDataRegistro.getText().toString())) {
+        } else if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
             msg = "A data de registro não é válida";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
@@ -568,7 +567,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
             valido = false;
-        } else if (!Utilitario.isCNSValido(etCnsResponsavelFamiliar.getText().toString())) {
+        } else if (!Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString()) && !Utilitario.isCNSValido(etCnsResponsavelFamiliar.getText().toString())) {
             msg = "O CNS do responsável não é válido";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
@@ -594,7 +593,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
             valido = false;
-        } else if (!Utilitario.dataValida(etDataNascimento.getText().toString())) {
+        } else if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && !Utilitario.dataValida(etDataNascimento.getText().toString())) {
             msg = "A data de nascimento não é válida";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
@@ -669,7 +668,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
             valido = false;
-        } else if (!Utilitario.dataValida(etDataNaturalizacao.getText().toString())) {
+        } else if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && !Utilitario.dataValida(etDataNaturalizacao.getText().toString())) {
             msg = "A data de naturalização não é válida";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
@@ -681,7 +680,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
             valido = false;
-        } else if (!Utilitario.dataValida(etDataEntrada.getText().toString())) {
+        } else if (!Utilitario.isEmpty(etDataEntrada.getText().toString()) && !Utilitario.dataValida(etDataEntrada.getText().toString())) {
             msg = "A data de entrada não é válida";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
