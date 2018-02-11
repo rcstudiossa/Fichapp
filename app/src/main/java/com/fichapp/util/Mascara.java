@@ -38,6 +38,7 @@ public class Mascara {
                     isUpdating = false;
                     return;
                 }
+
                 int i = 0;
                 for (char m : mask.toCharArray()) {
                     if (m != '#' && str.length() > 0) {

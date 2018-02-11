@@ -2,9 +2,11 @@ package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +31,7 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
+import com.fichapp.util.ViewDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -608,7 +611,17 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         }
 
         if (!aviso.isEmpty()) {
-            Utilitario.alertar(FichaCadastroDTActivity.this, aviso);
+            final String finalAviso = aviso;
+            Snackbar snackbar = Snackbar.make(fabGravar, "Alguns itens estão pendentes", Snackbar.LENGTH_LONG).setAction("DETALHES", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ViewDialog alert = new ViewDialog();
+                    alert.showDialog(FichaCadastroDTActivity.this, finalAviso);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+
         }
 
         return valido;

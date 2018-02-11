@@ -2,18 +2,21 @@ package com.fichapp.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fichapp.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +60,7 @@ public final class Utilitario {
 
     public static String addAviso(String texto, String aviso) {
 
-        texto = "- " + texto;
+        texto = "" + texto;
 
         if (isEmpty(aviso)) {
             aviso = texto;
@@ -121,7 +124,6 @@ public final class Utilitario {
     }
 
 
-
     public static boolean dataValida(String data) {
 
         Date dataValida;
@@ -141,7 +143,7 @@ public final class Utilitario {
 
             int meses = (hoje.get(Calendar.YEAR) * 12 + hoje.get(Calendar.MONTH)) - (dataCadastro.get(Calendar.YEAR) * 12 + dataCadastro.get(Calendar.MONTH));
 
-            if (Math.abs(meses) > (130 * 12) ) {
+            if (Math.abs(meses) > (130 * 12)) {
                 return false;
             }
 
@@ -154,38 +156,44 @@ public final class Utilitario {
 
     }
 
-    public static void enviarMsgErro(View view, String msg) {
+    public static void mostrarErro(View view, String msg) {
 
-        if (view instanceof CheckBox) {
-            ((CheckBox) view).setError(msg);
-        } else if (view instanceof EditText) {
-            ((EditText) view).setError(msg);
-        } else if (view instanceof TextView) {
-            ((TextView) view).setError(msg);
+        if (view instanceof TextView) {
+            ((TextView) view).setText(msg);
+            ((TextView) view).setTextColor(Color.parseColor("#D50000"));
+            view.setFocusable(true);
+            view.requestFocus();
         } else if (view instanceof TextInputLayout) {
             ((TextInputLayout) view).setError(msg);
+            (view).requestFocus();
         }
-
-        view.setFocusable(true);
-        view.requestFocus();
 
     }
 
 
+    public static void limparErros(View view) {
 
-    public static void limparMsgErro(View view) {
+        View componente;
 
         for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
 
-            if (((ViewGroup) view).getChildAt(i) instanceof ViewGroup) {
-                limparMsgErro(((ViewGroup) view).getChildAt(i));
+            componente = ((ViewGroup) view).getChildAt(i);
+
+            if (componente instanceof ViewGroup) {
+                limparErros(componente);
             }
 
-            enviarMsgErro(((ViewGroup) view).getChildAt(i), null);
+            if (componente instanceof TextView) {
+                if (((TextView) componente).getCurrentTextColor() == Color.parseColor("#D50000")) {
+                    ((TextView) componente).setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark));
+                }
+            } else if (componente instanceof TextInputLayout) {
+                mostrarErro(view, null);
+            }
+
 
         }
     }
-
 
 
 }

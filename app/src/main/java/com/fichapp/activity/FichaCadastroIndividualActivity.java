@@ -1,9 +1,11 @@
 package com.fichapp.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +27,9 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
+import com.fichapp.util.ViewDialog;
+
+import java.util.List;
 
 
 public class FichaCadastroIndividualActivity extends TemplateActivity {
@@ -400,13 +405,27 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
+    private void carregarSpinnerPais(boolean flagComBrasil) {
+
+        ArrayAdapter<TipoModel> spAdapter;
+
+        List<TipoModel> paises = new TipoModel().getComboPais();
+
+        if (!flagComBrasil) {
+            paises.remove(30);
+        }
+
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, paises);
+        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spPais.setAdapter(spAdapter);
+
+    }
+
     private void carregarSpinners() {
 
         ArrayAdapter<TipoModel> spAdapter;
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboPais());
-        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spPais.setAdapter(spAdapter);
+        this.carregarSpinnerPais(Boolean.TRUE);
 
         spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRaca());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -706,7 +725,17 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         }
 
         if (!aviso.isEmpty()) {
-            Utilitario.alertar(FichaCadastroIndividualActivity.this, aviso);
+            final String finalAviso = aviso;
+            Snackbar snackbar = Snackbar.make(fabGravar, "Alguns itens estão pendentes", Snackbar.LENGTH_LONG).setAction("DETALHES", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ViewDialog alert = new ViewDialog();
+                    alert.showDialog(FichaCadastroIndividualActivity.this, finalAviso);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+
         }
 
         return valido;
@@ -805,10 +834,12 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 Integer indexRg = rg.indexOfChild(findViewById(checkedId));
 
                 if (indexRg != 2) {
+                    FichaCadastroIndividualActivity.this.carregarSpinnerPais(Boolean.TRUE);
                     spPais.setEnabled(false);
                     spPais.setClickable(false);
                     spPais.setSelection(0);
                 } else {
+                    FichaCadastroIndividualActivity.this.carregarSpinnerPais(Boolean.FALSE);
                     spPais.setEnabled(true);
                     spPais.setClickable(true);
                     spPais.performClick();

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fichapp.R;
 import com.fichapp.business.ProfissionalBS;
@@ -71,32 +69,32 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         boolean campoValido = true;
 
         if (Utilitario.isEmpty(etUsuario.getText().toString())) {
-            Utilitario.enviarMsgErro(etUsuario, "Preencha o usuário.");
+            Utilitario.mostrarErro(etUsuario, "Preencha o usuário.");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etSenhaAtual.getText().toString())) {
-            Utilitario.enviarMsgErro(etSenhaAtual, "Preencha a senha atual.");
+            Utilitario.mostrarErro(etSenhaAtual, "Preencha a senha atual.");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etNovaSenha.getText().toString())) {
-            Utilitario.enviarMsgErro(etNovaSenha, "Preencha nova senha.");
+            Utilitario.mostrarErro(etNovaSenha, "Preencha nova senha.");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etConfirmarSenha.getText().toString())) {
-            Utilitario.enviarMsgErro(etConfirmarSenha, "Confirme a nova senha.");
+            Utilitario.mostrarErro(etConfirmarSenha, "Confirme a nova senha.");
             campoValido = false;
         }
 
         if ((!Utilitario.isEmpty(etNovaSenha.getText().toString())) && (!Utilitario.isEmpty(etConfirmarSenha.getText().toString())) && (!etNovaSenha.getText().toString().equals(etConfirmarSenha.getText().toString()))) {
-            Utilitario.enviarMsgErro(etConfirmarSenha, "A confirmação da senha não coincide");
+            Utilitario.mostrarErro(etConfirmarSenha, "A confirmação da senha não coincide");
             campoValido = false;
         } else {
 
             if ((!Utilitario.isEmpty(etSenhaAtual.getText().toString())) && (!Utilitario.isEmpty(etNovaSenha.getText().toString())) && (etNovaSenha.getText().toString().equals(etSenhaAtual.getText().toString()))) {
-                Utilitario.enviarMsgErro(etNovaSenha, "É necessário que a nova senha seja diferente da atual.");
+                Utilitario.mostrarErro(etNovaSenha, "É necessário que a nova senha seja diferente da atual.");
                 campoValido = false;
             }
         }
@@ -115,7 +113,7 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         ProfissionalModel profissionalModel = profissionalBS.obterProfissionalLogado(new ProfissionalModel(etUsuario.getText().toString(), etSenhaAtual.getText().toString(), Boolean.FALSE));
 
         if (Utilitario.isEmpty(profissionalModel) || Utilitario.isEmpty(profissionalModel.getId())) {
-            Utilitario.enviarMsgErro(etUsuario, "Usuário ou senha atual incorretos.");
+            Utilitario.mostrarErro(etUsuario, "Usuário ou senha atual incorretos.");
         } else {
             profissionalBS.alterarSenha(new ProfissionalModel(profissionalModel.getId(), etNovaSenha.getText().toString()));
             Utilitario.avisoSucesso(this);

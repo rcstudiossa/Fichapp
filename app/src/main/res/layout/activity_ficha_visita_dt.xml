@@ -66,7 +66,7 @@
                     android:orientation="horizontal">
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayout"
+                        android:id="@+id/til_data_registro"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp">
@@ -195,7 +195,7 @@
                     android:textSize="18sp" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout4"
+                    android:id="@+id/til_prontuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/field_margin">
@@ -211,7 +211,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/textInputLayout6"
+                    android:id="@+id/til_cns_cidadao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/field_margin">
@@ -233,10 +233,9 @@
                     android:orientation="horizontal">
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/textInputLayout5"
+                        android:id="@+id/til_data_nascimento"
                         android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/field_margin">
+                        android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/et_data_nascimento"

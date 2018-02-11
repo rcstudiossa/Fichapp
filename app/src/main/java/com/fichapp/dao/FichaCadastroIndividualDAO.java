@@ -419,9 +419,9 @@ public class FichaCadastroIndividualDAO {
 
         String s = "%" + query + "%";
 
-        String[] args = {s,s,s};
+        String[] args = {s,s,s,s};
 
-        Cursor c = db.rawQuery("SELECT id, data_registro, nome_completo, cns_cidadao FROM ficha_cadastro_individual where flag_ativo = 1 and (nome_completo like ? or strftime( '%d/%m/%Y', data_registro) like ? or cns_cidadao like ?) order by id;", args);
+        Cursor c = db.rawQuery("SELECT id, data_registro, nome_completo, cns_cidadao FROM ficha_cadastro_individual where flag_ativo = 1 and (id = ? or nome_completo like ? or strftime( '%d/%m/%Y', data_registro) like ? or cns_cidadao like ?) order by id;", args);
 
         if (c.moveToFirst()) {
             do {

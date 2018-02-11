@@ -106,6 +106,7 @@ public class TemplateActivity extends AppCompatActivity {
             ((EditText) componente).getText().clear();
         } else if (componente instanceof Spinner) {
             ((Spinner) componente).setSelection(0);
+            //TextView tv = (TextView) findViewById(R.id.tv_spinner_item);
         } else if (componente instanceof RadioGroup) {
             desabilitaRadioGroup((RadioGroup) componente);
         } else if (componente instanceof TextInputLayout) {

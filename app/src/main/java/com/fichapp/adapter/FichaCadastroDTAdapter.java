@@ -48,8 +48,9 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
     @Override
     public void onBindViewHolder(FichaCadastroDTVH fichaCadastroDTVH, final int position) {
 
+        fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha: %s", mList.get(position).getId()));
         fichaCadastroDTVH.tvCep.setText(String.format(Locale.getDefault(), "CEP: %s", mList.get(position).getCep()));
-        fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "%s, %s", mList.get(position).getBairro(), mList.get(position).getNumero()));
+        fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s, %s", mList.get(position).getBairro(), mList.get(position).getNumero()));
         fichaCadastroDTVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaCadastroDTVH.editBT.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +126,7 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
 
     public class FichaCadastroDTVH extends RecyclerView.ViewHolder {
 
+        public TextView tvFicha;
         public TextView tvCep;
         public TextView tvBairro;
         public TextView tvData;
@@ -133,6 +135,7 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
 
         public FichaCadastroDTVH(View itemView) {
             super(itemView);
+            tvFicha = (TextView) itemView.findViewById(R.id.tv_ficha);
             tvCep = (TextView) itemView.findViewById(R.id.tv_cep);
             tvBairro = (TextView) itemView.findViewById(R.id.tv_bairro);
             tvData = (TextView) itemView.findViewById(R.id.tv_data);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -22,8 +21,6 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.List;
-
-import static android.R.attr.delay;
 
 /**
  * Created by Rodrigo Costa on 25/12/2017.
@@ -87,12 +84,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean valido = true;
 
         if (Utilitario.isEmpty(usuarioET.getText().toString())) {
-            Utilitario.enviarMsgErro(usuarioET, "Preencha o usuário");
+            Utilitario.mostrarErro(usuarioET, "Preencha o usuário");
             valido = false;
         }
 
         if (Utilitario.isEmpty(senhaET.getText().toString())) {
-            Utilitario.enviarMsgErro(senhaET, "Preencha a senha");
+            Utilitario.mostrarErro(senhaET, "Preencha a senha");
             valido = false;
         }
 

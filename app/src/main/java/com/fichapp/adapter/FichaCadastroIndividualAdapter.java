@@ -46,7 +46,8 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
     @Override
     public void onBindViewHolder(FichaCadastroIndividualVH fichaCadastroIndividualVH, final int position) {
 
-        fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getNomeCompleto()));
+        fichaCadastroIndividualVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha: %s", mList.get(position).getId()));
+        fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "Nome: %s", mList.get(position).getNomeCompleto()));
         fichaCadastroIndividualVH.tvCNS.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaCadastroIndividualVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
@@ -124,6 +125,7 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
     public class FichaCadastroIndividualVH extends RecyclerView.ViewHolder {
 
+        public TextView tvFicha;
         public TextView tvNome;
         public TextView tvCNS;
         public TextView tvData;
@@ -132,6 +134,7 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
         public FichaCadastroIndividualVH(View itemView) {
             super(itemView);
+            tvFicha = itemView.findViewById(R.id.tv_ficha);
             tvNome = itemView.findViewById(R.id.tv_nome);
             tvCNS = itemView.findViewById(R.id.tv_cns);
             tvData = itemView.findViewById(R.id.tv_data);
