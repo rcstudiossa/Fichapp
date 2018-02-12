@@ -171,29 +171,20 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <LinearLayout
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_tipo_logradouro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="@dimen/field_margin"
-                    android:orientation="vertical">
+                    android:layout_margin="@dimen/field_margin">
 
-                    <TextView
-                        android:id="@+id/tv_tipo_logradouro"
+                    <android.support.v7.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/et_tipo_logradouro"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tipo de Logradouro*"
-                        android:layout_marginBottom="2dp"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:layout_height="match_parent"
+                        android:hint="Tipo de Logradouro*"
+                        android:inputType="textPersonName" />
 
-                    <Spinner
-                        android:id="@+id/spinner_tipo_logradouro"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="@drawable/spinner_item_layout" />
-
-                </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/til_nome_logradouro"

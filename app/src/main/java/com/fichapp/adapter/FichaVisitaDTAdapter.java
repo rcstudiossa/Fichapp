@@ -54,7 +54,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     @Override
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
-        fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha %s", position + 1));
+        fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
         fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
@@ -86,23 +86,6 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
                 intent.putExtra("fichaVisitaDT", fichaVisitaDTBS.obter(mList.get(position)));
                 view.getContext().startActivity(intent);
 
-            }
-        });
-
-        fichaVisitaDTVH.cardRV.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                removerFicha(view, position);
-                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        restaurarFicha(view, position);
-                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                snackbar.setActionTextColor(Color.YELLOW);
-                snackbar.show();
-                return true;
             }
         });
 
@@ -149,7 +132,6 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
         public TextView cnsTV;
         public TextView prontuarioTV;
         public TextView dataTV;
-        public ImageButton editBT;
         public ImageButton deleteBT;
 
         public FichaVisitaDTVH(View itemView) {
@@ -160,7 +142,6 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
             cnsTV = (TextView) itemView.findViewById(R.id.et_cns);
             prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
             dataTV = (TextView) itemView.findViewById(R.id.tv_data);
-            editBT = (ImageButton) itemView.findViewById(R.id.bt_edit);
             deleteBT = (ImageButton) itemView.findViewById(R.id.bt_delete);
 
         }

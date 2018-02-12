@@ -29,6 +29,7 @@ import com.fichapp.fragment.FichaCadastroIndividualFragment;
 import com.fichapp.fragment.FichaVisitaDTFragment;
 import com.fichapp.fragment.ProfissionalFragment;
 import com.fichapp.R;
+import com.fichapp.util.Utilitario;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tvNomeBar = v.findViewById(R.id.tv_capa_nome_bar);
         tvCboBar = v.findViewById(R.id.tv_capa_cbo_bar);
         tvHospitalBar = v.findViewById(R.id.tv_capa_hospital_bar);
+        ((TextView) v.findViewById(R.id.tv_versao)).setText(Utilitario.getVersao());
 
     }
 

@@ -37,7 +37,7 @@ public class FichaCadastroIndividualModel implements Serializable{
 
     private Integer nacionalidade;
     private TipoModel paisNascimento;
-    private String municipioUfNascimento;
+    private MunicipioModel municipioUfNascimento;
     private String portariaNaturalizacao;
     private Date dataNaturalizacao;
     private Date dataEntrada;
@@ -336,11 +336,11 @@ public class FichaCadastroIndividualModel implements Serializable{
         this.paisNascimento = paisNascimento;
     }
 
-    public String getMunicipioUfNascimento() {
+    public MunicipioModel getMunicipioUfNascimento() {
         return municipioUfNascimento;
     }
 
-    public void setMunicipioUfNascimento(String municipioUfNascimento) {
+    public void setMunicipioUfNascimento(MunicipioModel municipioUfNascimento) {
         this.municipioUfNascimento = municipioUfNascimento;
     }
 

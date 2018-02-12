@@ -49,20 +49,20 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
     @Override
     public void onBindViewHolder(FichaCadastroDTVH fichaCadastroDTVH, final int position) {
 
-        String bairro = mList.get(position).getBairro();
+        /*String bairro = mList.get(position).getBairro();
 
         String primeiroNome = bairro.split(" ")[0];
         String segundoNome = bairro.split(" ")[1];
 
-        String bairroAbreviado = primeiroNome + " " + segundoNome;
+        String bairroAbreviado = primeiroNome + " " + segundoNome;*/
 
 
-        fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", position + 1));
+        fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
         fichaCadastroDTVH.tvCep.setText(String.format(Locale.getDefault(), "CEP: %s", mList.get(position).getCep()));
         if (!Utilitario.isEmpty(mList.get(position).getNumero())) {
-            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s, %s", bairroAbreviado, mList.get(position).getNumero()));
+            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s, %s", mList.get(position).getBairro(), mList.get(position).getNumero()));
         } else {
-            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s", bairroAbreviado));
+            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s", mList.get(position).getBairro()));
         }
         fichaCadastroDTVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
@@ -98,23 +98,6 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
                 snackbar.setActionTextColor(Color.YELLOW);
 
                 snackbar.show();
-            }
-        });
-
-        fichaCadastroDTVH.cardRV.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                removerFicha(view, position);
-                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        restaurarFicha(view, position);
-                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                snackbar.setActionTextColor(Color.YELLOW);
-                snackbar.show();
-                return true;
             }
         });
 
@@ -159,7 +142,6 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
         public TextView tvCep;
         public TextView tvBairro;
         public TextView tvData;
-        public ImageButton editBT;
         public ImageButton deleteBT;
 
         public FichaCadastroDTVH(View itemView) {
@@ -170,7 +152,6 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
             tvCep = (TextView) itemView.findViewById(R.id.tv_cep);
             tvBairro = (TextView) itemView.findViewById(R.id.tv_bairro);
             tvData = (TextView) itemView.findViewById(R.id.tv_data);
-            editBT = (ImageButton) itemView.findViewById(R.id.bt_edit);
             deleteBT = (ImageButton) itemView.findViewById(R.id.bt_delete);
 
         }

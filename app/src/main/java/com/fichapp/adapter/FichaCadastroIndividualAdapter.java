@@ -47,16 +47,16 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
     @Override
     public void onBindViewHolder(FichaCadastroIndividualVH fichaCadastroIndividualVH, final int position) {
 
-        String nomeCompleto = mList.get(position).getNomeCompleto();
+        /*String nomeCompleto = mList.get(position).getNomeCompleto();
 
         String primeiroNome = nomeCompleto.split(" ")[0];
         String segundoNome = nomeCompleto.split(" ")[1];
 
-        String nomeAbreviado = primeiroNome + " " + segundoNome;
+        String nomeAbreviado = primeiroNome + " " + segundoNome;*/
 
 
-        fichaCadastroIndividualVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", position + 1));
-        fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "Nome: %s", nomeAbreviado));
+        fichaCadastroIndividualVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
+        fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "Nome: %s", mList.get(position).getNomeCompleto()));
         fichaCadastroIndividualVH.tvCNS.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaCadastroIndividualVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
@@ -86,23 +86,6 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
                 });
                 snackbar.setActionTextColor(Color.YELLOW);
                 snackbar.show();
-            }
-        });
-
-        fichaCadastroIndividualVH.cardRV.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                removerFicha(view, position);
-                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        restaurarFicha(view, position);
-                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                snackbar.setActionTextColor(Color.YELLOW);
-                snackbar.show();
-                return true;
             }
         });
 
@@ -147,7 +130,6 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
         public TextView tvNome;
         public TextView tvCNS;
         public TextView tvData;
-        public ImageButton btEdit;
         public ImageButton btDelete;
 
         public FichaCadastroIndividualVH(View itemView) {
@@ -158,7 +140,6 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
             tvNome = itemView.findViewById(R.id.tv_nome);
             tvCNS = itemView.findViewById(R.id.tv_cns);
             tvData = itemView.findViewById(R.id.tv_data);
-            btEdit = itemView.findViewById(R.id.bt_edit);
             btDelete = itemView.findViewById(R.id.bt_delete);
 
         }

@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -66,6 +67,35 @@ public class TemplateActivity extends AppCompatActivity {
             etDataRegistro.setText(Utilitario.getDataHojeFormatada());
         }
 
+    }
+
+    protected void onLongClickRg(View view) {
+
+        View componente;
+
+        for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+            componente = ((ViewGroup) view).getChildAt(i);
+
+            if (componente instanceof ViewGroup) {
+                onLongClickRg(componente);
+            }
+
+            if (componente instanceof RadioButton) {
+                final View finalComponente = componente;
+
+                ((RadioButton) componente).setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        if (((RadioGroup) finalComponente.getParent()).getCheckedRadioButtonId() > -1) {
+                            ((RadioGroup) finalComponente.getParent()).check(-1);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+            }
+        }
     }
 
     protected void desabilitaEditText(final EditText et) {

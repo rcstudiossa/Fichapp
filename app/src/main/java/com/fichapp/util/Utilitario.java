@@ -2,6 +2,8 @@ package com.fichapp.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -9,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fichapp.BuildConfig;
 import com.fichapp.R;
 
 import java.text.ParseException;
@@ -191,5 +196,9 @@ public final class Utilitario {
         }
     }
 
+    public static String getVersao() {
+        String versionName = BuildConfig.VERSION_NAME;
+        return versionName;
+    }
 
 }

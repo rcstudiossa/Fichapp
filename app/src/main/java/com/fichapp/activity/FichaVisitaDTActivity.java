@@ -134,6 +134,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.configComponentes();
 
+        this.onLongClickRg(findViewById(R.id.ll_geral));
+
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,9 +8,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -49,7 +52,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
     private Toolbar toolbar;
 
     private Spinner spUF;
-    private Spinner spTipoLogradouro;
+    private AutoCompleteTextView acTipoLogradouro;
     private Spinner spTipoImovel;
     private Spinner spSituacaoMoradia;
     private Spinner spCondicaoPosseTerra;
@@ -103,6 +106,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private LinearLayout llCondicoesMoradia;
 
+    private Integer codigoTipoLogradouro;
+    private List<TipoModel> tiposLogradouro;
+
 
     public static FichaCadastroDTActivity fichaCadastroDTActivity;
 
@@ -129,6 +135,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.configMascaras();
 
         this.configComponentes();
+
+        onLongClickRg(findViewById(R.id.ll_main));
 
         fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +169,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spUF = (Spinner) findViewById(R.id.spinner_uf);
         spMunicipio = (Spinner) findViewById(R.id.spinner_municipio);
         etBairro = (EditText) findViewById(R.id.et_bairro);
-        spTipoLogradouro = (Spinner) findViewById(R.id.spinner_tipo_logradouro);
+        acTipoLogradouro = (AutoCompleteTextView) findViewById(R.id.et_tipo_logradouro);
         etNomeLogradouro = (EditText) findViewById(R.id.et_nome_logradouro);
         etComplemento = (EditText) findViewById(R.id.et_complemento);
         etPontoReferencia = (EditText) findViewById(R.id.et_ponto_referencia);
@@ -279,9 +287,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spUF.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTipoLogradouro());
-        spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spTipoLogradouro.setAdapter(spAdapter);
+        tiposLogradouro = new TipoModel().getComboTipoLogradouro();
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, tiposLogradouro);
+        acTipoLogradouro.setAdapter(spAdapter);
 
     }
 
@@ -493,6 +501,33 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             }
         });
 
+        acTipoLogradouro.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                codigoTipoLogradouro = ((TipoModel) acTipoLogradouro.getAdapter().getItem(position)).getCodigo();
+            }
+        });
+
+        acTipoLogradouro.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                codigoTipoLogradouro = null;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        acTipoLogradouro.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (Utilitario.isEmpty(codigoTipoLogradouro)) {
+                    acTipoLogradouro.getText().clear();
+                }
+            }
+        });
+
     }
 
     private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
@@ -577,10 +612,10 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (Utilitario.isEmpty(((TipoModel)spTipoLogradouro.getSelectedItem()).getCodigo())) {
-            msg = "Selecione o tipo de logradouro";
+        if (Utilitario.isEmpty(acTipoLogradouro.getText().toString())) {
+            msg = "Preencha o tipo de logradouro";
             aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_tipo_logradouro), msg);
+            Utilitario.exibirErro(findViewById(R.id.til_tipo_logradouro), msg);
             valido = false;
         }
 
@@ -718,9 +753,15 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         }
 
         etBairro.setText(this.fichaCadastroDTModel.getBairro());
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro().getCodigo()) && this.fichaCadastroDTModel.getTipoLogradouro().getCodigo() > 0) {
-            spTipoLogradouro.setSelection(new TipoModel().getComboTipoLogradouro().indexOf(this.fichaCadastroDTModel.getTipoLogradouro()));
+
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro()) && this.fichaCadastroDTModel.getTipoLogradouro().getCodigo() > 0) {
+            TipoModel tipoLogradouroModel = tiposLogradouro.get(tiposLogradouro.indexOf(this.fichaCadastroDTModel.getTipoLogradouro()));
+            if (!Utilitario.isEmpty(tipoLogradouroModel)) {
+                acTipoLogradouro.setText(tipoLogradouroModel.toString());
+                codigoTipoLogradouro = tipoLogradouroModel.getCodigo();
+            }
         }
+
         etNomeLogradouro.setText(this.fichaCadastroDTModel.getNomeLogragouro());
         etComplemento.setText(this.fichaCadastroDTModel.getComplemento());
         etPontoReferencia.setText(this.fichaCadastroDTModel.getPontoReferencia());
@@ -806,7 +847,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         this.fichaCadastroDTModel.setUf((TipoModel) spUF.getSelectedItem());
         this.fichaCadastroDTModel.setMunicipio((MunicipioModel) spMunicipio.getSelectedItem());
         this.fichaCadastroDTModel.setBairro(etBairro.getText().toString());
-        this.fichaCadastroDTModel.setTipoLogradouro((TipoModel) spTipoLogradouro.getSelectedItem());
+        this.fichaCadastroDTModel.setTipoLogradouro(new TipoModel(codigoTipoLogradouro));
         this.fichaCadastroDTModel.setNomeLogragouro(etNomeLogradouro.getText().toString());
         this.fichaCadastroDTModel.setComplemento(etComplemento.getText().toString());
         this.fichaCadastroDTModel.setPontoReferencia(etPontoReferencia.getText().toString());

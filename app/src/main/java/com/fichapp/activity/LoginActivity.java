@@ -39,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-
-
         setContentView(R.layout.activity_login);
 
         usuarioET = (EditText) findViewById(R.id.ed_usuario);
@@ -65,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         spinnerHospital = (Spinner) findViewById(R.id.spinner_hospital);
 
         //this.carregarCombos();
+
+        ((TextView) findViewById(R.id.tv_versao)).setText(Utilitario.getVersao());
 
     }
 

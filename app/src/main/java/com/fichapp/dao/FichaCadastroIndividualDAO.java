@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroIndividualModel;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
@@ -52,7 +53,7 @@ public class FichaCadastroIndividualDAO {
 
                 fichaModel.getNacionalidade(),
                 fichaModel.getPaisNascimento().getCodigo(),
-                fichaModel.getMunicipioUfNascimento(),
+                fichaModel.getMunicipioUfNascimento().getCodigo(),
                 fichaModel.getPortariaNaturalizacao(),
                 Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
                 Utilitario.getDataFormatada(fichaModel.getDataEntrada()),
@@ -221,7 +222,7 @@ public class FichaCadastroIndividualDAO {
 
                 fichaModel.getNacionalidade(),
                 fichaModel.getPaisNascimento().getCodigo(),
-                fichaModel.getMunicipioUfNascimento(),
+                fichaModel.getMunicipioUfNascimento().getCodigo(),
                 fichaModel.getPortariaNaturalizacao(),
                 Utilitario.getDataFormatada(fichaModel.getDataNaturalizacao()),
                 Utilitario.getDataFormatada(fichaModel.getDataEntrada()),
@@ -491,7 +492,7 @@ public class FichaCadastroIndividualDAO {
 
         fichaModel.setNacionalidade(c.getInt(c.getColumnIndex("nacionalidade")));
         fichaModel.setPaisNascimento(new TipoModel(c.getInt(c.getColumnIndex("pais_nascimento"))));
-        fichaModel.setMunicipioUfNascimento(c.getString(c.getColumnIndex("municipio_uf_nascimento")));
+        fichaModel.setMunicipioUfNascimento(new MunicipioModel(c.getInt(c.getColumnIndex("municipio_uf_nascimento"))));
         fichaModel.setPortariaNaturalizacao(c.getString(c.getColumnIndex("portaria_naturalizacao")));
         fichaModel.setDataNaturalizacao(Utilitario.getDate(c.getString(c.getColumnIndex("data_naturalizacao"))));
         fichaModel.setDataEntrada(Utilitario.getDate(c.getString(c.getColumnIndex("data_entrada"))));

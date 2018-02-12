@@ -79,17 +79,6 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/bt_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/bt_delete"
-            android:background="@null"
-            android:padding="8dp"
-            android:src="@drawable/ic_edit" />
-
-        <ImageButton
             android:id="@+id/bt_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

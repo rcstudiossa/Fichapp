@@ -7,9 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -21,8 +24,10 @@ import android.widget.Spinner;
 
 import com.fichapp.R;
 import com.fichapp.business.FichaCadastroIndividualBS;
+import com.fichapp.business.MunicipioBS;
 import com.fichapp.model.CNESModel;
 import com.fichapp.model.FichaCadastroIndividualModel;
+import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
@@ -67,7 +72,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private CheckBox cbPaiDesconhecido;
 
     private RadioGroup rgNacionalidade;
-    private EditText etMunicipioNascimento;
+    private AutoCompleteTextView etMunicipioNascimento;
     private LinearLayout llNaturalizacao;
     private EditText etPortariaNaturalizacao;
     private EditText etDataNaturalizacao;
@@ -186,6 +191,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private LinearLayout llSituacaoRua;
     private LinearLayout llSeSituacaoRua;
 
+    private Integer codigoMunicipio;
+    private List<MunicipioModel> municipios;
+
     private RelativeLayout rlMain;
 
     @Override
@@ -239,6 +247,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         spPais.setEnabled(false);
         spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
 
+        etDataRegistro.requestFocus();
+
     }
 
     private void definirComponentes() {
@@ -254,7 +264,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etNis = (EditText) findViewById(R.id.et_nis);
         etNomeMae = (EditText) findViewById(R.id.et_nome_mae);
         etNomePai = (EditText) findViewById(R.id.et_nome_pai);
-        etMunicipioNascimento = (EditText) findViewById(R.id.et_municipio_nascimento);
+        etMunicipioNascimento = (AutoCompleteTextView) findViewById(R.id.et_municipio_nascimento);
+        etMunicipioNascimento = (AutoCompleteTextView) findViewById(R.id.et_municipio_nascimento);
         etPortariaNaturalizacao = (EditText) findViewById(R.id.et_portaria_naturalizacao);
         etDataNaturalizacao = (EditText) findViewById(R.id.et_data_naturalizacao);
         etDataEntrada = (EditText) findViewById(R.id.et_data_entrada);
@@ -460,6 +471,10 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spGenero.setAdapter(spAdapter);
 
+        municipios = new MunicipioBS(FichaCadastroIndividualActivity.this).pesquisar();
+        ArrayAdapter<MunicipioModel> spAdapterMunicipio = new ArrayAdapter<>(this, R.layout.spinner_dropdown_item, municipios);
+        etMunicipioNascimento.setAdapter(spAdapterMunicipio);
+
     }
 
     private void configDatas() {
@@ -662,6 +677,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
+        etMunicipioNascimento.clearFocus();
         if (Utilitario.isEmpty(etMunicipioNascimento.getText().toString()) && (indexNacionalidade == 0)) {
             msg = "Preencha o município de nascimento";
             aviso = Utilitario.addAviso(msg, aviso);
@@ -855,14 +871,16 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.desabilitaSpinner(rgInformarOrientacao, 1, spOrientacao);
         this.desabilitaSpinner(rgInformarIdentidadeGenero, 1, spGenero);
 
+        this.onLongClickRg(findViewById(R.id.ll_main));
+
         spRaca.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                desabilitarComponentes(spEtnia);
-
                 if (!Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo()) && ((TipoModel) spRaca.getSelectedItem()).getCodigo() == 5) {
                     habilitarComponentes(spEtnia);
+                } else {
+                    desabilitarComponentes(spEtnia);
                 }
             }
 
@@ -984,6 +1002,33 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                     habilitaLinearLayout(llSocioDemografico);
                     habilitaLinearLayout(llCondicoesSaude);
                     habilitaLinearLayout(llSituacaoRua);
+                }
+            }
+        });
+
+        etMunicipioNascimento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                codigoMunicipio = ((MunicipioModel)etMunicipioNascimento.getAdapter().getItem(position)).getCodigo();
+            }
+        });
+
+        etMunicipioNascimento.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                codigoMunicipio = null;
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        etMunicipioNascimento.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (Utilitario.isEmpty(codigoMunicipio)) {
+                    etMunicipioNascimento.getText().clear();
                 }
             }
         });
@@ -1136,7 +1181,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getPaisNascimento()) && this.fichaCadastroIndividualModel.getPaisNascimento().getCodigo() > 0) {
             spPais.setSelection(new TipoModel().getComboPais().indexOf(this.fichaCadastroIndividualModel.getPaisNascimento()));
         }
-        etMunicipioNascimento.setText(this.fichaCadastroIndividualModel.getMunicipioUfNascimento());
+        if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getMunicipioUfNascimento()) && this.fichaCadastroIndividualModel.getMunicipioUfNascimento().getCodigo() > 0) {
+            MunicipioModel municipioModel = municipios.get(municipios.indexOf(this.fichaCadastroIndividualModel.getMunicipioUfNascimento()));
+            if (!Utilitario.isEmpty(municipioModel)) {
+                etMunicipioNascimento.setText(municipioModel.toString());
+                codigoMunicipio = municipioModel.getCodigo();
+            }
+        }
         etPortariaNaturalizacao.setText(this.fichaCadastroIndividualModel.getPortariaNaturalizacao());
         etDataNaturalizacao.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataNaturalizacao()));
         etDataEntrada.setText(Utilitario.getDataFormatada(this.fichaCadastroIndividualModel.getDataEntrada()));
@@ -1261,7 +1312,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setFlagPaiDesconhecido(cbPaiDesconhecido.isChecked());
         this.fichaCadastroIndividualModel.setNacionalidade(this.getPosicaoSelecionadoRG(rgNacionalidade) + 1);
         this.fichaCadastroIndividualModel.setPaisNascimento((TipoModel) this.spPais.getSelectedItem());
-        this.fichaCadastroIndividualModel.setMunicipioUfNascimento(etMunicipioNascimento.getText().toString());
+        this.fichaCadastroIndividualModel.setMunicipioUfNascimento(new MunicipioModel(codigoMunicipio));
         this.fichaCadastroIndividualModel.setPortariaNaturalizacao(etPortariaNaturalizacao.getText().toString());
         this.fichaCadastroIndividualModel.setDataNaturalizacao(Utilitario.getDate(etDataNaturalizacao.getText().toString()));
         this.fichaCadastroIndividualModel.setDataEntrada(Utilitario.getDate(etDataEntrada.getText().toString()));
