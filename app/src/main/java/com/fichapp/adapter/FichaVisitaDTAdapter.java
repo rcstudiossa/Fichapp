@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,9 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     private LayoutInflater mLayoutInflater;
     private FichaVisitaDTModel fichaSelecionada;
 
+    public List<FichaVisitaDTModel> getmList() {
+        return mList;
+    }
 
     public FichaVisitaDTAdapter(Context c, List<FichaVisitaDTModel> l) {
         mList = l;
@@ -48,46 +54,55 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     @Override
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
-        fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha: %s", mList.get(position).getId()));
+        fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha %s", position + 1));
         fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
         fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
         fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
-
-        fichaVisitaDTVH.editBT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(view.getContext(), FichaVisitaDTActivity.class);
-
-                FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
-
-                intent.putExtra("fichaVisitaDT", fichaVisitaDTBS.obter(mList.get(position)));
-
-                view.getContext().startActivity(intent);
-
-            }
-        });
 
         fichaVisitaDTVH.deleteBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 removerFicha(view, position);
-
                 Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         restaurarFicha(view, position);
-
                         Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
                     }
                 });
-
                 snackbar.setActionTextColor(Color.YELLOW);
-
                 snackbar.show();
 
+            }
+        });
+
+        fichaVisitaDTVH.cardRV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), FichaVisitaDTActivity.class);
+                FichaVisitaDTBS fichaVisitaDTBS = new FichaVisitaDTBS(view.getContext());
+                intent.putExtra("fichaVisitaDT", fichaVisitaDTBS.obter(mList.get(position)));
+                view.getContext().startActivity(intent);
+
+            }
+        });
+
+        fichaVisitaDTVH.cardRV.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                removerFicha(view, position);
+                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        restaurarFicha(view, position);
+                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+                return true;
             }
         });
 
@@ -121,10 +136,14 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
         fichaVisitaDTBS.excluir(fichaSelecionada);
         mList.remove(position);
         notifyItemRemoved(position);
+
     }
 
 
+
     public class FichaVisitaDTVH extends RecyclerView.ViewHolder {
+
+        public CardView cardRV;
 
         public TextView fichaTV;
         public TextView cnsTV;
@@ -135,12 +154,14 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
 
         public FichaVisitaDTVH(View itemView) {
             super(itemView);
+
+            cardRV = (CardView) itemView.findViewById(R.id.card_rv);
             fichaTV = (TextView) itemView.findViewById(R.id.et_ficha);
             cnsTV = (TextView) itemView.findViewById(R.id.et_cns);
             prontuarioTV = (TextView) itemView.findViewById(R.id.tvProntuario);
             dataTV = (TextView) itemView.findViewById(R.id.tv_data);
-            editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
-            deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
+            editBT = (ImageButton) itemView.findViewById(R.id.bt_edit);
+            deleteBT = (ImageButton) itemView.findViewById(R.id.bt_delete);
 
         }
 

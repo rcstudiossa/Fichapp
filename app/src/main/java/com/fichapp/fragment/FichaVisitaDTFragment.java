@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ public class FichaVisitaDTFragment extends TemplateFragment {
         View view = inflater.inflate(R.layout.fragment_ficha_visita_dt, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_dt);
-        configRV();
+        this.configRV();
 
         fichaVisitaDTBS = new FichaVisitaDTBS(getActivity());
 
@@ -41,6 +43,8 @@ public class FichaVisitaDTFragment extends TemplateFragment {
 
         return view;
     }
+
+
 
     protected void pesquisarAtivos(String query) {
 

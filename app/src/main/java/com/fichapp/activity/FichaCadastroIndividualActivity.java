@@ -228,7 +228,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         super.configComponentes();
 
         rbBrasileira.setChecked(true);
-        spRaca.setSelection(0);
+        if (fichaCadastroIndividualModel.getId() == null) {
+            spRaca.setSelection(0);
+        } else {
+            if (!Utilitario.isEmpty(this.fichaCadastroIndividualModel.getRaca()) && this.fichaCadastroIndividualModel.getRaca().getCodigo() > 0) {
+                spRaca.setSelection(new TipoModel().getComboRaca().indexOf(this.fichaCadastroIndividualModel.getRaca()));
+            }
+        }
 
         spPais.setEnabled(false);
         spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
@@ -480,7 +486,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     private void gravar() {
 
-        if (!validaCampos()) { return; }
+        if (!validaCampos()) {
+            return;
+        }
 
         this.setActivityToModel();
 
@@ -496,7 +504,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     }
 
-    private boolean algumCheckBoxMarcado(LinearLayout ll) {
+    private boolean algumMarcado(LinearLayout ll) {
 
         Boolean marcado = false;
         int checks = 0;
@@ -507,17 +515,21 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                     checks++;
                 }
             } else if (ll.getChildAt(i) instanceof LinearLayout) {
-
-                if (algumCheckBoxMarcado((LinearLayout) ll.getChildAt(i))) {
+                if (algumMarcado((LinearLayout) ll.getChildAt(i))) {
                     checks++;
                 }
+            } else if (ll.getChildAt(i) instanceof RadioGroup) {
+                if (ll.getChildAt(i) instanceof RadioGroup) {
+                    if (((RadioButton) ll.getChildAt(i)).isChecked()) {
+                        checks++;
+                    }
+                }
+            }
+
+            if (checks > 0) {
+                marcado = true;
             }
         }
-
-        if (checks > 0) {
-            marcado = true;
-        }
-
         return marcado;
     }
 
@@ -614,7 +626,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             valido = false;
         }
 
-        if (!Utilitario.isEmpty((spRaca.getSelectedItem())) && !Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+        if (!Utilitario.isEmpty((spRaca.getSelectedItem())) && !Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo()) && ((TipoModel) spRaca.getSelectedItem()).getCodigo() == 5
+                && ((TipoModel) spEtnia.getSelectedItem()).getCodigo() == null) {
             msg = "Selecione a etnia";
             aviso = Utilitario.addAviso(msg, aviso);
             Utilitario.exibirErro(findViewById(R.id.tv_etnia), msg);
@@ -708,7 +721,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
                 valido = false;
-            } else if (!this.algumCheckBoxMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
+            } else if (!this.algumMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
                 msg = "Informe a(s) deficiência(s)";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
@@ -734,21 +747,21 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 valido = false;
             }
 
-            if (!this.algumCheckBoxMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
+            if (!this.algumMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
                 msg = "Informe a(s) doença(s)";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.tv_doenca_cardiaca), msg);
                 valido = false;
             }
 
-            if (!this.algumCheckBoxMarcado(llProblemaRins) && indexProblemaRins == 0) {
+            if (!this.algumMarcado(llProblemaRins) && indexProblemaRins == 0) {
                 msg = "Informe o(s) problema(s)";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.tv_problema_rins), msg);
                 valido = false;
             }
 
-            if (!this.algumCheckBoxMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
+            if (!this.algumMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
                 msg = "Informe a(s) doença(s)";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.tv_doenca_respiratoria), msg);
@@ -772,13 +785,27 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
                 msg = "Informe se está em situação de rua";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_situacao_rua), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_esta_situacao_rua), msg);
                 valido = false;
             }
 
             if (indexSituacaoRua == 0) {
 
-                if (!this.algumCheckBoxMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
+                if (rgFrequenciaAlimentacao.getCheckedRadioButtonId() == -1) {
+                    msg = "Informe a frequência da alimentação";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_frequencia_alimentacao), msg);
+                    valido = false;
+                }
+
+                if (rgTempoSituacaoRua.getCheckedRadioButtonId() == -1) {
+                    msg = "Informe o período em situação de rua";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_esta_situacao_rua), msg);
+                    valido = false;
+                }
+
+                if (!this.algumMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
                     msg = "Informe o acesso a higiene pessoal";
                     aviso = Utilitario.addAviso(msg, aviso);
                     Utilitario.exibirErro(findViewById(R.id.tv_higiene_pessoal), msg);
@@ -834,7 +861,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
                 desabilitarComponentes(spEtnia);
 
-                if (!Utilitario.isEmpty(((TipoModel)spRaca.getSelectedItem()).getCodigo()) && ((TipoModel)spRaca.getSelectedItem()).getCodigo() == 5) {
+                if (!Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo()) && ((TipoModel) spRaca.getSelectedItem()).getCodigo() == 5) {
                     habilitarComponentes(spEtnia);
                 }
             }
@@ -1229,7 +1256,9 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.fichaCadastroIndividualModel.setEtnia((TipoModel) this.spEtnia.getSelectedItem());
         this.fichaCadastroIndividualModel.setNis(etNis.getText().toString());
         this.fichaCadastroIndividualModel.setNomeMae(etNomeMae.getText().toString());
+        this.fichaCadastroIndividualModel.setFlagMaeDesconhecido(cbMaeDesconhecido.isChecked());
         this.fichaCadastroIndividualModel.setNomePai(etNomePai.getText().toString());
+        this.fichaCadastroIndividualModel.setFlagPaiDesconhecido(cbPaiDesconhecido.isChecked());
         this.fichaCadastroIndividualModel.setNacionalidade(this.getPosicaoSelecionadoRG(rgNacionalidade) + 1);
         this.fichaCadastroIndividualModel.setPaisNascimento((TipoModel) this.spPais.getSelectedItem());
         this.fichaCadastroIndividualModel.setMunicipioUfNascimento(etMunicipioNascimento.getText().toString());

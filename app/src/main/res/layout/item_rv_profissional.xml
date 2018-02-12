@@ -46,19 +46,19 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/edit_bt"
+        android:id="@+id/bt_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:src="@drawable/ic_edit"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/delete_bt"
+        android:layout_toStartOf="@+id/bt_delete"
         android:layout_centerVertical="true"
         android:background="@null"/>
 
     <ImageButton
         android:layout_alignParentRight="true"
-        android:id="@+id/delete_bt"
+        android:id="@+id/bt_delete"
         android:src="@drawable/ic_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

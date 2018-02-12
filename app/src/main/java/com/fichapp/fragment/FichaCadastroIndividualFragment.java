@@ -27,7 +27,7 @@ public class FichaCadastroIndividualFragment extends TemplateFragment {
         View view = inflater.inflate(R.layout.fragment_ficha_cadastro_individual, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_ficha_cadastro_individual);
-        configRV();
+        this.configRV();
 
         fichaCadastroIndividualBS = new FichaCadastroIndividualBS(getActivity());
 

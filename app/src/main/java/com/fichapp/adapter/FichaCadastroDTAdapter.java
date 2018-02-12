@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,21 +49,31 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
     @Override
     public void onBindViewHolder(FichaCadastroDTVH fichaCadastroDTVH, final int position) {
 
-        fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha: %s", mList.get(position).getId()));
+        String bairro = mList.get(position).getBairro();
+
+        String primeiroNome = bairro.split(" ")[0];
+        String segundoNome = bairro.split(" ")[1];
+
+        String bairroAbreviado = primeiroNome + " " + segundoNome;
+
+
+        fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", position + 1));
         fichaCadastroDTVH.tvCep.setText(String.format(Locale.getDefault(), "CEP: %s", mList.get(position).getCep()));
-        fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s, %s", mList.get(position).getBairro(), mList.get(position).getNumero()));
+        if (!Utilitario.isEmpty(mList.get(position).getNumero())) {
+            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s, %s", bairroAbreviado, mList.get(position).getNumero()));
+        } else {
+            fichaCadastroDTVH.tvBairro.setText(String.format(Locale.getDefault(), "Bairro: %s", bairroAbreviado));
+        }
         fichaCadastroDTVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
-        fichaCadastroDTVH.editBT.setOnClickListener(new View.OnClickListener() {
+
+        fichaCadastroDTVH.cardRV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(), FichaCadastroDTActivity.class);
-
                 FichaCadastroDTBS fichaCadastroDTBS = new FichaCadastroDTBS(view.getContext());
-
                 intent.putExtra("fichaCadastroDT", fichaCadastroDTBS.obter(mList.get(position)));
-
                 view.getContext().startActivity(intent);
 
             }
@@ -87,6 +98,23 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
                 snackbar.setActionTextColor(Color.YELLOW);
 
                 snackbar.show();
+            }
+        });
+
+        fichaCadastroDTVH.cardRV.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                removerFicha(view, position);
+                Snackbar snackbar = Snackbar.make(view, "A ficha foi excluida", Snackbar.LENGTH_LONG).setAction("DESFAZER", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        restaurarFicha(view, position);
+                        Toast.makeText(view.getContext(), "Ficha restaurada", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+                return true;
             }
         });
 
@@ -126,6 +154,7 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
 
     public class FichaCadastroDTVH extends RecyclerView.ViewHolder {
 
+        public CardView cardRV;
         public TextView tvFicha;
         public TextView tvCep;
         public TextView tvBairro;
@@ -135,12 +164,14 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
 
         public FichaCadastroDTVH(View itemView) {
             super(itemView);
+
+            cardRV = (CardView) itemView.findViewById(R.id.card_rv);
             tvFicha = (TextView) itemView.findViewById(R.id.tv_ficha);
             tvCep = (TextView) itemView.findViewById(R.id.tv_cep);
             tvBairro = (TextView) itemView.findViewById(R.id.tv_bairro);
             tvData = (TextView) itemView.findViewById(R.id.tv_data);
-            editBT = (ImageButton) itemView.findViewById(R.id.edit_bt);
-            deleteBT = (ImageButton) itemView.findViewById(R.id.delete_bt);
+            editBT = (ImageButton) itemView.findViewById(R.id.bt_edit);
+            deleteBT = (ImageButton) itemView.findViewById(R.id.bt_delete);
 
         }
 
