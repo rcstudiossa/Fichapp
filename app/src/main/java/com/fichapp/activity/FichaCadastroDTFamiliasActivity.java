@@ -1,7 +1,6 @@
 package com.fichapp.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Spinner;
 
 import com.fichapp.R;
@@ -26,7 +24,6 @@ import com.fichapp.adapter.FichaCadastroDTFamiliasAdapter;
 import com.fichapp.business.FichaCadastroDTFamiliasBS;
 import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
-import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
@@ -202,7 +199,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         ArrayAdapter<TipoModel> spAdapter;
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRendaFamiliar());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboRendaFamiliar());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spSalarioFamiliar.setAdapter(spAdapter);
 

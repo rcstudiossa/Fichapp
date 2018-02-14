@@ -94,10 +94,10 @@ public abstract class TemplateAdapter<T extends RecyclerView.Adapter> {
         public TemplateVH(View itemView) {
 
             super(itemView);
-            linha1TV = (TextView) itemView.findViewById(R.id.tv_linha_1);
+            /*linha1TV = (TextView) itemView.findViewById(R.id.tv_linha_1);
             linha2TV = (TextView) itemView.findViewById(R.id.tv_linha_2);
             linha3TV = (TextView) itemView.findViewById(R.id.tv_linha_3);
-            dataTV = (TextView) itemView.findViewById(R.id.tv_data);
+            */dataTV = (TextView) itemView.findViewById(R.id.tv_data);
             editBT = (ImageButton) itemView.findViewById(R.id.bt_edit);
             deleteBT = (ImageButton) itemView.findViewById(R.id.bt_delete);
 

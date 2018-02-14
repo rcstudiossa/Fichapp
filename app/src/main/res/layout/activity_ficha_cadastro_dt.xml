@@ -62,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Data Registro*"
-                        android:inputType="date" />
+                        android:inputType="number" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -252,7 +252,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="Número"
-                            android:inputType="number"
+                            android:inputType="textPostalAddress"
                             android:maxLength="10"
                             android:maxLines="1" />
 

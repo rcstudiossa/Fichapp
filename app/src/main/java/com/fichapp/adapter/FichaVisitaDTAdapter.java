@@ -55,8 +55,19 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
     public void onBindViewHolder(FichaVisitaDTVH fichaVisitaDTVH, final int position) {
 
         fichaVisitaDTVH.fichaTV.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
-        fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
-        fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
+
+        if (Utilitario.isEmpty(mList.get(position).getCnsCidadao())) {
+            fichaVisitaDTVH.cnsTV.setText("Sem CNS Cadastrado");
+        } else {
+            fichaVisitaDTVH.cnsTV.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
+        }
+
+        if (Utilitario.isEmpty(mList.get(position).getProntuario())) {
+            fichaVisitaDTVH.prontuarioTV.setText("Sem Prontuário Cadastrado");
+        } else {
+            fichaVisitaDTVH.prontuarioTV.setText(String.format(Locale.getDefault(), "Prontuário: %s", mList.get(position).getProntuario()));
+        }
+
         fichaVisitaDTVH.dataTV.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaVisitaDTVH.deleteBT.setOnClickListener(new View.OnClickListener() {

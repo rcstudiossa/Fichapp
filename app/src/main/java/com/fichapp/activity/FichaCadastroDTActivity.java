@@ -136,6 +136,8 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.configComponentes();
 
+        validaCbo(FichaCadastroDTActivity.this, fabGravar);
+
         onLongClickRg(findViewById(R.id.ll_main));
 
         fabGravar.setOnClickListener(new View.OnClickListener() {
@@ -255,35 +257,35 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         ArrayAdapter<TipoModel> spAdapter;
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboSituacaoMoradia());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboSituacaoMoradia());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spSituacaoMoradia.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboPosseTerra());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboPosseTerra());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCondicaoPosseTerra.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboMaterialParedes());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboMaterialParedes());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spMaterialParedes.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboAbastecimentoAgua());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboAbastecimentoAgua());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spAbastecimentoAgua.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboAguaConsumo());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboAguaConsumo());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spAguaConsumo.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboEscoamentoBanheiro());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboEscoamentoBanheiro());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spEscoamentoBanheiro.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboDestinoLixo());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboDestinoLixo());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spDestinoLixo.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboUF());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboUF());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spUF.setAdapter(spAdapter);
 
@@ -362,7 +364,9 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void gravar() {
 
-        if (!validaCampos()) { return; }
+        if (!validaCampos()) {
+            return;
+        }
 
         this.setActivityToModel();
 
@@ -393,7 +397,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                if (!Utilitario.isEmpty(((TipoModel)spUF.getSelectedItem()).getCodigo())) {
+                if (!Utilitario.isEmpty(((TipoModel) spUF.getSelectedItem()).getCodigo())) {
 
                     List<MunicipioModel> municipios = new MunicipioBS(fichaCadastroDTActivity).pesquisar(((TipoModel) spUF.getSelectedItem()).getAbreviacao());
 
@@ -422,14 +426,14 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
                 desabilitaCondicoesMoradia(position, cbVisitaRecusada.isChecked());
 
-                if (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && ((TipoModel)spTipoImovel.getSelectedItem()).getCodigo() == 1) {
+                if (!Utilitario.isEmpty(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo()) && ((TipoModel) spTipoImovel.getSelectedItem()).getCodigo() == 1) {
                     habilitarComponentes(rgTemAnimais);
                 } else {
                     desabilitarComponentes(rgTemAnimais);
                 }
 
-                List<Integer> tipos = new ArrayList<>(Arrays.asList(7,8,9,10,11));
-                if (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
+                List<Integer> tipos = new ArrayList<>(Arrays.asList(7, 8, 9, 10, 11));
+                if (!Utilitario.isEmpty(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo()) && tipos.contains(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo())) {
                     desabilitarComponentes(spSituacaoMoradia);
                     desabilitarComponentes(rgTipoDomicilio);
                     desabilitarComponentes(rgAcessoDomicilio);
@@ -510,13 +514,17 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         acTipoLogradouro.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 codigoTipoLogradouro = null;
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         acTipoLogradouro.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -532,7 +540,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private void desabilitaCondicoesMoradia(Integer posicaoTipoImovel, Boolean flagVisitaRecusada) {
 
-        List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,13));
+        List<Integer> tipos = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12, 13));
 
         boolean desaparecer = tipos.contains(posicaoTipoImovel) || flagVisitaRecusada;
 
@@ -572,103 +580,110 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         String aviso = "";
         String msg;
 
-        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            msg = "Preencha a data de registro";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
-            valido = false;
-        } else if (!Utilitario.dataValida(etDataRegistro.getText().toString())) {
-            msg = "A data de registro não é válida";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
-            valido = false;
-        }
+        if (!isCBOValido(FichaCadastroDTActivity.this)) {
+            Snackbar.make(fabGravar, avisoOcupacao, Snackbar.LENGTH_LONG).show();
+            return false;
+        } else {
 
-        if (Utilitario.isEmpty(etCep.getText().toString())) {
-            msg = "Preencha o CEP";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_cep), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(((TipoModel)spUF.getSelectedItem()).getCodigo())) {
-            msg = "Selecione o UF";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_uf), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty((spMunicipio.getSelectedItem())) || Utilitario.isEmpty(((MunicipioModel)spMunicipio.getSelectedItem()).getCodigo())) {
-            msg = "Selecione o município";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_municipio), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(etBairro.getText().toString())) {
-            msg = "Preencha o bairro";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_bairro), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(acTipoLogradouro.getText().toString())) {
-            msg = "Preencha o tipo de logradouro";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_tipo_logradouro), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
-            msg = "Preencha o nome do logradouro";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_nome_logradouro), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etNumero.getText().toString())) && !cbSemNumero.isChecked()) {
-            msg = "Preencha o número";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_numero), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-            msg = "Preencha a microárea";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
-            msg = "Selecione o tipo de imóvel";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_tipo_imovel), msg);
-            valido = false;
-        }
-
-        if (!cbVisitaRecusada.isChecked()) {
-
-            List<Integer> tipos = new ArrayList<>(Arrays.asList(2,3,4,5,6,12,99));
-            if (Utilitario.isEmpty(((TipoModel)spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()) && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo()))) {
-                msg = "Selecione a situação de moradia";
+            if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+                msg = "Preencha a data de registro";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_situacao_moradia), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
+                valido = false;
+            } else if (!Utilitario.dataValida(etDataRegistro.getText().toString())) {
+                msg = "A data de registro não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
                 valido = false;
             }
 
-            if (rgLocalizacao.getCheckedRadioButtonId() == -1 && !tipos.contains(((TipoModel)spTipoImovel.getSelectedItem()).getCodigo())) {
-                msg = "Selecione a localização";
+            if (Utilitario.isEmpty(etCep.getText().toString())) {
+                msg = "Preencha o CEP";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_localizacao), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_cep), msg);
                 valido = false;
             }
 
-            if (!Utilitario.isEmpty(etNumMoradores.getText().toString()) && this.fichaCadastroDTModel.getFamilias().size() > Integer.valueOf(etNumMoradores.getText().toString())) {
-                msg = "Número de moradores inválido";
+            if (Utilitario.isEmpty(((TipoModel) spUF.getSelectedItem()).getCodigo())) {
+                msg = "Selecione o UF";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.til_num_moradores), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_uf), msg);
                 valido = false;
+            }
+
+            if (Utilitario.isEmpty((spMunicipio.getSelectedItem())) || Utilitario.isEmpty(((MunicipioModel) spMunicipio.getSelectedItem()).getCodigo())) {
+                msg = "Selecione o município";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_municipio), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etBairro.getText().toString())) {
+                msg = "Preencha o bairro";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_bairro), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(acTipoLogradouro.getText().toString())) {
+                msg = "Preencha o tipo de logradouro";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_tipo_logradouro), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etNomeLogradouro.getText().toString())) {
+                msg = "Preencha o nome do logradouro";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_logradouro), msg);
+                valido = false;
+            }
+
+            if ((Utilitario.isEmpty(etNumero.getText().toString())) && !cbSemNumero.isChecked()) {
+                msg = "Preencha o número";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_numero), msg);
+                valido = false;
+            }
+
+            if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+                msg = "Preencha a microárea";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo())) {
+                msg = "Selecione o tipo de imóvel";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_tipo_imovel), msg);
+                valido = false;
+            }
+
+            if (!cbVisitaRecusada.isChecked()) {
+
+                List<Integer> tipos = new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12, 99));
+                if (Utilitario.isEmpty(((TipoModel) spSituacaoMoradia.getSelectedItem()).getCodigo()) && (!Utilitario.isEmpty(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo()) && !tipos.contains(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo()))) {
+                    msg = "Selecione a situação de moradia";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_situacao_moradia), msg);
+                    valido = false;
+                }
+
+                if (rgLocalizacao.getCheckedRadioButtonId() == -1 && !tipos.contains(((TipoModel) spTipoImovel.getSelectedItem()).getCodigo())) {
+                    msg = "Selecione a localização";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_localizacao), msg);
+                    valido = false;
+                }
+
+                if (!Utilitario.isEmpty(etNumMoradores.getText().toString()) && this.fichaCadastroDTModel.getFamilias().size() > Integer.valueOf(etNumMoradores.getText().toString())) {
+                    msg = "Número de moradores inválido";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_num_moradores), msg);
+                    valido = false;
+                }
+
             }
 
         }
@@ -747,7 +762,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             spUF.setSelection(new TipoModel().getComboUF().indexOf(this.fichaCadastroDTModel.getUf()));
 
             if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMunicipio().getCodigo()) && this.fichaCadastroDTModel.getMunicipio().getCodigo() > 0) {
-                spMunicipio.setSelection(municipioBS.pesquisar(((TipoModel)spUF.getSelectedItem()).getDescricao()).indexOf(this.fichaCadastroDTModel.getMunicipio()));
+                spMunicipio.setSelection(municipioBS.pesquisar(((TipoModel) spUF.getSelectedItem()).getDescricao()).indexOf(this.fichaCadastroDTModel.getMunicipio()));
             }
 
         }
@@ -823,7 +838,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         cbGato.setChecked(this.fichaCadastroDTModel.getFlagGato() == null ? false : this.fichaCadastroDTModel.getFlagGato());
         cbCachorro.setChecked(this.fichaCadastroDTModel.getFlagCachorro() == null ? false : this.fichaCadastroDTModel.getFlagCachorro());
         cbPassaro.setChecked(this.fichaCadastroDTModel.getFlagPassaro() == null ? false : this.fichaCadastroDTModel.getFlagPassaro());
-        cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais() == null ? false: this.fichaCadastroDTModel.getFlagOutrosAnimais());
+        cbOutrosAnimais.setChecked(this.fichaCadastroDTModel.getFlagOutrosAnimais() == null ? false : this.fichaCadastroDTModel.getFlagOutrosAnimais());
 
         btCadastrarFamilias.setText(String.format("Familias (%d)", this.fichaCadastroDTModel.getFamilias().size()));
 

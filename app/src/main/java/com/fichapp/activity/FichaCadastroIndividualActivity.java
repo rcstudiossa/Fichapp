@@ -195,6 +195,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private List<MunicipioModel> municipios;
 
     private RelativeLayout rlMain;
+    
+    private Integer spItemLayout = R.layout.spinner_item_habilitado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +218,8 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         this.instanciarFichaCadastroIndividualModel();
 
         this.configComponentes();
+
+        this.validaCbo(FichaCadastroIndividualActivity.this, fabGravar);
 
         this.configMascaras();
 
@@ -248,6 +252,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         spPais.setSelection(new TipoModel().getComboPais().indexOf(new TipoModel(31)));
 
         etDataRegistro.requestFocus();
+        rlMain.requestFocus();
 
     }
 
@@ -431,7 +436,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             paises.remove(30);
         }
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, paises);
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, paises);
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spPais.setAdapter(spAdapter);
 
@@ -443,31 +448,31 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
         this.carregarSpinnerPais(Boolean.TRUE);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboRaca());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboRaca());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spRaca.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboEtnia());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboEtnia());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spEtnia.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboParentesco());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboParentesco());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spParentesco.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboCurso());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboCurso());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCurso.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTrabalho());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboTrabalho());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spTrabalho.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboOrientacaoSexual());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboOrientacaoSexual());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spOrientacao.setAdapter(spAdapter);
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboGeneroSexual());
+        spAdapter = new ArrayAdapter<>(this, spItemLayout, new TipoModel().getComboGeneroSexual());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spGenero.setAdapter(spAdapter);
 
@@ -570,266 +575,272 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         int indexSaidaCadastro = rgSaidaCadastro.indexOfChild(findViewById(rgSaidaCadastro.getCheckedRadioButtonId()));
         int indexNacionalidade = rgNacionalidade.indexOfChild(findViewById(rgNacionalidade.getCheckedRadioButtonId()));
 
-        if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
-            msg = "Preencha a data de registro";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
-            valido = false;
-        } else if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
-            msg = "A data de registro não é válida";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
-            valido = false;
-        }
+        if (!isCBOValido(FichaCadastroIndividualActivity.this)) {
+            Snackbar.make(fabGravar, avisoOcupacao, Snackbar.LENGTH_LONG).show();
+            return false;
+        } else {
 
-        if ((!Utilitario.isEmpty(etCnsCidadao.getText().toString())) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
-            msg = "O CNS do cidadão não é válido";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
-            valido = false;
-        }
-
-        if (indexResponsavel == 1 && Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString())) {
-            msg = "Preencha o CNS do responsável";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
-            valido = false;
-        } else if (!Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString()) && !Utilitario.isCNSValido(etCnsResponsavelFamiliar.getText().toString())) {
-            msg = "O CNS do responsável não é válido";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
-            msg = "Preencha a microárea";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etNomeCompleto.getText().toString()))) {
-            msg = "Preencha o nome do cidadão";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_nome_completo), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etDataNascimento.getText().toString()))) {
-            msg = "Preencha a data de nascimento";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
-            valido = false;
-        } else if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && !Utilitario.dataValida(etDataNascimento.getText().toString())) {
-            msg = "A data de nascimento não é válida";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
-            valido = false;
-        }
-
-        if (rgSexo.getCheckedRadioButtonId() == -1) {
-            msg = "Selecione o sexo";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_sexo), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo())) {
-            msg = "Selecione a raça/cor";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_raca), msg);
-            valido = false;
-        }
-
-        if (!Utilitario.isEmpty((spRaca.getSelectedItem())) && !Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo()) && ((TipoModel) spRaca.getSelectedItem()).getCodigo() == 5
-                && ((TipoModel) spEtnia.getSelectedItem()).getCodigo() == null) {
-            msg = "Selecione a etnia";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_etnia), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etNomeMae.getText().toString())) && !cbMaeDesconhecido.isChecked()) {
-            msg = "Preencha o nome da mãe";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_nome_mae), msg);
-            valido = false;
-        }
-
-        if ((Utilitario.isEmpty(etNomePai.getText().toString())) && !cbPaiDesconhecido.isChecked()) {
-            msg = "Preencha o nome do pai";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_nome_pai), msg);
-            valido = false;
-        }
-
-        if (rgNacionalidade.getCheckedRadioButtonId() == -1) {
-            msg = "Selecione a nacionalidade";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_nacionalidade), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(((TipoModel) spPais.getSelectedItem()).getCodigo()) && (indexNacionalidade == 2)) {
-            msg = "Selecione o país de nascimento";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.tv_municipio), msg);
-            valido = false;
-        }
-
-        etMunicipioNascimento.clearFocus();
-        if (Utilitario.isEmpty(etMunicipioNascimento.getText().toString()) && (indexNacionalidade == 0)) {
-            msg = "Preencha o município de nascimento";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_municipio_nascimento), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(etPortariaNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
-            msg = "Preencha a portaria de naturalização";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_portaria_naturalizacao), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
-            msg = "Preencha a data de naturalização";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
-            valido = false;
-        } else if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && !Utilitario.dataValida(etDataNaturalizacao.getText().toString())) {
-            msg = "A data de naturalização não é válida";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
-            valido = false;
-        }
-
-        if (Utilitario.isEmpty(etDataEntrada.getText().toString()) && (indexNacionalidade == 2)) {
-            msg = "Preencha a data de entrada";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
-            valido = false;
-        } else if (!Utilitario.isEmpty(etDataEntrada.getText().toString()) && !Utilitario.dataValida(etDataEntrada.getText().toString())) {
-            msg = "A data de entrada não é válida";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
-            valido = false;
-        }
-
-        if ((!Utilitario.isEmpty(etEmailCidadao.getText().toString())) && !Utilitario.isEmailValido(etEmailCidadao.getText().toString())) {
-            msg = "O e-mail não é válido";
-            aviso = Utilitario.addAviso(msg, aviso);
-            Utilitario.exibirErro(findViewById(R.id.til_email), msg);
-            valido = false;
-        }
-
-        if (!cbVisitaRecusada.isChecked()) {
-
-            if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
-                msg = "Informe se frequenta escola ou creche";
+            if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
+                msg = "Preencha a data de registro";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_frequenta_escola), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
+                valido = false;
+            } else if (!Utilitario.isEmpty(etDataRegistro.getText().toString()) && !Utilitario.dataValida(etDataRegistro.getText().toString())) {
+                msg = "A data de registro não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
                 valido = false;
             }
 
-            if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
-                msg = "Informe se tem alguma deficiência";
+            if ((!Utilitario.isEmpty(etCnsCidadao.getText().toString())) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                msg = "O CNS do cidadão não é válido";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
-                valido = false;
-            } else if (!this.algumMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
-                msg = "Informe a(s) deficiência(s)";
-                aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
                 valido = false;
             }
 
-            if ((Utilitario.isEmpty(etNumeroDO.getText().toString())) && indexSaidaCadastro == 1) {
-                msg = "Preencha o número da D.O.";
+            if (indexResponsavel == 1 && Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString())) {
+                msg = "Preencha o CNS do responsável";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.til_numero_do), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
+                valido = false;
+            } else if (!Utilitario.isEmpty(etCnsResponsavelFamiliar.getText().toString()) && !Utilitario.isCNSValido(etCnsResponsavelFamiliar.getText().toString())) {
+                msg = "O CNS do responsável não é válido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
                 valido = false;
             }
 
-            if ((Utilitario.isEmpty(etDataObito.getText().toString())) && indexSaidaCadastro == 1) {
-                msg = "Preencha a data do óbito";
+            if ((Utilitario.isEmpty(etMicroarea.getText().toString())) && !cbForaDeArea.isChecked()) {
+                msg = "Preencha a microárea";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.til_data_obito), msg);
-                valido = false;
-            } else if (!Utilitario.isEmpty(etDataObito.getText().toString()) && !Utilitario.dataValida(etDataObito.getText().toString())) {
-                msg = "A data do óbito não é válida";
-                aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.til_data_obito), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_microarea), msg);
                 valido = false;
             }
 
-            if (!this.algumMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
-                msg = "Informe a(s) doença(s)";
+            if ((Utilitario.isEmpty(etNomeCompleto.getText().toString()))) {
+                msg = "Preencha o nome do cidadão";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_doenca_cardiaca), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_completo), msg);
                 valido = false;
             }
 
-            if (!this.algumMarcado(llProblemaRins) && indexProblemaRins == 0) {
-                msg = "Informe o(s) problema(s)";
+            if ((Utilitario.isEmpty(etDataNascimento.getText().toString()))) {
+                msg = "Preencha a data de nascimento";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_problema_rins), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
+                valido = false;
+            } else if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && !Utilitario.dataValida(etDataNascimento.getText().toString())) {
+                msg = "A data de nascimento não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
                 valido = false;
             }
 
-            if (!this.algumMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
-                msg = "Informe a(s) doença(s)";
+            if (rgSexo.getCheckedRadioButtonId() == -1) {
+                msg = "Selecione o sexo";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_doenca_respiratoria), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_sexo), msg);
                 valido = false;
             }
 
-            if (Utilitario.isEmpty(etQualMotivoInternamento.getText().toString()) && indexInternado == 0) {
-                msg = "Informe o motivo do internamento";
+            if (Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo())) {
+                msg = "Selecione a raça/cor";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_internamento), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_raca), msg);
                 valido = false;
             }
 
-            if (Utilitario.isEmpty(etQuaisPlantas.getText().toString()) && indexUsaPlantas == 0) {
-                msg = "Informe a(s) planta(s) utilizada(s)";
+            if (!Utilitario.isEmpty((spRaca.getSelectedItem())) && !Utilitario.isEmpty(((TipoModel) spRaca.getSelectedItem()).getCodigo()) && ((TipoModel) spRaca.getSelectedItem()).getCodigo() == 5
+                    && ((TipoModel) spEtnia.getSelectedItem()).getCodigo() == null) {
+                msg = "Selecione a etnia";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_doenca_cardiaca), msg);
+                Utilitario.exibirErro(findViewById(R.id.tv_etnia), msg);
                 valido = false;
             }
 
-            if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
-                msg = "Informe se está em situação de rua";
+            if ((Utilitario.isEmpty(etNomeMae.getText().toString())) && !cbMaeDesconhecido.isChecked()) {
+                msg = "Preencha o nome da mãe";
                 aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.tv_esta_situacao_rua), msg);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_mae), msg);
                 valido = false;
             }
 
-            if (indexSituacaoRua == 0) {
+            if ((Utilitario.isEmpty(etNomePai.getText().toString())) && !cbPaiDesconhecido.isChecked()) {
+                msg = "Preencha o nome do pai";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_pai), msg);
+                valido = false;
+            }
 
-                if (rgFrequenciaAlimentacao.getCheckedRadioButtonId() == -1) {
-                    msg = "Informe a frequência da alimentação";
+            if (rgNacionalidade.getCheckedRadioButtonId() == -1) {
+                msg = "Selecione a nacionalidade";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_nacionalidade), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(((TipoModel) spPais.getSelectedItem()).getCodigo()) && (indexNacionalidade == 2)) {
+                msg = "Selecione o país de nascimento";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.tv_municipio), msg);
+                valido = false;
+            }
+
+            etMunicipioNascimento.clearFocus();
+            if (Utilitario.isEmpty(etMunicipioNascimento.getText().toString()) && (indexNacionalidade == 0)) {
+                msg = "Preencha o município de nascimento";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_municipio_nascimento), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etPortariaNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
+                msg = "Preencha a portaria de naturalização";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_portaria_naturalizacao), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && (indexNacionalidade == 1)) {
+                msg = "Preencha a data de naturalização";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
+                valido = false;
+            } else if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && !Utilitario.dataValida(etDataNaturalizacao.getText().toString())) {
+                msg = "A data de naturalização não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
+                valido = false;
+            }
+
+            if (Utilitario.isEmpty(etDataEntrada.getText().toString()) && (indexNacionalidade == 2)) {
+                msg = "Preencha a data de entrada";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
+                valido = false;
+            } else if (!Utilitario.isEmpty(etDataEntrada.getText().toString()) && !Utilitario.dataValida(etDataEntrada.getText().toString())) {
+                msg = "A data de entrada não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
+                valido = false;
+            }
+
+            if ((!Utilitario.isEmpty(etEmailCidadao.getText().toString())) && !Utilitario.isEmailValido(etEmailCidadao.getText().toString())) {
+                msg = "O e-mail não é válido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_email), msg);
+                valido = false;
+            }
+
+            if (!cbVisitaRecusada.isChecked()) {
+
+                if (rgFrequentaEscola.getCheckedRadioButtonId() == -1) {
+                    msg = "Informe se frequenta escola ou creche";
                     aviso = Utilitario.addAviso(msg, aviso);
-                    Utilitario.exibirErro(findViewById(R.id.tv_frequencia_alimentacao), msg);
+                    Utilitario.exibirErro(findViewById(R.id.tv_frequenta_escola), msg);
                     valido = false;
                 }
 
-                if (rgTempoSituacaoRua.getCheckedRadioButtonId() == -1) {
-                    msg = "Informe o período em situação de rua";
+                if (rgDeficiencia.getCheckedRadioButtonId() == -1) {
+                    msg = "Informe se tem alguma deficiência";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
+                    valido = false;
+                } else if (!this.algumMarcado(llTemDeficiencia) && indexDeficiencia == 0) {
+                    msg = "Informe a(s) deficiência(s)";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_deficiencia), msg);
+                    valido = false;
+                }
+
+                if ((Utilitario.isEmpty(etNumeroDO.getText().toString())) && indexSaidaCadastro == 1) {
+                    msg = "Preencha o número da D.O.";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_numero_do), msg);
+                    valido = false;
+                }
+
+                if ((Utilitario.isEmpty(etDataObito.getText().toString())) && indexSaidaCadastro == 1) {
+                    msg = "Preencha a data do óbito";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_data_obito), msg);
+                    valido = false;
+                } else if (!Utilitario.isEmpty(etDataObito.getText().toString()) && !Utilitario.dataValida(etDataObito.getText().toString())) {
+                    msg = "A data do óbito não é válida";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_data_obito), msg);
+                    valido = false;
+                }
+
+                if (!this.algumMarcado(llDoencaCardiaca) && indexDoencaCardiaca == 0) {
+                    msg = "Informe a(s) doença(s)";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_doenca_cardiaca), msg);
+                    valido = false;
+                }
+
+                if (!this.algumMarcado(llProblemaRins) && indexProblemaRins == 0) {
+                    msg = "Informe o(s) problema(s)";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_problema_rins), msg);
+                    valido = false;
+                }
+
+                if (!this.algumMarcado(llDoencaRespiratoria) && indexDoencaRespiratoria == 0) {
+                    msg = "Informe a(s) doença(s)";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_doenca_respiratoria), msg);
+                    valido = false;
+                }
+
+                if (Utilitario.isEmpty(etQualMotivoInternamento.getText().toString()) && indexInternado == 0) {
+                    msg = "Informe o motivo do internamento";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_internamento), msg);
+                    valido = false;
+                }
+
+                if (Utilitario.isEmpty(etQuaisPlantas.getText().toString()) && indexUsaPlantas == 0) {
+                    msg = "Informe a(s) planta(s) utilizada(s)";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.tv_doenca_cardiaca), msg);
+                    valido = false;
+                }
+
+                if (rgSituacaoRua.getCheckedRadioButtonId() == -1) {
+                    msg = "Informe se está em situação de rua";
                     aviso = Utilitario.addAviso(msg, aviso);
                     Utilitario.exibirErro(findViewById(R.id.tv_esta_situacao_rua), msg);
                     valido = false;
                 }
 
-                if (!this.algumMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
-                    msg = "Informe o acesso a higiene pessoal";
-                    aviso = Utilitario.addAviso(msg, aviso);
-                    Utilitario.exibirErro(findViewById(R.id.tv_higiene_pessoal), msg);
-                    valido = false;
+                if (indexSituacaoRua == 0) {
+
+                    if (rgFrequenciaAlimentacao.getCheckedRadioButtonId() == -1) {
+                        msg = "Informe a frequência da alimentação";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.tv_frequencia_alimentacao), msg);
+                        valido = false;
+                    }
+
+                    if (rgTempoSituacaoRua.getCheckedRadioButtonId() == -1) {
+                        msg = "Informe o período em situação de rua";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.tv_esta_situacao_rua), msg);
+                        valido = false;
+                    }
+
+                    if (!this.algumMarcado(llHigienePessoal) && indexHigienePessoal == 0) {
+                        msg = "Informe o acesso a higiene pessoal";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.tv_higiene_pessoal), msg);
+                        valido = false;
+                    }
+
                 }
 
             }
-
         }
 
         if (!aviso.isEmpty()) {
@@ -1009,19 +1020,23 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etMunicipioNascimento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                codigoMunicipio = ((MunicipioModel)etMunicipioNascimento.getAdapter().getItem(position)).getCodigo();
+                codigoMunicipio = ((MunicipioModel) etMunicipioNascimento.getAdapter().getItem(position)).getCodigo();
             }
         });
 
         etMunicipioNascimento.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 codigoMunicipio = null;
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         etMunicipioNascimento.setOnFocusChangeListener(new View.OnFocusChangeListener() {

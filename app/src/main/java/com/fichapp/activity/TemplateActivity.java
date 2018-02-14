@@ -1,10 +1,15 @@
 package com.fichapp.activity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,13 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fichapp.R;
-import com.fichapp.business.MunicipioBS;
 import com.fichapp.model.MunicipioModel;
 import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,6 +43,8 @@ import java.util.List;
  */
 
 public class TemplateActivity extends AppCompatActivity {
+
+    protected String avisoOcupacao = "Sua ocupação não permite registrar esta ficha";
 
     protected ProfissionalModel profissionalModel;
     protected TextView nomeBarTV;
@@ -59,6 +67,7 @@ public class TemplateActivity extends AppCompatActivity {
 
         atualizarRodape();
 
+
     }
 
     protected void configComponentes() {
@@ -67,6 +76,50 @@ public class TemplateActivity extends AppCompatActivity {
             etDataRegistro.setText(Utilitario.getDataHojeFormatada());
         }
 
+    }
+
+    protected boolean isCBOValido(Activity activity) {
+
+        boolean cboValido = false;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        List<String> cadastroIndividualCbos = new ArrayList<>(Arrays.asList("322205", "322210", "322230", "322245", "322250", "322405", "322415", "322425", "322430", "352210", "515105", "515120", "515124", "515130", "515140", "515305", "515310"));
+        List<String> cadastroDTCbos = new ArrayList<>(Arrays.asList("322205", "322210", "322229", "322244", "322250", "322405", "322415", "322425", "322430", "352210", "515105", "515120", "515125", "515130", "515140", "515305", "515310", "422110"));
+        List<String> visitaDTCbos = new ArrayList<>(Arrays.asList("515105", "515120", "515310", "515140"));
+
+        if (activity.getClass() == FichaCadastroIndividualActivity.class) {
+
+            boolean cboValidoCadastroIndividual = cadastroIndividualCbos.contains(prefs.getString("cbo", ""));
+
+            if (cboValidoCadastroIndividual) {
+                cboValido = true;
+            }
+
+        } else if (activity.getClass() == FichaCadastroDTActivity.class) {
+
+            boolean cboValidoCadastroDT = cadastroDTCbos.contains(prefs.getString("cbo", ""));
+
+            if (cboValidoCadastroDT) {
+                cboValido = true;
+            }
+
+        } else if (activity.getClass() == FichaVisitaDTActivity.class) {
+
+            boolean cboValidoVisitaDT = visitaDTCbos.contains(prefs.getString("cbo", ""));
+
+            if (cboValidoVisitaDT) {
+                cboValido = true;
+            }
+
+        }
+        return cboValido;
+    }
+
+    protected void validaCbo(Activity activity, FloatingActionButton fab) {
+        if (!isCBOValido(activity)) {
+            Snackbar.make(fab, avisoOcupacao, Snackbar.LENGTH_LONG).show();
+        }
     }
 
     protected void onLongClickRg(View view) {
@@ -128,7 +181,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void desabilitarComponentes(View componente) {
 
-       componente.setEnabled(false);
+        componente.setEnabled(false);
 
         if (componente instanceof CheckBox) {
             ((CheckBox) componente).setChecked(false);
@@ -234,18 +287,6 @@ public class TemplateActivity extends AppCompatActivity {
 
     }
 
-    protected void validaHabilitacaoComponente(final View componente, boolean flagHabilitacao) {
-        if (!flagHabilitacao) {
-            componente.setEnabled(false);
-            componente.clearFocus();
-            componente.setFocusable(false);
-        } else {
-            componente.setEnabled(true);
-            componente.setFocusable(true);
-            componente.setFocusableInTouchMode(true);
-        }
-    }
-
     protected void desabilitaEditText(final RadioGroup rg, final Integer[] valorIndex, final EditText et) {
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -287,34 +328,11 @@ public class TemplateActivity extends AppCompatActivity {
                     sp.setEnabled(false);
                     sp.setClickable(false);
                     sp.setSelection(0);
+                    sp.getBackground().setColorFilter(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                 } else {
                     sp.setEnabled(true);
                     sp.setClickable(true);
-                    //sp.performClick();
-                }
-            }
-        });
-
-    }
-
-    protected void desabilitaRadioGroup(final RadioGroup rg, final Integer valorIndex, final RadioGroup rgDesabilitado) {
-
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup rg, int checkedId) {
-
-                Integer indexRg = rg.indexOfChild(findViewById(checkedId));
-
-                if (indexRg == valorIndex) {
-                    for (int i = 0; i < rgDesabilitado.getChildCount(); i++) {
-                        (rgDesabilitado.getChildAt(i)).setEnabled(false);
-                    }
-                    rgDesabilitado.clearCheck();
-
-                } else {
-                    for (int i = 0; i < rgDesabilitado.getChildCount(); i++) {
-                        (rgDesabilitado.getChildAt(i)).setEnabled(true);
-                    }
+                    sp.performClick();
                 }
             }
         });
@@ -368,7 +386,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void carregarSpinnerTipoImovel(Spinner spinner) {
 
-        ArrayAdapter<TipoModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboTipoImovel());
+        ArrayAdapter<TipoModel> adapterTipoImovel = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboTipoImovel());
         spinner.setAdapter(adapterTipoImovel);
         adapterTipoImovel.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -376,7 +394,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void carregarSpinnerMunicipio(Spinner spinner, List<MunicipioModel> lista) {
 
-        ArrayAdapter<MunicipioModel> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, lista);
+        ArrayAdapter<MunicipioModel> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, lista);
         spinner.setAdapter(adapter);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 

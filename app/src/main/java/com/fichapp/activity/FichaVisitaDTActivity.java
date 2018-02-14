@@ -134,19 +134,18 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         this.configComponentes();
 
+        this.validaCbo(FichaVisitaDTActivity.this, fabGravar);
+
         this.onLongClickRg(findViewById(R.id.ll_geral));
 
         this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 gravar();
             }
         });
 
     }
-
-
 
     private void definirComponentes() {
 
@@ -476,9 +475,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
         Utilitario.limparErros(findViewById(R.id.ll_geral));
 
-        if (!(cboProfissional.equals("515105") || cboProfissional.equals("515120") || cboProfissional.equals("515310") || cboProfissional.equals("51514"))) {
-            aviso = Utilitario.addAviso("Sua ocupação não permite registrar esta ficha.", aviso);
-            valido = false;
+        if (!isCBOValido(FichaVisitaDTActivity.this)) {
+            Snackbar.make(fabGravar, avisoOcupacao, Snackbar.LENGTH_LONG).show();
+            return false;
         } else {
 
             if (Utilitario.isEmpty(etDataRegistro.getText().toString())) {
@@ -529,7 +528,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                         aviso = Utilitario.addAviso(msg, aviso);
                         Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
                         valido = false;
-                    } else if (!Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                    } else if (!Utilitario.isEmpty(etCnsCidadao.getText().toString()) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
                         msg = "CNS do cidadão inválido";
                         aviso = Utilitario.addAviso(msg, aviso);
                         Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
@@ -558,6 +557,13 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                             Utilitario.exibirErro(findViewById(R.id.tv_sexo), msg);
                             valido = false;
                         }
+                    }
+                } else {
+                    if (!Utilitario.isEmpty(etCnsCidadao.getText().toString()) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                        msg = "CNS do cidadão inválido";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
+                        valido = false;
                     }
                 }
             }

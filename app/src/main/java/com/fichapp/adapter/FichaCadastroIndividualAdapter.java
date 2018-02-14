@@ -57,7 +57,13 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
 
         fichaCadastroIndividualVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
         fichaCadastroIndividualVH.tvNome.setText(String.format(Locale.getDefault(), "Nome: %s", mList.get(position).getNomeCompleto()));
-        fichaCadastroIndividualVH.tvCNS.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
+
+        if (Utilitario.isEmpty(mList.get(position).getCnsCidadao())) {
+            fichaCadastroIndividualVH.tvCNS.setText("Sem CNS Cadastrado");
+        } else {
+            fichaCadastroIndividualVH.tvCNS.setText(String.format(Locale.getDefault(), "CNS: %s", mList.get(position).getCnsCidadao()));
+        }
+
         fichaCadastroIndividualVH.tvData.setText(String.format("Data: %s", Utilitario.getDataFormatada(mList.get(position).getDataRegistro())));
 
         fichaCadastroIndividualVH.cardRV.setOnClickListener(new View.OnClickListener() {

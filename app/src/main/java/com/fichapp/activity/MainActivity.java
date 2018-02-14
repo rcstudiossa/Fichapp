@@ -184,8 +184,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             getSupportActionBar().setTitle("Cadastro de Fichas");
             habilitarComandosSemFragment(Boolean.FALSE);
-        }
 
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }, 500);
+        }
     }
 
     private void habilitarComandosSemFragment(Boolean flagHabilitar) {

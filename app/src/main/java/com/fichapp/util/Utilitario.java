@@ -119,7 +119,6 @@ public final class Utilitario {
 
     }
 
-
     public static boolean dataValida(String data) {
 
         Date dataValida;
@@ -168,7 +167,6 @@ public final class Utilitario {
         }
 
     }
-
 
     public static void limparErros(View view) {
 

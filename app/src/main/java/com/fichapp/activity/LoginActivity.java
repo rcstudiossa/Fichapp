@@ -3,6 +3,7 @@ package com.fichapp.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBT;
     private TextView alterarSenhaTV;
     private Spinner spinnerHospital;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +71,31 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            this.finishAffinity();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Clique novamente para fechar", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+
+    }
+
+
     private void carregarCombos() {
 
         CNESBS cnesBS = new CNESBS(this);
         List<CNESModel> hospitais = cnesBS.pesquisarAtivos();
         hospitais.add(0, new CNESModel("Selecione o CNES"));
-        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
+        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, hospitais);
         spinnerHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -84,12 +106,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean valido = true;
 
         if (Utilitario.isEmpty(usuarioET.getText().toString())) {
-            Utilitario.exibirErro(usuarioET, "Preencha o usuário");
+            usuarioET.setError("Preencha o Usuário");
             valido = false;
         }
 
         if (Utilitario.isEmpty(senhaET.getText().toString())) {
-            Utilitario.exibirErro(senhaET, "Preencha a senha");
+            senhaET.setError("Preencha a senha");
             valido = false;
         }
 

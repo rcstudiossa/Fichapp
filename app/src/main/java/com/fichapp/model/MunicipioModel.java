@@ -90,7 +90,11 @@ public class MunicipioModel implements Serializable {
             sb.append(codigo).append(": ");
         }*/
 
-        sb.append(String.format("%s, %s", this.nome, this.uf));
+        sb.append(this.nome);
+
+        if (!Utilitario.isEmpty(this.uf)) {
+            sb.append(String.format(", %s", this.uf));
+        }
 
         return sb.toString();
 

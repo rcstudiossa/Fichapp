@@ -127,13 +127,13 @@ public class ProfissionalActivity extends TemplateActivity {
         CNESBS cnesBS = new CNESBS(this);
         hospitais = cnesBS.pesquisarAtivos();
         hospitais.add(0, new CNESModel("Selecione o CNES*"));
-        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item, hospitais);
+        ArrayAdapter<CNESModel> adapterHospital = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, hospitais);
         spHospital.setAdapter(adapterHospital);
         adapterHospital.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         ArrayAdapter<TipoModel> spAdapter;
 
-        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, new TipoModel().getComboCBO());
+        spAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_habilitado, new TipoModel().getComboCBO());
         spAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spCbo.setAdapter(spAdapter);
 

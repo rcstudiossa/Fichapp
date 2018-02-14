@@ -69,32 +69,32 @@ public class AlterarSenhaActivity extends AppCompatActivity {
         boolean campoValido = true;
 
         if (Utilitario.isEmpty(etUsuario.getText().toString())) {
-            Utilitario.exibirErro(etUsuario, "Preencha o usuário.");
+            etUsuario.setError("Preencha o usuário");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etSenhaAtual.getText().toString())) {
-            Utilitario.exibirErro(etSenhaAtual, "Preencha a senha atual.");
+            etSenhaAtual.setError("Preencha a senha");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etNovaSenha.getText().toString())) {
-            Utilitario.exibirErro(etNovaSenha, "Preencha nova senha.");
+            etNovaSenha.setError("Preencha a nova senha");
             campoValido = false;
         }
 
         if (Utilitario.isEmpty(etConfirmarSenha.getText().toString())) {
-            Utilitario.exibirErro(etConfirmarSenha, "Confirme a nova senha.");
+            etConfirmarSenha.setError("Confirme a senha");
             campoValido = false;
         }
 
         if ((!Utilitario.isEmpty(etNovaSenha.getText().toString())) && (!Utilitario.isEmpty(etConfirmarSenha.getText().toString())) && (!etNovaSenha.getText().toString().equals(etConfirmarSenha.getText().toString()))) {
-            Utilitario.exibirErro(etConfirmarSenha, "A confirmação da senha não coincide");
+            etConfirmarSenha.setError("A confirmação da senha não coincide");
             campoValido = false;
         } else {
 
             if ((!Utilitario.isEmpty(etSenhaAtual.getText().toString())) && (!Utilitario.isEmpty(etNovaSenha.getText().toString())) && (etNovaSenha.getText().toString().equals(etSenhaAtual.getText().toString()))) {
-                Utilitario.exibirErro(etNovaSenha, "É necessário que a nova senha seja diferente da atual.");
+                etNovaSenha.setError("É necessário que a nova senha seja diferente da atual");
                 campoValido = false;
             }
         }
