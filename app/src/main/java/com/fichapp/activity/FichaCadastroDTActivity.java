@@ -684,6 +684,13 @@ public class FichaCadastroDTActivity extends TemplateActivity {
                     valido = false;
                 }
 
+                if (Utilitario.isEmpty(this.fichaCadastroDTModel.getFamilias()) || !(this.fichaCadastroDTModel.getFamilias().size() > 0)) {
+                    msg = "É necessário ao menos uma família cadastrada";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.bt_adicionar_familia), msg);
+                    valido = false;
+                }
+
             }
 
         }
@@ -760,7 +767,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getUf().getCodigo()) && this.fichaCadastroDTModel.getUf().getCodigo() > 0) {
 
             spUF.setSelection(new TipoModel().getComboUF().indexOf(this.fichaCadastroDTModel.getUf()));
-
             if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getMunicipio().getCodigo()) && this.fichaCadastroDTModel.getMunicipio().getCodigo() > 0) {
                 spMunicipio.setSelection(municipioBS.pesquisar(((TipoModel) spUF.getSelectedItem()).getDescricao()).indexOf(this.fichaCadastroDTModel.getMunicipio()));
             }
@@ -769,7 +775,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         etBairro.setText(this.fichaCadastroDTModel.getBairro());
 
-        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro()) && this.fichaCadastroDTModel.getTipoLogradouro().getCodigo() > 0) {
+        if (!Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro()) && !Utilitario.isEmpty(this.fichaCadastroDTModel.getTipoLogradouro().getCodigo()) && this.fichaCadastroDTModel.getTipoLogradouro().getCodigo() > 0) {
             TipoModel tipoLogradouroModel = tiposLogradouro.get(tiposLogradouro.indexOf(this.fichaCadastroDTModel.getTipoLogradouro()));
             if (!Utilitario.isEmpty(tipoLogradouroModel)) {
                 acTipoLogradouro.setText(tipoLogradouroModel.toString());

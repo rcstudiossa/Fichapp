@@ -33,6 +33,7 @@ import com.fichapp.model.TipoModel;
 import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -592,6 +593,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 valido = false;
             }
 
+            if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && Utilitario.dataValida(etDataNascimento.getText().toString()) && !Utilitario.isEmpty(etDataRegistro.getText().toString()) && Utilitario.dataValida(etDataRegistro.getText().toString()) && Utilitario.getDate(etDataRegistro.getText().toString()).before(Utilitario.getDate(etDataNascimento.getText().toString()))) {
+                msg = "O registro não pode ser anterior ao nascimento";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
+                valido = false;
+            }
+
             if ((!Utilitario.isEmpty(etCnsCidadao.getText().toString())) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
                 msg = "O CNS do cidadão não é válido";
                 aviso = Utilitario.addAviso(msg, aviso);
@@ -623,18 +631,50 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.til_nome_completo), msg);
                 valido = false;
+            } else if (!Utilitario.isNomeValido(etNomeCompleto.getText().toString())) {
+                msg = "O nome do cidadão não é válido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_completo), msg);
+                valido = false;
             }
 
-            if ((Utilitario.isEmpty(etDataNascimento.getText().toString()))) {
+            if (Utilitario.isEmpty(etDataNascimento.getText().toString())) {
                 msg = "Preencha a data de nascimento";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
                 valido = false;
-            } else if (!Utilitario.isEmpty(etDataNascimento.getText().toString()) && !Utilitario.dataValida(etDataNascimento.getText().toString())) {
-                msg = "A data de nascimento não é válida";
-                aviso = Utilitario.addAviso(msg, aviso);
-                Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
-                valido = false;
+            } else {
+
+                if (!Utilitario.dataValida(etDataNascimento.getText().toString())) {
+                    msg = "A data de nascimento não é válida";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
+                    valido = false;
+                } else {
+
+                    if (!Utilitario.isEmpty(etDataEntrada.getText().toString()) && Utilitario.dataValida(etDataEntrada.getText().toString()) && Utilitario.getDate(etDataNascimento.getText().toString()).after(Utilitario.getDate(etDataEntrada.getText().toString()))) {
+                        msg = "A data de entrada não pode ser anterior a data de nascimento";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.til_data_entrada), msg);
+                        valido = false;
+                    }
+
+                    if (!Utilitario.isEmpty(etDataNaturalizacao.getText().toString()) && Utilitario.dataValida(etDataNaturalizacao.getText().toString()) && Utilitario.getDate(etDataNascimento.getText().toString()).after(Utilitario.getDate(etDataNaturalizacao.getText().toString()))) {
+                        msg = "A data de naturalização não pode ser anterior a data de nascimento";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.til_data_naturalizacao), msg);
+                        valido = false;
+                    }
+
+                    if (!Utilitario.isEmpty(etDataObito.getText().toString()) && Utilitario.dataValida(etDataObito.getText().toString()) && Utilitario.getDate(etDataNascimento.getText().toString()).after(Utilitario.getDate(etDataObito.getText().toString()))) {
+                        msg = "A data de óbito não pode ser anterior a data de nascimento";
+                        aviso = Utilitario.addAviso(msg, aviso);
+                        Utilitario.exibirErro(findViewById(R.id.til_data_obito), msg);
+                        valido = false;
+                    }
+
+                }
+
             }
 
             if (rgSexo.getCheckedRadioButtonId() == -1) {
@@ -664,10 +704,20 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.til_nome_mae), msg);
                 valido = false;
+            } else if (!Utilitario.isNomeValido(etNomeMae.getText().toString())) {
+                msg = "O nome da mãe não é válido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_mae), msg);
+                valido = false;
             }
 
             if ((Utilitario.isEmpty(etNomePai.getText().toString())) && !cbPaiDesconhecido.isChecked()) {
                 msg = "Preencha o nome do pai";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_nome_pai), msg);
+                valido = false;
+            } else if (!Utilitario.isNomeValido(etNomePai.getText().toString())) {
+                msg = "O nome do pai não é válido";
                 aviso = Utilitario.addAviso(msg, aviso);
                 Utilitario.exibirErro(findViewById(R.id.til_nome_pai), msg);
                 valido = false;
@@ -1048,6 +1098,11 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             }
         });
 
+        etNomeCompleto.setOnFocusChangeListener(onBlurNome(etNomeCompleto));
+        etNomeMae.setOnFocusChangeListener(onBlurNome(etNomeMae));
+        etNomePai.setOnFocusChangeListener(onBlurNome(etNomePai));
+        etNomeSocial.setOnFocusChangeListener(onBlurNome(etNomeSocial));
+
     }
 
     private void configMascaras() {
@@ -1058,7 +1113,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etDataRegistro.addTextChangedListener(Mascara.insert(mascaraData, etDataRegistro));
         etDataRegistro.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataRegistro));
         etDataNascimento.addTextChangedListener(Mascara.insert(mascaraData, etDataNascimento));
-        etDataNascimento.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataNascimento));
+        etDataNascimento.setOnFocusChangeListener(onBlurDataNascimento(mascaraData, etDataNascimento));
         etDataNaturalizacao.addTextChangedListener(Mascara.insert(mascaraData, etDataNaturalizacao));
         etDataNaturalizacao.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraData, etDataNaturalizacao));
         etDataEntrada.addTextChangedListener(Mascara.insert(mascaraData, etDataEntrada));
@@ -1069,6 +1124,48 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         etTelefoneCelular.addTextChangedListener(Mascara.insert(mascaraTelefone, etTelefoneCelular));
         etTelefoneCelular.setOnFocusChangeListener(Mascara.onBlurValidaMascara(mascaraTelefone, etTelefoneCelular));
 
+
+
+    }
+
+    private View.OnFocusChangeListener onBlurDataNascimento(final String mask, final EditText ediTxt) {
+
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+
+                    if (ediTxt.length() != mask.length()) {
+                        ediTxt.getText().clear();
+                    }
+
+                    if (!Utilitario.isEmpty(ediTxt)) {
+                        if (Utilitario.diferencaMeses(new Date(), Utilitario.getDate(ediTxt.getText().toString())) > (9 * 12)) {
+                            FichaCadastroIndividualActivity.super.desabilitarComponentes(findViewById(R.id.ll_com_quem_fica));
+                        } else {
+                            FichaCadastroIndividualActivity.super.habilitarComponentes(findViewById(R.id.ll_com_quem_fica));
+                        }
+                    }
+
+                }
+            }
+        };
+    }
+
+    private View.OnFocusChangeListener onBlurNome(final EditText ediTxt) {
+
+        return new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+
+                    if (!Utilitario.isEmpty(ediTxt) && !Utilitario.isEmpty(ediTxt.getText().toString())) {
+                        ediTxt.setText(ediTxt.getText().toString().trim().replaceAll("\\s+", " "));
+                    }
+
+                }
+            }
+        };
     }
 
     private boolean validaDatas() {

@@ -207,9 +207,9 @@
                         android:id="@+id/et_nome_completo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ ÁÀÍÔÃÉÓÚÂÊÕÇ'"
                         android:hint="Nome Completo*"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapCharacters"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -223,9 +223,9 @@
                         android:id="@+id/et_nome_social"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ ÁÀÍÔÃÉÓÚÂÊÕÇ'"
                         android:hint="Nome Social"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapCharacters"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -365,7 +365,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Nome Completo da Mãe*"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ ÁÀÍÔÃÉÓÚÂÊÕÇ'"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -388,7 +389,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Nome Completo do Pai*"
-                        android:inputType="textPersonName"
+                        android:inputType="textCapCharacters"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ ÁÀÍÔÃÉÓÚÂÊÕÇ'"
                         android:maxLines="1" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -543,7 +545,7 @@
                             android:id="@+id/et_municipio_nascimento"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Município de Nascimento (Cód IBGE)**"
+                            android:hint="Município de Nascimento**"
                             android:inputType="textPersonName" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -752,6 +754,7 @@
                         android:textColor="@color/colorPrimaryDark" />
 
                     <LinearLayout
+                        android:id="@+id/ll_com_quem_fica"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/field_margin"

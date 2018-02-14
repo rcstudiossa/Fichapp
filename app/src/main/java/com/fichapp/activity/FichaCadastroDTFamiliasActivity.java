@@ -149,10 +149,28 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
         boolean valido = true;
 
         String aviso = "";
+        String msg;
+        Utilitario.limparErros(findViewById(R.id.ll_cadastro_familia));
+
 
         if (Utilitario.isEmpty(etCnsResponsavel.getText().toString())) {
-            aviso = Utilitario.addAviso("Preencha o CNS do responsável.", aviso);
+            msg = "Preencha o CNS do responsável";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
             valido = false;
+
+        } else {
+
+            for (FamiliaModel familiaModel: fichaCadastroDTModel.getFamilias()) {
+                if (familiaModel.getCnsResponsavel().equals(etCnsResponsavel.getText().toString())) {
+                    msg = "CNS do responsável já existente";
+                    aviso = Utilitario.addAviso(msg, aviso);
+                    Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
+                    valido = false;
+                    break;
+                }
+            }
+
         }
 
         if ((!Utilitario.isEmpty(etCnsResponsavel.getText().toString())) && !Utilitario.isCNSValido(etCnsResponsavel.getText().toString())) {

@@ -370,7 +370,7 @@ public class TemplateActivity extends AppCompatActivity {
 
     protected void ativaRG(RadioGroup radioGroup, Integer posicao) {
 
-        if (!Utilitario.isEmpty(posicao) && !Utilitario.isEmpty(radioGroup.getChildAt(posicao))) {
+        if (!Utilitario.isEmpty(posicao) && posicao > -1 && !Utilitario.isEmpty(radioGroup.getChildAt(posicao))) {
             ((RadioButton) radioGroup.getChildAt(posicao)).setChecked(true);
         }
     }

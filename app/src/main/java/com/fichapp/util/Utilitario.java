@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Rodrigo Costa on 25/12/2017.
@@ -128,16 +130,11 @@ public final class Utilitario {
             padrao.setLenient(false);
             dataValida = padrao.parse(data);
 
-            Calendar dataCadastro = Calendar.getInstance();
-            dataCadastro.setTime(dataValida);
-
-            Calendar hoje = Calendar.getInstance();
-
-            if (dataCadastro.after(hoje)) {
+            if (dataValida.after(new Date())) {
                 return false;
             }
 
-            int meses = (hoje.get(Calendar.YEAR) * 12 + hoje.get(Calendar.MONTH)) - (dataCadastro.get(Calendar.YEAR) * 12 + dataCadastro.get(Calendar.MONTH));
+            int meses = diferencaMeses(new Date(), dataValida);
 
             if (Math.abs(meses) > (130 * 12)) {
                 return false;
@@ -163,8 +160,12 @@ public final class Utilitario {
             view.requestFocus();
         } else if (view instanceof TextInputLayout) {
             ((TextInputLayout) view).setError(msg);
-            (view).requestFocus();
+            view.requestFocus();
+        } else if (view instanceof Button) {
+            ((Button) view).setError(msg);
+            view.requestFocus();
         }
+
 
     }
 
@@ -197,6 +198,55 @@ public final class Utilitario {
     public static String getVersao() {
         String versionName = BuildConfig.VERSION_NAME;
         return versionName;
+    }
+
+    public static int diferencaMeses(Date dataAtual, Date dataAnterior) {
+
+        Calendar cDataAnterior = new GregorianCalendar();
+        cDataAnterior.setTime(dataAnterior);
+
+        Calendar cDataAtual = new GregorianCalendar();
+        cDataAtual.setTime(dataAtual);
+
+        return (cDataAtual.get(Calendar.YEAR) * 12 + cDataAtual.get(Calendar.MONTH)) - (cDataAnterior.get(Calendar.YEAR) * 12 + cDataAnterior.get(Calendar.MONTH));
+
+    }
+
+    public static boolean isNomeValido(String nome) {
+
+        boolean valido = true;
+
+        if (!isEmpty(nome)) {
+
+            if (nome.trim().length() <= 3) {
+                valido = false;
+            }
+
+            if (!nome.trim().contains(" ")) {
+                valido = false;
+            }
+
+            String[] partes = nome.split(" ");
+            int qtdAbreviacoes = 0;
+            for (int i=0; i < partes.length; i++) {
+
+                if (partes[i].trim().length() == 1) {
+                    qtdAbreviacoes++;
+                } else {
+                    qtdAbreviacoes = 0;
+                }
+
+                if (qtdAbreviacoes >= 2) {
+                    valido = false;
+                }
+
+            }
+
+
+        }
+
+        return valido;
+
     }
 
 }

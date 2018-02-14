@@ -431,6 +431,8 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         this.cbEgressoInternacao.setEnabled(!desabilitar);
 
         if (desabilitar) {
+            this.desabilitarComponentes(etProntuario);
+            this.desabilitarComponentes(etCnsCidadao);
             this.cbVisitaPeriodica.setChecked(false);
             this.cbConsulta.setChecked(false);
             this.cbExame.setChecked(false);
@@ -459,6 +461,9 @@ public class FichaVisitaDTActivity extends TemplateActivity {
             this.cbUsuarioAlcool.setChecked(false);
             this.cbUsuarioOutrasDrogas.setChecked(false);
             this.cbEgressoInternacao.setChecked(false);
+        } else {
+            this.habilitarComponentes(etProntuario);
+            this.habilitarComponentes(etCnsCidadao);
         }
 
     }
@@ -506,6 +511,27 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                 valido = false;
             }
 
+            if (!Utilitario.isEmpty(etCnsCidadao.getText().toString()) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
+                msg = "CNS do cidadão inválido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
+                valido = false;
+            }
+
+            if (!Utilitario.isEmpty(etNascimento.getText().toString()) && !Utilitario.dataValida(etNascimento.getText().toString())) {
+                msg = "A data de nascimento não é válida";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
+                valido = false;
+            }
+
+            if (!Utilitario.isEmpty(etNascimento.getText().toString()) && Utilitario.dataValida(etNascimento.getText().toString()) && !Utilitario.isEmpty(etDataRegistro.getText().toString()) && Utilitario.dataValida(etDataRegistro.getText().toString()) && Utilitario.getDate(etDataRegistro.getText().toString()).before(Utilitario.getDate(etNascimento.getText().toString()))) {
+                msg = "O registro não pode ser anterior ao nascimento";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
+                valido = false;
+            }
+
             if (Utilitario.isEmpty((((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo()))) {
                 msg = "Selecione o tipo de imóvel";
                 aviso = Utilitario.addAviso(msg, aviso);
@@ -516,36 +542,10 @@ public class FichaVisitaDTActivity extends TemplateActivity {
 
                 if (!new ArrayList<>(Arrays.asList(2, 3, 4, 5, 6, 12)).contains(((TipoModel) spinnerTipoImovel.getSelectedItem()).getCodigo())) {
 
-                    if (Utilitario.isEmpty(etProntuario.getText().toString())) {
-                        msg = "Preencha o prontuário";
-                        aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.exibirErro(findViewById(R.id.til_prontuario), msg);
-                        valido = false;
-                    }
-
-                    if (Utilitario.isEmpty(etCnsCidadao.getText().toString())) {
-                        msg = "Preencha a CNS do cidadão";
-                        aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
-                        valido = false;
-                    } else if (!Utilitario.isEmpty(etCnsCidadao.getText().toString()) && !Utilitario.isCNSValido(etCnsCidadao.getText().toString())) {
-                        msg = "CNS do cidadão inválido";
-                        aviso = Utilitario.addAviso(msg, aviso);
-                        Utilitario.exibirErro(findViewById(R.id.til_cns_cidadao), msg);
-                        valido = false;
-                    }
-
                     if (flagPossuiOpcaoGrupoBuscaAtiva() || flagPossuiOpcaoGrupoAcompanhamento() || cbEgressoInternacao.isChecked() || cbOrientacao.isChecked() || !Utilitario.isEmpty(etPeso.getText().toString()) || !Utilitario.isEmpty(etAltura.getText().toString())) {
 
                         if (Utilitario.isEmpty(etNascimento.getText().toString())) {
                             msg = "Preencha a data de nascimento";
-                            aviso = Utilitario.addAviso(msg, aviso);
-                            Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
-                            valido = false;
-                        }
-
-                        if (!Utilitario.isEmpty(etNascimento.getText().toString()) && !Utilitario.dataValida(etNascimento.getText().toString())) {
-                            msg = "A data de nascimento não é válida";
                             aviso = Utilitario.addAviso(msg, aviso);
                             Utilitario.exibirErro(findViewById(R.id.til_data_nascimento), msg);
                             valido = false;

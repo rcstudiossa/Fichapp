@@ -2,8 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rl_main"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
@@ -39,9 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingBottom="36dp"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
-                android:paddingBottom="36dp"
                 android:paddingTop="8dp"
                 tools:context="com.fichapp.activity.FichaVisitaDTActivity">
 
@@ -82,8 +82,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="">
+                        android:gravity=""
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tv_turno"
@@ -100,23 +100,23 @@
 
                             <RadioButton
                                 android:id="@+id/rb_turno_m"
-                                android:longClickable="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:longClickable="true"
                                 android:text="M" />
 
                             <RadioButton
                                 android:id="@+id/rb_turno_t"
-                                android:longClickable="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:longClickable="true"
                                 android:text="T" />
 
                             <RadioButton
                                 android:id="@+id/rb_turno_n"
-                                android:longClickable="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:longClickable="true"
                                 android:text="N" />
 
                         </RadioGroup>
@@ -126,72 +126,72 @@
                 </LinearLayout>
 
 
-                    <LinearLayout
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/field_margin"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/til_microarea"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_microarea"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="16dp"
+                            android:hint="Microárea*"
+                            android:inputType="number"
+                            android:maxLength="2" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <CheckBox
+                        android:id="@+id/cb_fora_de_area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/field_margin"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Fora de Área" />
 
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/til_microarea"
-                            android:layout_width="130dp"
-                            android:layout_height="wrap_content">
+                </LinearLayout>
 
-                            <EditText
-                                android:id="@+id/et_microarea"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginBottom="4dp"
-                                android:layout_marginEnd="16dp"
-                                android:hint="Microárea*"
-                                android:inputType="number"
-                                android:maxLength="2" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/field_margin"
+                    android:orientation="vertical">
 
-                        </android.support.design.widget.TextInputLayout>
-
-                        <CheckBox
-                            android:id="@+id/cb_fora_de_area"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="@dimen/field_margin_start"
-                            android:text="Fora de Área" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_tipo_imovel"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_margin="@dimen/field_margin">
+                        android:layout_marginBottom="6dp"
+                        android:text="Tipo de Imóvel*"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                        <TextView
-                            android:id="@+id/tv_tipo_imovel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tipo de Imóvel*"
-                            android:layout_marginBottom="6dp"
-                            android:textColor="@color/colorPrimaryDark" />
+                    <Spinner
+                        android:id="@+id/spinner_tipo_imovel"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/spinner_item_layout" />
 
-                        <Spinner
-                            android:id="@+id/spinner_tipo_imovel"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/spinner_item_layout" />
-
-                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_dados_cidadao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorBGDivider"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginStart="@dimen/field_margin"
                     android:layout_marginEnd="@dimen/field_margin"
+                    android:layout_marginStart="@dimen/field_margin"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/colorBGDivider"
+                    android:paddingBottom="2dp"
                     android:paddingStart="6dp"
                     android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
                     android:text="Dados do Cidadão"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
@@ -207,8 +207,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="Nº Prontuário"
-                        android:maxLength="30"
-                        android:inputType="number" />
+                        android:inputType="text"
+                        android:maxLength="30" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -223,8 +223,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="CNS Cidadão"
-                        android:maxLength="15"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="15" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -291,9 +291,9 @@
                     android:id="@+id/visita_outro_profissional"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="12dp"
                     android:layout_marginStart="@dimen/field_margin_start"
+                    android:layout_marginTop="8dp"
                     android:text="Visita compartilhada com outro profissional" />
 
                 <TextView
@@ -309,30 +309,30 @@
                     android:id="@+id/rg_desfecho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_margin="@dimen/field_margin">
+                    android:layout_margin="@dimen/field_margin"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rb_visita_realizada"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Visita realizada"
+                        android:layout_marginStart="@dimen/field_margin_start"
                         android:checked="true"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
+                        android:text="Visita realizada" />
 
                     <RadioButton
                         android:id="@+id/rb_visita_recusada"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Recusada"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Recusada" />
 
                     <RadioButton
                         android:id="@+id/rb_ausente"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ausente"
-                        android:layout_marginStart="@dimen/field_margin_start"/>
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:text="Ausente" />
 
                 </RadioGroup>
 
@@ -346,11 +346,11 @@
                         android:id="@+id/tv_motivos_visita"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/colorBGDivider"
                         android:layout_marginTop="8dp"
+                        android:background="@color/colorBGDivider"
+                        android:paddingBottom="2dp"
                         android:paddingStart="6dp"
                         android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
                         android:text="Motivo da Visita**"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
@@ -359,8 +359,8 @@
                         android:id="@+id/cb_cadastramento_atualizacao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
                         android:layout_marginStart="@dimen/field_margin_start"
+                        android:layout_marginTop="16dp"
                         android:text="Cadastramento/Atualização" />
 
                     <CheckBox
@@ -648,50 +648,50 @@
                         android:layout_marginStart="@dimen/field_margin_start"
                         android:text="Outros" />
 
-                </LinearLayout>
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Antropometria"
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/field_margin_start">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/et_peso"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Peso (kg)"
-                            android:inputType="numberDecimal" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="130dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp">
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Antropometria"
+                        android:textColor="@color/colorPrimaryDark" />
 
-                        <EditText
-                            android:id="@+id/et_altura"
-                            android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/field_margin_start"
+                        android:orientation="horizontal">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/et_peso"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Peso (kg)"
+                                android:inputType="numberDecimal" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_width="130dp"
                             android:layout_height="wrap_content"
-                            android:hint="Altura (cm)"
-                            android:inputType="number" />
+                            android:layout_marginStart="16dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/et_altura"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Altura (cm)"
+                                android:inputType="number" />
+
+                        </android.support.design.widget.TextInputLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -705,11 +705,11 @@
         android:id="@+id/fab_gravar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_gravar_ficha"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="36dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="36dp"/>
+        android:src="@drawable/ic_gravar_ficha" />
 
 
     <include

@@ -51,8 +51,7 @@
         <activity
             android:name=".activity.AlterarSenhaActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.FichaCadastroIndividualActivity"
             android:screenOrientation="portrait"
