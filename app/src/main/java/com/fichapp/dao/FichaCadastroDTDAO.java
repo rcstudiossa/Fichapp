@@ -10,6 +10,7 @@ import com.fichapp.model.ProfissionalModel;
 import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -310,5 +311,11 @@ public class FichaCadastroDTDAO {
 
     }
 
+    public SQLiteDatabase getDb() {
+        return db;
+    }
 
+    public void setDb(SQLiteDatabase db) {
+        this.db = db;
+    }
 }

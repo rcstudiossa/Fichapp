@@ -5,13 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.fichapp.R;
 import com.fichapp.business.FichaCadastroDTFamiliasBS;
 import com.fichapp.model.FamiliaModel;
+import com.fichapp.model.TipoModel;
 import com.fichapp.util.Utilitario;
 
 import java.util.List;
@@ -42,8 +42,69 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
     @Override
     public void onBindViewHolder(FichaCadastroDTFamiliasVH fichaCadastroDTFamiliasVH, final int position) {
 
-        fichaCadastroDTFamiliasVH.tvProntuarioFamiliar.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getProntuario()));
         fichaCadastroDTFamiliasVH.tvCnsResponsavel.setText(String.format(Locale.getDefault(), "%s", mList.get(position).getCnsResponsavel()));
+
+        StringBuilder sb = new StringBuilder("Prontuario: ");
+
+        if (!Utilitario.isEmpty(mList.get(position).getProntuario())) {
+            sb.append(mList.get(position).getProntuario());
+        }
+
+        if (!Utilitario.isEmpty(mList.get(position).getDataNascimentoResponsavel())) {
+
+            if (!Utilitario.isEmpty(sb.toString())) {
+                sb.append(", ");
+            }
+
+            sb.append(Utilitario.getDataFormatada(mList.get(position).getDataNascimentoResponsavel()));
+        }
+
+        if (!Utilitario.isEmpty(sb.toString())) {
+            fichaCadastroDTFamiliasVH.tvLinha2.setText(sb.toString());
+        }
+
+        sb = new StringBuilder("Renda familiar: ");
+
+        if (!Utilitario.isEmpty(mList.get(position).getRendaFamiliar()) && !Utilitario.isEmpty(mList.get(position).getRendaFamiliar().getCodigo()) && mList.get(position).getRendaFamiliar().getCodigo() > 0) {
+
+            List<TipoModel> rendaFamiliar = new TipoModel().getComboRendaFamiliar();
+
+            sb.append(rendaFamiliar.get(rendaFamiliar.indexOf(mList.get(position).getRendaFamiliar())).getDescricao());
+
+        }
+
+        if (!Utilitario.isEmpty(sb.toString())) {
+            fichaCadastroDTFamiliasVH.tvLinha3.setText(sb.toString());
+        }
+
+        sb = new StringBuilder("Reside desde: ");
+
+        if (!Utilitario.isEmpty(mList.get(position).getResideMes()) && !Utilitario.isEmpty(mList.get(position).getResideAno()) && mList.get(position).getResideMes() > 0 &&mList.get(position).getResideAno() > 0) {
+            sb.append(mList.get(position).getResideMes()).append("/").append(mList.get(position).getResideAno());
+        }
+
+        if (!Utilitario.isEmpty(sb.toString())) {
+            fichaCadastroDTFamiliasVH.tvLinha4.setText(sb.toString());
+        }
+
+        sb = new StringBuilder("Membros: ");
+
+        if (!Utilitario.isEmpty(mList.get(position).getNumeroMembros()) && mList.get(position).getNumeroMembros() > 0) {
+            sb.append(mList.get(position).getNumeroMembros());
+        }
+
+        if (mList.get(position).getFlagMudou()) {
+
+            if (!Utilitario.isEmpty(sb.toString())) {
+                sb.append(", ");
+            }
+
+            sb.append("Mudou-se");
+        }
+
+        if (!Utilitario.isEmpty(sb.toString())) {
+            fichaCadastroDTFamiliasVH.tvLinha5.setText(sb.toString());
+        }
 
         fichaCadastroDTFamiliasVH.btDeletarFamilia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,16 +144,22 @@ public class FichaCadastroDTFamiliasAdapter extends RecyclerView.Adapter<FichaCa
 
     public class FichaCadastroDTFamiliasVH extends RecyclerView.ViewHolder {
 
-        public TextView tvProntuarioFamiliar;
         public TextView tvCnsResponsavel;
+        public TextView tvLinha2;
+        public TextView tvLinha3;
+        public TextView tvLinha4;
+        public TextView tvLinha5;
         public ImageButton btDeletarFamilia;
 
         public FichaCadastroDTFamiliasVH(View itemView) {
 
             super(itemView);
 
-            tvProntuarioFamiliar = itemView.findViewById(R.id.tv_prontuario_familiar);
             tvCnsResponsavel = itemView.findViewById(R.id.tv_cns_responsavel);
+            tvLinha2 = itemView.findViewById(R.id.tv_linha2);
+            tvLinha3 = itemView.findViewById(R.id.tv_linha3);
+            tvLinha4 = itemView.findViewById(R.id.tv_linha4);
+            tvLinha5 = itemView.findViewById(R.id.tv_linha5);
             btDeletarFamilia = itemView.findViewById(R.id.bt_delete);
 
         }

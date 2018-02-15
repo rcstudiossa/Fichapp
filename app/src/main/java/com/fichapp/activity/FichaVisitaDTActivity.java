@@ -1,5 +1,7 @@
 package com.fichapp.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -243,13 +245,32 @@ public class FichaVisitaDTActivity extends TemplateActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FichaVisitaDTActivity.this, MainActivity.class);
-                intent.putExtra("fragment", "FichaVisitaDTFragment");
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        exibirDialogConfirmacao();
+    }
+
+    public void exibirDialogConfirmacao() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cancelar Alterações")
+                .setMessage("Você tem certeza que deseja voltar?" + "\n" + "As alterações feitas não serão salvas")
+                .setCancelable(false)
+                .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(FichaVisitaDTActivity.this, MainActivity.class);
+                        intent.putExtra("fragment", "FichaVisitaDTFragment");
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("CANCELAR", null)
+                .show();
     }
 
     private void carregarSpinners() {

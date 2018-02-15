@@ -25,6 +25,7 @@ import com.fichapp.business.FichaCadastroDTFamiliasBS;
 import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.model.TipoModel;
+import com.fichapp.util.Mascara;
 import com.fichapp.util.Utilitario;
 
 import java.text.SimpleDateFormat;
@@ -53,7 +54,6 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -66,7 +66,7 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
         this.instanciarFichaCadastroDTModel();
 
-        this.configData();
+        this.configMascaras();
 
         this.btAdicionarFamilia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +144,14 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     }
 
+    private void configMascaras() {
+
+        String mascaraData = "##/##/####";
+
+        etDataNascimentoResponsavel.addTextChangedListener(Mascara.insert(mascaraData, etDataNascimentoResponsavel));
+
+    }
+
     private boolean validaCampos() {
 
         boolean valido = true;
@@ -160,8 +168,14 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
             valido = false;
 
         } else {
+            if ((!Utilitario.isEmpty(etCnsResponsavel.getText().toString())) && !Utilitario.isCNSValido(etCnsResponsavel.getText().toString())) {
+                msg = "CNS do responsável não é válido";
+                aviso = Utilitario.addAviso(msg, aviso);
+                Utilitario.exibirErro(findViewById(R.id.til_cns_responsavel), msg);
+                valido = false;
+            }
 
-            for (FamiliaModel familiaModel: fichaCadastroDTModel.getFamilias()) {
+            for (FamiliaModel familiaModel : fichaCadastroDTModel.getFamilias()) {
                 if (familiaModel.getCnsResponsavel().equals(etCnsResponsavel.getText().toString())) {
                     msg = "CNS do responsável já existente";
                     aviso = Utilitario.addAviso(msg, aviso);
@@ -170,16 +184,19 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
                     break;
                 }
             }
-
         }
 
-        if ((!Utilitario.isEmpty(etCnsResponsavel.getText().toString())) && !Utilitario.isCNSValido(etCnsResponsavel.getText().toString())) {
-            aviso = Utilitario.addAviso("CNS do responsável é inválido.", aviso);
+        if (!Utilitario.isEmpty(etDataNascimentoResponsavel.getText().toString()) && !Utilitario.dataValida(etDataNascimentoResponsavel.getText().toString())) {
+            msg = "A data de nascimento não é válida";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_data_registro), msg);
             valido = false;
         }
 
-        if ((!Utilitario.isEmpty(etNumMembros.getText().toString())) && new Integer(etNumMembros.getText().toString()) == 0) {
-            aviso = Utilitario.addAviso("Nº de membros não pode ser zero.", aviso);
+        if ((!Utilitario.isEmpty(etNumMembros.getText().toString())) && Integer.valueOf(etNumMembros.getText().toString()) == 0) {
+            msg = "O número de membros não pode ser zero";
+            aviso = Utilitario.addAviso(msg, aviso);
+            Utilitario.exibirErro(findViewById(R.id.til_num_membros), msg);
             valido = false;
         }
 
@@ -193,15 +210,15 @@ public class FichaCadastroDTFamiliasActivity extends AppCompatActivity {
 
     private void adicionarFamilia() {
 
-        if (!validaCampos()) { return; }
+        if (!validaCampos()) {
+            return;
+        }
 
         adapter.addListItem(getFamilia());
 
     }
 
     private void gravar() {
-
-        Utilitario.avisoSucesso(getApplicationContext());
 
         navegarTelaCadastroDT();
 

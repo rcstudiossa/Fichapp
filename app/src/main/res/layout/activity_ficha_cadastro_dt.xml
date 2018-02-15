@@ -244,14 +244,14 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/til_numero"
-                        android:layout_width="100dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/et_numero_casa"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Número"
+                            android:hint="Número**"
                             android:inputType="textPostalAddress"
                             android:maxLength="10"
                             android:maxLines="1" />
@@ -276,14 +276,14 @@
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/til_microarea"
-                        android:layout_width="100dp"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content">
 
                         <EditText
                             android:id="@+id/et_microarea"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Microárea"
+                            android:hint="Microárea**"
                             android:inputType="number"
                             android:maxLength="2"
                             android:maxLines="1" />
@@ -312,7 +312,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
-                        android:text="Tipo de Imóvel"
+                        android:text="Tipo de Imóvel*"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <Spinner
@@ -405,7 +405,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="6dp"
-                            android:text="Situação de moradia/Posse de terra"
+                            android:text="Situação de moradia/Posse de terra*"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <Spinner
@@ -427,7 +427,7 @@
                             android:id="@+id/tv_localizacao"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Localização"
+                            android:text="Localização*"
                             android:textColor="@color/colorPrimaryDark" />
 
                         <RadioGroup

@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(getApplicationContext(), "Acesso negado!", Toast.LENGTH_LONG).show();
+            this.senhaET.getText().clear();
         }
     }
 

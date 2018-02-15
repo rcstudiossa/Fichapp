@@ -9,6 +9,7 @@ import com.fichapp.model.FamiliaModel;
 import com.fichapp.model.FichaCadastroDTModel;
 import com.fichapp.util.Utilitario;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +31,30 @@ public class FichaCadastroDTBS {
         fichaCadastroDTFamiliasBS = new FichaCadastroDTFamiliasBS(context);
     }
 
-    public void gravar(FichaCadastroDTModel fichaModel) {
+    public void gravar(FichaCadastroDTModel fichaModel) throws Exception {
 
-        if (fichaModel.getId() != null) {
-            fichaCadastroDTDAO.alterar(fichaModel);
-        } else {
-            fichaCadastroDTDAO.inserir(fichaModel);
+        fichaCadastroDTDAO.getDb().beginTransaction();
+
+        try {
+
+            if (fichaModel.getId() != null) {
+                fichaCadastroDTDAO.alterar(fichaModel);
+            } else {
+                fichaCadastroDTDAO.inserir(fichaModel);
+            }
+
+            fichaCadastroDTFamiliasBS.gravar(fichaCadastroDTDAO.getDb(), fichaModel.getFamilias());
+
+            fichaCadastroDTDAO.getDb().setTransactionSuccessful();
+
+            fichaCadastroDTDAO.getDb().endTransaction();
+
+        } catch (Exception e) {
+
+            fichaCadastroDTDAO.getDb().endTransaction();
+            throw e;
+
         }
-
-        fichaCadastroDTFamiliasBS.gravar(fichaModel.getFamilias());
 
     }
 

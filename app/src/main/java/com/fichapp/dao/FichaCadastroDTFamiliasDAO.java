@@ -23,8 +23,7 @@ public class FichaCadastroDTFamiliasDAO {
         this.db = smpepDbHelper.getWritableDatabase();
     }
 
-    //INSERIR
-    public void inserir(FamiliaModel familiaModel) {
+    public void inserir(SQLiteDatabase db, FamiliaModel familiaModel) {
 
         Object[] args = {
 
@@ -49,8 +48,7 @@ public class FichaCadastroDTFamiliasDAO {
         db.execSQL(query, args);
     }
 
-    //ALTERAR
-    public void alterar (FamiliaModel familiaModel) {
+    public void alterar (SQLiteDatabase db, FamiliaModel familiaModel) {
 
         Object[] args = {
 

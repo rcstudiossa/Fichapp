@@ -1,6 +1,8 @@
 package com.fichapp.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -242,10 +244,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FichaCadastroDTActivity.this, MainActivity.class);
-                intent.putExtra("fragment", "FichaCadastroDTFragment");
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -370,15 +369,32 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
         this.setActivityToModel();
 
-        this.fichaCadastroDTBS.gravar(this.fichaCadastroDTModel);
+        try {
 
-        Utilitario.avisoSucesso(getApplicationContext());
+            this.fichaCadastroDTBS.gravar(this.fichaCadastroDTModel);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("fragment", "FichaCadastroDTFragment");
-        startActivity(intent);
+            Utilitario.avisoSucesso(getApplicationContext());
 
-        finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("fragment", "FichaCadastroDTFragment");
+            startActivity(intent);
+
+            finish();
+
+        } catch (Exception e) {
+
+            final String aviso = e.getMessage();
+
+            Snackbar snackbar = Snackbar.make(fabGravar, "Ocorreu erro ao gravar", Snackbar.LENGTH_LONG).setAction("ABRIR LOG", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utilitario.alertar(FichaCadastroDTActivity.this, aviso);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+
+        }
 
         /*
         Intent intent = new Intent(this, FichaCadastroDTFamiliasActivity.class);
@@ -712,6 +728,28 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        this.exibirDialogConfirmacao();
+    }
+
+    public void exibirDialogConfirmacao() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cancelar Alterações")
+                .setMessage("Você tem certeza que deseja voltar?" + "\n" + "As alterações feitas não serão salvas")
+                .setCancelable(false)
+                .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(FichaCadastroDTActivity.this, MainActivity.class);
+                        intent.putExtra("fragment", "FichaCadastroDTFragment");
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("CANCELAR", null)
+                .show();
+    }
+
 
     private void setPosicaoSelecionadoRG(RadioGroup radioGroup, Integer valor) {
 
@@ -758,7 +796,6 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
 
     }
-
 
     private void setModelToActivity() {
 

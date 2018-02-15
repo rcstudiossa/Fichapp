@@ -1,6 +1,7 @@
 package com.fichapp.business;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.fichapp.dao.FichaCadastroDTFamiliasDAO;
 import com.fichapp.dao.SMPEPDbHelper;
@@ -25,22 +26,22 @@ public class FichaCadastroDTFamiliasBS {
         fichaCadastroDTFamiliasDAO = new FichaCadastroDTFamiliasDAO(smpepDbHelper);
     }
 
-    public void gravar(List<FamiliaModel> familias) {
+    public void gravar(SQLiteDatabase db, List<FamiliaModel> familias) {
 
         for (FamiliaModel familiaModel: familias) {
 
-            this.gravar(familiaModel);
+            this.gravar(db, familiaModel);
 
         }
 
     }
 
-    public void gravar(FamiliaModel familiaModel) {
+    public void gravar(SQLiteDatabase db, FamiliaModel familiaModel) {
 
         if (familiaModel.getId() != null && familiaModel.getId() > 0) {
-            fichaCadastroDTFamiliasDAO.alterar(familiaModel);
+            fichaCadastroDTFamiliasDAO.alterar(db, familiaModel);
         } else {
-            fichaCadastroDTFamiliasDAO.inserir(familiaModel);
+            fichaCadastroDTFamiliasDAO.inserir(db, familiaModel);
         }
 
     }
