@@ -49,14 +49,6 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
     @Override
     public void onBindViewHolder(FichaCadastroDTVH fichaCadastroDTVH, final int position) {
 
-        /*String bairro = mList.get(position).getBairro();
-
-        String primeiroNome = bairro.split(" ")[0];
-        String segundoNome = bairro.split(" ")[1];
-
-        String bairroAbreviado = primeiroNome + " " + segundoNome;*/
-
-
         fichaCadastroDTVH.tvFicha.setText(String.format(Locale.getDefault(), "Ficha %s", mList.get(position).getId()));
         fichaCadastroDTVH.tvCep.setText(String.format(Locale.getDefault(), "CEP: %s", mList.get(position).getCep()));
         if (!Utilitario.isEmpty(mList.get(position).getNumero())) {
@@ -130,7 +122,7 @@ public class FichaCadastroDTAdapter extends RecyclerView.Adapter<FichaCadastroDT
         fichaSelecionada = mList.get(position);
         fichaCadastroDTBS.excluir(fichaSelecionada);
         mList.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
 
     }
 

@@ -7,6 +7,6 @@ package com.fichapp.util;
 public class Constantes {
 
     public static final String SMPEP_DB = "smpep";
-    public static final int DATABASE_VERSION = 285;
+    public static final int DATABASE_VERSION = 1709;
 
 }

@@ -124,7 +124,7 @@ public class FichaCadastroIndividualAdapter extends RecyclerView.Adapter<FichaCa
         fichaSelecionada = mList.get(position);
         fichaCadastroIndividualBS.excluir(fichaSelecionada);
         mList.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
 
     }
 

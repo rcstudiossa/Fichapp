@@ -269,7 +269,7 @@ public class FichaVisitaDTActivity extends TemplateActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("CANCELAR", null)
+                .setNegativeButton("NÃO", null)
                 .show();
     }
 

@@ -746,7 +746,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("CANCELAR", null)
+                .setNegativeButton("NÃO", null)
                 .show();
     }
 

@@ -129,7 +129,7 @@ public class FichaVisitaDTAdapter extends RecyclerView.Adapter<FichaVisitaDTAdap
         fichaSelecionada = mList.get(position);
         fichaVisitaDTBS.excluir(fichaSelecionada);
         mList.remove(position);
-        notifyItemRemoved(position);
+        notifyDataSetChanged();
 
     }
 

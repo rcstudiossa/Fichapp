@@ -26,7 +26,10 @@ public class FichaCadastroDTDAO {
 
     public void inserir(FichaCadastroDTModel fichaModel) {
 
+        fichaModel.setId(obterSequence());
+
         Object[] args = {
+                fichaModel.getId(),
                 fichaModel.getProfissionalModel().getId(),
                 fichaModel.getCnesModel().getId(),
                 Utilitario.getDataFormatada(fichaModel.getDataRegistro()),
@@ -75,17 +78,17 @@ public class FichaCadastroDTDAO {
                 Boolean.TRUE,
                 Boolean.FALSE };
 
-        String query = "insert into ficha_cadastro_domiciliar_territorial (profissional_id, cnes_id, data_registro, cep, uf, municipio, bairro, tipo_logradouro, nome_logradouro, complemento" +
+        String query = "insert into ficha_cadastro_domiciliar_territorial (id, profissional_id, cnes_id, data_registro, cep, uf, municipio, bairro, tipo_logradouro, nome_logradouro, complemento" +
                 ", ponto_referencia, numero, flag_sem_numero, microarea, flag_fora_de_area, tipo_imovel, tel_residencia, tel_contato, flag_recusado, situacao_moradia, localizacao" +
                 ", tipo_domicilio, acesso_domicilio, condicao_terra, num_moradores, num_comodos, material_paredes, flag_energia_eletrica, abastecimento_agua, agua_consumo" +
                 ", escoamento_banheiro, destino_lixo, flag_animais, qtd_animais, flag_gato, flag_cachorro, flag_passaro, flag_outros, nome_instituicao" +
                 ", flag_outros_profissionais, nome_responsavel, cns_responsavel, cargo_instituicao, tel_contato_responsavel, flag_ativo, flag_exportado)" +
-                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         db.execSQL(query, args);
     }
 
-    public void alterar (FichaCadastroDTModel fichaModel) {
+    public void alterar (FichaCadastroDTModel fichaModel) throws SQLException {
 
         Object[] args = {
 
@@ -232,6 +235,19 @@ public class FichaCadastroDTDAO {
 
         if (c.moveToFirst()) {
             return getFichaCadastroDTModelInstance(c);
+        }
+        c.close();
+
+        return null;
+
+    }
+
+    public Long obterSequence() {
+
+        Cursor c = db.rawQuery("select coalesce(max(id),0) + 1 as id from ficha_cadastro_domiciliar_territorial", null);
+
+        if (c.moveToFirst()) {
+            return c.getLong(c.getColumnIndex("id"));
         }
         c.close();
 
