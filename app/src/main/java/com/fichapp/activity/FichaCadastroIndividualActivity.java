@@ -1159,7 +1159,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
                         ediTxt.getText().clear();
                     }
 
-                    if (!Utilitario.isEmpty(ediTxt)) {
+                    if (!Utilitario.isEmpty(ediTxt.getText().toString())) {
                         if (Utilitario.diferencaMeses(new Date(), Utilitario.getDate(ediTxt.getText().toString())) > (9 * 12)) {
                             FichaCadastroIndividualActivity.super.desabilitarComponentes(findViewById(R.id.ll_com_quem_fica));
                         } else {
