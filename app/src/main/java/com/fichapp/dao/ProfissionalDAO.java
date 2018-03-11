@@ -97,6 +97,40 @@ public class ProfissionalDAO {
 
     }
 
+    public ProfissionalModel obter(ProfissionalModel profissionalModel) {
+
+        List<String> args = new ArrayList<>();
+
+        args.add(profissionalModel.getId().toString());
+
+        StringBuilder sb = new StringBuilder("SELECT id, nome, cns, cbo, flag_ativo, usuario, senha, flag_ativo, flag_administrador, cnes_id, (select c.nome from cnes c where c.id = p.cnes_id) nome_cnes, (select c.codigo from cnes c where c.id = p.cnes_id) codigo_cnes FROM profissional p WHERE id = ?");
+
+        String[] strings = new String[args.size()];
+        strings = (String[]) args.toArray(strings);
+
+        Cursor c = db.rawQuery(sb.toString(), strings);
+
+        ProfissionalModel model = new ProfissionalModel();
+
+        if (c.moveToFirst()) {
+
+            model.setId(c.getLong(c.getColumnIndex("id")));
+            model.setNome(c.getString(c.getColumnIndex("nome")));
+            model.setCns(c.getString(c.getColumnIndex("cns")));
+            model.setCbo(new TipoModel(c.getInt(c.getColumnIndex("cbo"))));
+            model.setUsuario(c.getString(c.getColumnIndex("usuario")));
+            model.setCnesModel(new CNESModel(c.getLong(c.getColumnIndex("cnes_id")), c.getString(c.getColumnIndex("nome_cnes")), c.getString(c.getColumnIndex("codigo_cnes"))));
+            model.setFlagAtivo(c.getInt(c.getColumnIndex("flag_ativo")) > 0);
+            model.setFlagAdministrador(c.getInt(c.getColumnIndex("flag_administrador")) > 0);
+
+        }
+
+        c.close();
+
+        return model;
+
+    }
+
     public ProfissionalModel obterProfissionalLogado(ProfissionalModel profissionalModel) {
 
         List<String> args = new ArrayList<>();

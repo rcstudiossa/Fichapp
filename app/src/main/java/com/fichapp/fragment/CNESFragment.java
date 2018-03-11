@@ -52,4 +52,8 @@ public class CNESFragment extends TemplateFragment {
 
     }
 
+    protected void exportar() {
+
+    }
+
 }

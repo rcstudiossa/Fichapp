@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.fichapp.R;
 import com.fichapp.util.Utilitario;
@@ -29,6 +30,15 @@ public abstract class TemplateFragment extends Fragment implements SearchView.On
 
         SearchView sv = (SearchView) menu.findItem(R.id.search_bar).getActionView();
         sv.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_export) {
+            exportar();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -60,5 +70,7 @@ public abstract class TemplateFragment extends Fragment implements SearchView.On
     }
 
     protected abstract void pesquisarAtivos(String query);
+
+    protected abstract void exportar();
 
 }
