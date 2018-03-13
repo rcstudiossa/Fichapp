@@ -9,6 +9,7 @@ import com.fichapp.model.OrigemModel;
 import com.fichapp.model.integracao.FichaCabecalhoUnicoEsusModel;
 import com.fichapp.model.integracao.FichaCadastroIndividualCondicaoSaudeEsusModel;
 import com.fichapp.model.integracao.FichaCadastroIndividualEsusModel;
+import com.fichapp.model.integracao.FichaCadastroIndividualIdentificacaoUsuarioCidadaoEsusModel;
 import com.fichapp.model.integracao.FichaCadastroIndividualSaidaCidadaoEsusModel;
 import com.fichapp.model.integracao.FichaCadastroIndividualSituacaoRuaEsusModel;
 import com.fichapp.model.integracao.FichaCadastroInformacaoSocioDemograficaEsusModel;
@@ -88,6 +89,33 @@ public class FichaCadastroIndividualBS {
         cabecalho.setIne(ficha.getProfissionalModel().getIne());
         cabecalho.setDataAtendimento(ficha.getDataRegistro());
         fichaCadastroIndividualEsusModel.setFichaCabecalhoEsusModel(cabecalho);
+
+        FichaCadastroIndividualIdentificacaoUsuarioCidadaoEsusModel identificacao = new FichaCadastroIndividualIdentificacaoUsuarioCidadaoEsusModel();
+        identificacao.setCnsCidadao(ficha.getCnsCidadao());
+        identificacao.setFlagStatusEhResponsavel(ficha.getFlagResponsavelFamiliar() == 0);
+        identificacao.setCnsResponsavelFamiliar(ficha.getCnsResponsavelFamiliar());
+        identificacao.setMicroArea(ficha.getMicroarea());
+        identificacao.setFlagSituacaoForaArea(ficha.getFlagForaDeArea());
+        identificacao.setNomeCidadao(ficha.getNomeCompleto());
+        identificacao.setNomeSocial(ficha.getNomeSocial());
+        identificacao.setDataNascimentoCidadao(ficha.getDataNascimento());
+        identificacao.setSexoCidadao(ficha.getSexo().longValue());
+        identificacao.setRacaCorCidadao(!Utilitario.isEmpty(ficha.getRaca().getCodigo()) ? ficha.getRaca().getCodigo().longValue() : null);
+        identificacao.setEtnia(!Utilitario.isEmpty(ficha.getEtnia().getCodigo()) ? ficha.getEtnia().getCodigo().longValue() : null);
+        identificacao.setNumeroNisPisPasep(ficha.getNis());
+        identificacao.setNomeMaeCidadao(ficha.getNomeMae());
+        identificacao.setFlagDesconheceNomeMae(ficha.getFlagMaeDesconhecido());
+        identificacao.setNomePaiCidadao(ficha.getNomePai());
+        identificacao.setFlagDesconheceNomePai(ficha.getFlagPaiDesconhecido());
+        identificacao.setNacionalidadeCidadao(ficha.getNacionalidade().longValue());
+        identificacao.setDataEntradaBrasil(ficha.getDataEntrada());
+        identificacao.setDataNaturalizacao(ficha.getDataNaturalizacao());
+        identificacao.setPortariaNaturalizacao(ficha.getPortariaNaturalizacao());
+        identificacao.setPaisNascimento(!Utilitario.isEmpty(ficha.getPaisNascimento().getCodigo()) ? ficha.getPaisNascimento().getCodigo().longValue() : null);
+        identificacao.setTelefoneCelular(ficha.getTelefoneCelular());
+        identificacao.setEmailCidadao(ficha.getEmailCidadao());
+        fichaCadastroIndividualEsusModel.setFichaCadastroIndividualIdentificacaoUsuarioCidadaoEsusModel(identificacao);
+
 
         FichaCadastroInformacaoSocioDemograficaEsusModel socioDemografica = new FichaCadastroInformacaoSocioDemograficaEsusModel();
         socioDemografica.setRelacaoParentescoCidadao(!Utilitario.isEmpty(ficha.getParentescoResponsavelFamiliar().getCodigo()) ? ficha.getParentescoResponsavelFamiliar().getCodigo().longValue() : null);

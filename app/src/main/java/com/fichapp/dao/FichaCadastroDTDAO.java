@@ -187,6 +187,24 @@ public class FichaCadastroDTDAO {
 
     }
 
+    public List<FichaCadastroDTModel> pesquisarNaoExportados() {
+
+        List<FichaCadastroDTModel> fichas = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT * FROM ficha_cadastro_domiciliar_territorial where flag_ativo = 1 and flag_exportado = 0 order by id;", null);
+
+        if (c.moveToFirst()) {
+            do {
+                fichas.add(getFichaCadastroDTPesquisaModelInstance(c));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return fichas;
+
+    }
+
     public List<FichaCadastroDTModel> pesquisarAtivos() {
 
         List<FichaCadastroDTModel> fichas = new ArrayList<>();
