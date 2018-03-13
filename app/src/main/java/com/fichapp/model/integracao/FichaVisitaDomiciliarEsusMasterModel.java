@@ -1,4 +1,4 @@
-package com.fichapp.model;
+package com.fichapp.model.integracao;
 
 import java.util.List;
 

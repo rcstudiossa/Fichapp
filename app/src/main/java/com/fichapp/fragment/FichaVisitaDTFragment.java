@@ -13,6 +13,7 @@ import com.fichapp.adapter.FichaVisitaDTAdapter;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
+import com.fichapp.util.HttpHandler;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class FichaVisitaDTFragment extends TemplateFragment {
 
             String url = "http://localhost:8080/smpep/webresources/wsintegracaoubs/inserirFichaVisitaDomiciliar";
 
-            //new HttpHandler().makeRequest(url, jsonStr);
+            new HttpHandler().makeRequest(url, jsonStr);
 
             return true;
         }

@@ -3,12 +3,12 @@ package com.fichapp.business;
 import android.content.Context;
 
 import com.fichapp.dao.ProfissionalDAO;
-import com.fichapp.model.FichaCabecalhoUnicoEsusModel;
+import com.fichapp.model.integracao.FichaCabecalhoUnicoEsusModel;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.dao.FichaVisitaDTDAO;
 import com.fichapp.dao.SMPEPDbHelper;
-import com.fichapp.model.FichaVisitaDomiciliarEsusChildModel;
-import com.fichapp.model.FichaVisitaDomiciliarEsusMasterModel;
+import com.fichapp.model.integracao.FichaVisitaDomiciliarEsusChildModel;
+import com.fichapp.model.integracao.FichaVisitaDomiciliarEsusMasterModel;
 import com.fichapp.model.OrigemModel;
 
 import com.fichapp.util.Utilitario;
@@ -87,7 +87,7 @@ public class FichaVisitaDTBS {
 
     public String getJSONObject(FichaVisitaDTModel ficha) {
 
-        ficha = fichaVisitaDTDAO.obter(ficha);
+        //ficha = fichaVisitaDTDAO.obter(ficha);
 
 
         FichaCabecalhoUnicoEsusModel cabecalho = new FichaCabecalhoUnicoEsusModel();
@@ -107,11 +107,11 @@ public class FichaVisitaDTBS {
 
         FichaVisitaDomiciliarEsusChildModel visita = new FichaVisitaDomiciliarEsusChildModel();
 
-        visita.setTurno(new Long(ficha.getTurno()));
+        visita.setTurno(ficha.getTurno() == "M" ? 1L : ficha.getTurno() == "T" ? 2L : 3L);
         visita.setNumProntuario(ficha.getProntuario());
         visita.setCnsCidadao(ficha.getCnsCidadao());
         visita.setDataNascimento(ficha.getDataNascimento());
-        visita.setSexo(new Long(ficha.getSexo()));
+        visita.setSexo(ficha.getSexo() == "M" ? 0L : ficha.getSexo() == "F" ? 1L : 4L);
         visita.setFlagVisitaCompartilhadaOutroProfissional(ficha.getFlagVisitaCompartilhada());
         visita.setMotivosVisita1(ficha.getMotivosVisitaTipoVisita());
         visita.setMotivosVisitaBuscaAtiva(ficha.getMotivosVisitaBuscaAtiva());

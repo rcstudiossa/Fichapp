@@ -1,4 +1,6 @@
-package com.fichapp.model;
+package com.fichapp.model.integracao;
+
+import com.fichapp.model.OrigemModel;
 
 import java.io.Serializable;
 

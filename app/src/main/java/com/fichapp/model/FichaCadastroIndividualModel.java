@@ -1,5 +1,7 @@
 package com.fichapp.model;
 
+import com.fichapp.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -1062,5 +1064,181 @@ public class FichaCadastroIndividualModel implements Serializable{
 
     public void setFlagExportado(Boolean flagExportado) {
         this.flagExportado = flagExportado;
+    }
+
+    public String getDoencasCardiacas() {
+
+        String codigos = null;
+
+        if (getFlagInsuficienciaCardiaca()) {
+            Utilitario.addCodigo(codigos, "24");
+        }
+
+        if (getFlagOutraDoencaCardiaca()) {
+            Utilitario.addCodigo(codigos, "25");
+        }
+
+        if (getFlagNaoSabeDoencaCardiaca()) {
+            Utilitario.addCodigo(codigos, "26");
+        }
+
+        return codigos;
+
+    }
+
+    public String getDoencasRins() {
+
+        String codigos = null;
+
+        if (getFlagInsuficienciaRenal()) {
+            Utilitario.addCodigo(codigos, "27");
+        }
+
+        if (getFlagOutroProblemaRins()) {
+            Utilitario.addCodigo(codigos, "28");
+        }
+
+        if (getFlagNaoSabeProblemaRins()) {
+            Utilitario.addCodigo(codigos, "29");
+        }
+
+        return codigos;
+
+    }
+
+    public String getDoencasRespiratorias() {
+
+        String codigos = null;
+
+        if (getFlagAsma()) {
+            Utilitario.addCodigo(codigos, "30");
+        }
+
+        if (getFlagEnfisema()) {
+            Utilitario.addCodigo(codigos, "31");
+        }
+
+        if (getFlagOutraDoencaRespiratoria()) {
+            Utilitario.addCodigo(codigos, "32");
+        }
+
+        if (getFlagNaoSabeDoencaRespiratoria()) {
+            Utilitario.addCodigo(codigos, "33");
+        }
+
+        return codigos;
+
+    }
+
+    public String getOrigemAlimentacao() {
+
+        String codigos = null;
+
+        if (getFlagAlimentacaoRestaurantePopular()) {
+            Utilitario.addCodigo(codigos, "37");
+        }
+
+        if (getFlagAlimentacaoDoacaoGrupoReligioso()) {
+            Utilitario.addCodigo(codigos, "38");
+        }
+
+        if (getFlagAlimentacaoDoacaoRestaurante()) {
+            Utilitario.addCodigo(codigos, "39");
+        }
+
+        if (getFlagAlimentacaoDoacaoPopular()) {
+            Utilitario.addCodigo(codigos, "40");
+        }
+
+        if (getFlagAlimentacaoOutras()) {
+            Utilitario.addCodigo(codigos, "41");
+        }
+
+        return codigos;
+
+    }
+
+    public String getHigienePessoal() {
+
+        String codigos = null;
+
+        if (getFlagAcessoBanho()) {
+            Utilitario.addCodigo(codigos, "42");
+        }
+
+        if (getFlagAcessoSanitario()) {
+            Utilitario.addCodigo(codigos, "43");
+        }
+
+        if (getFlagAcessoHigieneBucal()) {
+            Utilitario.addCodigo(codigos, "44");
+        }
+
+        if (getFlagAcessoOutras()) {
+            Utilitario.addCodigo(codigos, "45");
+        }
+
+        return codigos;
+
+    }
+
+    public String getResponsavelCrianca() {
+
+        String codigos = null;
+
+        if (getFlagFicaComAdultoResponsavel()) {
+            Utilitario.addCodigo(codigos, "1");
+        }
+
+        if (getFlagFicaEmCreche()) {
+            Utilitario.addCodigo(codigos, "134");
+        }
+
+        if (getFlagFicaComOutrasCriancas()) {
+            Utilitario.addCodigo(codigos, "2");
+        }
+
+        if (getFlagFicaSozinha()) {
+            Utilitario.addCodigo(codigos, "3");
+        }
+
+        if (getFlagFicaComAdolescente()) {
+            Utilitario.addCodigo(codigos, "133");
+        }
+
+        if (getFlagFicaOutro()) {
+            Utilitario.addCodigo(codigos, "4");
+        }
+
+        return codigos;
+
+    }
+
+    public String getDeficiencias() {
+
+        String codigos = null;
+
+        if (getFlagDeficienciaAuditiva()) {
+            Utilitario.addCodigo(codigos, "12");
+        }
+
+        if (getFlagDeficienciaFisica()) {
+            Utilitario.addCodigo(codigos, "15");
+        }
+
+        if (getFlagDeficienciaVisual()) {
+            Utilitario.addCodigo(codigos, "13");
+        }
+
+        if (getFlagOutraDeficiencia()) {
+            Utilitario.addCodigo(codigos, "16");
+        }
+
+        if (getFlagDeficienciaIntelectual()) {
+            Utilitario.addCodigo(codigos, "14");
+        }
+
+        return codigos;
+
     }
 }
