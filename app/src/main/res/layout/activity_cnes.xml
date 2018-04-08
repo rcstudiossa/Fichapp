@@ -72,21 +72,32 @@
                 android:layout_marginTop="12dp"
                 android:text="Ativo" />
 
-            <Button
-                android:id="@+id/bt_gravar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/cadastrar" />
-
         </LinearLayout>
 
     </LinearLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_list"
+        android:layout_above="@+id/fab_gravar"
+        android:layout_alignParentEnd="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_gravar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_gravar_ficha"
+        android:layout_above="@+id/include_rodape_cnes"
+        android:layout_alignParentEnd="true" />
 
     <include
+        android:id="@+id/include_rodape_cnes"
         layout="@layout/rodape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

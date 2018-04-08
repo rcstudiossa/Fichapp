@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     boolean doubleBackToExitPressedOnce = false;
     private Long usuarioId;
 
+    private Button btAbrirMenu;
+
+    private boolean temConteudo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -78,6 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configDrawer();
 
+        this.btAbrirMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
+
+
     }
 
     private void definirComponentes() {
@@ -88,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         this.drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+        this.btAbrirMenu = (Button) findViewById(R.id.bt_abrir_menu);
 
         tvInicial = (TextView) findViewById(R.id.tv_inicial);
         View v = navigationView.getHeaderView(0);
@@ -191,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void run() {
                     drawer.openDrawer(GravityCompat.START);
                 }
-            }, 500);
+            }, 100);
         }
     }
 
@@ -200,9 +214,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (flagHabilitar) {
             this.fab.setVisibility(View.VISIBLE);
             this.tvInicial.setVisibility(View.GONE);
+            this.btAbrirMenu.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
+            this.temConteudo = true;
         } else {
             this.fab.setVisibility(View.GONE);
             this.tvInicial.setVisibility(View.VISIBLE);
+            this.btAbrirMenu.setVisibility(View.VISIBLE);
+            toolbar.setVisibility(View.GONE);
+            this.temConteudo = false;
         }
 
 
@@ -210,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void configDrawer() {
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle (this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -231,7 +251,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (!temConteudo) {
+
             if (doubleBackToExitPressedOnce) {
                 this.logout();
                 return;
@@ -243,11 +264,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
 
+        } else {
+            if (getFragmentClass().equals(CNESFragment.class)) {
+                Intent intent = new Intent(MainActivity.this, CNESActivity.class);
+                startActivity(intent);
+            } else if (getFragmentClass().equals(ProfissionalFragment.class)) {
+                Intent intent = new Intent(MainActivity.this, ProfissionalActivity.class);
+                startActivity(intent);
+            } else if (getFragmentClass().equals(FichaVisitaDTFragment.class)) {
+                Intent intent = new Intent(MainActivity.this, FichaVisitaDTActivity.class);
+                startActivity(intent);
+            } else if (getFragmentClass().equals(FichaCadastroDTFragment.class)) {
+                Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
+                startActivity(intent);
+            } else if (getFragmentClass().equals(FichaCadastroIndividualFragment.class)) {
+                Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
+                startActivity(intent);
+            }
         }
+
     }
 
     @Override
@@ -289,24 +328,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         habilitarComandosSemFragment(Boolean.TRUE);
 
         if (id == R.id.nav_cnes) {
-            setContent(new CNESFragment());
-            getSupportActionBar().setTitle(this.barTitleCNES);
+            Intent intent = new Intent(MainActivity.this, CNESActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_profissional) {
-            setContent(new ProfissionalFragment());
-            getSupportActionBar().setTitle(this.barTitleProfissionais);
+            Intent intent = new Intent(MainActivity.this, ProfissionalActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_ficha_visita_dt) {
-            setContent(new FichaVisitaDTFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaVisitaDT);
+            Intent intent = new Intent(MainActivity.this, FichaVisitaDTActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_ficha_cadastro_dt) {
-            setContent(new FichaCadastroDTFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaCadastroDT);
+            Intent intent = new Intent(MainActivity.this, FichaCadastroDTActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_ficha_cadastro_idv) {
-            setContent(new FichaCadastroIndividualFragment());
-            getSupportActionBar().setTitle(this.barTitleFichaCadastroIndividual);
+            Intent intent = new Intent(MainActivity.this, FichaCadastroIndividualActivity.class);
+            startActivity(intent);
 
         }
 

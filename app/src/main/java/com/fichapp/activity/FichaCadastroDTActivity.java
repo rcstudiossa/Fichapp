@@ -105,6 +105,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     private Button btCadastrarFamilias;
     private FloatingActionButton fabGravar;
+    private FloatingActionButton fabLista;
 
     private LinearLayout llCondicoesMoradia;
 
@@ -146,6 +147,13 @@ public class FichaCadastroDTActivity extends TemplateActivity {
             @Override
             public void onClick(View view) {
                 gravar();
+            }
+        });
+
+        fabLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exibirDialogConfirmacao("FichaCadastroDTFragment");
             }
         });
 
@@ -224,6 +232,7 @@ public class FichaCadastroDTActivity extends TemplateActivity {
         btCadastrarFamilias = (Button) findViewById(R.id.bt_cadastrar_familias);
 
         fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+        fabLista = (FloatingActionButton) findViewById(R.id.fab_lista);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -730,18 +739,18 @@ public class FichaCadastroDTActivity extends TemplateActivity {
 
     @Override
     public void onBackPressed() {
-        this.exibirDialogConfirmacao();
+        this.exibirDialogConfirmacao(null);
     }
 
-    public void exibirDialogConfirmacao() {
+    public void exibirDialogConfirmacao(final String extra) {
         new AlertDialog.Builder(this)
                 .setTitle("Cancelar Alterações")
-                .setMessage("Você tem certeza que deseja voltar?" + "\n" + "As alterações feitas não serão salvas")
+                .setMessage("Você tem certeza que deseja sair deste cadastro?" + "\n" + "As alterações feitas não serão salvas.")
                 .setCancelable(false)
                 .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(FichaCadastroDTActivity.this, MainActivity.class);
-                        intent.putExtra("fragment", "FichaCadastroDTFragment");
+                        intent.putExtra("fragment", extra);
                         startActivity(intent);
                         finish();
                     }

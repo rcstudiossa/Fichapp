@@ -2,6 +2,7 @@ package com.fichapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,13 +23,14 @@ public class CNESActivity extends TemplateActivity {
     private EditText cnesET;
     private EditText nomeET;
     private CheckBox mFlagAtivo;
-    private Button gravarBT;
+    private FloatingActionButton fabGravar;
+    private FloatingActionButton fabLista;
+
     private Toolbar toolbar;
     private Integer qtdNome = 1;
     private Integer qtdCnes = 7;
 
-    public CNESActivity() {
-    }
+    public CNESActivity() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,19 @@ public class CNESActivity extends TemplateActivity {
 
         this.instanciarCNESModel();
 
-        this.gravarBT.setOnClickListener(new View.OnClickListener() {
+        this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
+            }
+        });
+
+        this.fabLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CNESActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "CNESFragment");
+                startActivity(intent);
             }
         });
 
@@ -58,7 +69,8 @@ public class CNESActivity extends TemplateActivity {
 
     private void definirComponentes() {
 
-        this.gravarBT = (Button) findViewById(R.id.bt_gravar);
+        this.fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+        this.fabLista = (FloatingActionButton) findViewById(R.id.fab_lista);
         this.cnesET = (EditText) findViewById(R.id.codigo);
         this.nomeET = (EditText) findViewById(R.id.et_nome_completo);
         this.mFlagAtivo = (CheckBox) findViewById(R.id.flag_ativo);
@@ -77,10 +89,7 @@ public class CNESActivity extends TemplateActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CNESActivity.this, MainActivity.class);
-                intent.putExtra("fragment", "CNESFragment");
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -146,12 +155,13 @@ public class CNESActivity extends TemplateActivity {
 
     }
 
+
     private void leitorCampos() {
 
         qtdNome = 0;
         qtdCnes = 0;
 
-        gravarBT.setEnabled(false);
+        fabGravar.setEnabled(false);
 
         nomeET.addTextChangedListener(new TextWatcher() {
 
@@ -191,14 +201,19 @@ public class CNESActivity extends TemplateActivity {
 
     private void validadorBotao() {
 
-        gravarBT.setEnabled(false);
+        fabGravar.setEnabled(false);
 
         if (qtdNome == 0 || qtdCnes != 6) {
-            gravarBT.setEnabled(false);
+            fabGravar.setEnabled(false);
         } else {
-            gravarBT.setEnabled(true);
+            fabGravar.setEnabled(true);
         }
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CNESActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 }

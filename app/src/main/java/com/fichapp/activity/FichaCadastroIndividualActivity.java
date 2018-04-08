@@ -188,6 +188,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
     private CheckBox cbAcessoOutras;
 
     private FloatingActionButton fabGravar;
+    private FloatingActionButton fabLista;
 
     private LinearLayout llSocioDemografico;
     private LinearLayout llCondicoesSaude;
@@ -230,6 +231,13 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
             @Override
             public void onClick(View view) {
                 gravar();
+            }
+        });
+
+        this.fabLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exibirDialogConfirmacao("FichaCadastroIndividualFragment");
             }
         });
 
@@ -396,6 +404,7 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
         llSeSituacaoRua = (LinearLayout) findViewById(R.id.ll_se_situacao_rua);
 
         fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+        fabLista = (FloatingActionButton) findViewById(R.id.fab_lista);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -555,18 +564,18 @@ public class FichaCadastroIndividualActivity extends TemplateActivity {
 
     @Override
     public void onBackPressed() {
-        exibirDialogConfirmacao();
+        exibirDialogConfirmacao(null);
     }
 
-    public void exibirDialogConfirmacao() {
+    public void exibirDialogConfirmacao(final String extra) {
         new AlertDialog.Builder(this)
                 .setTitle("Cancelar Alterações")
-                .setMessage("Você tem certeza que deseja voltar?" + "\n" + "As alterações feitas não serão salvas")
+                .setMessage("Você tem certeza que deseja sair deste cadastro?" + "\n" + "As alterações feitas não serão salvas.")
                 .setCancelable(false)
                 .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(FichaCadastroIndividualActivity.this, MainActivity.class);
-                        intent.putExtra("fragment", "FichaCadastroIndividualFragment");
+                        intent.putExtra("fragment", extra);
                         startActivity(intent);
                         finish();
                     }

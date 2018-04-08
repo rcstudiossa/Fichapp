@@ -2,6 +2,7 @@ package com.fichapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,7 +35,8 @@ public class ProfissionalActivity extends TemplateActivity {
     private CheckBox mFlagAtivo;
     private Spinner spHospital;
     private Spinner spCbo;
-    private Button btGravar;
+    private FloatingActionButton fabGravar;
+    private FloatingActionButton fabLista;
     private Toolbar toolbar;
 
     List<CNESModel> hospitais;
@@ -56,10 +58,19 @@ public class ProfissionalActivity extends TemplateActivity {
 
         this.instanciarProfissionalModel();
 
-        this.btGravar.setOnClickListener(new View.OnClickListener() {
+        this.fabGravar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gravar();
+            }
+        });
+
+        this.fabLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfissionalActivity.this, MainActivity.class);
+                intent.putExtra("fragment", "ProfissionalFragment");
+                startActivity(intent);
             }
         });
 
@@ -67,7 +78,8 @@ public class ProfissionalActivity extends TemplateActivity {
 
     private void definirComponentes() {
 
-        btGravar = (Button) findViewById(R.id.bt_gravar);
+        fabGravar = (FloatingActionButton) findViewById(R.id.fab_gravar);
+        fabLista = (FloatingActionButton) findViewById(R.id.fab_lista);
         spCbo = (Spinner) findViewById(R.id.spinner_cbo);
         etCns = (EditText) findViewById(R.id.et_cns);
         etIne = (EditText) findViewById(R.id.et_ine);
@@ -92,10 +104,7 @@ public class ProfissionalActivity extends TemplateActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfissionalActivity.this, MainActivity.class);
-                intent.putExtra("fragment", "ProfissionalFragment");
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -217,6 +226,12 @@ public class ProfissionalActivity extends TemplateActivity {
 
         finish();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ProfissionalActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }

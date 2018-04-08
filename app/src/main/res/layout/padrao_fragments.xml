@@ -36,16 +36,40 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".95"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp">
 
                 <TextView
                     android:id="@+id/tv_inicial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="16dp"
                     android:text="Escolha um item do menu"
                     android:textAlignment="center"
+                    android:textSize="24dp" />
+
+                <Button
+                    android:id="@+id/bt_abrir_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
-                    android:textSize="24dp"/>
+                    android:background="@drawable/main_button_layout"
+                    android:paddingEnd="36dp"
+                    android:paddingStart="36dp"
+                    android:text="ABRIR MENU"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
         </FrameLayout>
 

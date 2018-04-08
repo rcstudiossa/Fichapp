@@ -1058,14 +1058,24 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="16dp"
+        android:layout_above="@+id/fab_gravar"
+        android:src="@drawable/ic_list" />
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_gravar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="13dp"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_gravar_ficha" />
+        android:src="@drawable/ic_gravar_ficha"
+        android:layout_above="@+id/include_rodape_cadastro_dt"
+        android:layout_alignParentEnd="true" />
 
     <include
         android:id="@+id/include_rodape_cadastro_dt"
