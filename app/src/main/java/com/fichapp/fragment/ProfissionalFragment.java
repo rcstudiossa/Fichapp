@@ -53,4 +53,8 @@ public class ProfissionalFragment extends TemplateFragment {
 
     }
 
+    protected void exportar() {
+
+    }
+
 }

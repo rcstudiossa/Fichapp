@@ -175,6 +175,14 @@ public class FichaVisitaDTDAO {
 
     }
 
+    public void alterarStatusExportado(FichaVisitaDTModel fichaVisitaDTModel) {
+
+        Object[] args = {Boolean.TRUE, fichaVisitaDTModel.getId()};
+
+        db.execSQL("UPDATE ficha_visita_domiciliar_territorial SET flag_exportado = ? where id = ? ", args);
+
+    }
+
     public List<FichaVisitaDTModel> pesquisar() {
 
         List<FichaVisitaDTModel> fichas = new ArrayList<>();
@@ -224,6 +232,24 @@ public class FichaVisitaDTDAO {
         if (c.moveToFirst()) {
             do {
                 fichas.add(getFichaVisitaDTPesquisaModelInstance(c));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return fichas;
+
+    }
+
+    public List<FichaVisitaDTModel> pesquisarNaoExportados() {
+
+        List<FichaVisitaDTModel> fichas = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT * FROM ficha_visita_domiciliar_territorial where flag_ativo = 1 and flag_exportado = 0 order by id;", null);
+
+        if (c.moveToFirst()) {
+            do {
+                fichas.add(getFichaVisitaDTModelInstance(c));
             } while (c.moveToNext());
         }
 
@@ -317,7 +343,6 @@ public class FichaVisitaDTDAO {
         fichaModel.setFlagExportado(c.getInt(c.getColumnIndex("flag_exportado")) > 0);
 
         return fichaModel;
-
 
     }
 

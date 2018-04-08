@@ -1,5 +1,7 @@
 package com.fichapp.model;
 
+import com.fichapp.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -456,5 +458,29 @@ public class FichaCadastroDTModel implements Serializable {
 
     public void setFlagExportado(Boolean flagExportado) {
         this.flagExportado = flagExportado;
+    }
+
+    public String getAnimais() {
+
+        String codigos = null;
+
+        if (getFlagGato()) {
+            Utilitario.addCodigo(codigos, "128");
+        }
+
+        if (getFlagCachorro()) {
+            Utilitario.addCodigo(codigos, "129");
+        }
+
+        if (getFlagPassaro()) {
+            Utilitario.addCodigo(codigos, "130");
+        }
+
+        if (getFlagOutrosAnimais()) {
+            Utilitario.addCodigo(codigos, "132");
+        }
+
+        return codigos;
+
     }
 }

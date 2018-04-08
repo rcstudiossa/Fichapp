@@ -48,4 +48,8 @@ public class FichaCadastroIndividualFragment extends TemplateFragment {
 
     }
 
+    protected void exportar() {
+
+    }
+
 }

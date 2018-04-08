@@ -1,5 +1,7 @@
 package com.fichapp.model;
 
+import com.fichapp.util.Utilitario;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -494,6 +496,169 @@ public class FichaVisitaDTModel implements Serializable{
 
     public void setFlagExportado(Boolean flagExportado) {
         this.flagExportado = flagExportado;
+    }
+
+    public String getMotivosVisitaTipoVisita() {
+
+        String codigos = null;
+
+        if (getFlagCadastramento()) {
+            Utilitario.addCodigo(codigos, "1");
+        }
+
+        if (getFlagVisitaPeriodica()) {
+            Utilitario.addCodigo(codigos, "29");
+        }
+
+        return codigos;
+
+    }
+
+    public String getMotivosVisitaBuscaAtiva() {
+
+        String codigos = null;
+
+        if (getFlagConsulta()) {
+            Utilitario.addCodigo(codigos, "2");
+        }
+
+        if (getFlagExame()) {
+            Utilitario.addCodigo(codigos, "3");
+        }
+
+        if (getFlagVacina()) {
+            Utilitario.addCodigo(codigos, "4");
+        }
+
+        if (getFlagBolsaFamilia()) {
+            Utilitario.addCodigo(codigos, "30");
+        }
+
+        return codigos;
+
+    }
+
+    public String getMotivosVisitaAcompanhamento() {
+
+        String codigos = null;
+
+        if (getFlagGestante()) {
+            Utilitario.addCodigo(codigos, "5");
+        }
+        if (getFlagPuerpera()) {
+            Utilitario.addCodigo(codigos, "6");
+        }
+        if (getFlagRecemNascido()) {
+            Utilitario.addCodigo(codigos, "7");
+        }
+        if (getFlagCrianca()) {
+            Utilitario.addCodigo(codigos, "8");
+        }
+        if (getFlagDesnutricao()) {
+            Utilitario.addCodigo(codigos, "9");
+        }
+        if (getFlagReabilitacao()) {
+            Utilitario.addCodigo(codigos, "10");
+        }
+        if (getFlagHipertensao()) {
+            Utilitario.addCodigo(codigos, "11");
+        }
+        if (getFlagDiabetes()) {
+            Utilitario.addCodigo(codigos, "12");
+        }
+        if (getFlagAsma()) {
+            Utilitario.addCodigo(codigos, "13");
+        }
+        if (getFlagEnfisema()) {
+            Utilitario.addCodigo(codigos, "14");
+        }
+        if (getFlagCancer()) {
+            Utilitario.addCodigo(codigos, "15");
+        }
+        if (getFlagDoencasCronicas()) {
+            Utilitario.addCodigo(codigos, "16");
+        }
+        if (getFlagHanseniase()) {
+            Utilitario.addCodigo(codigos, "17");
+        }
+        if (getFlagTuberculose()) {
+            Utilitario.addCodigo(codigos, "18");
+        }
+        if (getFlagSintomaticosRespiratorios()) {
+            Utilitario.addCodigo(codigos, "32");
+        }
+        if (getFlagTabagista()) {
+            Utilitario.addCodigo(codigos, "33");
+        }
+        if (getFlagAcamado()) {
+            Utilitario.addCodigo(codigos, "19");
+        }
+        if (getFlagVunerabilidadeSocial()) {
+            Utilitario.addCodigo(codigos, "20");
+        }
+        if (getFlagBolsaFamilia()) {
+            Utilitario.addCodigo(codigos, "21");
+        }
+        if (getFlagSaudeMental()) {
+            Utilitario.addCodigo(codigos, "22");
+        }
+        if (getFlagUsuarioAlcool()) {
+            Utilitario.addCodigo(codigos, "23");
+        }
+        if (getFlagOutrasDrogas()) {
+            Utilitario.addCodigo(codigos, "24");
+        }
+
+        return codigos;
+
+    }
+
+    public String getMotivosVisitaControleAmbiental() {
+
+        String codigos = null;
+
+        if (getFlagAcaoEducativa()) {
+            Utilitario.addCodigo(codigos, "34");
+        }
+
+        if (getFlagImovelComFoco()) {
+            Utilitario.addCodigo(codigos, "5");
+        }
+
+        if (getFlagAcaoMecanica()) {
+            Utilitario.addCodigo(codigos, "36");
+        }
+
+        if (getFlagTratamentoFocal()) {
+            Utilitario.addCodigo(codigos, "37");
+        }
+
+        return codigos;
+
+    }
+
+    public String getMotivosVisitaOutros() {
+
+        String codigos = null;
+
+        if (getFlagEgressoInternacao()) {
+            Utilitario.addCodigo(codigos, "25");
+        }
+
+        if (getFlagConvite()) {
+            Utilitario.addCodigo(codigos, "27");
+        }
+
+        if (getFlagOrientacao()) {
+            Utilitario.addCodigo(codigos, "31");
+        }
+
+        if (getFlagOutros()) {
+            Utilitario.addCodigo(codigos, "28");
+        }
+
+        return codigos;
+
     }
 
 }

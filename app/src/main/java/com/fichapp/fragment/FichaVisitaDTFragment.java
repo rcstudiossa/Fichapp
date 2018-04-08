@@ -1,22 +1,19 @@
 package com.fichapp.fragment;
 
 
+import android.net.http.HttpResponseCache;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.fichapp.adapter.FichaVisitaDTAdapter;
 import com.fichapp.model.FichaVisitaDTModel;
 import com.fichapp.R;
 import com.fichapp.business.FichaVisitaDTBS;
-import com.fichapp.util.Utilitario;
+import com.fichapp.util.HttpHandler;
 
 import java.util.List;
 
@@ -44,8 +41,6 @@ public class FichaVisitaDTFragment extends TemplateFragment {
         return view;
     }
 
-
-
     protected void pesquisarAtivos(String query) {
 
         mList = fichaVisitaDTBS.pesquisarAtivos(query);
@@ -54,5 +49,67 @@ public class FichaVisitaDTFragment extends TemplateFragment {
         adapter.notifyDataSetChanged();
 
     }
+
+    protected void exportar() {
+
+        ExportTask exportTask;
+
+        List<FichaVisitaDTModel> fichas = fichaVisitaDTBS.pesquisarNaoExportados();
+
+        for (FichaVisitaDTModel ficha: fichas) {
+
+            exportTask = new ExportTask(ficha);
+            exportTask.execute((Void) null);
+
+        }
+
+    }
+
+    public class ExportTask extends AsyncTask<Void, Void, Boolean> {
+
+        private FichaVisitaDTModel ficha;
+
+        ExportTask(FichaVisitaDTModel ficha) {
+            this.ficha = ficha;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            String jsonStr = fichaVisitaDTBS.getJSONObject(ficha);
+
+            String url = "http://localhost:8080/smpep/webresources/wsintegracaoubs/inserirFichaVisitaDomiciliar";
+
+            new HttpHandler().makeRequest(url, jsonStr);
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+
+            /*mAuthTask = null;
+            showProgress(false);
+
+            if (success) {
+                mInfo.setVisibility(View.VISIBLE);
+            } else {
+                if (!TextUtils.isEmpty(jsonStr)) {
+                    mEmailView.setError(getString(R.string.error_exist_email));
+                    mEmailView.requestFocus();
+                }
+            }*/
+
+        }
+
+        @Override
+        protected void onCancelled() {
+            /*mAuthTask = null;
+            showProgress(false);*/
+        }
+    }
+
+
+
 
 }

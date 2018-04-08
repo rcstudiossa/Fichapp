@@ -396,6 +396,24 @@ public class FichaCadastroIndividualDAO {
 
     }
 
+    public List<FichaCadastroIndividualModel> pesquisarNaoExportados() {
+
+        List<FichaCadastroIndividualModel> fichas = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT * FROM ficha_cadastro_individual where flag_ativo = 1 and flag_exportado = 0 order by id;", null);
+
+        if (c.moveToFirst()) {
+            do {
+                fichas.add(getFichaCadastroIndividualPesquisaModelInstance(c));
+            } while (c.moveToNext());
+        }
+
+        c.close();
+
+        return fichas;
+
+    }
+
     public List<FichaCadastroIndividualModel> pesquisarAtivos() {
 
         List<FichaCadastroIndividualModel> fichas = new ArrayList<>();

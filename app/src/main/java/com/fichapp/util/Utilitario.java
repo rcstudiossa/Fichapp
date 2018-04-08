@@ -79,6 +79,18 @@ public final class Utilitario {
 
     }
 
+    public static String addCodigo(String texto, String valor) {
+
+        if (isEmpty(texto)) {
+            texto = valor;
+        } else {
+            texto = texto + "," + valor;
+        }
+
+        return texto;
+
+    }
+
     public static String getDataHojeFormatada() {
 
         return new SimpleDateFormat("dd/MM/yyyy").format(new Date());

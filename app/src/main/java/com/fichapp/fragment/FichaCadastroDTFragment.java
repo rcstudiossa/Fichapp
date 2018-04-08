@@ -48,4 +48,8 @@ public class FichaCadastroDTFragment extends TemplateFragment {
 
     }
 
+    protected void exportar() {
+
+    }
+
 }

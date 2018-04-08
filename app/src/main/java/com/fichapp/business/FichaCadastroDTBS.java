@@ -86,6 +86,11 @@ public class FichaCadastroDTBS {
         return fichaCadastroDTDAO.pesquisarAtivos();
     }
 
+    public List<FichaCadastroDTModel> pesquisarNaoExportados() {
+
+        return fichaCadastroDTDAO.pesquisarNaoExportados();
+    }
+
     public List<FichaCadastroDTModel> pesquisarAtivos(String query) {
 
         if (Utilitario.isEmpty(query)) {
